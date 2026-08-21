@@ -1,0 +1,34 @@
+{
+  "hinweis": "Die drei politischen Forderungen, die im laufenden Jahrgang am häufigsten wiederholt wurden - gemessen an der Zahl der Meldungen, die sie erheben, und am Datum der jüngsten Nennung. Jede Forderung MUSS mit mindestens einem Beleg hinterlegt sein. 'zitat_ab' ist ein wörtlicher Textanfang aus der genannten Meldung; baue-ticker.py schneidet ab dort ein Zitat heraus und bricht ab, wenn der Text dort nicht steht. So kann hier nichts Erfundenes stehen.",
+  "kriterium": "Sortiert nach Häufigkeit der Wiederholung, bei Gleichstand nach dem jüngsten Datum.",
+  "stand": "2026-08-21",
+  "forderungen": [
+    {
+      "kurz": "Handwerkerbonus erhalten statt kürzen",
+      "adressat": "Bund",
+      "worum": "Der Steuerbonus für Handwerkerleistungen nach § 35a Abs. 3 EStG steht im Bundeshaushalt 2027 als Einsparmaßnahme zur Debatte. Das Handwerk hält dagegen: Der Bonus halte Aufträge im legalen Wirtschaftskreislauf und wirke gegen Schwarzarbeit.",
+      "belege": [
+        {"id": "6847", "zitat_ab": "Eine Abschaffung des Handwerkerbonus wäre ein Fehler"},
+        {"id": "6871", "zitat_ab": "Kritisch sehen wir, dass der Steuerbonus"}
+      ]
+    },
+    {
+      "kurz": "Dauerhafte Entlastung bei Energie und Kraftstoff",
+      "adressat": "Bund und Land Brandenburg",
+      "worum": "Im Flächenland Brandenburg fahren Betriebe täglich weite Wege. Gefordert werden verlässliche Energiepreise statt kurzfristiger Maßnahmen – und befristete Preisgleitklauseln, damit außergewöhnliche Preissprünge bei öffentlichen Aufträgen nicht allein an den Betrieben hängen bleiben.",
+      "belege": [
+        {"id": "6796", "zitat_ab": "Die brandenburgische Landesregierung wird daher aufgefordert"},
+        {"id": "6808", "zitat_ab": "Eine kurzfristige Senkung der Energiesteuer"}
+      ]
+    },
+    {
+      "kurz": "Verlässliche Rahmenbedingungen und Planungssicherheit",
+      "adressat": "Land Brandenburg",
+      "worum": "Die Forderung zieht sich durch das ganze Jahr – vom Koalitionsbruch im Januar über den Koalitionsvertrag im März bis zur Vereidigung der neuen Landesregierung. Verlangt werden klare Entscheidungen, planbare Rahmenbedingungen und eine beschleunigte Verwaltungsmodernisierung.",
+      "belege": [
+        {"id": "6715", "zitat_ab": "Für das brandenburgische Handwerk steht fest"},
+        {"id": "6788", "zitat_ab": "Die neue Landesregierung steht in der Pflicht"}
+      ]
+    }
+  ]
+}

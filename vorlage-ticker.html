@@ -88,10 +88,14 @@
   .chip.wichtig{border-color:var(--signal);color:var(--signal);font-weight:600}
   .chip.wichtig[aria-pressed="true"]{background:var(--signal);border-color:var(--signal);color:#fff}
   .zeile2{display:flex;gap:8px;margin-top:10px}
-  .zeile2 select,.zeile2 input{
+  .zeile2 input{
     flex:1;min-width:0;font:inherit;font-size:.9rem;padding:9px 11px;
     border:1px solid var(--linie);border-radius:10px;background:var(--weiss);color:var(--text);min-height:40px}
   .zeile2 input::placeholder{color:#9aa1a9}
+  .chips.themen{margin-top:9px}
+  .chips.themen .chip{font-size:.85rem;padding:7px 13px;min-height:36px}
+  .chips.themen .chip[aria-pressed="true"]{background:var(--blau-hell);border-color:var(--blau-hell)}
+  .chips.themen .chip.nachrangig{opacity:.6}
 
   /* ---------- Liste ---------- */
   main{max-width:760px;margin:0 auto;padding:16px 18px 40px}
@@ -141,9 +145,35 @@
   footer p{margin:0 0 8px}
   footer a{color:var(--blau)}
 
+  /* ---------- Top-Forderungen ---------- */
+  .spalte-seite{margin-bottom:22px}
+  .forderungen-kasten{background:var(--blau);color:#fff;border-radius:var(--radius);padding:18px}
+  .forderungen-kasten h2{font-size:1.05rem;margin:0 0 4px;color:#fff}
+  .forderungen-kasten .kriterium{font-size:.75rem;opacity:.75;margin:0 0 14px;line-height:1.45}
+  .forderung{border-top:1px solid rgba(255,255,255,.2);padding:13px 0 0;margin-top:13px}
+  .forderung:first-of-type{border-top:0;margin-top:0;padding-top:0}
+  .forderung-rang{display:inline-block;background:#fff;color:var(--blau);font-weight:700;
+                  border-radius:6px;width:22px;height:22px;text-align:center;line-height:22px;
+                  font-size:.8rem;margin-right:7px}
+  .forderung h3{display:inline;font-size:.98rem;margin:0;line-height:1.35}
+  .adressat{display:inline-block;margin-top:8px;background:rgba(255,255,255,.16);
+            border-radius:999px;padding:3px 10px;font-size:.72rem;font-weight:600}
+  .forderung p.worum{font-size:.84rem;margin:8px 0 0;opacity:.92;line-height:1.5}
+  .forderung blockquote{background:rgba(255,255,255,.1);border-left:3px solid rgba(255,255,255,.5);
+                        color:#fff;font-size:.82rem;margin:10px 0 0;padding:9px 12px}
+  .beleg-fuss{font-size:.72rem;opacity:.8;margin:6px 0 0}
+  .beleg-fuss a{color:#fff}
+
   @media (min-width:700px){
     h1{font-size:1.85rem}
     .karte{padding:20px 22px}
+  }
+  @media (min-width:1000px){
+    main{max-width:1120px}
+    .inhalt{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:26px;align-items:start}
+    .spalte-liste{grid-column:1;grid-row:1}
+    .spalte-seite{grid-column:2;grid-row:1;position:sticky;top:150px;margin-bottom:0}
+    .filter-innen,.kopf-innen,.hinweis-innen,footer{max-width:1120px}
   }
 </style>
 </head>
@@ -173,17 +203,22 @@
 <div class="filter">
   <div class="filter-innen">
     <div class="chips" id="artFilter" role="group" aria-label="Nach Art filtern"></div>
+    <div class="chips themen" id="themaFilter" role="group" aria-label="Nach Thema filtern"></div>
     <div class="zeile2">
-      <select id="themaFilter" aria-label="Nach Thema filtern"></select>
       <input id="suche" type="search" placeholder="Suchen &hellip;" aria-label="Volltextsuche">
     </div>
   </div>
 </div>
 
 <main>
-  <div id="ansichtMeldungen">
-    <p class="zaehler" id="zaehler"></p>
-    <div id="liste"></div>
+  <div id="ansichtMeldungen" class="inhalt">
+    <!-- Auf dem Handy stehen die Forderungen oben - dort sind sie die schnelle
+         Orientierung. Auf breiten Bildschirmen ruecken sie per Raster nach rechts. -->
+    <aside class="spalte-seite" id="forderungen"></aside>
+    <div class="spalte-liste">
+      <p class="zaehler" id="zaehler"></p>
+      <div id="liste"></div>
+    </div>
   </div>
   <div id="ansichtThemen" hidden>
     <div class="lesehilfe">
@@ -241,12 +276,17 @@ function datumLesbar(iso){
   return parseInt(t[2],10) + ". " + MONATSNAMEN[parseInt(t[1],10)-1] + " " + t[0];
 }
 
+/* Eine Meldung kann zwei Themen tragen - der Knopf trifft beide. */
+function hatThema(m, thema){
+  return m.thema === thema || m.thema2 === thema;
+}
+
 function passt(m){
   if (filterArt !== "alle" && m.art !== filterArt) return false;
-  if (filterThema !== "alle" && m.thema !== filterThema) return false;
+  if (filterThema !== "alle" && !hatThema(m, filterThema)) return false;
   if (suchtext) {
-    const heu = (m.schlagzeile + " " + m.dreizeiler + " " + m.titel + " " +
-                 m.thema + " " + (m.zitat || "")).toLowerCase();
+    const heu = (m.schlagzeile + " " + m.dreizeiler + " " + m.titel + " " + m.thema + " " +
+                 (m.thema2 || "") + " " + m.absender + " " + (m.zitat || "")).toLowerCase();
     if (heu.indexOf(suchtext) === -1) return false;
   }
   return true;
@@ -274,12 +314,43 @@ function zeichneFilter(){
            (a.schluessel === filterArt) + '">' + esc(a.name) + " " + anzahl + "</button>";
   }).join("");
 
+  // Kriterien-Knoepfe: die Begriffe, unter denen man im Betrieb sucht.
+  // "Ehrungen & Termine" steht hinten und blasser - es ist der Nebenschauplatz.
   document.getElementById("themaFilter").innerHTML =
-    '<option value="alle">Alle Themen</option>' +
+    '<button type="button" class="chip" data-thema="alle" aria-pressed="' +
+      (filterThema === "alle") + '">Alle Themen</button>' +
     DATEN.themen.map(t => {
-      const anzahl = DATEN.meldungen.filter(m => m.thema === t).length;
-      return '<option value="' + esc(t) + '">' + esc(t) + " (" + anzahl + ")</option>";
+      const anzahl = DATEN.meldungen.filter(m => hatThema(m, t)).length;
+      const blass = (t === "Ehrungen & Termine") ? " nachrangig" : "";
+      return '<button type="button" class="chip' + blass + '" data-thema="' + esc(t) +
+             '" aria-pressed="' + (t === filterThema) + '">' +
+             esc(t) + " " + anzahl + "</button>";
     }).join("");
+}
+
+function zeichneForderungen(){
+  if (!DATEN.forderungen || !DATEN.forderungen.length) return;
+
+  document.getElementById("forderungen").innerHTML =
+    '<div class="forderungen-kasten">' +
+      '<h2>Top 3 der politischen Forderungen</h2>' +
+      '<p class="kriterium">' + esc(DATEN.forderungen_kriterium) + '</p>' +
+      DATEN.forderungen.map((f, i) => {
+        const beleg = f.belege[0];
+        return '<div class="forderung">' +
+          '<span class="forderung-rang">' + (i + 1) + '</span>' +
+          '<h3>' + esc(f.kurz) + '</h3>' +
+          '<div><span class="adressat">an ' + esc(f.adressat) + '</span></div>' +
+          '<p class="worum">' + esc(f.worum) + '</p>' +
+          '<blockquote>&bdquo;' + esc(beleg.zitat) + '&ldquo;</blockquote>' +
+          '<p class="beleg-fuss">' + esc(beleg.absender) + ', ' +
+            esc(datumLesbar(beleg.datum)) +
+            ' &middot; <a href="' + esc(beleg.url) + '" target="_blank" rel="noopener">Original</a>' +
+            (f.anzahl > 1 ? ' &middot; ' + f.anzahl + ' Meldungen dazu' : '') +
+          '</p>' +
+        '</div>';
+      }).join("") +
+    '</div>';
 }
 
 /* Reihenfolge der Bloecke: politische Substanz zuerst,
@@ -356,7 +427,8 @@ function karte(m){
     '<div class="karte-kopf">' +
       (m.neu ? '<span class="marke neu">Neu</span>' : '') +
       '<span class="marke ' + esc(m.art) + '">' + esc(ART_NAME[m.art] || m.art) + '</span>' +
-      '<span class="thema">' + esc(m.thema) + '</span>' +
+      '<span class="thema">' + esc(m.thema) +
+        (m.thema2 ? ' &middot; ' + esc(m.thema2) : '') + '</span>' +
       '<span class="datum">' + datum + '</span>' +
     '</div>' +
     '<h2>' + esc(m.schlagzeile) + '</h2>' +
@@ -367,7 +439,8 @@ function karte(m){
     (m.zitat ? '<blockquote>&bdquo;' + esc(m.zitat) + '&ldquo;</blockquote>' : '') +
     '<div class="karte-fuss">' +
       '<a class="original" href="' + esc(m.url) + '" target="_blank" rel="noopener">Zum Original</a>' +
-      (m.nummer ? '<span class="nummer">Presseinformation Nr. ' + esc(m.nummer) + '</span>' : '') +
+      '<span class="nummer">' + esc(m.absender) +
+        (m.nummer ? ' &middot; Nr. ' + esc(m.nummer) : '') + '</span>' +
     '</div>' +
   '</article>';
 }
@@ -381,8 +454,13 @@ document.getElementById("artFilter").addEventListener("click", function(e){
   zeichneListe();
 });
 
-document.getElementById("themaFilter").addEventListener("change", function(){
-  filterThema = this.value;
+document.getElementById("themaFilter").addEventListener("click", function(e){
+  const knopf = e.target.closest(".chip");
+  if (!knopf) return;
+  // Nochmal auf denselben Knopf tippen hebt die Auswahl wieder auf
+  filterThema = (knopf.dataset.thema === filterThema) ? "alle" : knopf.dataset.thema;
+  this.querySelectorAll(".chip").forEach(c =>
+    c.setAttribute("aria-pressed", String(c.dataset.thema === filterThema)));
   zeichneListe();
 });
 
@@ -476,6 +554,7 @@ document.getElementById("stand").textContent =
 
 zeichneKennzahlen();
 zeichneFilter();
+zeichneForderungen();
 zeichneListe();
 zeichneThemen();
 </script>

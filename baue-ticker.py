@@ -34,6 +34,28 @@ def artikel_id(url):
     return m.group(1) if m else None
 
 
+def absender_bestimmen(meldung):
+    """Wer spricht? Viele Meldungen auf hwk-potsdam.de stammen nicht von der
+    Kammer Potsdam allein, sondern vom Brandenburgischen Handwerkskammertag -
+    dem Zusammenschluss der Kammern Cottbus, Frankfurt (Oder) und Potsdam mit
+    Federfuehrung Potsdam. Das ist politisch der Unterschied zwischen einer
+    regionalen Stimme und der Stimme des Landeshandwerks."""
+    kopf = meldung.get("kopfzeile", "")
+    text = meldung["volltext"]
+    anfang = text[:400]
+
+    if kopf.lower().startswith("gemeinsame presse"):
+        return "Gemeinsam mit Partnern"
+    if "Handwerkskammertag" in kopf:
+        return "Handwerkskammertag Brandenburg"
+    # Die Ortszeile nennt bei Landesmeldungen alle drei Kammerstaedte
+    if re.search(r"(Cottbus|Frankfurt \(Oder\))[/ ].*Potsdam|Potsdam/\s*Cottbus", anfang):
+        return "Handwerkskammertag Brandenburg"
+    if "Handwerkskammertag" in anfang:
+        return "Handwerkskammertag Brandenburg"
+    return "Handwerkskammer Potsdam"
+
+
 def zitat_finden(volltext):
     """Erstes ausreichend langes woertliches Zitat, exakt wie in der Quelle.
 
@@ -112,6 +134,8 @@ def main():
             "url": m["url"],
             "art": r["art"],
             "thema": r["thema"],
+            "thema2": r.get("thema2"),
+            "absender": absender_bestimmen(m),
             "schlagzeile": r["schlagzeile"],
             "dreizeiler": r["dreizeiler"],
             "unredigiert": bool(r.get("unredigiert")),
@@ -169,14 +193,60 @@ def main():
         })
     themenfelder.sort(key=lambda f: -f["erwaehnt"])
 
-    # Themen in der Reihenfolge ihrer Haeufigkeit, damit die Auswahl nuetzlich sortiert ist
+    # Themen in der Reihenfolge ihrer Haeufigkeit. "Ehrungen & Termine" steht
+    # immer hinten - das ist der nachrangige Bereich (siehe KMS [D-0173]).
     haeufigkeit = {}
     for x in fertig:
-        haeufigkeit[x["thema"]] = haeufigkeit.get(x["thema"], 0) + 1
-    themen = sorted(haeufigkeit, key=lambda t: (-haeufigkeit[t], t))
+        for t in (x["thema"], x.get("thema2")):
+            if t:
+                haeufigkeit[t] = haeufigkeit.get(t, 0) + 1
+    NACHRANGIG = "Ehrungen & Termine"
+    themen = sorted(haeufigkeit,
+                    key=lambda t: (t == NACHRANGIG, -haeufigkeit[t], t))
+    themen_zahl = haeufigkeit
+
+    # ---- Top-Forderungen mit woertlichem Beleg ----------------------------
+    forderungen_datei = json.load(open("daten/forderungen.json", encoding="utf-8"))
+    nach_id = {x["id"]: x for x in fertig}
+    roh_nach_id = {artikel_id(m["url"]): m for m in meldungen}
+    forderungen = []
+
+    for f in forderungen_datei["forderungen"]:
+        belege = []
+        for b in f["belege"]:
+            quelle = roh_nach_id.get(b["id"])
+            if not quelle:
+                sys.exit("Forderung '%s': Meldung %s gibt es nicht." % (f["kurz"], b["id"]))
+            text = " ".join(quelle["volltext"].split())
+            start = text.find(b["zitat_ab"])
+            if start < 0:
+                sys.exit("Forderung '%s': Der Text '%s' steht NICHT in Meldung %s."
+                         % (f["kurz"], b["zitat_ab"], b["id"]))
+            ausschnitt = text[start:start + ANZEIGE_ZITAT]
+            enden = [t.end() for t in SATZ_ENDE.finditer(ausschnitt)]
+            if enden:
+                ausschnitt = ausschnitt[:enden[-1]]
+            belege.append({
+                "id": b["id"],
+                "zitat": ausschnitt,
+                "datum": nach_id[b["id"]]["datum"],
+                "url": quelle["url"],
+                "absender": absender_bestimmen(quelle),
+            })
+        belege.sort(key=lambda x: x["datum"], reverse=True)
+        forderungen.append({
+            "kurz": f["kurz"],
+            "adressat": f["adressat"],
+            "worum": f["worum"],
+            "belege": belege,
+            "zuletzt": belege[0]["datum"],
+            "anzahl": len(belege),
+        })
 
     daten = {
         "jahr": JAHR,
+        "forderungen": forderungen,
+        "forderungen_kriterium": forderungen_datei.get("kriterium", ""),
         "stand": redaktion_datei.get("stand", datetime.date.today().isoformat()),
         "themen": themen,
         "themenfelder": themenfelder,
