@@ -55,10 +55,10 @@
   .wert b{display:block;font-size:1.15rem;line-height:1.25}
   .wert span{font-size:.72rem;color:var(--grau);display:block;line-height:1.3}
   .wert.warn b{color:var(--signal)}
-  .verlauf{display:flex;align-items:flex-end;gap:4px;height:46px;margin-bottom:6px}
-  .saeule{flex:1;background:var(--blau-flaeche);border-radius:3px 3px 0 0;min-height:3px;position:relative}
-  .saeule.leer{background:#eef0f3}
-  .saeule.viel{background:var(--blau-hell)}
+  .verlauf{display:block;width:100%;height:46px;margin-bottom:6px}
+  .saeule.wenig{fill:var(--blau-flaeche)}
+  .saeule.viel{fill:var(--blau-hell)}
+  .saeule.leer{fill:#e6e9ed}
   .monate{display:flex;gap:4px;font-size:.65rem;color:var(--grau);margin-bottom:12px}
   .monate span{flex:1;text-align:center}
   .befund{font-size:.88rem;margin:0 0 10px;color:#333}
@@ -78,7 +78,15 @@
   .filter{position:sticky;top:0;z-index:10;background:var(--weiss);
           border-bottom:1px solid var(--linie);padding:12px 18px}
   .filter-innen{max-width:760px;margin:0 auto}
-  .chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:2px;-webkit-overflow-scrolling:touch}
+  /* Die Knopfreihen scrollen seitlich. Damit auf dem Handy erkennbar ist,
+     dass rechts noch mehr kommt, blendet ein Verlauf die Kante weich aus. */
+  .chip-reihe{position:relative}
+  .chip-reihe::after{content:"";position:absolute;top:0;right:0;bottom:0;width:26px;
+                     pointer-events:none;opacity:0;transition:opacity .15s;
+                     background:linear-gradient(to right,rgba(255,255,255,0),var(--weiss))}
+  .chip-reihe.mehr-rechts::after{opacity:1}
+  .chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:2px;-webkit-overflow-scrolling:touch;
+         scrollbar-width:none}
   .chips::-webkit-scrollbar{height:0}
   .chip{flex:0 0 auto;border:1px solid var(--linie);background:var(--weiss);color:var(--grau);
         border-radius:999px;padding:9px 15px;font-size:.9rem;cursor:pointer;white-space:nowrap;
@@ -152,17 +160,73 @@
   .forderungen-kasten .kriterium{font-size:.75rem;opacity:.75;margin:0 0 14px;line-height:1.45}
   .forderung{border-top:1px solid rgba(255,255,255,.2);padding:13px 0 0;margin-top:13px}
   .forderung:first-of-type{border-top:0;margin-top:0;padding-top:0}
-  .forderung-rang{display:inline-block;background:#fff;color:var(--blau);font-weight:700;
-                  border-radius:6px;width:22px;height:22px;text-align:center;line-height:22px;
-                  font-size:.8rem;margin-right:7px}
-  .forderung h3{display:inline;font-size:.98rem;margin:0;line-height:1.35}
-  .adressat{display:inline-block;margin-top:8px;background:rgba(255,255,255,.16);
+  .forderung summary{cursor:pointer;list-style:none;display:grid;
+                     grid-template-columns:auto 1fr;gap:0 8px;align-items:start;
+                     padding:4px 0;min-height:40px}
+  .forderung summary::-webkit-details-marker{display:none}
+  .forderung-rang{background:#fff;color:var(--blau);font-weight:700;border-radius:6px;
+                  width:22px;height:22px;text-align:center;line-height:22px;font-size:.8rem;
+                  grid-row:1;margin-top:1px}
+  .forderung-titel{font-size:.98rem;font-weight:600;line-height:1.35;grid-row:1}
+  .adressat{grid-column:2;justify-self:start;margin-top:7px;background:rgba(255,255,255,.16);
             border-radius:999px;padding:3px 10px;font-size:.72rem;font-weight:600}
+  .forderung:not([open]) summary .adressat{margin-bottom:2px}
   .forderung p.worum{font-size:.84rem;margin:8px 0 0;opacity:.92;line-height:1.5}
   .forderung blockquote{background:rgba(255,255,255,.1);border-left:3px solid rgba(255,255,255,.5);
                         color:#fff;font-size:.82rem;margin:10px 0 0;padding:9px 12px}
   .beleg-fuss{font-size:.72rem;opacity:.8;margin:6px 0 0}
   .beleg-fuss a{color:#fff}
+
+  /* ---------- Handy ----------
+     Alles, was mit dem Daumen getroffen werden muss, ist mindestens 44 Pixel
+     hoch. Die kleinsten Schriften wachsen, damit man sie unterwegs lesen kann.
+     Die klebende Filterleiste bleibt schmal, sonst frisst sie den Bildschirm. */
+  @media (max-width:699px){
+    body{font-size:16px}
+    header{padding:18px 16px 16px}
+    .filter{padding:9px 16px}
+    .hinweis{padding:10px 16px}
+    main{padding:14px 16px 32px}
+
+    .chip{min-height:44px;padding:11px 15px;font-size:.92rem}
+    .chips.themen .chip{min-height:44px;padding:11px 14px;font-size:.88rem}
+    .zeile2{margin-top:7px}
+    .zeile2 input{min-height:44px;font-size:1rem}
+    .chips.themen{margin-top:7px}
+    .reiter button{min-height:46px}
+    .original{min-height:44px;display:inline-flex;align-items:center;font-size:.95rem}
+
+    .marke{font-size:.76rem;padding:5px 9px}
+    .thema{font-size:.82rem}
+    .datum{font-size:.82rem}
+    .nummer{font-size:.8rem}
+    .adressat{font-size:.8rem;padding:4px 11px}
+    .beleg-fuss{font-size:.8rem;line-height:1.5}
+    .beleg-fuss a{display:inline-block;padding:7px 3px}
+
+    /* Beim Scrollen weicht das Suchfeld - die klebende Leiste soll nicht
+       ein Fuenftel des Bildschirms belegen. Oben ist es sofort wieder da. */
+    .filter.kompakt .zeile2{display:none}
+    .forderungen-kasten .kriterium{font-size:.8rem}
+    .forderung p.worum{font-size:.88rem}
+    .forderung blockquote{font-size:.86rem}
+    .lesehilfe{font-size:.9rem}
+    .wert span{font-size:.76rem}
+    .befund{font-size:.92rem}
+    .feld-liste{font-size:.92rem}
+    .nebensache-hinweis{font-size:.87rem}
+    details.nebensache summary{min-height:44px;font-size:.85rem}
+    h2{font-size:1.16rem}
+    .karte{padding:15px 15px}
+  }
+
+  /* Sehr schmale Geraete (iPhone SE und aehnlich) */
+  @media (max-width:359px){
+    .kennzahl{min-width:0;padding:7px 8px}
+    .kennzahl b{font-size:1.05rem}
+    .kennzahl span{font-size:.76rem;line-height:1.25}
+    h1{font-size:1.3rem}
+  }
 
   @media (min-width:700px){
     h1{font-size:1.85rem}
@@ -202,8 +266,12 @@
 
 <div class="filter">
   <div class="filter-innen">
-    <div class="chips" id="artFilter" role="group" aria-label="Nach Art filtern"></div>
-    <div class="chips themen" id="themaFilter" role="group" aria-label="Nach Thema filtern"></div>
+    <div class="chip-reihe">
+      <div class="chips" id="artFilter" role="group" aria-label="Nach Art filtern"></div>
+    </div>
+    <div class="chip-reihe">
+      <div class="chips themen" id="themaFilter" role="group" aria-label="Nach Thema filtern"></div>
+    </div>
     <div class="zeile2">
       <input id="suche" type="search" placeholder="Suchen &hellip;" aria-label="Volltextsuche">
     </div>
@@ -1647,10 +1715,14 @@ function zeichneForderungen(){
       '<p class="kriterium">' + esc(DATEN.forderungen_kriterium) + '</p>' +
       DATEN.forderungen.map((f, i) => {
         const beleg = f.belege[0];
-        return '<div class="forderung">' +
-          '<span class="forderung-rang">' + (i + 1) + '</span>' +
-          '<h3>' + esc(f.kurz) + '</h3>' +
-          '<div><span class="adressat">an ' + esc(f.adressat) + '</span></div>' +
+        // Auf dem Handy zugeklappt: erst die drei Forderungen im Ueberblick,
+        // Begruendung und Beleg auf Wunsch. Am Rechner steht alles offen.
+        return '<details class="forderung"' + (breiterBildschirm() ? " open" : "") + '>' +
+          '<summary>' +
+            '<span class="forderung-rang">' + (i + 1) + '</span>' +
+            '<span class="forderung-titel">' + esc(f.kurz) + '</span>' +
+            '<span class="adressat">an ' + esc(f.adressat) + '</span>' +
+          '</summary>' +
           '<p class="worum">' + esc(f.worum) + '</p>' +
           '<blockquote>&bdquo;' + esc(beleg.zitat) + '&ldquo;</blockquote>' +
           '<p class="beleg-fuss">' + esc(beleg.absender) + ', ' +
@@ -1658,9 +1730,13 @@ function zeichneForderungen(){
             ' &middot; <a href="' + esc(beleg.url) + '" target="_blank" rel="noopener">Original</a>' +
             (f.anzahl > 1 ? ' &middot; ' + f.anzahl + ' Meldungen dazu' : '') +
           '</p>' +
-        '</div>';
+        '</details>';
       }).join("") +
     '</div>';
+}
+
+function breiterBildschirm(){
+  return window.matchMedia("(min-width:1000px)").matches;
 }
 
 /* Reihenfolge der Bloecke: politische Substanz zuerst,
@@ -1810,12 +1886,21 @@ function zeichneThemen(){
   document.getElementById("felder").innerHTML = DATEN.themenfelder.map(f => {
     const befund = befundText(f);
 
-    const saeulen = f.monate.map((z, i) => {
-      const hoehe = z ? Math.max(8, Math.round(z / hoechst * 100)) : 0;
-      const art = !z ? " leer" : (z >= hoechst * 0.6 ? " viel" : "");
-      return '<div class="saeule' + art + '" style="height:' + (z ? hoehe : 6) + '%" ' +
-             'title="' + esc(MONATSNAMEN[i] + ": " + z + " Meldung(en)") + '"></div>';
-    }).join("");
+    // Als SVG gezeichnet, nicht als Flex-Kaesten: Bei Flex-Elementen wurde die
+    // Hoehenangabe nicht zuverlaessig uebernommen - leere Monate erschienen
+    // dann als volle Balken, was das Gegenteil der Wahrheit anzeigt.
+    const saeulen =
+      '<svg class="verlauf" viewBox="0 0 236 46" preserveAspectRatio="none" ' +
+           'role="img" aria-label="Meldungen je Monat">' +
+      f.monate.map((z, i) => {
+        const hoehe = z ? Math.max(4, Math.round(z / hoechst * 44)) : 2;
+        const art = !z ? "leer" : (z >= hoechst * 0.6 ? "viel" : "wenig");
+        return '<rect class="saeule ' + art + '" x="' + (i * 20) + '" y="' + (46 - hoehe) +
+               '" width="16" height="' + hoehe + '" rx="2">' +
+               '<title>' + esc(MONATSNAMEN[i] + ": " + z + " Meldung(en)") + '</title>' +
+               '</rect>';
+      }).join("") +
+      '</svg>';
 
     const eigene = DATEN.meldungen
       .filter(m => f.hauptthema.indexOf(m.id) !== -1)
@@ -1832,7 +1917,7 @@ function zeichneThemen(){
         '<div class="wert' + (f.hauptthema.length ? '' : ' warn') + '"><b>' +
           f.hauptthema.length + '</b><span>eigene Meldung</span></div>' +
       '</div>' +
-      '<div class="verlauf">' + saeulen + '</div>' +
+      saeulen +
       '<div class="monate">' + MONATE_KURZ.map(m => '<span>' + m + '</span>').join("") + '</div>' +
       '<p class="befund ' + befund.klasse + '">' + esc(befund.text) + '</p>' +
       (eigene
@@ -1858,6 +1943,34 @@ document.getElementById("reiterThemen")
 
 document.getElementById("schwelleText").textContent = DATEN.schwelle_substanz;
 
+/* Der Verlauf an der rechten Kante erscheint nur, solange dort noch Knoepfe
+   verborgen sind - sonst wuerde er den letzten Knopf dauerhaft verschleiern. */
+function scrollHinweisePruefen(){
+  document.querySelectorAll(".chip-reihe").forEach(reihe => {
+    const spur = reihe.querySelector(".chips");
+    const nochWas = spur.scrollWidth - spur.clientWidth - spur.scrollLeft > 4;
+    reihe.classList.toggle("mehr-rechts", nochWas);
+  });
+}
+
+document.querySelectorAll(".chip-reihe .chips").forEach(spur =>
+  spur.addEventListener("scroll", scrollHinweisePruefen, {passive:true}));
+
+/* Sobald man in die Liste hineingescrollt hat, schrumpft die klebende Leiste.
+   Eine leere Suche kann verschwinden - eine ausgefuellte bleibt sichtbar,
+   sonst wuesste man nicht mehr, warum so wenige Meldungen zu sehen sind. */
+const filterLeiste = document.querySelector(".filter");
+window.addEventListener("scroll", () => {
+  filterLeiste.classList.toggle("kompakt", window.scrollY > 260 && !suchtext);
+}, {passive:true});
+
+/* Beim Drehen des Handys: Hinweise neu pruefen und die Forderungen passend
+   auf- oder zuklappen. */
+window.addEventListener("resize", () => {
+  scrollHinweisePruefen();
+  document.querySelectorAll("details.forderung").forEach(d => d.open = breiterBildschirm());
+});
+
 document.getElementById("stand").textContent =
   "Datenstand: " + datumLesbar(DATEN.stand) + " · " + DATEN.meldungen.length +
   " Meldungen aus dem Jahr " + DATEN.jahr + ".";
@@ -1867,6 +1980,7 @@ zeichneFilter();
 zeichneForderungen();
 zeichneListe();
 zeichneThemen();
+scrollHinweisePruefen();
 </script>
 </body>
 </html>
