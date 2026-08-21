@@ -1,0 +1,56 @@
+{
+  "hinweis": "Themenfelder für die Themen-Ansicht. 'stichworte' werden im Volltext gezählt (klein geschrieben, Teiltreffer erlaubt). 'themen' nennt die Themen aus redaktion-2026.json, die als Hauptthema dieses Feldes gelten. Diese Datei darf jederzeit erweitert werden - danach baue-ticker.py neu laufen lassen.",
+  "schwelle_substanz": 3,
+  "felder": [
+    {
+      "name": "Bürokratieabbau",
+      "stichworte": ["bürokratie", "berichtspflicht", "genehmigungsverfahren", "nachweispflicht"],
+      "themen": ["Bürokratie"]
+    },
+    {
+      "name": "Fachkräfte",
+      "stichworte": ["fachkräfte", "fachkraft", "arbeitskräfte"],
+      "themen": []
+    },
+    {
+      "name": "Ausbildung & Nachwuchs",
+      "stichworte": ["ausbildung", "auszubildend", "azubi", "lehrstelle", "berufsorientierung"],
+      "themen": ["Fachkräfte & Ausbildung"]
+    },
+    {
+      "name": "Gründung & Nachfolge",
+      "stichworte": ["nachfolge", "generationswechsel", "existenzgründ", "betriebsübernahme"],
+      "themen": ["Gründung & Nachfolge"]
+    },
+    {
+      "name": "Steuern & Abgaben",
+      "stichworte": ["steuer", "handwerkerbonus", "abgabe", "verpackungssteuer"],
+      "themen": ["Steuern & Abgaben"]
+    },
+    {
+      "name": "Energie & Kraftstoff",
+      "stichworte": ["energie", "kraftstoff", "diesel", "sprit", "strompreis"],
+      "themen": ["Energie & Kraftstoff"]
+    },
+    {
+      "name": "Planungssicherheit",
+      "stichworte": ["planungssicherheit", "rahmenbedingungen", "verlässlich"],
+      "themen": ["Landespolitik"]
+    },
+    {
+      "name": "Vergabe & öffentliche Aufträge",
+      "stichworte": ["vergabe", "öffentliche aufträge", "preisgleitklausel", "ausschreibung"],
+      "themen": []
+    },
+    {
+      "name": "Wirtschaftslage",
+      "stichworte": ["geschäftslage", "konjunktur", "auftragslage", "investitionsbereitschaft"],
+      "themen": ["Konjunktur"]
+    },
+    {
+      "name": "Digitalisierung",
+      "stichworte": ["digitalisierung", "digitale", "künstliche intelligenz"],
+      "themen": []
+    }
+  ]
+}

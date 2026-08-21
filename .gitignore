@@ -4,3 +4,10 @@ daten/cache/
 # Windows
 Thumbs.db
 desktop.ini
+
+# Laufprotokolle des taeglichen Abgleichs
+daten/abgleich-protokoll.txt
+daten/letzter-abgleich.txt
+
+# Zahlen-PDFs der Kammer - liegen lokal, gehoeren nicht ins Repository
+daten/fakten-pdf/*.pdf

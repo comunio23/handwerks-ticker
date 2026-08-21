@@ -37,6 +37,38 @@
   .kennzahl b{display:block;font-size:1.3rem;line-height:1.2}
   .kennzahl span{font-size:.75rem;opacity:.85}
 
+  /* ---------- Ansichtswechsel ---------- */
+  .reiter{display:flex;gap:8px;margin-top:16px}
+  .reiter button{flex:1;font:inherit;font-size:.95rem;font-weight:600;cursor:pointer;
+                 padding:11px 10px;border-radius:10px;min-height:44px;
+                 border:1px solid rgba(255,255,255,.35);background:transparent;color:#fff}
+  .reiter button[aria-selected="true"]{background:#fff;color:var(--blau);border-color:#fff}
+
+  /* ---------- Themen-Ansicht ---------- */
+  .lesehilfe{background:var(--blau-flaeche);border:1px solid #b9d4f4;border-radius:var(--radius);
+             padding:14px 16px;margin-bottom:14px;font-size:.87rem;color:#0d3163;line-height:1.5}
+  .feld{background:var(--weiss);border:1px solid var(--linie);border-radius:var(--radius);
+        padding:16px;margin-bottom:12px}
+  .feld h3{margin:0 0 10px;font-size:1.05rem}
+  .werte{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+  .wert{flex:1;min-width:88px;background:var(--flaeche);border-radius:9px;padding:8px 10px}
+  .wert b{display:block;font-size:1.15rem;line-height:1.25}
+  .wert span{font-size:.72rem;color:var(--grau);display:block;line-height:1.3}
+  .wert.warn b{color:var(--signal)}
+  .verlauf{display:flex;align-items:flex-end;gap:4px;height:46px;margin-bottom:6px}
+  .saeule{flex:1;background:var(--blau-flaeche);border-radius:3px 3px 0 0;min-height:3px;position:relative}
+  .saeule.leer{background:#eef0f3}
+  .saeule.viel{background:var(--blau-hell)}
+  .monate{display:flex;gap:4px;font-size:.65rem;color:var(--grau);margin-bottom:12px}
+  .monate span{flex:1;text-align:center}
+  .befund{font-size:.88rem;margin:0 0 10px;color:#333}
+  .befund.mahnung{color:var(--signal);font-weight:600}
+  .feld-liste{margin:0;padding-left:18px;font-size:.88rem}
+  .feld-liste li{margin-bottom:4px}
+  .feld-liste a{color:var(--blau);text-decoration:none}
+  .feld-liste a:hover{text-decoration:underline}
+  .keine{font-size:.88rem;color:var(--grau);font-style:italic;margin:0}
+
   /* ---------- Abgrenzung ---------- */
   .hinweis{background:#fff8e8;border-bottom:1px solid #f0dfba;padding:11px 18px}
   .hinweis-innen{max-width:760px;margin:0 auto;font-size:.84rem;color:#5c4708;line-height:1.45}
@@ -88,6 +120,23 @@
   .nummer{font-size:.78rem;color:var(--grau)}
   .leer{text-align:center;color:var(--grau);padding:44px 10px}
 
+  /* ---------- Bloecke ---------- */
+  .block-titel{margin:22px 0 10px;font-size:.82rem;font-weight:700;letter-spacing:.06em;
+               text-transform:uppercase;color:var(--blau);display:flex;align-items:center;gap:8px}
+  .block-titel:first-child{margin-top:0}
+  .block-zahl{background:var(--blau-flaeche);color:var(--blau);border-radius:999px;
+              padding:1px 9px;font-size:.78rem;letter-spacing:0}
+  .marke.neu{background:var(--signal);color:#fff}
+  .marke.unsortiert{background:var(--orange);color:#3a2000}
+  .karte.ist-neu{border-color:var(--signal);box-shadow:0 0 0 2px rgba(184,0,63,.09)}
+  .dreizeiler.offen{color:var(--grau);font-style:italic}
+  details.nebensache{margin-top:26px;border-top:1px solid var(--linie);padding-top:16px}
+  details.nebensache summary{cursor:pointer;font-size:.82rem;font-weight:700;letter-spacing:.06em;
+                             text-transform:uppercase;color:var(--grau);padding:8px 0;
+                             display:flex;align-items:center;gap:8px}
+  details.nebensache summary::-webkit-details-marker{color:var(--grau)}
+  .nebensache-hinweis{font-size:.83rem;color:var(--grau);margin:2px 0 14px;font-style:italic}
+
   footer{max-width:760px;margin:0 auto;padding:0 18px 40px;font-size:.8rem;color:var(--grau)}
   footer p{margin:0 0 8px}
   footer a{color:var(--blau)}
@@ -105,6 +154,10 @@
     <h1>Handwerks-Ticker</h1>
     <p class="unterzeile">Die Pressemitteilungen der Handwerkskammer Potsdam &ndash; kurz gefasst f&uuml;r die Handwerksjunioren.</p>
     <div class="kennzahlen" id="kennzahlen"></div>
+    <div class="reiter" role="tablist">
+      <button type="button" id="reiterMeldungen" role="tab" aria-selected="true">Meldungen</button>
+      <button type="button" id="reiterThemen" role="tab" aria-selected="false">Themen im Verlauf</button>
+    </div>
   </div>
 </header>
 
@@ -128,8 +181,22 @@
 </div>
 
 <main>
-  <p class="zaehler" id="zaehler"></p>
-  <div id="liste"></div>
+  <div id="ansichtMeldungen">
+    <p class="zaehler" id="zaehler"></p>
+    <div id="liste"></div>
+  </div>
+  <div id="ansichtThemen" hidden>
+    <div class="lesehilfe">
+      <strong>Wie diese Ansicht zu lesen ist.</strong>
+      &bdquo;Genannt&ldquo; hei&szlig;t: Das Thema kommt in der Meldung vor &ndash; oft nur als
+      Aufz&auml;hlungspunkt in einer Meldung, die eigentlich von etwas anderem handelt.
+      &bdquo;Mit Substanz&ldquo; z&auml;hlt nur Meldungen, in denen das Thema mindestens
+      <span id="schwelleText"></span>-mal vorkommt. &bdquo;Eigene Meldung&ldquo; z&auml;hlt, wo es
+      das Hauptthema ist. Je weiter diese drei Zahlen auseinanderliegen, desto mehr wird ein
+      Thema mitgef&uuml;hrt, statt es zu f&uuml;hren.
+    </div>
+    <div id="felder"></div>
+  </div>
 </main>
 
 <footer>
@@ -159,6 +226,270 @@ const DATEN = /*__DATEN__*/{
   "Bürokratie",
   "Kammer & Service"
  ],
+ "themenfelder": [
+  {
+   "name": "Ausbildung & Nachwuchs",
+   "erwaehnt": 29,
+   "substanz": 18,
+   "hauptthema": [
+    "6869",
+    "6853",
+    "6851",
+    "6842",
+    "6835",
+    "6825",
+    "6816",
+    "6787",
+    "6785",
+    "6776",
+    "6759",
+    "6756",
+    "6720",
+    "6721"
+   ],
+   "hauptthema_politisch": 3,
+   "monate": [
+    4,
+    5,
+    5,
+    2,
+    3,
+    8,
+    2,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "monate_belegt": 7
+  },
+  {
+   "name": "Fachkräfte",
+   "erwaehnt": 27,
+   "substanz": 6,
+   "hauptthema": [],
+   "hauptthema_politisch": 0,
+   "monate": [
+    4,
+    2,
+    4,
+    6,
+    2,
+    8,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "monate_belegt": 7
+  },
+  {
+   "name": "Planungssicherheit",
+   "erwaehnt": 25,
+   "substanz": 10,
+   "hauptthema": [
+    "6814",
+    "6788",
+    "6779",
+    "6715"
+   ],
+   "hauptthema_politisch": 3,
+   "monate": [
+    4,
+    3,
+    4,
+    6,
+    1,
+    6,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "monate_belegt": 7
+  },
+  {
+   "name": "Energie & Kraftstoff",
+   "erwaehnt": 22,
+   "substanz": 6,
+   "hauptthema": [
+    "6808",
+    "6796"
+   ],
+   "hauptthema_politisch": 2,
+   "monate": [
+    2,
+    3,
+    4,
+    6,
+    1,
+    6,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "monate_belegt": 6
+  },
+  {
+   "name": "Bürokratieabbau",
+   "erwaehnt": 20,
+   "substanz": 2,
+   "hauptthema": [
+    "6747"
+   ],
+   "hauptthema_politisch": 1,
+   "monate": [
+    4,
+    2,
+    1,
+    6,
+    2,
+    4,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "monate_belegt": 7
+  },
+  {
+   "name": "Gründung & Nachfolge",
+   "erwaehnt": 18,
+   "substanz": 11,
+   "hauptthema": [
+    "6848",
+    "6778",
+    "6755",
+    "6712"
+   ],
+   "hauptthema_politisch": 0,
+   "monate": [
+    2,
+    2,
+    4,
+    2,
+    1,
+    6,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "monate_belegt": 7
+  },
+  {
+   "name": "Steuern & Abgaben",
+   "erwaehnt": 12,
+   "substanz": 4,
+   "hauptthema": [
+    "6871",
+    "6847",
+    "6738"
+   ],
+   "hauptthema_politisch": 3,
+   "monate": [
+    1,
+    2,
+    2,
+    4,
+    0,
+    2,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "monate_belegt": 6
+  },
+  {
+   "name": "Digitalisierung",
+   "erwaehnt": 12,
+   "substanz": 5,
+   "hauptthema": [],
+   "hauptthema_politisch": 0,
+   "monate": [
+    1,
+    1,
+    1,
+    2,
+    1,
+    6,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "monate_belegt": 6
+  },
+  {
+   "name": "Wirtschaftslage",
+   "erwaehnt": 8,
+   "substanz": 4,
+   "hauptthema": [
+    "6831",
+    "6807",
+    "6806",
+    "6801"
+   ],
+   "hauptthema_politisch": 0,
+   "monate": [
+    0,
+    0,
+    1,
+    4,
+    1,
+    2,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "monate_belegt": 4
+  },
+  {
+   "name": "Vergabe & öffentliche Aufträge",
+   "erwaehnt": 6,
+   "substanz": 2,
+   "hauptthema": [],
+   "hauptthema_politisch": 0,
+   "monate": [
+    1,
+    0,
+    3,
+    1,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "monate_belegt": 4
+  }
+ ],
+ "schwelle_substanz": 3,
+ "letzter_abgleich": "2026-08-21",
+ "neu_anzahl": 0,
  "meldungen": [
   {
    "id": "6895",
@@ -171,7 +502,10 @@ const DATEN = /*__DATEN__*/{
    "thema": "Termine",
    "schlagzeile": "Der Terminkalender der Kammer für August",
    "dreizeiler": "Die Handwerkskammer listet ihre presseöffentlichen Termine im August 2026 auf. Darunter das 60-jährige Bestehen des Raumausstatterbetriebs Haupt in Lindow (Mark). Wer Präsenz zeigen will, findet hier die Gelegenheiten.",
-   "zitat": null
+   "unredigiert": false,
+   "zuerst_gesehen": "erstbestand",
+   "zitat": null,
+   "neu": false
   },
   {
    "id": "6894",
@@ -184,7 +518,10 @@ const DATEN = /*__DATEN__*/{
    "thema": "Region & Ehrungen",
    "schlagzeile": "Diese Betriebe feiern im August Jubiläum",
    "dreizeiler": "Die monatliche Liste der Betriebs- und Meisterjubiläen im Kammerbezirk. Sie reicht von 30 Jahren Bauklempnerei Neumann in Leegebruch bis zu Meisterbriefen, die ein halbes Jahrhundert alt sind. Eine gute Gelegenheit für Glückwünsche aus der eigenen Innung.",
-   "zitat": null
+   "unredigiert": false,
+   "zuerst_gesehen": "erstbestand",
+   "zitat": null,
+   "neu": false
   },
   {
    "id": "6892",
@@ -197,7 +534,10 @@ const DATEN = /*__DATEN__*/{
    "thema": "Region & Ehrungen",
    "schlagzeile": "70 Jahre Meister – mit 94 Jahren",
    "dreizeiler": "Fleischermeister Kurt Pirsch erhält den Platin-Meisterbrief. Seinen Meisterbrief bekam er 1956, als die Berliner Mauer noch nicht stand. Die Kammer würdigt damit sieben Jahrzehnte Meisterwürde und ein Lebenswerk, das bis heute Bestand hat.",
-   "zitat": "70 Jahre Meisterschaft sind weit mehr als ein außergewöhnliches Jubiläum. Kurt Pirsch hat sein Handwerk über Jahrzehnte mit Leidenschaft gelebt, einen Familienbetrieb aufgebaut und seine Erfahrungen an die nächsten Generationen weitergegeben."
+   "unredigiert": false,
+   "zuerst_gesehen": "erstbestand",
+   "zitat": "70 Jahre Meisterschaft sind weit mehr als ein außergewöhnliches Jubiläum. Kurt Pirsch hat sein Handwerk über Jahrzehnte mit Leidenschaft gelebt, einen Familienbetrieb aufgebaut und seine Erfahrungen an die nächsten Generationen weitergegeben.",
+   "neu": false
   },
   {
    "id": "6871",
@@ -210,7 +550,10 @@ const DATEN = /*__DATEN__*/{
    "thema": "Steuern & Abgaben",
    "schlagzeile": "Reformpaket: Lob für weniger Bürokratie, Kritik beim Steuerbonus",
    "dreizeiler": "Der Brandenburgische Handwerkskammertag nennt das Reformpaket der Bundesregierung einen Schritt in die richtige Richtung. Begrüßt werden weniger Berichtspflichten, schnellere Genehmigungen und einfachere Datenschutzregeln. Kritisiert wird die geplante Kürzung des Steuerbonus für Handwerkerleistungen.",
-   "zitat": "Positiv ist, dass auf Steuererhöhungen für den breiten Mittelstand verzichtet wird und der Steuerbonus für Handwerkerleistungen grundsätzlich erhalten bleibt. Zugleich sind weniger Berichtspflichten, schnellere Genehmigungen und einfachere Datenschutzregeln für unsere Betriebe dringend notwendig."
+   "unredigiert": false,
+   "zuerst_gesehen": "erstbestand",
+   "zitat": "Positiv ist, dass auf Steuererhöhungen für den breiten Mittelstand verzichtet wird und der Steuerbonus für Handwerkerleistungen grundsätzlich erhalten bleibt. Zugleich sind weniger Berichtspflichten, schnellere Genehmigungen und einfachere Datenschutzregeln für unsere Betriebe dringend notwendig.",
+   "neu": false
   },
   {
    "id": "6869",
@@ -223,7 +566,10 @@ const DATEN = /*__DATEN__*/{
    "thema": "Fachkräfte & Ausbildung",
    "schlagzeile": "473 neue Ausbildungsverträge – ein Plus von 5,9 Prozent",
    "dreizeiler": "Bis zum 30. Juni 2026 wurden im Kammerbezirk 473 neue Ausbildungsverträge abgeschlossen, 26 mehr als im Vorjahreszeitraum. Mehr junge Menschen entscheiden sich damit für das Handwerk. Wer noch sucht, hat in den Sommerferien weiterhin Chancen.",
-   "zitat": null
+   "unredigiert": false,
+   "zuerst_gesehen": "erstbestand",
+   "zitat": null,
+   "neu": false
   },
   {
    "id": "6867",
@@ -236,7 +582,10 @@ const DATEN = /*__DATEN__*/{
    "thema": "Region & Ehrungen",
    "schlagzeile": "Vorstand besucht Betriebe in der Prignitz",
    "dreizeiler": "Am 2. Juli besuchen Präsident und Vorstand Handwerksbetriebe im Landkreis Prignitz. Die Vor-Ort-Gespräche gibt es seit 1997. Themen sind Wirtschaftslage, Ausbildung und Fachkräfte.",
-   "zitat": null
+   "unredigiert": false,
+   "zuerst_gesehen": "erstbestand",
+   "zitat": null,
+   "neu": false
   },
   {
    "id": "6859",
@@ -249,7 +598,10 @@ const DATEN = /*__DATEN__*/{
    "thema": "Termine",
    "schlagzeile": "Der Terminkalender der Kammer für Juli",
    "dreizeiler": "Überblick über die presseöffentlichen Termine im Juli 2026. Den Auftakt macht der kostenlose Service „Individueller Nachfolgefahrplan“ am 1. Juli. Es geht um Betriebsnachfolge, Arbeitsschutz und mehr.",
-   "zitat": null
+   "unredigiert": false,
+   "zuerst_gesehen": "erstbestand",
+   "zitat": null,
+   "neu": false
   },
   {
    "id": "6858",
@@ -262,7 +614,10 @@ const DATEN = /*__DATEN__*/{
    "thema": "Region & Ehrungen",
    "schlagzeile": "Diese Betriebe feiern im Juli Jubiläum",
    "dreizeiler": "Die monatliche Liste der Betriebs- und Meisterjubiläen im Kammerbezirk. Von 30 Jahren Töpferei Malenz in Velten bis zu Betrieben, die seit Jahrzehnten bestehen. Wer gratulieren will, findet hier Namen und Termine.",
-   "zitat": null
+   "unredigiert": false,
+   "zuerst_gesehen": "erstbestand",
+   "zitat": null,
+   "neu": false
   },
   {
    "id": "6854",
@@ -275,7 +630,10 @@ const DATEN = /*__DATEN__*/{
    "thema": "Region & Ehrungen",
    "schlagzeile": "Zwölf Unternehmen im Finale des Zukunftspreises",
    "dreizeiler": "Zwölf Unternehmen stehen im Finale des Zukunftspreises Brandenburg 2026. Sie setzten sich unter 73 Bewerbungen durch. Die Preisverleihung ist am 20. November in Schönefeld.",
-   "zitat": null
+   "unredigiert": false,
+   "zuerst_gesehen": "erstbestand",
+   "zitat": null,
+   "neu": false
   },
   {
    "id": "6853",
@@ -288,7 +646,10 @@ const DATEN = /*__DATEN__*/{
    "thema": "Fachkräfte & Ausbildung",
    "schlagzeile": "Handwerk warnt: Unterrichtsausfall gefährdet die Fachkräfte von morgen",
    "dreizeiler": "Der Unterricht an Brandenburgs Schulen kann im kommenden Schuljahr nicht überall abgesichert werden. Das Handwerk sieht darin ein Risiko für die Fachkräftesicherung und ein Armutszeugnis. Auch die bundesweite Anerkennung brandenburgischer Schulabschlüsse steht laut Bildungsminister auf dem Spiel.",
-   "zitat": "Dass Brandenburg den Kernunterricht nicht mehr überall absichern kann, ist ein Armutszeugnis. Wenn die Stundentafel gekürzt wird oder Abschlüsse nicht mehr bundesweit sicher anerkannt werden, ist auch das Handwerk betroffen."
+   "unredigiert": false,
+   "zuerst_gesehen": "erstbestand",
+   "zitat": "Dass Brandenburg den Kernunterricht nicht mehr überall absichern kann, ist ein Armutszeugnis. Wenn die Stundentafel gekürzt wird oder Abschlüsse nicht mehr bundesweit sicher anerkannt werden, ist auch das Handwerk betroffen.",
+   "neu": false
   },
   {
    "id": "6851",
@@ -301,7 +662,10 @@ const DATEN = /*__DATEN__*/{
    "thema": "Fachkräfte & Ausbildung",
    "schlagzeile": "Kita gewinnt Landeswettbewerb mit dem Dachdeckerhandwerk",
    "dreizeiler": "Die Kita Bärenhaus in Groß Pankow gewinnt den Landeswettbewerb „Kleine Hände, große Zukunft“. Grundlage war ein Projekttag bei Lublow Bedachungen in Pritzwalk. Nachwuchsgewinnung fängt früher an, als man denkt.",
-   "zitat": null
+   "unredigiert": false,
+   "zuerst_gesehen": "erstbestand",
+   "zitat": null,
+   "neu": false
   },
   {
    "id": "6848",
@@ -314,7 +678,10 @@ const DATEN = /*__DATEN__*/{
    "thema": "Gründung & Nachfolge",
    "schlagzeile": "Nachfolgetag: Wo Betrieb und Nachfolger sich finden",
    "dreizeiler": "IHK und Handwerkskammer Potsdam laden am 23. Juni zum Nachfolgetag Brandenburg „It’s a match“. Viele Betriebe stehen vor dem Generationswechsel, gleichzeitig suchen Qualifizierte einen Betrieb. Der Tag soll beide Seiten zusammenbringen.",
-   "zitat": null
+   "unredigiert": false,
+   "zuerst_gesehen": "erstbestand",
+   "zitat": null,
+   "neu": false
   },
   {
    "id": "6847",
@@ -327,7 +694,10 @@ const DATEN = /*__DATEN__*/{
    "thema": "Steuern & Abgaben",
    "schlagzeile": "Handwerkerbonus stärken statt streichen",
    "dreizeiler": "Der Handwerkerbonus nach § 35a EStG steht bei den Beratungen zum Bundeshaushalt 2027 als Einsparmaßnahme zur Diskussion. Der Handwerkskammertag warnt vor der Abschaffung. Der Bonus sorge dafür, dass Leistungen offiziell beauftragt und legal versteuert werden.",
-   "zitat": "Eine Abschaffung des Handwerkerbonus wäre ein Fehler mit spürbaren Folgen für Brandenburg. Der Bonus sorgt seit Jahren dafür, dass handwerkliche Leistungen offiziell beauftragt, sauber abgerechnet und legal versteuert werden. Davon profitieren Betriebe, private Haushalte und der Staat gleichermaßen."
+   "unredigiert": false,
+   "zuerst_gesehen": "erstbestand",
+   "zitat": "Eine Abschaffung des Handwerkerbonus wäre ein Fehler mit spürbaren Folgen für Brandenburg. Der Bonus sorgt seit Jahren dafür, dass handwerkliche Leistungen offiziell beauftragt, sauber abgerechnet und legal versteuert werden. Davon profitieren Betriebe, private Haushalte und der Staat gleichermaßen.",
+   "neu": false
   },
   {
    "id": "6842",
@@ -340,7 +710,10 @@ const DATEN = /*__DATEN__*/{
    "thema": "Fachkräfte & Ausbildung",
    "schlagzeile": "Aktionsprogramm 2026–2029 unterzeichnet",
    "dreizeiler": "Landesregierung, die brandenburgischen Handwerkskammern und der DGB Berlin-Brandenburg haben das Aktionsprogramm „Zukunft des Handwerks im Land Brandenburg“ unterzeichnet. Es gilt für 2026 bis 2029. Vereinbart sind Maßnahmen zu Fachkräften, Ausbildung, Energiewende, Gründung, Nachfolge und Bürokratieabbau.",
-   "zitat": "setzen die Landesregierung, die brandenburgischen Handwerkskammern und der Deutsche Gewerkschaftsbund Berlin-Brandenburg ihre erfolgreiche Zusammenarbeit der vergangenen Jahre fort und bekräftigen ihr gemeinsames Engagement, um die rund 37.500 brandenburgischen Handwerksbetriebe mit ihren fast 185.000 Beschäftigten bei der Bewältigung der Zukunftsaufgaben zu unterstützen."
+   "unredigiert": false,
+   "zuerst_gesehen": "erstbestand",
+   "zitat": "setzen die Landesregierung, die brandenburgischen Handwerkskammern und der Deutsche Gewerkschaftsbund Berlin-Brandenburg ihre erfolgreiche Zusammenarbeit der vergangenen Jahre fort und bekräftigen ihr gemeinsames Engagement, um die rund 37.500 brandenburgischen Handwerksbetriebe mit ihren fast 185.000 Beschäftigten bei der Bewältigung der Zukunftsaufgaben zu unterstützen.",
+   "neu": false
   },
   {
    "id": "6837",
@@ -353,7 +726,10 @@ const DATEN = /*__DATEN__*/{
    "thema": "Region & Ehrungen",
    "schlagzeile": "Handwerkszeichen in Gold für Robert Wüst",
    "dreizeiler": "Kammerpräsident Robert Wüst erhält die höchste Auszeichnung des deutschen Handwerks. Der Metallbauermeister aus Pritzwalk führt sein Familienunternehmen in fünfter Generation. Seit 2016 steht er ehrenamtlich an der Spitze der Handwerkskammer Potsdam.",
-   "zitat": null
+   "unredigiert": false,
+   "zuerst_gesehen": "erstbestand",
+   "zitat": null,
+   "neu": false
   },
   {
    "id": "6841",
@@ -366,7 +742,10 @@ const DATEN = /*__DATEN__*/{
    "thema": "Region & Ehrungen",
    "schlagzeile": "450 Gäste beim Gartenfest – mit klaren Botschaften an die Politik",
    "dreizeiler": "Rund 450 Gäste kamen zum 32. Gartenfest der Kammer nach Caputh, im Jahr ihres 80-jährigen Bestehens. Die Gespräche prägten die angespannte Wirtschaftslage, Ausbildung, Nachfolge und Bürokratieabbau. Ein Abend zum Netzwerken – und zum Positionieren.",
-   "zitat": null
+   "unredigiert": false,
+   "zuerst_gesehen": "erstbestand",
+   "zitat": null,
+   "neu": false
   },
   {
    "id": "6835",
@@ -379,7 +758,10 @@ const DATEN = /*__DATEN__*/{
    "thema": "Fachkräfte & Ausbildung",
    "schlagzeile": "Einladung zur Unterzeichnung des Aktionsprogramms",
    "dreizeiler": "Am 5. Juni unterzeichnen Landesregierung, Handwerkskammern und DGB das Aktionsprogramm 2026–2029. Es betrifft rund 37.500 Handwerksbetriebe im Land. Ort ist der Meistersaal der Handwerkskammer Potsdam.",
-   "zitat": null
+   "unredigiert": false,
+   "zuerst_gesehen": "erstbestand",
+   "zitat": null,
+   "neu": false
   },
   {
    "id": "6843",
@@ -392,7 +774,10 @@ const DATEN = /*__DATEN__*/{
    "thema": "Region & Ehrungen",
    "schlagzeile": "Diese Betriebe feiern im Juni Jubiläum",
    "dreizeiler": "Die monatliche Liste der Betriebs- und Meisterjubiläen im Kammerbezirk. Darunter 80 Jahre Tischlerei Matthias John in Potsdam. Namen, Orte und Termine auf einen Blick.",
-   "zitat": null
+   "unredigiert": false,
+   "zuerst_gesehen": "erstbestand",
+   "zitat": null,
+   "neu": false
   },
   {
    "id": "6833",
@@ -405,7 +790,10 @@ const DATEN = /*__DATEN__*/{
    "thema": "Termine",
    "schlagzeile": "Der Terminkalender der Kammer für Juni",
    "dreizeiler": "Überblick über die presseöffentlichen Termine im Juni 2026. Den Auftakt macht eine Praxislernwoche am Bildungs- und Innovationscampus Handwerk in Götz. 50 Achtklässler testen dort ihre handwerklichen Fähigkeiten.",
-   "zitat": null
+   "unredigiert": false,
+   "zuerst_gesehen": "erstbestand",
+   "zitat": null,
+   "neu": false
   },
   {
    "id": "6831",
@@ -418,7 +806,10 @@ const DATEN = /*__DATEN__*/{
    "thema": "Konjunktur",
    "schlagzeile": "Jahresbericht: 18,6 Milliarden Euro Umsatz, aber weniger Betriebe",
    "dreizeiler": "Der Handwerkskammertag hat den Jahresbericht „Handwerk in Brandenburg 2025“ vorgelegt. 37.429 Betriebe, 184.890 Beschäftigte und 8.052 Auszubildende stehen für 18,6 Milliarden Euro Umsatz. Die Zahl der Betriebe ging im Vorjahresvergleich um 274 zurück.",
-   "zitat": null
+   "unredigiert": false,
+   "zuerst_gesehen": "erstbestand",
+   "zitat": null,
+   "neu": false
   },
   {
    "id": "6832",
@@ -431,7 +822,10 @@ const DATEN = /*__DATEN__*/{
    "thema": "Region & Ehrungen",
    "schlagzeile": "Einladung: 80 Jahre Handwerkskammer Potsdam",
    "dreizeiler": "Die Kammer wurde 1946 gegründet und feiert das Jubiläum beim 32. Gartenfest am 4. Juni in Caputh. Seit 1992 gehört das Fest zu den wichtigsten Netzwerkveranstaltungen des brandenburgischen Handwerks. Medienvertreter sind eingeladen.",
-   "zitat": null
+   "unredigiert": false,
+   "zuerst_gesehen": "erstbestand",
+   "zitat": null,
+   "neu": false
   },
   {
    "id": "6825",
@@ -444,7 +838,10 @@ const DATEN = /*__DATEN__*/{
    "thema": "Fachkräfte & Ausbildung",
    "schlagzeile": "Fachkräfte aus Usbekistan: Was Zuwanderung praktisch bedeutet",
    "dreizeiler": "Zwei Fachkräfte aus Usbekistan arbeiten seit vier Monaten bei der HTB Haustechnik GmbH in Brandenburg an der Havel. Vermittelt wurden sie über das bundesweite Pilotprojekt FIT, an dem die Kammer beteiligt ist. Die Erfahrung zeigt viel Potenzial – aber auch hohen Aufwand für alle Beteiligten.",
-   "zitat": null
+   "unredigiert": false,
+   "zuerst_gesehen": "erstbestand",
+   "zitat": null,
+   "neu": false
   },
   {
    "id": "6823",
@@ -457,7 +854,10 @@ const DATEN = /*__DATEN__*/{
    "thema": "Region & Ehrungen",
    "schlagzeile": "Diese Betriebe feiern im Mai Jubiläum",
    "dreizeiler": "Die monatliche Liste der Betriebs- und Meisterjubiläen im Kammerbezirk. Darunter 80 Jahre Malereibetrieb Roland Geißler in Hohen Neuendorf. Wer gratulieren will, findet hier die Termine.",
-   "zitat": null
+   "unredigiert": false,
+   "zuerst_gesehen": "erstbestand",
+   "zitat": null,
+   "neu": false
   },
   {
    "id": "6821",
@@ -470,7 +870,10 @@ const DATEN = /*__DATEN__*/{
    "thema": "Termine",
    "schlagzeile": "Der Terminkalender der Kammer für Mai",
    "dreizeiler": "Überblick über die presseöffentlichen Termine im Mai 2026. Auftakt ist am 4. Mai ein Pressegespräch zur Fachkräfteintegration am Bildungscampus in Groß Kreutz. Weitere Termine folgen im Monatsverlauf.",
-   "zitat": null
+   "unredigiert": false,
+   "zuerst_gesehen": "erstbestand",
+   "zitat": null,
+   "neu": false
   },
   {
    "id": "6816",
@@ -483,7 +886,10 @@ const DATEN = /*__DATEN__*/{
    "thema": "Fachkräfte & Ausbildung",
    "schlagzeile": "Einladung: Wie Fachkräfteintegration praktisch funktioniert",
    "dreizeiler": "Pressegespräch am 4. Mai am Bildungs- und Innovationscampus Handwerk in Groß Kreutz. Ein Betrieb und zwei usbekische Fachkräfte berichten aus der Praxis. Hintergrund ist das bundesweite Pilotprojekt FIT.",
-   "zitat": null
+   "unredigiert": false,
+   "zuerst_gesehen": "erstbestand",
+   "zitat": null,
+   "neu": false
   },
   {
    "id": "6814",
@@ -496,7 +902,10 @@ const DATEN = /*__DATEN__*/{
    "thema": "Landespolitik",
    "schlagzeile": "Spitzengespräch mit der neuen Wirtschaftsministerin",
    "dreizeiler": "Am 27. April trifft der Handwerkskammertag erstmals die neue Wirtschaftsministerin Martina Klement. Im Anschluss informieren Ministerin und Kammerpräsidenten gemeinsam über Schwerpunkte und Erwartungen. Ort ist das Märkische Gildehaus in Caputh.",
-   "zitat": null
+   "unredigiert": false,
+   "zuerst_gesehen": "erstbestand",
+   "zitat": null,
+   "neu": false
   },
   {
    "id": "6809",
@@ -509,7 +918,10 @@ const DATEN = /*__DATEN__*/{
    "thema": "Region & Ehrungen",
    "schlagzeile": "Stadtspitze und Kammer besuchen Potsdamer Betriebe",
    "dreizeiler": "Am 22. April geht die Besuchsreihe „Handwerk regional“ in der Landeshauptstadt weiter. Es geht um Fachkräftesicherung, Bürokratieentlastung und die Bedingungen für das regionale Handwerk. Gefragt wird direkt bei den Betrieben.",
-   "zitat": null
+   "unredigiert": false,
+   "zuerst_gesehen": "erstbestand",
+   "zitat": null,
+   "neu": false
   },
   {
    "id": "6807",
@@ -522,7 +934,10 @@ const DATEN = /*__DATEN__*/{
    "thema": "Konjunktur",
    "schlagzeile": "Frühjahrsbericht: Geschäftslage im Land verschlechtert sich",
    "dreizeiler": "Die Umfrageergebnisse für das erste Quartal 2026 zeigen eine weiter verschlechterte Geschäftslage. 73,8 Prozent der brandenburgischen Handwerksbetriebe bezeichnen ihre Lage noch als gut oder zumindest befriedigend. Die Beurteilung fällt schlechter aus als vor einem Jahr.",
-   "zitat": null
+   "unredigiert": false,
+   "zuerst_gesehen": "erstbestand",
+   "zitat": null,
+   "neu": false
   },
   {
    "id": "6806",
@@ -535,7 +950,10 @@ const DATEN = /*__DATEN__*/{
    "thema": "Konjunktur",
    "schlagzeile": "Kammerbezirk: Erwartungen verhalten, Investitionen schwach",
    "dreizeiler": "Die Frühjahrskonjunkturumfrage zeigt für den Kammerbezirk Potsdam eine weiter verschlechterte Lage. Auftragsreichweiten haben sich verkürzt, die Nachfrage bleibt schwach, die Preissituation ist angespannt. Auch die Investitionsbereitschaft ist niedrig.",
-   "zitat": null
+   "unredigiert": false,
+   "zuerst_gesehen": "erstbestand",
+   "zitat": null,
+   "neu": false
   },
   {
    "id": "6808",
@@ -548,7 +966,10 @@ const DATEN = /*__DATEN__*/{
    "thema": "Energie & Kraftstoff",
    "schlagzeile": "Spritpreis-Entlastung: „ein Strohfeuer“",
    "dreizeiler": "Der Koalitionsausschuss hat eine Senkung der Energiesteuer auf Diesel und Benzin um rund 17 Cent brutto pro Liter beschlossen. Das Handwerk nennt das grundsätzlich ein richtiges Signal. Bei einer nur zweimonatigen Senkung bleibe es aber ein Strohfeuer – die Betriebe brauchten Planungssicherheit.",
-   "zitat": "Die Ergebnisse des Koalitionsausschusses greifen die Lage des Handwerks in Brandenburg nur unzureichend auf. Unsere Betriebe brauchen Planungssicherheit und Entlastung. Beides bleibt weitgehend aus."
+   "unredigiert": false,
+   "zuerst_gesehen": "erstbestand",
+   "zitat": "Die Ergebnisse des Koalitionsausschusses greifen die Lage des Handwerks in Brandenburg nur unzureichend auf. Unsere Betriebe brauchen Planungssicherheit und Entlastung. Beides bleibt weitgehend aus.",
+   "neu": false
   },
   {
    "id": "6801",
@@ -561,7 +982,10 @@ const DATEN = /*__DATEN__*/{
    "thema": "Konjunktur",
    "schlagzeile": "Einladung: Wirtschaftslage im westbrandenburgischen Handwerk",
    "dreizeiler": "Pressegespräch zur Frühjahrs-Bilanz 2026 der Handwerkskammer Potsdam. Grundlage ist die halbjährliche Konjunkturumfrage unter 6000 Handwerksbetrieben. Es geht um Geschäftslage und Erwartungen für die kommenden Monate.",
-   "zitat": null
+   "unredigiert": false,
+   "zuerst_gesehen": "erstbestand",
+   "zitat": null,
+   "neu": false
   },
   {
    "id": "6796",
@@ -574,7 +998,10 @@ const DATEN = /*__DATEN__*/{
    "thema": "Energie & Kraftstoff",
    "schlagzeile": "Handwerk fordert Entlastung bei Kraftstoffen und faire Preisgleitklauseln",
    "dreizeiler": "Steigende Kosten für Kraftstoff, Energie und Material setzen die Betriebe unter Druck. Der Handwerkskammertag fordert die Landesregierung auf, sich im Bund für wirksame Entlastungen einzusetzen. Zusätzlich verlangt er praxistaugliche Regelungen bei öffentlichen Aufträgen.",
-   "zitat": "Für unsere Handwerksbetriebe wird der Alltag immer schwieriger. Tanken und Materialeinkauf werden gleichzeitig teurer, sind kaum noch kalkulierbar und erste Engpässe sind spürbar."
+   "unredigiert": false,
+   "zuerst_gesehen": "erstbestand",
+   "zitat": "Für unsere Handwerksbetriebe wird der Alltag immer schwieriger. Tanken und Materialeinkauf werden gleichzeitig teurer, sind kaum noch kalkulierbar und erste Engpässe sind spürbar.",
+   "neu": false
   },
   {
    "id": "6800",
@@ -587,7 +1014,10 @@ const DATEN = /*__DATEN__*/{
    "thema": "Region & Ehrungen",
    "schlagzeile": "Diese Betriebe feiern im April Jubiläum",
    "dreizeiler": "Die monatliche Liste der Betriebs- und Meisterjubiläen im Kammerbezirk. Darunter 70 Jahre Tischlerei Gänserich in Potsdam OT Fahrland. Namen, Orte und Termine auf einen Blick.",
-   "zitat": null
+   "unredigiert": false,
+   "zuerst_gesehen": "erstbestand",
+   "zitat": null,
+   "neu": false
   },
   {
    "id": "6795",
@@ -600,7 +1030,10 @@ const DATEN = /*__DATEN__*/{
    "thema": "Termine",
    "schlagzeile": "Der Terminkalender der Kammer für April",
    "dreizeiler": "Überblick über die presseöffentlichen Termine der Kammer. Zum Auftakt gratuliert die Kammer der Tischlerei Gänserich zum 70-jährigen Bestehen. Der Meisterbetrieb wird in vierter Generation geführt.",
-   "zitat": null
+   "unredigiert": false,
+   "zuerst_gesehen": "erstbestand",
+   "zitat": null,
+   "neu": false
   },
   {
    "id": "6788",
@@ -613,7 +1046,10 @@ const DATEN = /*__DATEN__*/{
    "thema": "Landespolitik",
    "schlagzeile": "Neue Landesregierung: Handwerk erwartet Stabilität und Verlässlichkeit",
    "dreizeiler": "Zur Vereidigung der neuen rot-schwarzen Landesregierung meldet sich das Handwerk zu Wort. Brandenburg brauche jetzt Sicherheit und Stabilität – politisch und für die Betriebe. Die neue Regierung stehe in der Pflicht, verlässliche Rahmenbedingungen zu schaffen.",
-   "zitat": "Brandenburg braucht jetzt Sicherheit und Stabilität, nicht nur politisch, sondern auch für die vielen Handwerksbetriebe, die tagtäglich Verantwortung für Arbeits- und Ausbildungsplätze übernehmen."
+   "unredigiert": false,
+   "zuerst_gesehen": "erstbestand",
+   "zitat": "Brandenburg braucht jetzt Sicherheit und Stabilität, nicht nur politisch, sondern auch für die vielen Handwerksbetriebe, die tagtäglich Verantwortung für Arbeits- und Ausbildungsplätze übernehmen.",
+   "neu": false
   },
   {
    "id": "6787",
@@ -626,7 +1062,10 @@ const DATEN = /*__DATEN__*/{
    "thema": "Fachkräfte & Ausbildung",
    "schlagzeile": "50 junge Handwerker waren in Europa unterwegs",
    "dreizeiler": "Zwischen 2025 und Februar 2026 absolvierten 50 junge Handwerkerinnen und Handwerker aus dem Kammerbezirk einen Lernaufenthalt im Ausland. Sie arbeiteten unter anderem in Dänemark, Italien und Finnland. Am 24. März werden diese Leistungen in der Staatskanzlei gewürdigt.",
-   "zitat": ", betont Dörte Thie, Vizepräsidentin der Handwerkskammer Potsdam in ihrem Grußwort."
+   "unredigiert": false,
+   "zuerst_gesehen": "erstbestand",
+   "zitat": ", betont Dörte Thie, Vizepräsidentin der Handwerkskammer Potsdam in ihrem Grußwort.",
+   "neu": false
   },
   {
    "id": "6785",
@@ -639,7 +1078,10 @@ const DATEN = /*__DATEN__*/{
    "thema": "Fachkräfte & Ausbildung",
    "schlagzeile": "232 neue Meisterinnen und Meister",
    "dreizeiler": "Am 7. März erhielten 232 Absolventinnen und Absolventen im Hans Otto Theater ihre Meisterbriefe. Überreicht wurden sie von Kammerpräsident Robert Wüst und Wirtschaftsminister Daniel Keller. Der Meisterbrief bleibt der wichtigste Karriereschritt im Handwerk.",
-   "zitat": null
+   "unredigiert": false,
+   "zuerst_gesehen": "erstbestand",
+   "zitat": null,
+   "neu": false
   },
   {
    "id": "6779",
@@ -652,7 +1094,10 @@ const DATEN = /*__DATEN__*/{
    "thema": "Landespolitik",
    "schlagzeile": "Koalitionsvertrag: Handwerk erwartet jetzt Taten",
    "dreizeiler": "Der Handwerkskammertag begrüßt, dass SPD und CDU ihren Koalitionsvertrag zügig vorgelegt haben. Nach den politischen Turbulenzen der Vorwochen erwartet das Handwerk klare und entschlossene Maßnahmen. Die Betriebe bräuchten Planungssicherheit und klare politische Leitplanken.",
-   "zitat": "Es ist gut, dass SPD und CDU ihren Koalitionsvertrag zügig vorgelegt haben. Unsere Betriebe brauchen in der aktuellen wirtschaftlichen Lage Planungssicherheit und klare politische Leitplanken. Die im Koalitionsvertrag verankerte Stärkung der Meisterausbildung ist ein wichtiges Signal für das brandenburgische Handwerk."
+   "unredigiert": false,
+   "zuerst_gesehen": "erstbestand",
+   "zitat": "Es ist gut, dass SPD und CDU ihren Koalitionsvertrag zügig vorgelegt haben. Unsere Betriebe brauchen in der aktuellen wirtschaftlichen Lage Planungssicherheit und klare politische Leitplanken. Die im Koalitionsvertrag verankerte Stärkung der Meisterausbildung ist ein wichtiges Signal für das brandenburgische Handwerk.",
+   "neu": false
   },
   {
    "id": "6778",
@@ -665,7 +1110,10 @@ const DATEN = /*__DATEN__*/{
    "thema": "Gründung & Nachfolge",
    "schlagzeile": "Mit pinkem Ordner in die Selbstständigkeit",
    "dreizeiler": "Augenoptikmeisterin Lisa Pittelkow übernimmt mit Mitte 30 den Betrieb „Carreé Optik“ in Potsdam. Vorher war sie festangestellte Filialleiterin bei einer großen Kette in Berlin. Ihre Geschichte zeigt, wie eine Übernahme im Handwerk konkret abläuft.",
-   "zitat": "Zwischen Trennblättern und Klarsichthüllen steckt monatelange Vorbereitung und die Entscheidung, mit Mitte 30, als junge Mutter, einen etablierten Augenoptikerbetrieb in der Landeshauptstadt Potsdam zu übernehmen. Bis Ende 2025 war Lisa Pittelkow festangestellte Filialleiterin bei einer großen Optik-Kette in Berlin."
+   "unredigiert": false,
+   "zuerst_gesehen": "erstbestand",
+   "zitat": "Zwischen Trennblättern und Klarsichthüllen steckt monatelange Vorbereitung und die Entscheidung, mit Mitte 30, als junge Mutter, einen etablierten Augenoptikerbetrieb in der Landeshauptstadt Potsdam zu übernehmen. Bis Ende 2025 war Lisa Pittelkow festangestellte Filialleiterin bei einer großen Optik-Kette in Berlin.",
+   "neu": false
   },
   {
    "id": "6777",
@@ -678,7 +1126,10 @@ const DATEN = /*__DATEN__*/{
    "thema": "Kammer & Service",
    "schlagzeile": "Neue Beschwerdestelle bei der Kammer",
    "dreizeiler": "Seit dem 1. März 2026 gibt es bei der Handwerkskammer Potsdam ein Beschwerdemanagement. Es ist für Betriebe und Kunden da, wenn Rückmeldungen ausbleiben oder Abläufe Anlass zur Kritik geben. Die Bearbeitung erfolgt vertraulich, neutral und transparent.",
-   "zitat": null
+   "unredigiert": false,
+   "zuerst_gesehen": "erstbestand",
+   "zitat": null,
+   "neu": false
   },
   {
    "id": "6776",
@@ -691,7 +1142,10 @@ const DATEN = /*__DATEN__*/{
    "thema": "Fachkräfte & Ausbildung",
    "schlagzeile": "Azubi des Monats März: Luca Herrfurth",
    "dreizeiler": "Der angehende Kraftfahrzeugmechatroniker aus Dahnsdorf wird von der Kammer ausgezeichnet. Sein Ausbildungsbetrieb, die Autohaus Heinrich GmbH, hatte ihn empfohlen. Gelobt werden Zuverlässigkeit, Wissbegier und Freude an schwierigen technischen Aufgaben.",
-   "zitat": "Der Junge ist von Anfang an mit voller Energie dabei. Durch seine offene und freundliche Art ist er schnell in unser Team hineingewachsen und wir freuen uns, dass seine Leistungen durchweg gut sind."
+   "unredigiert": false,
+   "zuerst_gesehen": "erstbestand",
+   "zitat": "Der Junge ist von Anfang an mit voller Energie dabei. Durch seine offene und freundliche Art ist er schnell in unser Team hineingewachsen und wir freuen uns, dass seine Leistungen durchweg gut sind.",
+   "neu": false
   },
   {
    "id": "6765",
@@ -704,7 +1158,10 @@ const DATEN = /*__DATEN__*/{
    "thema": "Region & Ehrungen",
    "schlagzeile": "Diese Betriebe feiern im März Jubiläum",
    "dreizeiler": "Die monatliche Liste der Betriebs- und Meisterjubiläen im Kammerbezirk. Von Schornsteinfegern über Elektroinstallateure bis zum Reifendienst. Namen, Orte und Termine auf einen Blick.",
-   "zitat": null
+   "unredigiert": false,
+   "zuerst_gesehen": "erstbestand",
+   "zitat": null,
+   "neu": false
   },
   {
    "id": "6764",
@@ -717,7 +1174,10 @@ const DATEN = /*__DATEN__*/{
    "thema": "Termine",
    "schlagzeile": "Der Terminkalender der Kammer für März",
    "dreizeiler": "Überblick über die presseöffentlichen Termine im März 2026. Zum Auftakt testen 100 Achtklässler der Hans-Klakow-Gesamtschule Brieselang ihre handwerklichen Fähigkeiten. Ort ist der Bildungscampus in Götz.",
-   "zitat": null
+   "unredigiert": false,
+   "zuerst_gesehen": "erstbestand",
+   "zitat": null,
+   "neu": false
   },
   {
    "id": "6759",
@@ -730,7 +1190,10 @@ const DATEN = /*__DATEN__*/{
    "thema": "Fachkräfte & Ausbildung",
    "schlagzeile": "Azubi-Ticket kommt zurück – Handwerk begrüßt das",
    "dreizeiler": "SPD und CDU wollen das Azubi-Ticket zum Ausbildungsjahr im September 2026 wieder einführen. Auszubildende sollen statt 63 Euro dann 37,80 Euro monatlich für das Deutschland-Ticket zahlen. Das Handwerk sieht darin einen wichtigen Schritt für faire Chancen in der Ausbildung.",
-   "zitat": "Das brandenburgische Handwerk begrüßt, dass das Azubi-Ticket in Brandenburg zurückkehren soll. Das ist eine sehr gute Nachricht und genau die Anschlusslösung, die das Handwerk seit langem fordert."
+   "unredigiert": false,
+   "zuerst_gesehen": "erstbestand",
+   "zitat": "Das brandenburgische Handwerk begrüßt, dass das Azubi-Ticket in Brandenburg zurückkehren soll. Das ist eine sehr gute Nachricht und genau die Anschlusslösung, die das Handwerk seit langem fordert.",
+   "neu": false
   },
   {
    "id": "6758",
@@ -743,7 +1206,10 @@ const DATEN = /*__DATEN__*/{
    "thema": "Region & Ehrungen",
    "schlagzeile": "Vorstand besucht Betriebe rund um Brandenburg und Belzig",
    "dreizeiler": "Am 25. Februar besuchen Präsident und Vorstand Betriebe in der Region Brandenburg an der Havel und Bad Belzig. Diese Vor-Ort-Gespräche gibt es seit 29 Jahren. Themen sind Wirtschaftslage, Ausbildung und Fachkräfte.",
-   "zitat": null
+   "unredigiert": false,
+   "zuerst_gesehen": "erstbestand",
+   "zitat": null,
+   "neu": false
   },
   {
    "id": "6756",
@@ -756,7 +1222,10 @@ const DATEN = /*__DATEN__*/{
    "thema": "Fachkräfte & Ausbildung",
    "schlagzeile": "Einladung: 232 Meisterbriefe werden überreicht",
    "dreizeiler": "232 Absolventinnen und Absolventen aus 14 Gewerken haben ihre Meisterprüfung bestanden – 47 Frauen und 185 Männer. Die jüngste Meisterin war 19 Jahre alt, der älteste Absolvent 58. Die Meisterbriefe werden am 7. März im Hans Otto Theater überreicht.",
-   "zitat": null
+   "unredigiert": false,
+   "zuerst_gesehen": "erstbestand",
+   "zitat": null,
+   "neu": false
   },
   {
    "id": "6755",
@@ -769,7 +1238,10 @@ const DATEN = /*__DATEN__*/{
    "thema": "Gründung & Nachfolge",
    "schlagzeile": "Wenn Investieren zur Hürde wird: Praxischeck im Bootsbau",
    "dreizeiler": "Bootsbauermeister Norman Julien Melke aus Teltow zeigt, wie eine Gründung im Handwerk wächst. Sein Werdegang macht aber auch sichtbar, was viele Gründungen bremst: Finanzierung und Förderlogik passen für kleine Betriebe und Einzelunternehmen oft nicht. Hauptgeschäftsführer Ralph Bührig war vor Ort.",
-   "zitat": null
+   "unredigiert": false,
+   "zuerst_gesehen": "erstbestand",
+   "zitat": null,
+   "neu": false
   },
   {
    "id": "6747",
@@ -782,7 +1254,10 @@ const DATEN = /*__DATEN__*/{
    "thema": "Bürokratie",
    "schlagzeile": "Handwerkerparkausweis in OPR – Handwerk will landesweite Lösung",
    "dreizeiler": "Der Landkreis Ostprignitz-Ruppin ermöglicht seit dem 1. Februar 2026 einen einheitlichen Handwerkerparkausweis. Die Kammer begrüßt den Schritt als spürbare Entlastung. Sie fordert, dass eine solche Regelung landesweit gilt.",
-   "zitat": "Der Handwerkerparkausweis ist ein spürbarer Schritt zur Entlastung des regionalen Handwerks. Unsere Betriebe müssen schnell und flexibel zu ihren Kunden gelangen, oft mit Werkzeug und Material. Der Landkreis OPR setzt ein deutliches Zeichen für mehr Praxistauglichkeit und weniger bürokratische Hürden."
+   "unredigiert": false,
+   "zuerst_gesehen": "erstbestand",
+   "zitat": "Der Handwerkerparkausweis ist ein spürbarer Schritt zur Entlastung des regionalen Handwerks. Unsere Betriebe müssen schnell und flexibel zu ihren Kunden gelangen, oft mit Werkzeug und Material. Der Landkreis OPR setzt ein deutliches Zeichen für mehr Praxistauglichkeit und weniger bürokratische Hürden.",
+   "neu": false
   },
   {
    "id": "6738",
@@ -795,7 +1270,10 @@ const DATEN = /*__DATEN__*/{
    "thema": "Steuern & Abgaben",
    "schlagzeile": "Vier Verbände gegen die Potsdamer Verpackungssteuer",
    "dreizeiler": "IHK, Handwerkskammer, Handelsverband und DEHOGA kritisieren die zum 1. Juli 2026 geplante Verpackungssteuer in Potsdam. Sie treffe Gewerbetreibende, ohne der Umwelt zu nützen, und bringe neue Bürokratie. Gemeinsam fordern sie die Stadtverordneten auf, die Haushaltsvorlage abzulehnen.",
-   "zitat": null
+   "unredigiert": false,
+   "zuerst_gesehen": "erstbestand",
+   "zitat": null,
+   "neu": false
   },
   {
    "id": "6732",
@@ -808,7 +1286,10 @@ const DATEN = /*__DATEN__*/{
    "thema": "Region & Ehrungen",
    "schlagzeile": "Diese Betriebe feiern im Februar Jubiläum",
    "dreizeiler": "Die monatliche Liste der Betriebs- und Meisterjubiläen im Kammerbezirk. Darunter 80 Jahre Drechslerei und Treppenbau Dobbeck in Leegebruch. Namen, Orte und Termine auf einen Blick.",
-   "zitat": null
+   "unredigiert": false,
+   "zuerst_gesehen": "erstbestand",
+   "zitat": null,
+   "neu": false
   },
   {
    "id": "6731",
@@ -821,7 +1302,10 @@ const DATEN = /*__DATEN__*/{
    "thema": "Termine",
    "schlagzeile": "Der Terminkalender der Kammer für Februar",
    "dreizeiler": "Überblick über die presseöffentlichen Termine im Februar 2026. Den Auftakt macht das 80-jährige Bestehen der Drechslerei und Treppenbau Dobbeck in Leegebruch. Der Familienbetrieb wurde 1946 gegründet.",
-   "zitat": null
+   "unredigiert": false,
+   "zuerst_gesehen": "erstbestand",
+   "zitat": null,
+   "neu": false
   },
   {
    "id": "6720",
@@ -834,7 +1318,10 @@ const DATEN = /*__DATEN__*/{
    "thema": "Fachkräfte & Ausbildung",
    "schlagzeile": "1.377 neue Ausbildungsverträge – 6,2 Prozent mehr",
    "dreizeiler": "Zum 31. Dezember 2025 wurden im Kammerbezirk 1.377 neue Ausbildungsverträge abgeschlossen, 80 mehr als 2024. Die stärksten Zuwächse gab es in Potsdam, Potsdam-Mittelmark und Teltow-Fläming. Rückgänge verzeichnete vor allem Brandenburg an der Havel.",
-   "zitat": null
+   "unredigiert": false,
+   "zuerst_gesehen": "erstbestand",
+   "zitat": null,
+   "neu": false
   },
   {
    "id": "6721",
@@ -847,7 +1334,10 @@ const DATEN = /*__DATEN__*/{
    "thema": "Fachkräfte & Ausbildung",
    "schlagzeile": "Azubi des Monats Januar: Kilian Böhm",
    "dreizeiler": "Der angehende Automobilkaufmann wird am 15. Januar in seinem Ausbildungsbetrieb in Geltow ausgezeichnet. Sein Betrieb, die Autohaus Biering GmbH, hatte ihn vorgeschlagen. Gelobt werden Talent, Kreativität und Offenheit.",
-   "zitat": "Die Bewerbung um eine Auszeichnung der Handwerkskammer für den angehenden Automobilkaufmann überzeugte. Kilian Böhm wird deshalb am 15. Januar durch die Handwerkskammer Potsdam in seinem Ausbildungsbetrieb in Geltow (Schwielowsee) als Auszubildender des Monats Januar geehrt."
+   "unredigiert": false,
+   "zuerst_gesehen": "erstbestand",
+   "zitat": "Die Bewerbung um eine Auszeichnung der Handwerkskammer für den angehenden Automobilkaufmann überzeugte. Kilian Böhm wird deshalb am 15. Januar durch die Handwerkskammer Potsdam in seinem Ausbildungsbetrieb in Geltow (Schwielowsee) als Auszubildender des Monats Januar geehrt.",
+   "neu": false
   },
   {
    "id": "6715",
@@ -860,7 +1350,10 @@ const DATEN = /*__DATEN__*/{
    "thema": "Landespolitik",
    "schlagzeile": "Nach dem Koalitionsbruch: Handwerk pocht auf Handlungsfähigkeit",
    "dreizeiler": "Ministerpräsident Dietmar Woidke hat am 6. Januar die Koalition mit dem BSW beendet. Das Handwerk erklärt, das Land brauche in der aktuellen Wirtschaftslage eine handlungsfähige und verlässliche Landesregierung. Die Betriebe seien auf klare Entscheidungen und planbare Rahmenbedingungen angewiesen.",
-   "zitat": "Für das brandenburgische Handwerk steht fest, dass das Land in der aktuellen wirtschaftlichen Lage eine handlungsfähige und verlässliche Landesregierung braucht."
+   "unredigiert": false,
+   "zuerst_gesehen": "erstbestand",
+   "zitat": "Für das brandenburgische Handwerk steht fest, dass das Land in der aktuellen wirtschaftlichen Lage eine handlungsfähige und verlässliche Landesregierung braucht.",
+   "neu": false
   },
   {
    "id": "6712",
@@ -873,7 +1366,10 @@ const DATEN = /*__DATEN__*/{
    "thema": "Gründung & Nachfolge",
    "schlagzeile": "17.522 Betriebe – mehr Gründungen, aber weniger qualifizierte",
    "dreizeiler": "Zum 31. Dezember 2025 waren im Kammerbezirk 17.522 Betriebe gemeldet, 159 mehr als im Vorjahr. Neu eingetragen wurden 1.550 Betriebe, gelöscht 1.391. Die Zahl der qualifizierten Gründungen ging jedoch zurück.",
-   "zitat": null
+   "unredigiert": false,
+   "zuerst_gesehen": "erstbestand",
+   "zitat": null,
+   "neu": false
   }
  ]
 }/*__DATEN_ENDE__*/;
@@ -947,6 +1443,17 @@ function zeichneFilter(){
     }).join("");
 }
 
+/* Reihenfolge der Bloecke: politische Substanz zuerst,
+   Ehrungen und Termine ganz unten und eingeklappt. */
+const BLOECKE = [
+  {schluessel:"neu",        titel:"Neu seit dem letzten Abgleich"},
+  {schluessel:"unsortiert", titel:"Noch nicht eingeordnet"},
+  {schluessel:"politik",    titel:"Politik & Forderungen"},
+  {schluessel:"zahlen",     titel:"Zahlen & Fakten"},
+  {schluessel:"bericht",    titel:"Aus den Betrieben"}
+];
+const NEBENSACHE = ["ehrung","termin"];
+
 function zeichneListe(){
   const treffer = DATEN.meldungen.filter(passt);
   const zaehler = document.getElementById("zaehler");
@@ -960,30 +1467,70 @@ function zeichneListe(){
     return;
   }
 
-  const artName = {};
-  ARTEN.forEach(a => artName[a.schluessel] = a.name);
+  // Gruppiert wird nur in der ungefilterten Gesamtansicht. Sobald jemand
+  // gezielt filtert oder sucht, ist eine flache Liste das Erwartbare.
+  const gruppiert = (filterArt === "alle" && filterThema === "alle" && !suchtext);
 
-  document.getElementById("liste").innerHTML = treffer.map(m => {
-    const datum = m.datum_ungenau
-      ? '<span class="ungenau" title="Diese Meldung nennt kein Datum. Aus der Reihenfolge der ' +
-        'Übersichtsseite eingeordnet.">um den ' + esc(datumLesbar(m.datum)) + '</span>'
-      : esc(datumLesbar(m.datum));
+  if (!gruppiert){
+    document.getElementById("liste").innerHTML = treffer.map(karte).join("");
+    return;
+  }
 
-    return '<article class="karte">' +
-      '<div class="karte-kopf">' +
-        '<span class="marke ' + esc(m.art) + '">' + esc(artName[m.art] || m.art) + '</span>' +
-        '<span class="thema">' + esc(m.thema) + '</span>' +
-        '<span class="datum">' + datum + '</span>' +
-      '</div>' +
-      '<h2>' + esc(m.schlagzeile) + '</h2>' +
-      '<p class="dreizeiler">' + esc(m.dreizeiler) + '</p>' +
-      (m.zitat ? '<blockquote>&bdquo;' + esc(m.zitat) + '&ldquo;</blockquote>' : '') +
-      '<div class="karte-fuss">' +
-        '<a class="original" href="' + esc(m.url) + '" target="_blank" rel="noopener">Zum Original</a>' +
-        (m.nummer ? '<span class="nummer">Presseinformation Nr. ' + esc(m.nummer) + '</span>' : '') +
-      '</div>' +
-    '</article>';
-  }).join("");
+  let html = "";
+  const vergeben = {};
+
+  BLOECKE.forEach(b => {
+    const teil = treffer.filter(m => !vergeben[m.id] &&
+      (b.schluessel === "neu" ? m.neu : m.art === b.schluessel));
+    if (!teil.length) return;
+    teil.forEach(m => vergeben[m.id] = true);
+    html += '<h3 class="block-titel">' + esc(b.titel) +
+            ' <span class="block-zahl">' + teil.length + '</span></h3>' +
+            teil.map(karte).join("");
+  });
+
+  const rest = treffer.filter(m => !vergeben[m.id] && NEBENSACHE.indexOf(m.art) !== -1);
+  if (rest.length){
+    html += '<details class="nebensache">' +
+              '<summary>Ehrungen, Jubil&auml;en und Termine <span class="block-zahl">' +
+                rest.length + '</span></summary>' +
+              '<p class="nebensache-hinweis">Sch&ouml;n, aber politisch ohne Gewicht &ndash; ' +
+                'deshalb hier unten und zugeklappt.</p>' +
+              rest.map(karte).join("") +
+            '</details>';
+  }
+
+  document.getElementById("liste").innerHTML = html;
+}
+
+const ART_NAME = {};
+ARTEN.forEach(a => ART_NAME[a.schluessel] = a.name);
+ART_NAME.unsortiert = "Noch nicht eingeordnet";
+
+function karte(m){
+  const datum = m.datum_ungenau
+    ? '<span class="ungenau" title="Diese Meldung nennt kein Datum. Aus der Reihenfolge der ' +
+      'Übersichtsseite eingeordnet.">um den ' + esc(datumLesbar(m.datum)) + '</span>'
+    : esc(datumLesbar(m.datum));
+
+  return '<article class="karte' + (m.neu ? " ist-neu" : "") + '">' +
+    '<div class="karte-kopf">' +
+      (m.neu ? '<span class="marke neu">Neu</span>' : '') +
+      '<span class="marke ' + esc(m.art) + '">' + esc(ART_NAME[m.art] || m.art) + '</span>' +
+      '<span class="thema">' + esc(m.thema) + '</span>' +
+      '<span class="datum">' + datum + '</span>' +
+    '</div>' +
+    '<h2>' + esc(m.schlagzeile) + '</h2>' +
+    (m.dreizeiler
+      ? '<p class="dreizeiler">' + esc(m.dreizeiler) + '</p>'
+      : '<p class="dreizeiler offen">Noch nicht zusammengefasst &ndash; oben steht der ' +
+        'Originaltitel der Handwerkskammer.</p>') +
+    (m.zitat ? '<blockquote>&bdquo;' + esc(m.zitat) + '&ldquo;</blockquote>' : '') +
+    '<div class="karte-fuss">' +
+      '<a class="original" href="' + esc(m.url) + '" target="_blank" rel="noopener">Zum Original</a>' +
+      (m.nummer ? '<span class="nummer">Presseinformation Nr. ' + esc(m.nummer) + '</span>' : '') +
+    '</div>' +
+  '</article>';
 }
 
 document.getElementById("artFilter").addEventListener("click", function(e){
@@ -1005,6 +1552,85 @@ document.getElementById("suche").addEventListener("input", function(){
   zeichneListe();
 });
 
+/* ---------- Themen im Verlauf ---------- */
+
+const MONATE_KURZ = ["J","F","M","A","M","J","J","A","S","O","N","D"];
+
+function befundText(f){
+  if (!f.hauptthema.length && f.erwaehnt >= 5){
+    return {klasse:"mahnung", text:"Wird in " + f.erwaehnt + " Meldungen genannt, aber in keiner " +
+            "einzigen selbst zum Thema gemacht."};
+  }
+  if (f.hauptthema.length === 1 && f.erwaehnt >= 8){
+    return {klasse:"mahnung", text:"In " + f.erwaehnt + " Meldungen genannt – aber nur einmal " +
+            "als eigenes Thema. Läuft fast immer im Nebensatz mit."};
+  }
+  if (!f.erwaehnt){
+    return {klasse:"", text:"Kommt in diesem Jahrgang gar nicht vor."};
+  }
+  if (f.hauptthema_politisch === 0 && f.hauptthema.length){
+    return {klasse:"", text:"Wird behandelt, aber nie als politische Forderung – " +
+            "sondern als Service, Termin oder Zahlenmeldung."};
+  }
+  return {klasse:"", text:"In " + f.monate_belegt + " von 12 Monaten präsent, " +
+          f.hauptthema_politisch + " politische Meldung(en) dazu."};
+}
+
+function zeichneThemen(){
+  const hoechst = Math.max.apply(null,
+    DATEN.themenfelder.map(f => Math.max.apply(null, f.monate)));
+
+  document.getElementById("felder").innerHTML = DATEN.themenfelder.map(f => {
+    const befund = befundText(f);
+
+    const saeulen = f.monate.map((z, i) => {
+      const hoehe = z ? Math.max(8, Math.round(z / hoechst * 100)) : 0;
+      const art = !z ? " leer" : (z >= hoechst * 0.6 ? " viel" : "");
+      return '<div class="saeule' + art + '" style="height:' + (z ? hoehe : 6) + '%" ' +
+             'title="' + esc(MONATSNAMEN[i] + ": " + z + " Meldung(en)") + '"></div>';
+    }).join("");
+
+    const eigene = DATEN.meldungen
+      .filter(m => f.hauptthema.indexOf(m.id) !== -1)
+      .map(m => '<li><a href="' + esc(m.url) + '" target="_blank" rel="noopener">' +
+                esc(m.schlagzeile) + '</a> <span class="nummer">' +
+                esc(datumLesbar(m.datum)) + '</span></li>')
+      .join("");
+
+    return '<section class="feld">' +
+      '<h3>' + esc(f.name) + '</h3>' +
+      '<div class="werte">' +
+        '<div class="wert"><b>' + f.erwaehnt + '</b><span>Meldungen nennen es</span></div>' +
+        '<div class="wert"><b>' + f.substanz + '</b><span>davon mit Substanz</span></div>' +
+        '<div class="wert' + (f.hauptthema.length ? '' : ' warn') + '"><b>' +
+          f.hauptthema.length + '</b><span>eigene Meldung</span></div>' +
+      '</div>' +
+      '<div class="verlauf">' + saeulen + '</div>' +
+      '<div class="monate">' + MONATE_KURZ.map(m => '<span>' + m + '</span>').join("") + '</div>' +
+      '<p class="befund ' + befund.klasse + '">' + esc(befund.text) + '</p>' +
+      (eigene
+        ? '<ul class="feld-liste">' + eigene + '</ul>'
+        : '<p class="keine">Keine Meldung hat dieses Thema als Hauptthema.</p>') +
+    '</section>';
+  }).join("");
+}
+
+function ansichtWechseln(zuThemen){
+  document.getElementById("ansichtMeldungen").hidden = zuThemen;
+  document.getElementById("ansichtThemen").hidden = !zuThemen;
+  document.querySelector(".filter").hidden = zuThemen;
+  document.getElementById("reiterMeldungen").setAttribute("aria-selected", String(!zuThemen));
+  document.getElementById("reiterThemen").setAttribute("aria-selected", String(zuThemen));
+  window.scrollTo(0, 0);
+}
+
+document.getElementById("reiterMeldungen")
+        .addEventListener("click", () => ansichtWechseln(false));
+document.getElementById("reiterThemen")
+        .addEventListener("click", () => ansichtWechseln(true));
+
+document.getElementById("schwelleText").textContent = DATEN.schwelle_substanz;
+
 document.getElementById("stand").textContent =
   "Datenstand: " + datumLesbar(DATEN.stand) + " · " + DATEN.meldungen.length +
   " Meldungen aus dem Jahr " + DATEN.jahr + ".";
@@ -1012,6 +1638,7 @@ document.getElementById("stand").textContent =
 zeichneKennzahlen();
 zeichneFilter();
 zeichneListe();
+zeichneThemen();
 </script>
 </body>
 </html>
