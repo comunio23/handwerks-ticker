@@ -37,6 +37,11 @@
   .kennzahl b{display:block;font-size:1.3rem;line-height:1.2}
   .kennzahl span{font-size:.75rem;opacity:.85}
 
+  /* ---------- Abgrenzung ---------- */
+  .hinweis{background:#fff8e8;border-bottom:1px solid #f0dfba;padding:11px 18px}
+  .hinweis-innen{max-width:760px;margin:0 auto;font-size:.84rem;color:#5c4708;line-height:1.45}
+  .hinweis b{color:#3d2f05}
+
   /* ---------- Filter ---------- */
   .filter{position:sticky;top:0;z-index:10;background:var(--weiss);
           border-bottom:1px solid var(--linie);padding:12px 18px}
@@ -103,6 +108,15 @@
   </div>
 </header>
 
+<div class="hinweis">
+  <div class="hinweis-innen">
+    <b>Kein offizielles Angebot der Handwerkskammer Potsdam.</b>
+    Diese Seite ist ein privat gepflegter &Uuml;berblick f&uuml;r die Handwerksjunioren.
+    Schlagzeile und Kurztext sind redaktionelle Zusammenfassungen &ndash;
+    ma&szlig;geblich ist immer die verlinkte Originalmeldung auf hwk-potsdam.de.
+  </div>
+</div>
+
 <div class="filter">
   <div class="filter-innen">
     <div class="chips" id="artFilter" role="group" aria-label="Nach Art filtern"></div>
@@ -121,10 +135,11 @@
 <footer>
   <p><strong>Zu den Zusammenfassungen:</strong> Schlagzeile und Kurztext sind redaktionelle
      Zusammenfassungen der jeweiligen Pressemitteilung. Ma&szlig;geblich ist immer das verlinkte
-     Original auf hwk-potsdam.de. W&ouml;rtliche Zitate sind unver&auml;ndert &uuml;bernommen.</p>
+     Original auf hwk-potsdam.de. W&ouml;rtliche Zitate sind unver&auml;ndert &uuml;bernommen und
+     h&ouml;chstens am Satzende gek&uuml;rzt.</p>
   <p>Quelle aller Meldungen: <a href="https://www.hwk-potsdam.de/artikel/pressemitteilungen-2026-9,735,6713.html"
      target="_blank" rel="noopener">Handwerkskammer Potsdam, Pressemitteilungen 2026</a>.
-     Dies ist ein Arbeitsstand f&uuml;r die Handwerksjunioren, kein offizielles Angebot der Kammer.</p>
+     Bilder der Kammer-Website werden bewusst nicht &uuml;bernommen.</p>
   <p id="stand"></p>
 </footer>
 

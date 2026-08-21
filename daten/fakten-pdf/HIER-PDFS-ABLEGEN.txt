@@ -1,0 +1,15 @@
+Hier die drei PDFs der Handwerkskammer ablegen (bitte selbst herunterladen -
+der Pfad /downloads/ ist laut robots.txt fuer automatische Abrufe gesperrt,
+siehe KMS [D-0171]):
+
+1. Handwerk im Kammerbezirk 2025
+   https://www.hwk-potsdam.de/downloads/handwerk-im-kammerbezirk-2025-9,14558.pdf
+
+2. Handwerk in Brandenburg 2025
+   https://www.hwk-potsdam.de/downloads/handwerk-in-brandenburg-2025-9,14557.pdf
+
+3. Konjunkturbericht Fruehjahr 2026
+   https://www.hwk-potsdam.de/downloads/konjunkturbericht-fruehjahr-2026-9,14553.pdf
+
+Danach Bescheid geben - die Zahlen werden woertlich mit Bezugseinheit,
+Bezugsjahr und Quellenangabe uebernommen (KMS [D-0166]).
