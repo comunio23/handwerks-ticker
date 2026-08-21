@@ -11,3 +11,10 @@ daten/letzter-abgleich.txt
 
 # Zahlen-PDFs der Kammer - liegen lokal, gehoeren nicht ins Repository
 daten/fakten-pdf/*.pdf
+
+# Python-Zwischenstaende
+__pycache__/
+*.pyc
+
+# Arbeitsdatei der Gegenlesung
+daten/_pruefung.txt
