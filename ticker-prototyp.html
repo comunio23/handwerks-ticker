@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Handwerks-Ticker</title>
+<style>
+  /* Farben aus dem Original-CSS der Handwerkskammer Potsdam (style/cdi21/custom.css) */
+  :root{
+    --blau:#073070;
+    --blau-hell:#408fe5;
+    --blau-flaeche:#d0e3f9;
+    --signal:#b8003f;
+    --orange:#ff8d25;
+    --text:#1c1c1c;
+    --grau:#5a5a5a;
+    --linie:#e3e6ea;
+    --flaeche:#f5f7fa;
+    --weiss:#fff;
+    --radius:14px;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;background:var(--flaeche);color:var(--text);
+    font-family:"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+    font-size:17px;line-height:1.55;
+  }
+
+  /* ---------- Kopf ---------- */
+  header{background:var(--blau);color:#fff;padding:22px 18px 20px}
+  .kopf-innen{max-width:760px;margin:0 auto}
+  h1{margin:0;font-size:1.5rem;letter-spacing:-.02em}
+  .unterzeile{margin:6px 0 0;font-size:.95rem;opacity:.85}
+  .kennzahlen{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap}
+  .kennzahl{background:rgba(255,255,255,.12);border-radius:10px;padding:8px 12px;flex:1;min-width:96px}
+  .kennzahl b{display:block;font-size:1.3rem;line-height:1.2}
+  .kennzahl span{font-size:.75rem;opacity:.85}
+
+  /* ---------- Filter ---------- */
+  .filter{position:sticky;top:0;z-index:10;background:var(--weiss);
+          border-bottom:1px solid var(--linie);padding:12px 18px}
+  .filter-innen{max-width:760px;margin:0 auto}
+  .chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:2px;-webkit-overflow-scrolling:touch}
+  .chips::-webkit-scrollbar{height:0}
+  .chip{flex:0 0 auto;border:1px solid var(--linie);background:var(--weiss);color:var(--grau);
+        border-radius:999px;padding:9px 15px;font-size:.9rem;cursor:pointer;white-space:nowrap;
+        font-family:inherit;min-height:40px}
+  .chip:hover{border-color:var(--blau-hell)}
+  .chip[aria-pressed="true"]{background:var(--blau);border-color:var(--blau);color:#fff;font-weight:600}
+  .chip.wichtig{border-color:var(--signal);color:var(--signal);font-weight:600}
+  .chip.wichtig[aria-pressed="true"]{background:var(--signal);border-color:var(--signal);color:#fff}
+  .zeile2{display:flex;gap:8px;margin-top:10px}
+  .zeile2 select,.zeile2 input{
+    flex:1;min-width:0;font:inherit;font-size:.9rem;padding:9px 11px;
+    border:1px solid var(--linie);border-radius:10px;background:var(--weiss);color:var(--text);min-height:40px}
+  .zeile2 input::placeholder{color:#9aa1a9}
+
+  /* ---------- Liste ---------- */
+  main{max-width:760px;margin:0 auto;padding:16px 18px 40px}
+  .zaehler{font-size:.85rem;color:var(--grau);margin:2px 0 14px}
+  .karte{background:var(--weiss);border:1px solid var(--linie);border-radius:var(--radius);
+         padding:16px;margin-bottom:12px}
+  .karte-kopf{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:9px}
+  .marke{font-size:.72rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
+         padding:4px 9px;border-radius:6px;background:var(--blau-flaeche);color:var(--blau)}
+  .marke.politik{background:var(--signal);color:#fff}
+  .marke.zahlen{background:var(--orange);color:#3a2000}
+  .marke.bericht{background:var(--blau-hell);color:#fff}
+  .marke.ehrung,.marke.termin{background:var(--blau-flaeche);color:var(--blau)}
+  .datum{font-size:.8rem;color:var(--grau);margin-left:auto;flex-shrink:0}
+  .datum .ungenau{cursor:help;border-bottom:1px dotted var(--grau)}
+  .thema{font-size:.8rem;color:var(--blau-hell);font-weight:600}
+  h2{margin:0 0 7px;font-size:1.12rem;line-height:1.35;letter-spacing:-.01em}
+  .dreizeiler{margin:0;color:#333}
+  blockquote{margin:12px 0 0;padding:10px 14px;background:var(--flaeche);
+             border-left:3px solid var(--blau-hell);border-radius:0 8px 8px 0;
+             font-size:.94rem;color:#333}
+  .karte-fuss{margin-top:13px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .original{display:inline-block;color:var(--blau);text-decoration:none;font-weight:600;
+            font-size:.9rem;border:1px solid var(--blau);border-radius:9px;padding:9px 14px;min-height:40px}
+  .original:hover{background:var(--blau);color:#fff}
+  .nummer{font-size:.78rem;color:var(--grau)}
+  .leer{text-align:center;color:var(--grau);padding:44px 10px}
+
+  footer{max-width:760px;margin:0 auto;padding:0 18px 40px;font-size:.8rem;color:var(--grau)}
+  footer p{margin:0 0 8px}
+  footer a{color:var(--blau)}
+
+  @media (min-width:700px){
+    h1{font-size:1.85rem}
+    .karte{padding:20px 22px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="kopf-innen">
+    <h1>Handwerks-Ticker</h1>
+    <p class="unterzeile">Die Pressemitteilungen der Handwerkskammer Potsdam &ndash; kurz gefasst f&uuml;r die Handwerksjunioren.</p>
+    <div class="kennzahlen" id="kennzahlen"></div>
+  </div>
+</header>
+
+<div class="filter">
+  <div class="filter-innen">
+    <div class="chips" id="artFilter" role="group" aria-label="Nach Art filtern"></div>
+    <div class="zeile2">
+      <select id="themaFilter" aria-label="Nach Thema filtern"></select>
+      <input id="suche" type="search" placeholder="Suchen &hellip;" aria-label="Volltextsuche">
+    </div>
+  </div>
+</div>
+
+<main>
+  <p class="zaehler" id="zaehler"></p>
+  <div id="liste"></div>
+</main>
+
+<footer>
+  <p><strong>Zu den Zusammenfassungen:</strong> Schlagzeile und Kurztext sind redaktionelle
+     Zusammenfassungen der jeweiligen Pressemitteilung. Ma&szlig;geblich ist immer das verlinkte
+     Original auf hwk-potsdam.de. W&ouml;rtliche Zitate sind unver&auml;ndert &uuml;bernommen.</p>
+  <p>Quelle aller Meldungen: <a href="https://www.hwk-potsdam.de/artikel/pressemitteilungen-2026-9,735,6713.html"
+     target="_blank" rel="noopener">Handwerkskammer Potsdam, Pressemitteilungen 2026</a>.
+     Dies ist ein Arbeitsstand f&uuml;r die Handwerksjunioren, kein offizielles Angebot der Kammer.</p>
+  <p id="stand"></p>
+</footer>
+
+<script>
+const DATEN = /*__DATEN__*/{
+ "jahr": "2026",
+ "stand": "2026-08-21",
+ "themen": [
+  "Region & Ehrungen",
+  "Fachkräfte & Ausbildung",
+  "Termine",
+  "Gründung & Nachfolge",
+  "Konjunktur",
+  "Landespolitik",
+  "Steuern & Abgaben",
+  "Energie & Kraftstoff",
+  "Bürokratie",
+  "Kammer & Service"
+ ],
+ "meldungen": [
+  {
+   "id": "6895",
+   "datum": "2026-07-31",
+   "datum_ungenau": false,
+   "nummer": "59",
+   "titel": "Ausgewählte presseöffentliche Termine und Veranstaltungen des Handwerks und der Handwerkskammer Potsdam im August 2026",
+   "url": "https://www.hwk-potsdam.de/artikel/ausgewaehlte-presseoeffentliche-termine-und-veranstaltungen-des-handwerks-und-der-handwerkskammer-potsdam-im-august-2026-9,735,6895.html",
+   "art": "termin",
+   "thema": "Termine",
+   "schlagzeile": "Der Terminkalender der Kammer für August",
+   "dreizeiler": "Die Handwerkskammer listet ihre presseöffentlichen Termine im August 2026 auf. Darunter das 60-jährige Bestehen des Raumausstatterbetriebs Haupt in Lindow (Mark). Wer Präsenz zeigen will, findet hier die Gelegenheiten.",
+   "zitat": null
+  },
+  {
+   "id": "6894",
+   "datum": "2026-07-29",
+   "datum_ungenau": false,
+   "nummer": "58",
+   "titel": "Die Handwerkskammer Potsdam informiert zu ausgewählten Jubiläen im Handwerk im Monat August 2026",
+   "url": "https://www.hwk-potsdam.de/artikel/die-handwerkskammer-potsdam-informiert-zu-ausgewaehlten-jubilaeen-im-handwerk-im-monat-august-2026-9,735,6894.html",
+   "art": "ehrung",
+   "thema": "Region & Ehrungen",
+   "schlagzeile": "Diese Betriebe feiern im August Jubiläum",
+   "dreizeiler": "Die monatliche Liste der Betriebs- und Meisterjubiläen im Kammerbezirk. Sie reicht von 30 Jahren Bauklempnerei Neumann in Leegebruch bis zu Meisterbriefen, die ein halbes Jahrhundert alt sind. Eine gute Gelegenheit für Glückwünsche aus der eigenen Innung.",
+   "zitat": null
+  },
+  {
+   "id": "6892",
+   "datum": "2026-07-14",
+   "datum_ungenau": false,
+   "nummer": "57",
+   "titel": "Seit 70 Jahren Meister: Kurt Pirsch erhält den Platin-Meisterbrief/ 94-jähriger Fleischermeister steht für ein außergewöhnliches Stück Potsdamer Handwerksgeschichte",
+   "url": "https://www.hwk-potsdam.de/artikel/seit-70-jahren-meister-kurt-pirsch-erhaelt-den-platin-meisterbrief-94-jaehriger-fleischermeister-steht-fuer-ein-aussergewoehnliches-stueck-potsdamer-handwerksgeschichte-9,735,6892.html",
+   "art": "ehrung",
+   "thema": "Region & Ehrungen",
+   "schlagzeile": "70 Jahre Meister – mit 94 Jahren",
+   "dreizeiler": "Fleischermeister Kurt Pirsch erhält den Platin-Meisterbrief. Seinen Meisterbrief bekam er 1956, als die Berliner Mauer noch nicht stand. Die Kammer würdigt damit sieben Jahrzehnte Meisterwürde und ein Lebenswerk, das bis heute Bestand hat.",
+   "zitat": "70 Jahre Meisterschaft sind weit mehr als ein außergewöhnliches Jubiläum. Kurt Pirsch hat sein Handwerk über Jahrzehnte mit Leidenschaft gelebt, einen Familienbetrieb aufgebaut und seine Erfahrungen an die nächsten Generationen weitergegeben."
+  },
+  {
+   "id": "6871",
+   "datum": "2026-07-03",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Reformpaket der Bundesregierung: Handwerkskammertag Land Brandenburg begrüßt Bürokratieabbau und schnellere Verfahren/Kritik an Kürzung des Steuerbonus für Handwerkerleistungen",
+   "url": "https://www.hwk-potsdam.de/artikel/reformpaket-der-bundesregierung-handwerkskammertag-land-brandenburg-begruesst-buerokratieabbau-und-schnellere-verfahren-kritik-an-kuerzung-des-steuerbonus-9,735,6871.html",
+   "art": "politik",
+   "thema": "Steuern & Abgaben",
+   "schlagzeile": "Reformpaket: Lob für weniger Bürokratie, Kritik beim Steuerbonus",
+   "dreizeiler": "Der Brandenburgische Handwerkskammertag nennt das Reformpaket der Bundesregierung einen Schritt in die richtige Richtung. Begrüßt werden weniger Berichtspflichten, schnellere Genehmigungen und einfachere Datenschutzregeln. Kritisiert wird die geplante Kürzung des Steuerbonus für Handwerkerleistungen.",
+   "zitat": "Positiv ist, dass auf Steuererhöhungen für den breiten Mittelstand verzichtet wird und der Steuerbonus für Handwerkerleistungen grundsätzlich erhalten bleibt. Zugleich sind weniger Berichtspflichten, schnellere Genehmigungen und einfachere Datenschutzregeln für unsere Betriebe dringend notwendig."
+  },
+  {
+   "id": "6869",
+   "datum": "2026-06-30",
+   "datum_ungenau": false,
+   "nummer": "54",
+   "titel": "Zum Sommer der Berufsausbildung: Junge Menschen setzen auf´s Handwerk Neu abgeschlossene Ausbildungsverträge steigen um 5,9 Prozent/ Sommerferien bieten jetzt noch Chancen für Jugendliche und ihre Eltern",
+   "url": "https://www.hwk-potsdam.de/artikel/zum-sommer-der-berufsausbildung-junge-menschen-setzen-aufs-handwerk-neu-abgeschlossene-ausbildungsvertraege-steigen-um-5-9-prozent-sommerferien-bieten-9,735,6869.html",
+   "art": "zahlen",
+   "thema": "Fachkräfte & Ausbildung",
+   "schlagzeile": "473 neue Ausbildungsverträge – ein Plus von 5,9 Prozent",
+   "dreizeiler": "Bis zum 30. Juni 2026 wurden im Kammerbezirk 473 neue Ausbildungsverträge abgeschlossen, 26 mehr als im Vorjahreszeitraum. Mehr junge Menschen entscheiden sich damit für das Handwerk. Wer noch sucht, hat in den Sommerferien weiterhin Chancen.",
+   "zitat": null
+  },
+  {
+   "id": "6867",
+   "datum": "2026-06-29",
+   "datum_ungenau": false,
+   "nummer": "53",
+   "titel": "Präsident und Vorstandsmitglieder der Handwerkskammer Potsdam besuchen Betriebe in der Prignitz",
+   "url": "https://www.hwk-potsdam.de/artikel/praesident-und-vorstandsmitglieder-der-handwerkskammer-potsdam-besuchen-betriebe-in-der-prignitz-9,735,6867.html",
+   "art": "termin",
+   "thema": "Region & Ehrungen",
+   "schlagzeile": "Vorstand besucht Betriebe in der Prignitz",
+   "dreizeiler": "Am 2. Juli besuchen Präsident und Vorstand Handwerksbetriebe im Landkreis Prignitz. Die Vor-Ort-Gespräche gibt es seit 1997. Themen sind Wirtschaftslage, Ausbildung und Fachkräfte.",
+   "zitat": null
+  },
+  {
+   "id": "6859",
+   "datum": "2026-06-29",
+   "datum_ungenau": false,
+   "nummer": "52",
+   "titel": "Ausgewählte presseöffentliche Termine und Veranstaltungen des Handwerks und der Handwerkskammer Potsdam im Juli 2026",
+   "url": "https://www.hwk-potsdam.de/artikel/ausgewaehlte-presseoeffentliche-termine-und-veranstaltungen-des-handwerks-und-der-handwerkskammer-potsdam-im-juli-2026-9,735,6859.html",
+   "art": "termin",
+   "thema": "Termine",
+   "schlagzeile": "Der Terminkalender der Kammer für Juli",
+   "dreizeiler": "Überblick über die presseöffentlichen Termine im Juli 2026. Den Auftakt macht der kostenlose Service „Individueller Nachfolgefahrplan“ am 1. Juli. Es geht um Betriebsnachfolge, Arbeitsschutz und mehr.",
+   "zitat": null
+  },
+  {
+   "id": "6858",
+   "datum": "2026-06-26",
+   "datum_ungenau": false,
+   "nummer": "51",
+   "titel": "Die Handwerkskammer Potsdam informiert zu ausgewählten Jubiläen im Handwerk im Monat Juli 2026",
+   "url": "https://www.hwk-potsdam.de/artikel/die-handwerkskammer-potsdam-informiert-zu-ausgewaehlten-jubilaeen-im-handwerk-im-monat-juli-2026-9,735,6858.html",
+   "art": "ehrung",
+   "thema": "Region & Ehrungen",
+   "schlagzeile": "Diese Betriebe feiern im Juli Jubiläum",
+   "dreizeiler": "Die monatliche Liste der Betriebs- und Meisterjubiläen im Kammerbezirk. Von 30 Jahren Töpferei Malenz in Velten bis zu Betrieben, die seit Jahrzehnten bestehen. Wer gratulieren will, findet hier Namen und Termine.",
+   "zitat": null
+  },
+  {
+   "id": "6854",
+   "datum": "2026-06-22",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "12 Unternehmen im Finale des Zukunftspreises Brandenburg 2026",
+   "url": "https://www.hwk-potsdam.de/artikel/12-unternehmen-im-finale-des-zukunftspreises-brandenburg-2026-9,735,6854.html",
+   "art": "ehrung",
+   "thema": "Region & Ehrungen",
+   "schlagzeile": "Zwölf Unternehmen im Finale des Zukunftspreises",
+   "dreizeiler": "Zwölf Unternehmen stehen im Finale des Zukunftspreises Brandenburg 2026. Sie setzten sich unter 73 Bewerbungen durch. Die Preisverleihung ist am 20. November in Schönefeld.",
+   "zitat": null
+  },
+  {
+   "id": "6853",
+   "datum": "2026-06-22",
+   "datum_ungenau": true,
+   "nummer": null,
+   "titel": "Unterrichtsausfall wird zum Risiko für die Fachkräftesicherung",
+   "url": "https://www.hwk-potsdam.de/artikel/unterrichtsausfall-wird-zum-risiko-fuer-die-fachkraeftesicherung-9,735,6853.html",
+   "art": "politik",
+   "thema": "Fachkräfte & Ausbildung",
+   "schlagzeile": "Handwerk warnt: Unterrichtsausfall gefährdet die Fachkräfte von morgen",
+   "dreizeiler": "Der Unterricht an Brandenburgs Schulen kann im kommenden Schuljahr nicht überall abgesichert werden. Das Handwerk sieht darin ein Risiko für die Fachkräftesicherung und ein Armutszeugnis. Auch die bundesweite Anerkennung brandenburgischer Schulabschlüsse steht laut Bildungsminister auf dem Spiel.",
+   "zitat": "Dass Brandenburg den Kernunterricht nicht mehr überall absichern kann, ist ein Armutszeugnis. Wenn die Stundentafel gekürzt wird oder Abschlüsse nicht mehr bundesweit sicher anerkannt werden, ist auch das Handwerk betroffen."
+  },
+  {
+   "id": "6851",
+   "datum": "2026-06-16",
+   "datum_ungenau": false,
+   "nummer": "49",
+   "titel": "Kita Bärenhaus wird Landessieger im bundesweiten Kita-Wettbewerb „Kleine Hände, große Zukunft“/ Robert Wüst überreicht Auszeichnung und 500-Euro-Gutschein",
+   "url": "https://www.hwk-potsdam.de/artikel/kita-baerenhaus-wird-landessieger-im-bundesweiten-kita-wettbewerb-kleine-haende-grosse-zukunft-robert-wuest-ueberreicht-auszeichnung-und-500-euro-gutschein-9,735,6851.html",
+   "art": "ehrung",
+   "thema": "Fachkräfte & Ausbildung",
+   "schlagzeile": "Kita gewinnt Landeswettbewerb mit dem Dachdeckerhandwerk",
+   "dreizeiler": "Die Kita Bärenhaus in Groß Pankow gewinnt den Landeswettbewerb „Kleine Hände, große Zukunft“. Grundlage war ein Projekttag bei Lublow Bedachungen in Pritzwalk. Nachwuchsgewinnung fängt früher an, als man denkt.",
+   "zitat": null
+  },
+  {
+   "id": "6848",
+   "datum": "2026-06-15",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Wie gelingt Unternehmensnachfolge?",
+   "url": "https://www.hwk-potsdam.de/artikel/wie-gelingt-unternehmensnachfolge-9,735,6848.html",
+   "art": "termin",
+   "thema": "Gründung & Nachfolge",
+   "schlagzeile": "Nachfolgetag: Wo Betrieb und Nachfolger sich finden",
+   "dreizeiler": "IHK und Handwerkskammer Potsdam laden am 23. Juni zum Nachfolgetag Brandenburg „It’s a match“. Viele Betriebe stehen vor dem Generationswechsel, gleichzeitig suchen Qualifizierte einen Betrieb. Der Tag soll beide Seiten zusammenbringen.",
+   "zitat": null
+  },
+  {
+   "id": "6847",
+   "datum": "2026-06-12",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Handwerkerbonus stärken statt streichen",
+   "url": "https://www.hwk-potsdam.de/artikel/handwerkerbonus-staerken-statt-streichen-9,735,6847.html",
+   "art": "politik",
+   "thema": "Steuern & Abgaben",
+   "schlagzeile": "Handwerkerbonus stärken statt streichen",
+   "dreizeiler": "Der Handwerkerbonus nach § 35a EStG steht bei den Beratungen zum Bundeshaushalt 2027 als Einsparmaßnahme zur Diskussion. Der Handwerkskammertag warnt vor der Abschaffung. Der Bonus sorge dafür, dass Leistungen offiziell beauftragt und legal versteuert werden.",
+   "zitat": "Eine Abschaffung des Handwerkerbonus wäre ein Fehler mit spürbaren Folgen für Brandenburg. Der Bonus sorgt seit Jahren dafür, dass handwerkliche Leistungen offiziell beauftragt, sauber abgerechnet und legal versteuert werden. Davon profitieren Betriebe, private Haushalte und der Staat gleichermaßen."
+  },
+  {
+   "id": "6842",
+   "datum": "2026-06-12",
+   "datum_ungenau": true,
+   "nummer": null,
+   "titel": "Gemeinsam für die Zukunft des brandenburgischen Handwerks: Aktionsprogramm unterzeichnet",
+   "url": "https://www.hwk-potsdam.de/artikel/gemeinsam-fuer-die-zukunft-des-brandenburgischen-handwerks-aktionsprogramm-unterzeichnet-9,735,6842.html",
+   "art": "politik",
+   "thema": "Fachkräfte & Ausbildung",
+   "schlagzeile": "Aktionsprogramm 2026–2029 unterzeichnet",
+   "dreizeiler": "Landesregierung, die brandenburgischen Handwerkskammern und der DGB Berlin-Brandenburg haben das Aktionsprogramm „Zukunft des Handwerks im Land Brandenburg“ unterzeichnet. Es gilt für 2026 bis 2029. Vereinbart sind Maßnahmen zu Fachkräften, Ausbildung, Energiewende, Gründung, Nachfolge und Bürokratieabbau.",
+   "zitat": "setzen die Landesregierung, die brandenburgischen Handwerkskammern und der Deutsche Gewerkschaftsbund Berlin-Brandenburg ihre erfolgreiche Zusammenarbeit der vergangenen Jahre fort und bekräftigen ihr gemeinsames Engagement, um die rund 37.500 brandenburgischen Handwerksbetriebe mit ihren fast 185.000 Beschäftigten bei der Bewältigung der Zukunftsaufgaben zu unterstützen."
+  },
+  {
+   "id": "6837",
+   "datum": "2026-06-04",
+   "datum_ungenau": false,
+   "nummer": "45",
+   "titel": "Handwerkszeichen in Gold für Robert Wüst",
+   "url": "https://www.hwk-potsdam.de/artikel/handwerkszeichen-in-gold-fuer-robert-wuest-9,735,6837.html",
+   "art": "ehrung",
+   "thema": "Region & Ehrungen",
+   "schlagzeile": "Handwerkszeichen in Gold für Robert Wüst",
+   "dreizeiler": "Kammerpräsident Robert Wüst erhält die höchste Auszeichnung des deutschen Handwerks. Der Metallbauermeister aus Pritzwalk führt sein Familienunternehmen in fünfter Generation. Seit 2016 steht er ehrenamtlich an der Spitze der Handwerkskammer Potsdam.",
+   "zitat": null
+  },
+  {
+   "id": "6841",
+   "datum": "2026-06-04",
+   "datum_ungenau": false,
+   "nummer": "44",
+   "titel": "80 Jahre Handwerkskammer Potsdam: Gartenfest am Schwielowsee mit klaren Botschaften an die Politik",
+   "url": "https://www.hwk-potsdam.de/artikel/80-jahre-handwerkskammer-potsdam-gartenfest-am-schwielowsee-mit-klaren-botschaften-an-die-politik-9,735,6841.html",
+   "art": "bericht",
+   "thema": "Region & Ehrungen",
+   "schlagzeile": "450 Gäste beim Gartenfest – mit klaren Botschaften an die Politik",
+   "dreizeiler": "Rund 450 Gäste kamen zum 32. Gartenfest der Kammer nach Caputh, im Jahr ihres 80-jährigen Bestehens. Die Gespräche prägten die angespannte Wirtschaftslage, Ausbildung, Nachfolge und Bürokratieabbau. Ein Abend zum Netzwerken – und zum Positionieren.",
+   "zitat": null
+  },
+  {
+   "id": "6835",
+   "datum": "2026-06-01",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Unterzeichnung des Aktionsprogramms „Zukunft des Handwerks im Land Brandenburg 2026–2029",
+   "url": "https://www.hwk-potsdam.de/artikel/unterzeichnung-des-aktionsprogramms-zukunft-des-handwerks-im-land-brandenburg-20262029-9,735,6835.html",
+   "art": "termin",
+   "thema": "Fachkräfte & Ausbildung",
+   "schlagzeile": "Einladung zur Unterzeichnung des Aktionsprogramms",
+   "dreizeiler": "Am 5. Juni unterzeichnen Landesregierung, Handwerkskammern und DGB das Aktionsprogramm 2026–2029. Es betrifft rund 37.500 Handwerksbetriebe im Land. Ort ist der Meistersaal der Handwerkskammer Potsdam.",
+   "zitat": null
+  },
+  {
+   "id": "6843",
+   "datum": "2026-05-26",
+   "datum_ungenau": false,
+   "nummer": "41",
+   "titel": "Die Handwerkskammer Potsdam informiert zu ausgewählten Jubiläen im Handwerk im Monat Juni 2026",
+   "url": "https://www.hwk-potsdam.de/artikel/die-handwerkskammer-potsdam-informiert-zu-ausgewaehlten-jubilaeen-im-handwerk-im-monat-juni-2026-9,735,6843.html",
+   "art": "ehrung",
+   "thema": "Region & Ehrungen",
+   "schlagzeile": "Diese Betriebe feiern im Juni Jubiläum",
+   "dreizeiler": "Die monatliche Liste der Betriebs- und Meisterjubiläen im Kammerbezirk. Darunter 80 Jahre Tischlerei Matthias John in Potsdam. Namen, Orte und Termine auf einen Blick.",
+   "zitat": null
+  },
+  {
+   "id": "6833",
+   "datum": "2026-05-26",
+   "datum_ungenau": false,
+   "nummer": "40",
+   "titel": "Ausgewählte presseöffentliche Termine und Veranstaltungen des Handwerks und der Handwerkskammer Potsdam im Juni 2026",
+   "url": "https://www.hwk-potsdam.de/artikel/ausgewaehlte-presseoeffentliche-termine-und-veranstaltungen-des-handwerks-und-der-handwerkskammer-potsdam-im-juni-2026-9,735,6833.html",
+   "art": "termin",
+   "thema": "Termine",
+   "schlagzeile": "Der Terminkalender der Kammer für Juni",
+   "dreizeiler": "Überblick über die presseöffentlichen Termine im Juni 2026. Den Auftakt macht eine Praxislernwoche am Bildungs- und Innovationscampus Handwerk in Götz. 50 Achtklässler testen dort ihre handwerklichen Fähigkeiten.",
+   "zitat": null
+  },
+  {
+   "id": "6831",
+   "datum": "2026-05-22",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Handwerk in Brandenburg 2025: Stabilität trotz Belastung, Umsatz 18,6 Milliarden Euro, mehr Ausbildung, starke Bildungs- und Beratungsleistung der Handwerkskammern",
+   "url": "https://www.hwk-potsdam.de/artikel/handwerk-in-brandenburg-2025-stabilitaet-trotz-belastung-umsatz-18-6-milliarden-euro-mehr-ausbildung-starke-bildungs-und-beratungsleistung-der-handwerkskammern-9,735,6831.html",
+   "art": "zahlen",
+   "thema": "Konjunktur",
+   "schlagzeile": "Jahresbericht: 18,6 Milliarden Euro Umsatz, aber weniger Betriebe",
+   "dreizeiler": "Der Handwerkskammertag hat den Jahresbericht „Handwerk in Brandenburg 2025“ vorgelegt. 37.429 Betriebe, 184.890 Beschäftigte und 8.052 Auszubildende stehen für 18,6 Milliarden Euro Umsatz. Die Zahl der Betriebe ging im Vorjahresvergleich um 274 zurück.",
+   "zitat": null
+  },
+  {
+   "id": "6832",
+   "datum": "2026-05-21",
+   "datum_ungenau": false,
+   "nummer": "38",
+   "titel": "80 Jahre Handwerkskammer Potsdam: 32. Gartenfest rückt Zukunft des Handwerks in den Mittelpunkt",
+   "url": "https://www.hwk-potsdam.de/artikel/80-jahre-handwerkskammer-potsdam-32-gartenfest-rueckt-zukunft-des-handwerks-in-den-mittelpunkt-9,735,6832.html",
+   "art": "termin",
+   "thema": "Region & Ehrungen",
+   "schlagzeile": "Einladung: 80 Jahre Handwerkskammer Potsdam",
+   "dreizeiler": "Die Kammer wurde 1946 gegründet und feiert das Jubiläum beim 32. Gartenfest am 4. Juni in Caputh. Seit 1992 gehört das Fest zu den wichtigsten Netzwerkveranstaltungen des brandenburgischen Handwerks. Medienvertreter sind eingeladen.",
+   "zitat": null
+  },
+  {
+   "id": "6825",
+   "datum": "2026-05-04",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Fachkräfteintegration im Handwerk: Pilotprojekt FIT zeigt Chancen und macht bestehenden Handlungsbedarf deutlich",
+   "url": "https://www.hwk-potsdam.de/artikel/fachkraefteintegration-im-handwerk-pilotprojekt-fit-zeigt-chancen-und-macht-bestehenden-handlungsbedarf-deutlich-9,735,6825.html",
+   "art": "bericht",
+   "thema": "Fachkräfte & Ausbildung",
+   "schlagzeile": "Fachkräfte aus Usbekistan: Was Zuwanderung praktisch bedeutet",
+   "dreizeiler": "Zwei Fachkräfte aus Usbekistan arbeiten seit vier Monaten bei der HTB Haustechnik GmbH in Brandenburg an der Havel. Vermittelt wurden sie über das bundesweite Pilotprojekt FIT, an dem die Kammer beteiligt ist. Die Erfahrung zeigt viel Potenzial – aber auch hohen Aufwand für alle Beteiligten.",
+   "zitat": null
+  },
+  {
+   "id": "6823",
+   "datum": "2026-04-29",
+   "datum_ungenau": false,
+   "nummer": "36",
+   "titel": "Die Handwerkskammer Potsdam informiert zu ausgewählten Jubiläen im Handwerk im Monat Mai 2026",
+   "url": "https://www.hwk-potsdam.de/artikel/die-handwerkskammer-potsdam-informiert-zu-ausgewaehlten-jubilaeen-im-handwerk-im-monat-mai-2026-9,735,6823.html",
+   "art": "ehrung",
+   "thema": "Region & Ehrungen",
+   "schlagzeile": "Diese Betriebe feiern im Mai Jubiläum",
+   "dreizeiler": "Die monatliche Liste der Betriebs- und Meisterjubiläen im Kammerbezirk. Darunter 80 Jahre Malereibetrieb Roland Geißler in Hohen Neuendorf. Wer gratulieren will, findet hier die Termine.",
+   "zitat": null
+  },
+  {
+   "id": "6821",
+   "datum": "2026-04-28",
+   "datum_ungenau": false,
+   "nummer": "34",
+   "titel": "Ausgewählte presseöffentliche Termine und Veranstaltungen des Handwerks und der Handwerkskammer Potsdam im Mai 2026",
+   "url": "https://www.hwk-potsdam.de/artikel/ausgewaehlte-presseoeffentliche-termine-und-veranstaltungen-des-handwerks-und-der-handwerkskammer-potsdam-im-mai-2026-9,735,6821.html",
+   "art": "termin",
+   "thema": "Termine",
+   "schlagzeile": "Der Terminkalender der Kammer für Mai",
+   "dreizeiler": "Überblick über die presseöffentlichen Termine im Mai 2026. Auftakt ist am 4. Mai ein Pressegespräch zur Fachkräfteintegration am Bildungscampus in Groß Kreutz. Weitere Termine folgen im Monatsverlauf.",
+   "zitat": null
+  },
+  {
+   "id": "6816",
+   "datum": "2026-04-22",
+   "datum_ungenau": false,
+   "nummer": "32",
+   "titel": "Fachkräfteintegration im Handwerk: Pressegespräch zu Erfahrungen aus der Praxis und zum bundesweiten Pilotprojekt FIT for German Climate Businesses",
+   "url": "https://www.hwk-potsdam.de/artikel/fachkraefteintegration-im-handwerk-pressegespraech-zu-erfahrungen-aus-der-praxis-und-zum-bundesweiten-pilotprojekt-fit-for-german-climate-businesses-9,735,6816.html",
+   "art": "termin",
+   "thema": "Fachkräfte & Ausbildung",
+   "schlagzeile": "Einladung: Wie Fachkräfteintegration praktisch funktioniert",
+   "dreizeiler": "Pressegespräch am 4. Mai am Bildungs- und Innovationscampus Handwerk in Groß Kreutz. Ein Betrieb und zwei usbekische Fachkräfte berichten aus der Praxis. Hintergrund ist das bundesweite Pilotprojekt FIT.",
+   "zitat": null
+  },
+  {
+   "id": "6814",
+   "datum": "2026-04-21",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Pressestatement nach dem Spitzengespräch des Brandenburger Handwerks mit Wirtschaftsministerin Martina Klement",
+   "url": "https://www.hwk-potsdam.de/artikel/pressestatement-nach-dem-spitzengespraech-des-brandenburger-handwerks-mit-wirtschaftsministerin-martina-klement-9,735,6814.html",
+   "art": "termin",
+   "thema": "Landespolitik",
+   "schlagzeile": "Spitzengespräch mit der neuen Wirtschaftsministerin",
+   "dreizeiler": "Am 27. April trifft der Handwerkskammertag erstmals die neue Wirtschaftsministerin Martina Klement. Im Anschluss informieren Ministerin und Kammerpräsidenten gemeinsam über Schwerpunkte und Erwartungen. Ort ist das Märkische Gildehaus in Caputh.",
+   "zitat": null
+  },
+  {
+   "id": "6809",
+   "datum": "2026-04-15",
+   "datum_ungenau": false,
+   "nummer": "31",
+   "titel": "Handwerk regional: Stadtspitze und Handwerkskammer im Austausch  mit Potsdamer Handwerksbetrieben",
+   "url": "https://www.hwk-potsdam.de/artikel/handwerk-regional-stadtspitze-und-handwerkskammer-im-austausch-mit-potsdamer-handwerksbetrieben-9,735,6809.html",
+   "art": "termin",
+   "thema": "Region & Ehrungen",
+   "schlagzeile": "Stadtspitze und Kammer besuchen Potsdamer Betriebe",
+   "dreizeiler": "Am 22. April geht die Besuchsreihe „Handwerk regional“ in der Landeshauptstadt weiter. Es geht um Fachkräftesicherung, Bürokratieentlastung und die Bedingungen für das regionale Handwerk. Gefragt wird direkt bei den Betrieben.",
+   "zitat": null
+  },
+  {
+   "id": "6807",
+   "datum": "2026-04-14",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Konjunkturelle Lage im Handwerk Brandenburgs – Frühjahrsbericht 2026",
+   "url": "https://www.hwk-potsdam.de/artikel/konjunkturelle-lage-im-handwerk-brandenburgs-fruehjahrsbericht-2026-9,735,6807.html",
+   "art": "zahlen",
+   "thema": "Konjunktur",
+   "schlagzeile": "Frühjahrsbericht: Geschäftslage im Land verschlechtert sich",
+   "dreizeiler": "Die Umfrageergebnisse für das erste Quartal 2026 zeigen eine weiter verschlechterte Geschäftslage. 73,8 Prozent der brandenburgischen Handwerksbetriebe bezeichnen ihre Lage noch als gut oder zumindest befriedigend. Die Beurteilung fällt schlechter aus als vor einem Jahr.",
+   "zitat": null
+  },
+  {
+   "id": "6806",
+   "datum": "2026-04-14",
+   "datum_ungenau": false,
+   "nummer": "27",
+   "titel": "Konjunkturlage im Handwerk verschlechtert sich weiter: Frühjahrskonjunkturumfrage 2026: Erwartungen sehr verhalten,  Investitionsbereitschaft bleibt schwach",
+   "url": "https://www.hwk-potsdam.de/artikel/konjunkturlage-im-handwerk-verschlechtert-sich-weiter-fruehjahrskonjunkturumfrage-2026-erwartungen-sehr-verhalten-investitionsbereitschaft-bleibt-schwach-9,735,6806.html",
+   "art": "zahlen",
+   "thema": "Konjunktur",
+   "schlagzeile": "Kammerbezirk: Erwartungen verhalten, Investitionen schwach",
+   "dreizeiler": "Die Frühjahrskonjunkturumfrage zeigt für den Kammerbezirk Potsdam eine weiter verschlechterte Lage. Auftragsreichweiten haben sich verkürzt, die Nachfrage bleibt schwach, die Preissituation ist angespannt. Auch die Investitionsbereitschaft ist niedrig.",
+   "zitat": null
+  },
+  {
+   "id": "6808",
+   "datum": "2026-04-13",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Statement des Präsidenten des Handwerkskammertages Land Brandenburg zu den heute vorgestellten Ergebnissen der schwarz-roten Koalition zu Entlastungsmaßnahmen bei Spritpreisen",
+   "url": "https://www.hwk-potsdam.de/artikel/statement-des-praesidenten-des-handwerkskammertages-land-brandenburg-zu-den-heute-vorgestellten-ergebnissen-der-schwarz-roten-koalition-zu-entlastungsma-9,735,6808.html",
+   "art": "politik",
+   "thema": "Energie & Kraftstoff",
+   "schlagzeile": "Spritpreis-Entlastung: „ein Strohfeuer“",
+   "dreizeiler": "Der Koalitionsausschuss hat eine Senkung der Energiesteuer auf Diesel und Benzin um rund 17 Cent brutto pro Liter beschlossen. Das Handwerk nennt das grundsätzlich ein richtiges Signal. Bei einer nur zweimonatigen Senkung bleibe es aber ein Strohfeuer – die Betriebe brauchten Planungssicherheit.",
+   "zitat": "Die Ergebnisse des Koalitionsausschusses greifen die Lage des Handwerks in Brandenburg nur unzureichend auf. Unsere Betriebe brauchen Planungssicherheit und Entlastung. Beides bleibt weitgehend aus."
+  },
+  {
+   "id": "6801",
+   "datum": "2026-04-02",
+   "datum_ungenau": false,
+   "nummer": "26",
+   "titel": "Einladung zum Pressegespräch: Die Wirtschaftslage im westbrandenburgischen Handwerk - Frühjahrs-Bilanz 2026",
+   "url": "https://www.hwk-potsdam.de/artikel/einladung-zum-pressegespraech-die-wirtschaftslage-im-westbrandenburgischen-handwerk-fruehjahrs-bilanz-2026-9,735,6801.html",
+   "art": "termin",
+   "thema": "Konjunktur",
+   "schlagzeile": "Einladung: Wirtschaftslage im westbrandenburgischen Handwerk",
+   "dreizeiler": "Pressegespräch zur Frühjahrs-Bilanz 2026 der Handwerkskammer Potsdam. Grundlage ist die halbjährliche Konjunkturumfrage unter 6000 Handwerksbetrieben. Es geht um Geschäftslage und Erwartungen für die kommenden Monate.",
+   "zitat": null
+  },
+  {
+   "id": "6796",
+   "datum": "2026-03-31",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Handwerk fordert Entlastungen bei Kraftstoffen und Preisgleitklauseln",
+   "url": "https://www.hwk-potsdam.de/artikel/handwerk-fordert-entlastungen-bei-kraftstoffen-und-preisgleitklauseln-9,735,6796.html",
+   "art": "politik",
+   "thema": "Energie & Kraftstoff",
+   "schlagzeile": "Handwerk fordert Entlastung bei Kraftstoffen und faire Preisgleitklauseln",
+   "dreizeiler": "Steigende Kosten für Kraftstoff, Energie und Material setzen die Betriebe unter Druck. Der Handwerkskammertag fordert die Landesregierung auf, sich im Bund für wirksame Entlastungen einzusetzen. Zusätzlich verlangt er praxistaugliche Regelungen bei öffentlichen Aufträgen.",
+   "zitat": "Für unsere Handwerksbetriebe wird der Alltag immer schwieriger. Tanken und Materialeinkauf werden gleichzeitig teurer, sind kaum noch kalkulierbar und erste Engpässe sind spürbar."
+  },
+  {
+   "id": "6800",
+   "datum": "2026-03-30",
+   "datum_ungenau": false,
+   "nummer": "24",
+   "titel": "Die Handwerkskammer Potsdam informiert zu ausgewählten Jubiläen im Handwerk im Monat April 2026",
+   "url": "https://www.hwk-potsdam.de/artikel/die-handwerkskammer-potsdam-informiert-zu-ausgewaehlten-jubilaeen-im-handwerk-im-monat-april-2026-9,735,6800.html",
+   "art": "ehrung",
+   "thema": "Region & Ehrungen",
+   "schlagzeile": "Diese Betriebe feiern im April Jubiläum",
+   "dreizeiler": "Die monatliche Liste der Betriebs- und Meisterjubiläen im Kammerbezirk. Darunter 70 Jahre Tischlerei Gänserich in Potsdam OT Fahrland. Namen, Orte und Termine auf einen Blick.",
+   "zitat": null
+  },
+  {
+   "id": "6795",
+   "datum": "2026-03-27",
+   "datum_ungenau": false,
+   "nummer": "23",
+   "titel": "Ausgewählte presseöffentliche Termine und Veranstaltungen des Handwerks und der Handwerkskammer Potsdam im März 2026",
+   "url": "https://www.hwk-potsdam.de/artikel/ausgewaehlte-presseoeffentliche-termine-und-veranstaltungen-des-handwerks-und-der-handwerkskammer-potsdam-im-maerz-2026-9,735,6795.html",
+   "art": "termin",
+   "thema": "Termine",
+   "schlagzeile": "Der Terminkalender der Kammer für April",
+   "dreizeiler": "Überblick über die presseöffentlichen Termine der Kammer. Zum Auftakt gratuliert die Kammer der Tischlerei Gänserich zum 70-jährigen Bestehen. Der Meisterbetrieb wird in vierter Generation geführt.",
+   "zitat": null
+  },
+  {
+   "id": "6788",
+   "datum": "2026-03-18",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Handwerk erwartet Stabilität und Verlässlichkeit",
+   "url": "https://www.hwk-potsdam.de/artikel/handwerk-erwartet-stabilitaet-und-verlaesslichkeit-9,735,6788.html",
+   "art": "politik",
+   "thema": "Landespolitik",
+   "schlagzeile": "Neue Landesregierung: Handwerk erwartet Stabilität und Verlässlichkeit",
+   "dreizeiler": "Zur Vereidigung der neuen rot-schwarzen Landesregierung meldet sich das Handwerk zu Wort. Brandenburg brauche jetzt Sicherheit und Stabilität – politisch und für die Betriebe. Die neue Regierung stehe in der Pflicht, verlässliche Rahmenbedingungen zu schaffen.",
+   "zitat": "Brandenburg braucht jetzt Sicherheit und Stabilität, nicht nur politisch, sondern auch für die vielen Handwerksbetriebe, die tagtäglich Verantwortung für Arbeits- und Ausbildungsplätze übernehmen."
+  },
+  {
+   "id": "6787",
+   "datum": "2026-03-17",
+   "datum_ungenau": false,
+   "nummer": "21",
+   "titel": "Mit Werkzeug und Weltblick: Handwerk aus Brandenburg unterwegs in Europa",
+   "url": "https://www.hwk-potsdam.de/artikel/mit-werkzeug-und-weltblick-handwerk-aus-brandenburg-unterwegs-in-europa-9,735,6787.html",
+   "art": "bericht",
+   "thema": "Fachkräfte & Ausbildung",
+   "schlagzeile": "50 junge Handwerker waren in Europa unterwegs",
+   "dreizeiler": "Zwischen 2025 und Februar 2026 absolvierten 50 junge Handwerkerinnen und Handwerker aus dem Kammerbezirk einen Lernaufenthalt im Ausland. Sie arbeiteten unter anderem in Dänemark, Italien und Finnland. Am 24. März werden diese Leistungen in der Staatskanzlei gewürdigt.",
+   "zitat": ", betont Dörte Thie, Vizepräsidentin der Handwerkskammer Potsdam in ihrem Grußwort."
+  },
+  {
+   "id": "6785",
+   "datum": "2026-03-07",
+   "datum_ungenau": false,
+   "nummer": "20",
+   "titel": "Nächster Karriereschritt geschafft: 232 neue Meisterinnen und Meister halten ihren Meisterbrief in den Händen",
+   "url": "https://www.hwk-potsdam.de/artikel/naechster-karriereschritt-geschafft-232-neue-meisterinnen-und-meister-halten-ihren-meisterbrief-in-den-haenden-9,735,6785.html",
+   "art": "ehrung",
+   "thema": "Fachkräfte & Ausbildung",
+   "schlagzeile": "232 neue Meisterinnen und Meister",
+   "dreizeiler": "Am 7. März erhielten 232 Absolventinnen und Absolventen im Hans Otto Theater ihre Meisterbriefe. Überreicht wurden sie von Kammerpräsident Robert Wüst und Wirtschaftsminister Daniel Keller. Der Meisterbrief bleibt der wichtigste Karriereschritt im Handwerk.",
+   "zitat": null
+  },
+  {
+   "id": "6779",
+   "datum": "2026-03-04",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Handwerkskammertag Brandenburg zur Vorstellung des Koalitionsvertrages von SPD und CDU",
+   "url": "https://www.hwk-potsdam.de/artikel/handwerkskammertag-brandenburg-zur-vorstellung-des-koalitionsvertrages-von-spd-und-cdu-9,735,6779.html",
+   "art": "politik",
+   "thema": "Landespolitik",
+   "schlagzeile": "Koalitionsvertrag: Handwerk erwartet jetzt Taten",
+   "dreizeiler": "Der Handwerkskammertag begrüßt, dass SPD und CDU ihren Koalitionsvertrag zügig vorgelegt haben. Nach den politischen Turbulenzen der Vorwochen erwartet das Handwerk klare und entschlossene Maßnahmen. Die Betriebe bräuchten Planungssicherheit und klare politische Leitplanken.",
+   "zitat": "Es ist gut, dass SPD und CDU ihren Koalitionsvertrag zügig vorgelegt haben. Unsere Betriebe brauchen in der aktuellen wirtschaftlichen Lage Planungssicherheit und klare politische Leitplanken. Die im Koalitionsvertrag verankerte Stärkung der Meisterausbildung ist ein wichtiges Signal für das brandenburgische Handwerk."
+  },
+  {
+   "id": "6778",
+   "datum": "2026-03-04",
+   "datum_ungenau": false,
+   "nummer": "18",
+   "titel": "Mit pinkem Ordner in die Selbstständigkeit: Augenoptikmeisterin Lisa Pittelkow übernimmt \"Carreé Optik\" in Potsdam",
+   "url": "https://www.hwk-potsdam.de/artikel/mit-pinkem-ordner-in-die-selbststaendigkeit-augenoptikmeisterin-lisa-pittelkow-uebernimmt-carree-optik-in-potsdam-9,735,6778.html",
+   "art": "bericht",
+   "thema": "Gründung & Nachfolge",
+   "schlagzeile": "Mit pinkem Ordner in die Selbstständigkeit",
+   "dreizeiler": "Augenoptikmeisterin Lisa Pittelkow übernimmt mit Mitte 30 den Betrieb „Carreé Optik“ in Potsdam. Vorher war sie festangestellte Filialleiterin bei einer großen Kette in Berlin. Ihre Geschichte zeigt, wie eine Übernahme im Handwerk konkret abläuft.",
+   "zitat": "Zwischen Trennblättern und Klarsichthüllen steckt monatelange Vorbereitung und die Entscheidung, mit Mitte 30, als junge Mutter, einen etablierten Augenoptikerbetrieb in der Landeshauptstadt Potsdam zu übernehmen. Bis Ende 2025 war Lisa Pittelkow festangestellte Filialleiterin bei einer großen Optik-Kette in Berlin."
+  },
+  {
+   "id": "6777",
+   "datum": "2026-03-03",
+   "datum_ungenau": false,
+   "nummer": "17",
+   "titel": "Beschwerdemanagement am 1. März 2026 gestartet/ Neue Anlaufstelle für Mitgliedsbetriebe und Kunden der Handwerkskammer Potsdam",
+   "url": "https://www.hwk-potsdam.de/artikel/beschwerdemanagement-am-1-maerz-2026-gestartet-neue-anlaufstelle-fuer-mitgliedsbetriebe-und-kunden-der-handwerkskammer-potsdam-9,735,6777.html",
+   "art": "bericht",
+   "thema": "Kammer & Service",
+   "schlagzeile": "Neue Beschwerdestelle bei der Kammer",
+   "dreizeiler": "Seit dem 1. März 2026 gibt es bei der Handwerkskammer Potsdam ein Beschwerdemanagement. Es ist für Betriebe und Kunden da, wenn Rückmeldungen ausbleiben oder Abläufe Anlass zur Kritik geben. Die Bearbeitung erfolgt vertraulich, neutral und transparent.",
+   "zitat": null
+  },
+  {
+   "id": "6776",
+   "datum": "2026-02-26",
+   "datum_ungenau": false,
+   "nummer": "16",
+   "titel": "Auszubildender des Monats März: Kraftfahrzeugmechatroniker-Azubi Luca Herrfurth aus Dahnsdorf ausgezeichnet",
+   "url": "https://www.hwk-potsdam.de/artikel/auszubildender-des-monats-maerz-kraftfahrzeugmechatroniker-azubi-luca-herrfurth-aus-dahnsdorf-ausgezeichnet-9,735,6776.html",
+   "art": "ehrung",
+   "thema": "Fachkräfte & Ausbildung",
+   "schlagzeile": "Azubi des Monats März: Luca Herrfurth",
+   "dreizeiler": "Der angehende Kraftfahrzeugmechatroniker aus Dahnsdorf wird von der Kammer ausgezeichnet. Sein Ausbildungsbetrieb, die Autohaus Heinrich GmbH, hatte ihn empfohlen. Gelobt werden Zuverlässigkeit, Wissbegier und Freude an schwierigen technischen Aufgaben.",
+   "zitat": "Der Junge ist von Anfang an mit voller Energie dabei. Durch seine offene und freundliche Art ist er schnell in unser Team hineingewachsen und wir freuen uns, dass seine Leistungen durchweg gut sind."
+  },
+  {
+   "id": "6765",
+   "datum": "2026-02-24",
+   "datum_ungenau": false,
+   "nummer": "15",
+   "titel": "Die Handwerkskammer Potsdam informiert zu ausgewählten Jubiläen im Handwerk im Monat März 2026",
+   "url": "https://www.hwk-potsdam.de/artikel/die-handwerkskammer-potsdam-informiert-zu-ausgewaehlten-jubilaeen-im-handwerk-im-monat-maerz-2026-9,735,6765.html",
+   "art": "ehrung",
+   "thema": "Region & Ehrungen",
+   "schlagzeile": "Diese Betriebe feiern im März Jubiläum",
+   "dreizeiler": "Die monatliche Liste der Betriebs- und Meisterjubiläen im Kammerbezirk. Von Schornsteinfegern über Elektroinstallateure bis zum Reifendienst. Namen, Orte und Termine auf einen Blick.",
+   "zitat": null
+  },
+  {
+   "id": "6764",
+   "datum": "2026-02-23",
+   "datum_ungenau": false,
+   "nummer": "14",
+   "titel": "Ausgewählte presseöffentliche Termine und Veranstaltungen des Handwerks und der Handwerkskammer Potsdam im März 2026",
+   "url": "https://www.hwk-potsdam.de/artikel/ausgewaehlte-presseoeffentliche-termine-und-veranstaltungen-des-handwerks-und-der-handwerkskammer-potsdam-im-maerz-2026-9,735,6764.html",
+   "art": "termin",
+   "thema": "Termine",
+   "schlagzeile": "Der Terminkalender der Kammer für März",
+   "dreizeiler": "Überblick über die presseöffentlichen Termine im März 2026. Zum Auftakt testen 100 Achtklässler der Hans-Klakow-Gesamtschule Brieselang ihre handwerklichen Fähigkeiten. Ort ist der Bildungscampus in Götz.",
+   "zitat": null
+  },
+  {
+   "id": "6759",
+   "datum": "2026-02-19",
+   "datum_ungenau": false,
+   "nummer": "12",
+   "titel": "Handwerk begrüßt Rückkehr des Azubi-Tickets als wichtigen  Schritt für faire Chancen in der Ausbildung",
+   "url": "https://www.hwk-potsdam.de/artikel/handwerk-begruesst-rueckkehr-des-azubi-tickets-als-wichtigen-schritt-fuer-faire-chancen-in-der-ausbildung-9,735,6759.html",
+   "art": "politik",
+   "thema": "Fachkräfte & Ausbildung",
+   "schlagzeile": "Azubi-Ticket kommt zurück – Handwerk begrüßt das",
+   "dreizeiler": "SPD und CDU wollen das Azubi-Ticket zum Ausbildungsjahr im September 2026 wieder einführen. Auszubildende sollen statt 63 Euro dann 37,80 Euro monatlich für das Deutschland-Ticket zahlen. Das Handwerk sieht darin einen wichtigen Schritt für faire Chancen in der Ausbildung.",
+   "zitat": "Das brandenburgische Handwerk begrüßt, dass das Azubi-Ticket in Brandenburg zurückkehren soll. Das ist eine sehr gute Nachricht und genau die Anschlusslösung, die das Handwerk seit langem fordert."
+  },
+  {
+   "id": "6758",
+   "datum": "2026-02-18",
+   "datum_ungenau": false,
+   "nummer": "11",
+   "titel": "Präsident und Vorstandsmitglieder der Handwerkskammer Potsdam besuchen Betriebe in der Region Brandenburg (Havel)/Belzig",
+   "url": "https://www.hwk-potsdam.de/artikel/praesident-und-vorstandsmitglieder-der-handwerkskammer-potsdam-besuchen-betriebe-in-der-region-brandenburg-havel-belzig-9,735,6758.html",
+   "art": "termin",
+   "thema": "Region & Ehrungen",
+   "schlagzeile": "Vorstand besucht Betriebe rund um Brandenburg und Belzig",
+   "dreizeiler": "Am 25. Februar besuchen Präsident und Vorstand Betriebe in der Region Brandenburg an der Havel und Bad Belzig. Diese Vor-Ort-Gespräche gibt es seit 29 Jahren. Themen sind Wirtschaftslage, Ausbildung und Fachkräfte.",
+   "zitat": null
+  },
+  {
+   "id": "6756",
+   "datum": "2026-02-17",
+   "datum_ungenau": false,
+   "nummer": "10",
+   "titel": "232 neue Meisterinnen und Meister feiern ihre Erfolge in Potsdam",
+   "url": "https://www.hwk-potsdam.de/artikel/232-neue-meisterinnen-und-meister-feiern-ihre-erfolge-in-potsdam-9,735,6756.html",
+   "art": "termin",
+   "thema": "Fachkräfte & Ausbildung",
+   "schlagzeile": "Einladung: 232 Meisterbriefe werden überreicht",
+   "dreizeiler": "232 Absolventinnen und Absolventen aus 14 Gewerken haben ihre Meisterprüfung bestanden – 47 Frauen und 185 Männer. Die jüngste Meisterin war 19 Jahre alt, der älteste Absolvent 58. Die Meisterbriefe werden am 7. März im Hans Otto Theater überreicht.",
+   "zitat": null
+  },
+  {
+   "id": "6755",
+   "datum": "2026-02-11",
+   "datum_ungenau": false,
+   "nummer": "9",
+   "titel": "Gründergeist im Handwerk: Praxischeck im Bootsbauerhandwerk bei Investitionen und Wachstum",
+   "url": "https://www.hwk-potsdam.de/artikel/gruendergeist-im-handwerk-praxischeck-im-bootsbauerhandwerk-bei-investitionen-und-wachstum-9,735,6755.html",
+   "art": "bericht",
+   "thema": "Gründung & Nachfolge",
+   "schlagzeile": "Wenn Investieren zur Hürde wird: Praxischeck im Bootsbau",
+   "dreizeiler": "Bootsbauermeister Norman Julien Melke aus Teltow zeigt, wie eine Gründung im Handwerk wächst. Sein Werdegang macht aber auch sichtbar, was viele Gründungen bremst: Finanzierung und Förderlogik passen für kleine Betriebe und Einzelunternehmen oft nicht. Hauptgeschäftsführer Ralph Bührig war vor Ort.",
+   "zitat": null
+  },
+  {
+   "id": "6747",
+   "datum": "2026-02-10",
+   "datum_ungenau": false,
+   "nummer": "8",
+   "titel": "Landkreis Ostprignitz-Ruppin führt Handwerkerparkausweis ein: Handwerk fordert landesweite Lösung",
+   "url": "https://www.hwk-potsdam.de/artikel/landkreis-ostprignitz-ruppin-fuehrt-handwerkerparkausweis-ein-handwerk-fordert-landesweite-loesung-9,735,6747.html",
+   "art": "politik",
+   "thema": "Bürokratie",
+   "schlagzeile": "Handwerkerparkausweis in OPR – Handwerk will landesweite Lösung",
+   "dreizeiler": "Der Landkreis Ostprignitz-Ruppin ermöglicht seit dem 1. Februar 2026 einen einheitlichen Handwerkerparkausweis. Die Kammer begrüßt den Schritt als spürbare Entlastung. Sie fordert, dass eine solche Regelung landesweit gilt.",
+   "zitat": "Der Handwerkerparkausweis ist ein spürbarer Schritt zur Entlastung des regionalen Handwerks. Unsere Betriebe müssen schnell und flexibel zu ihren Kunden gelangen, oft mit Werkzeug und Material. Der Landkreis OPR setzt ein deutliches Zeichen für mehr Praxistauglichkeit und weniger bürokratische Hürden."
+  },
+  {
+   "id": "6738",
+   "datum": "2026-02-04",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Potsdamer Verpackungssteuer trifft Gewerbetreibende – ohne Mehrwert für die Umwelt",
+   "url": "https://www.hwk-potsdam.de/artikel/potsdamer-verpackungssteuer-trifft-gewerbetreibende-ohne-mehrwert-fuer-die-umwelt-9,735,6738.html",
+   "art": "politik",
+   "thema": "Steuern & Abgaben",
+   "schlagzeile": "Vier Verbände gegen die Potsdamer Verpackungssteuer",
+   "dreizeiler": "IHK, Handwerkskammer, Handelsverband und DEHOGA kritisieren die zum 1. Juli 2026 geplante Verpackungssteuer in Potsdam. Sie treffe Gewerbetreibende, ohne der Umwelt zu nützen, und bringe neue Bürokratie. Gemeinsam fordern sie die Stadtverordneten auf, die Haushaltsvorlage abzulehnen.",
+   "zitat": null
+  },
+  {
+   "id": "6732",
+   "datum": "2026-01-26",
+   "datum_ungenau": false,
+   "nummer": "6",
+   "titel": "Die Handwerkskammer Potsdam informiert zu ausgewählten Jubiläen im Handwerk im Monat Februar 2026",
+   "url": "https://www.hwk-potsdam.de/artikel/die-handwerkskammer-potsdam-informiert-zu-ausgewaehlten-jubilaeen-im-handwerk-im-monat-februar-2026-9,735,6732.html",
+   "art": "ehrung",
+   "thema": "Region & Ehrungen",
+   "schlagzeile": "Diese Betriebe feiern im Februar Jubiläum",
+   "dreizeiler": "Die monatliche Liste der Betriebs- und Meisterjubiläen im Kammerbezirk. Darunter 80 Jahre Drechslerei und Treppenbau Dobbeck in Leegebruch. Namen, Orte und Termine auf einen Blick.",
+   "zitat": null
+  },
+  {
+   "id": "6731",
+   "datum": "2026-01-26",
+   "datum_ungenau": false,
+   "nummer": "5",
+   "titel": "Ausgewählte presseöffentliche Termine und Veranstaltungen des Handwerks und der Handwerkskammer Potsdam im Februar 2026",
+   "url": "https://www.hwk-potsdam.de/artikel/ausgewaehlte-presseoeffentliche-termine-und-veranstaltungen-des-handwerks-und-der-handwerkskammer-potsdam-im-februar-2026-9,735,6731.html",
+   "art": "termin",
+   "thema": "Termine",
+   "schlagzeile": "Der Terminkalender der Kammer für Februar",
+   "dreizeiler": "Überblick über die presseöffentlichen Termine im Februar 2026. Den Auftakt macht das 80-jährige Bestehen der Drechslerei und Treppenbau Dobbeck in Leegebruch. Der Familienbetrieb wurde 1946 gegründet.",
+   "zitat": null
+  },
+  {
+   "id": "6720",
+   "datum": "2026-01-13",
+   "datum_ungenau": false,
+   "nummer": "4",
+   "titel": "Ausbildungszahlen im westbrandenburgischen Handwerk erneut gestiegen",
+   "url": "https://www.hwk-potsdam.de/artikel/ausbildungszahlen-im-westbrandenburgischen-handwerk-erneut-gestiegen-9,735,6720.html",
+   "art": "zahlen",
+   "thema": "Fachkräfte & Ausbildung",
+   "schlagzeile": "1.377 neue Ausbildungsverträge – 6,2 Prozent mehr",
+   "dreizeiler": "Zum 31. Dezember 2025 wurden im Kammerbezirk 1.377 neue Ausbildungsverträge abgeschlossen, 80 mehr als 2024. Die stärksten Zuwächse gab es in Potsdam, Potsdam-Mittelmark und Teltow-Fläming. Rückgänge verzeichnete vor allem Brandenburg an der Havel.",
+   "zitat": null
+  },
+  {
+   "id": "6721",
+   "datum": "2026-01-08",
+   "datum_ungenau": false,
+   "nummer": "3",
+   "titel": "Kilian Böhm übertrifft mit Talent und Kreativität alle Erwartungen",
+   "url": "https://www.hwk-potsdam.de/artikel/kilian-boehm-uebertrifft-mit-talent-und-kreativitaet-alle-erwartungen-9,735,6721.html",
+   "art": "ehrung",
+   "thema": "Fachkräfte & Ausbildung",
+   "schlagzeile": "Azubi des Monats Januar: Kilian Böhm",
+   "dreizeiler": "Der angehende Automobilkaufmann wird am 15. Januar in seinem Ausbildungsbetrieb in Geltow ausgezeichnet. Sein Betrieb, die Autohaus Biering GmbH, hatte ihn vorgeschlagen. Gelobt werden Talent, Kreativität und Offenheit.",
+   "zitat": "Die Bewerbung um eine Auszeichnung der Handwerkskammer für den angehenden Automobilkaufmann überzeugte. Kilian Böhm wird deshalb am 15. Januar durch die Handwerkskammer Potsdam in seinem Ausbildungsbetrieb in Geltow (Schwielowsee) als Auszubildender des Monats Januar geehrt."
+  },
+  {
+   "id": "6715",
+   "datum": "2026-01-06",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Handwerkskammertag Brandenburg: Stabilität der Landesregierung jetzt entscheidend",
+   "url": "https://www.hwk-potsdam.de/artikel/handwerkskammertag-brandenburg-stabilitaet-der-landesregierung-jetzt-entscheidend-9,735,6715.html",
+   "art": "politik",
+   "thema": "Landespolitik",
+   "schlagzeile": "Nach dem Koalitionsbruch: Handwerk pocht auf Handlungsfähigkeit",
+   "dreizeiler": "Ministerpräsident Dietmar Woidke hat am 6. Januar die Koalition mit dem BSW beendet. Das Handwerk erklärt, das Land brauche in der aktuellen Wirtschaftslage eine handlungsfähige und verlässliche Landesregierung. Die Betriebe seien auf klare Entscheidungen und planbare Rahmenbedingungen angewiesen.",
+   "zitat": "Für das brandenburgische Handwerk steht fest, dass das Land in der aktuellen wirtschaftlichen Lage eine handlungsfähige und verlässliche Landesregierung braucht."
+  },
+  {
+   "id": "6712",
+   "datum": "2026-01-06",
+   "datum_ungenau": false,
+   "nummer": "1",
+   "titel": "Anstieg der Betriebszahlen im westbrandenburgischen Handwerk 2025 Qualifizierte Gründungen gehen zurück",
+   "url": "https://www.hwk-potsdam.de/artikel/anstieg-der-betriebszahlen-im-westbrandenburgischen-handwerk-2025-qualifizierte-gruendungen-gehen-zurueck-9,735,6712.html",
+   "art": "zahlen",
+   "thema": "Gründung & Nachfolge",
+   "schlagzeile": "17.522 Betriebe – mehr Gründungen, aber weniger qualifizierte",
+   "dreizeiler": "Zum 31. Dezember 2025 waren im Kammerbezirk 17.522 Betriebe gemeldet, 159 mehr als im Vorjahr. Neu eingetragen wurden 1.550 Betriebe, gelöscht 1.391. Die Zahl der qualifizierten Gründungen ging jedoch zurück.",
+   "zitat": null
+  }
+ ]
+}/*__DATEN_ENDE__*/;
+
+/* Pflicht bei jedem innerHTML: Sonderzeichen entschaerfen (siehe KMS [L-0024]) */
+function esc(s){
+  return String(s == null ? "" : s)
+    .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;").replace(/'/g,"&#39;");
+}
+
+const ARTEN = [
+  {schluessel:"alle",     name:"Alle"},
+  {schluessel:"politik",  name:"Politik & Forderungen", wichtig:true},
+  {schluessel:"zahlen",   name:"Zahlen & Fakten"},
+  {schluessel:"bericht",  name:"Aus den Betrieben"},
+  {schluessel:"ehrung",   name:"Ehrungen"},
+  {schluessel:"termin",   name:"Termine"}
+];
+
+const MONATSNAMEN = ["Januar","Februar","März","April","Mai","Juni",
+                     "Juli","August","September","Oktober","November","Dezember"];
+
+let filterArt = "alle";
+let filterThema = "alle";
+let suchtext = "";
+
+function datumLesbar(iso){
+  const t = iso.split("-");
+  return parseInt(t[2],10) + ". " + MONATSNAMEN[parseInt(t[1],10)-1] + " " + t[0];
+}
+
+function passt(m){
+  if (filterArt !== "alle" && m.art !== filterArt) return false;
+  if (filterThema !== "alle" && m.thema !== filterThema) return false;
+  if (suchtext) {
+    const heu = (m.schlagzeile + " " + m.dreizeiler + " " + m.titel + " " +
+                 m.thema + " " + (m.zitat || "")).toLowerCase();
+    if (heu.indexOf(suchtext) === -1) return false;
+  }
+  return true;
+}
+
+function zeichneKennzahlen(){
+  const politisch = DATEN.meldungen.filter(m => m.art === "politik").length;
+  const felder = [
+    {wert: DATEN.meldungen.length, text: "Meldungen"},
+    {wert: politisch,              text: "davon politisch"},
+    {wert: DATEN.themen.length,    text: "Themen"}
+  ];
+  document.getElementById("kennzahlen").innerHTML = felder.map(f =>
+    '<div class="kennzahl"><b>' + esc(f.wert) + '</b><span>' + esc(f.text) + '</span></div>'
+  ).join("");
+}
+
+function zeichneFilter(){
+  document.getElementById("artFilter").innerHTML = ARTEN.map(a => {
+    const anzahl = a.schluessel === "alle"
+      ? DATEN.meldungen.length
+      : DATEN.meldungen.filter(m => m.art === a.schluessel).length;
+    return '<button type="button" class="chip' + (a.wichtig ? " wichtig" : "") +
+           '" data-art="' + esc(a.schluessel) + '" aria-pressed="' +
+           (a.schluessel === filterArt) + '">' + esc(a.name) + " " + anzahl + "</button>";
+  }).join("");
+
+  document.getElementById("themaFilter").innerHTML =
+    '<option value="alle">Alle Themen</option>' +
+    DATEN.themen.map(t => {
+      const anzahl = DATEN.meldungen.filter(m => m.thema === t).length;
+      return '<option value="' + esc(t) + '">' + esc(t) + " (" + anzahl + ")</option>";
+    }).join("");
+}
+
+function zeichneListe(){
+  const treffer = DATEN.meldungen.filter(passt);
+  const zaehler = document.getElementById("zaehler");
+  zaehler.textContent = treffer.length === DATEN.meldungen.length
+    ? treffer.length + " Meldungen"
+    : treffer.length + " von " + DATEN.meldungen.length + " Meldungen";
+
+  if (!treffer.length){
+    document.getElementById("liste").innerHTML =
+      '<p class="leer">Dazu gibt es keine Meldung. Filter zur&uuml;cksetzen und neu suchen.</p>';
+    return;
+  }
+
+  const artName = {};
+  ARTEN.forEach(a => artName[a.schluessel] = a.name);
+
+  document.getElementById("liste").innerHTML = treffer.map(m => {
+    const datum = m.datum_ungenau
+      ? '<span class="ungenau" title="Diese Meldung nennt kein Datum. Aus der Reihenfolge der ' +
+        'Übersichtsseite eingeordnet.">um den ' + esc(datumLesbar(m.datum)) + '</span>'
+      : esc(datumLesbar(m.datum));
+
+    return '<article class="karte">' +
+      '<div class="karte-kopf">' +
+        '<span class="marke ' + esc(m.art) + '">' + esc(artName[m.art] || m.art) + '</span>' +
+        '<span class="thema">' + esc(m.thema) + '</span>' +
+        '<span class="datum">' + datum + '</span>' +
+      '</div>' +
+      '<h2>' + esc(m.schlagzeile) + '</h2>' +
+      '<p class="dreizeiler">' + esc(m.dreizeiler) + '</p>' +
+      (m.zitat ? '<blockquote>&bdquo;' + esc(m.zitat) + '&ldquo;</blockquote>' : '') +
+      '<div class="karte-fuss">' +
+        '<a class="original" href="' + esc(m.url) + '" target="_blank" rel="noopener">Zum Original</a>' +
+        (m.nummer ? '<span class="nummer">Presseinformation Nr. ' + esc(m.nummer) + '</span>' : '') +
+      '</div>' +
+    '</article>';
+  }).join("");
+}
+
+document.getElementById("artFilter").addEventListener("click", function(e){
+  const knopf = e.target.closest(".chip");
+  if (!knopf) return;
+  filterArt = knopf.dataset.art;
+  this.querySelectorAll(".chip").forEach(c =>
+    c.setAttribute("aria-pressed", String(c.dataset.art === filterArt)));
+  zeichneListe();
+});
+
+document.getElementById("themaFilter").addEventListener("change", function(){
+  filterThema = this.value;
+  zeichneListe();
+});
+
+document.getElementById("suche").addEventListener("input", function(){
+  suchtext = this.value.trim().toLowerCase();
+  zeichneListe();
+});
+
+document.getElementById("stand").textContent =
+  "Datenstand: " + datumLesbar(DATEN.stand) + " · " + DATEN.meldungen.length +
+  " Meldungen aus dem Jahr " + DATEN.jahr + ".";
+
+zeichneKennzahlen();
+zeichneFilter();
+zeichneListe();
+</script>
+</body>
+</html>

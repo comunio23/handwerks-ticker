@@ -1,0 +1,6 @@
+# Zwischenspeicher der abgerufenen Seiten - gehoert nicht ins Repository
+daten/cache/
+
+# Windows
+Thumbs.db
+desktop.ini

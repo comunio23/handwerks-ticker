@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Handwerks-Ticker</title>
+<style>
+  /* Farben aus dem Original-CSS der Handwerkskammer Potsdam (style/cdi21/custom.css) */
+  :root{
+    --blau:#073070;
+    --blau-hell:#408fe5;
+    --blau-flaeche:#d0e3f9;
+    --signal:#b8003f;
+    --orange:#ff8d25;
+    --text:#1c1c1c;
+    --grau:#5a5a5a;
+    --linie:#e3e6ea;
+    --flaeche:#f5f7fa;
+    --weiss:#fff;
+    --radius:14px;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;background:var(--flaeche);color:var(--text);
+    font-family:"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+    font-size:17px;line-height:1.55;
+  }
+
+  /* ---------- Kopf ---------- */
+  header{background:var(--blau);color:#fff;padding:22px 18px 20px}
+  .kopf-innen{max-width:760px;margin:0 auto}
+  h1{margin:0;font-size:1.5rem;letter-spacing:-.02em}
+  .unterzeile{margin:6px 0 0;font-size:.95rem;opacity:.85}
+  .kennzahlen{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap}
+  .kennzahl{background:rgba(255,255,255,.12);border-radius:10px;padding:8px 12px;flex:1;min-width:96px}
+  .kennzahl b{display:block;font-size:1.3rem;line-height:1.2}
+  .kennzahl span{font-size:.75rem;opacity:.85}
+
+  /* ---------- Filter ---------- */
+  .filter{position:sticky;top:0;z-index:10;background:var(--weiss);
+          border-bottom:1px solid var(--linie);padding:12px 18px}
+  .filter-innen{max-width:760px;margin:0 auto}
+  .chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:2px;-webkit-overflow-scrolling:touch}
+  .chips::-webkit-scrollbar{height:0}
+  .chip{flex:0 0 auto;border:1px solid var(--linie);background:var(--weiss);color:var(--grau);
+        border-radius:999px;padding:9px 15px;font-size:.9rem;cursor:pointer;white-space:nowrap;
+        font-family:inherit;min-height:40px}
+  .chip:hover{border-color:var(--blau-hell)}
+  .chip[aria-pressed="true"]{background:var(--blau);border-color:var(--blau);color:#fff;font-weight:600}
+  .chip.wichtig{border-color:var(--signal);color:var(--signal);font-weight:600}
+  .chip.wichtig[aria-pressed="true"]{background:var(--signal);border-color:var(--signal);color:#fff}
+  .zeile2{display:flex;gap:8px;margin-top:10px}
+  .zeile2 select,.zeile2 input{
+    flex:1;min-width:0;font:inherit;font-size:.9rem;padding:9px 11px;
+    border:1px solid var(--linie);border-radius:10px;background:var(--weiss);color:var(--text);min-height:40px}
+  .zeile2 input::placeholder{color:#9aa1a9}
+
+  /* ---------- Liste ---------- */
+  main{max-width:760px;margin:0 auto;padding:16px 18px 40px}
+  .zaehler{font-size:.85rem;color:var(--grau);margin:2px 0 14px}
+  .karte{background:var(--weiss);border:1px solid var(--linie);border-radius:var(--radius);
+         padding:16px;margin-bottom:12px}
+  .karte-kopf{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:9px}
+  .marke{font-size:.72rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
+         padding:4px 9px;border-radius:6px;background:var(--blau-flaeche);color:var(--blau)}
+  .marke.politik{background:var(--signal);color:#fff}
+  .marke.zahlen{background:var(--orange);color:#3a2000}
+  .marke.bericht{background:var(--blau-hell);color:#fff}
+  .marke.ehrung,.marke.termin{background:var(--blau-flaeche);color:var(--blau)}
+  .datum{font-size:.8rem;color:var(--grau);margin-left:auto;flex-shrink:0}
+  .datum .ungenau{cursor:help;border-bottom:1px dotted var(--grau)}
+  .thema{font-size:.8rem;color:var(--blau-hell);font-weight:600}
+  h2{margin:0 0 7px;font-size:1.12rem;line-height:1.35;letter-spacing:-.01em}
+  .dreizeiler{margin:0;color:#333}
+  blockquote{margin:12px 0 0;padding:10px 14px;background:var(--flaeche);
+             border-left:3px solid var(--blau-hell);border-radius:0 8px 8px 0;
+             font-size:.94rem;color:#333}
+  .karte-fuss{margin-top:13px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .original{display:inline-block;color:var(--blau);text-decoration:none;font-weight:600;
+            font-size:.9rem;border:1px solid var(--blau);border-radius:9px;padding:9px 14px;min-height:40px}
+  .original:hover{background:var(--blau);color:#fff}
+  .nummer{font-size:.78rem;color:var(--grau)}
+  .leer{text-align:center;color:var(--grau);padding:44px 10px}
+
+  footer{max-width:760px;margin:0 auto;padding:0 18px 40px;font-size:.8rem;color:var(--grau)}
+  footer p{margin:0 0 8px}
+  footer a{color:var(--blau)}
+
+  @media (min-width:700px){
+    h1{font-size:1.85rem}
+    .karte{padding:20px 22px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="kopf-innen">
+    <h1>Handwerks-Ticker</h1>
+    <p class="unterzeile">Die Pressemitteilungen der Handwerkskammer Potsdam &ndash; kurz gefasst f&uuml;r die Handwerksjunioren.</p>
+    <div class="kennzahlen" id="kennzahlen"></div>
+  </div>
+</header>
+
+<div class="filter">
+  <div class="filter-innen">
+    <div class="chips" id="artFilter" role="group" aria-label="Nach Art filtern"></div>
+    <div class="zeile2">
+      <select id="themaFilter" aria-label="Nach Thema filtern"></select>
+      <input id="suche" type="search" placeholder="Suchen &hellip;" aria-label="Volltextsuche">
+    </div>
+  </div>
+</div>
+
+<main>
+  <p class="zaehler" id="zaehler"></p>
+  <div id="liste"></div>
+</main>
+
+<footer>
+  <p><strong>Zu den Zusammenfassungen:</strong> Schlagzeile und Kurztext sind redaktionelle
+     Zusammenfassungen der jeweiligen Pressemitteilung. Ma&szlig;geblich ist immer das verlinkte
+     Original auf hwk-potsdam.de. W&ouml;rtliche Zitate sind unver&auml;ndert &uuml;bernommen.</p>
+  <p>Quelle aller Meldungen: <a href="https://www.hwk-potsdam.de/artikel/pressemitteilungen-2026-9,735,6713.html"
+     target="_blank" rel="noopener">Handwerkskammer Potsdam, Pressemitteilungen 2026</a>.
+     Dies ist ein Arbeitsstand f&uuml;r die Handwerksjunioren, kein offizielles Angebot der Kammer.</p>
+  <p id="stand"></p>
+</footer>
+
+<script>
+const DATEN = /*__DATEN__*/null/*__DATEN_ENDE__*/;
+
+/* Pflicht bei jedem innerHTML: Sonderzeichen entschaerfen (siehe KMS [L-0024]) */
+function esc(s){
+  return String(s == null ? "" : s)
+    .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;").replace(/'/g,"&#39;");
+}
+
+const ARTEN = [
+  {schluessel:"alle",     name:"Alle"},
+  {schluessel:"politik",  name:"Politik & Forderungen", wichtig:true},
+  {schluessel:"zahlen",   name:"Zahlen & Fakten"},
+  {schluessel:"bericht",  name:"Aus den Betrieben"},
+  {schluessel:"ehrung",   name:"Ehrungen"},
+  {schluessel:"termin",   name:"Termine"}
+];
+
+const MONATSNAMEN = ["Januar","Februar","März","April","Mai","Juni",
+                     "Juli","August","September","Oktober","November","Dezember"];
+
+let filterArt = "alle";
+let filterThema = "alle";
+let suchtext = "";
+
+function datumLesbar(iso){
+  const t = iso.split("-");
+  return parseInt(t[2],10) + ". " + MONATSNAMEN[parseInt(t[1],10)-1] + " " + t[0];
+}
+
+function passt(m){
+  if (filterArt !== "alle" && m.art !== filterArt) return false;
+  if (filterThema !== "alle" && m.thema !== filterThema) return false;
+  if (suchtext) {
+    const heu = (m.schlagzeile + " " + m.dreizeiler + " " + m.titel + " " +
+                 m.thema + " " + (m.zitat || "")).toLowerCase();
+    if (heu.indexOf(suchtext) === -1) return false;
+  }
+  return true;
+}
+
+function zeichneKennzahlen(){
+  const politisch = DATEN.meldungen.filter(m => m.art === "politik").length;
+  const felder = [
+    {wert: DATEN.meldungen.length, text: "Meldungen"},
+    {wert: politisch,              text: "davon politisch"},
+    {wert: DATEN.themen.length,    text: "Themen"}
+  ];
+  document.getElementById("kennzahlen").innerHTML = felder.map(f =>
+    '<div class="kennzahl"><b>' + esc(f.wert) + '</b><span>' + esc(f.text) + '</span></div>'
+  ).join("");
+}
+
+function zeichneFilter(){
+  document.getElementById("artFilter").innerHTML = ARTEN.map(a => {
+    const anzahl = a.schluessel === "alle"
+      ? DATEN.meldungen.length
+      : DATEN.meldungen.filter(m => m.art === a.schluessel).length;
+    return '<button type="button" class="chip' + (a.wichtig ? " wichtig" : "") +
+           '" data-art="' + esc(a.schluessel) + '" aria-pressed="' +
+           (a.schluessel === filterArt) + '">' + esc(a.name) + " " + anzahl + "</button>";
+  }).join("");
+
+  document.getElementById("themaFilter").innerHTML =
+    '<option value="alle">Alle Themen</option>' +
+    DATEN.themen.map(t => {
+      const anzahl = DATEN.meldungen.filter(m => m.thema === t).length;
+      return '<option value="' + esc(t) + '">' + esc(t) + " (" + anzahl + ")</option>";
+    }).join("");
+}
+
+function zeichneListe(){
+  const treffer = DATEN.meldungen.filter(passt);
+  const zaehler = document.getElementById("zaehler");
+  zaehler.textContent = treffer.length === DATEN.meldungen.length
+    ? treffer.length + " Meldungen"
+    : treffer.length + " von " + DATEN.meldungen.length + " Meldungen";
+
+  if (!treffer.length){
+    document.getElementById("liste").innerHTML =
+      '<p class="leer">Dazu gibt es keine Meldung. Filter zur&uuml;cksetzen und neu suchen.</p>';
+    return;
+  }
+
+  const artName = {};
+  ARTEN.forEach(a => artName[a.schluessel] = a.name);
+
+  document.getElementById("liste").innerHTML = treffer.map(m => {
+    const datum = m.datum_ungenau
+      ? '<span class="ungenau" title="Diese Meldung nennt kein Datum. Aus der Reihenfolge der ' +
+        'Übersichtsseite eingeordnet.">um den ' + esc(datumLesbar(m.datum)) + '</span>'
+      : esc(datumLesbar(m.datum));
+
+    return '<article class="karte">' +
+      '<div class="karte-kopf">' +
+        '<span class="marke ' + esc(m.art) + '">' + esc(artName[m.art] || m.art) + '</span>' +
+        '<span class="thema">' + esc(m.thema) + '</span>' +
+        '<span class="datum">' + datum + '</span>' +
+      '</div>' +
+      '<h2>' + esc(m.schlagzeile) + '</h2>' +
+      '<p class="dreizeiler">' + esc(m.dreizeiler) + '</p>' +
+      (m.zitat ? '<blockquote>&bdquo;' + esc(m.zitat) + '&ldquo;</blockquote>' : '') +
+      '<div class="karte-fuss">' +
+        '<a class="original" href="' + esc(m.url) + '" target="_blank" rel="noopener">Zum Original</a>' +
+        (m.nummer ? '<span class="nummer">Presseinformation Nr. ' + esc(m.nummer) + '</span>' : '') +
+      '</div>' +
+    '</article>';
+  }).join("");
+}
+
+document.getElementById("artFilter").addEventListener("click", function(e){
+  const knopf = e.target.closest(".chip");
+  if (!knopf) return;
+  filterArt = knopf.dataset.art;
+  this.querySelectorAll(".chip").forEach(c =>
+    c.setAttribute("aria-pressed", String(c.dataset.art === filterArt)));
+  zeichneListe();
+});
+
+document.getElementById("themaFilter").addEventListener("change", function(){
+  filterThema = this.value;
+  zeichneListe();
+});
+
+document.getElementById("suche").addEventListener("input", function(){
+  suchtext = this.value.trim().toLowerCase();
+  zeichneListe();
+});
+
+document.getElementById("stand").textContent =
+  "Datenstand: " + datumLesbar(DATEN.stand) + " · " + DATEN.meldungen.length +
+  " Meldungen aus dem Jahr " + DATEN.jahr + ".";
+
+zeichneKennzahlen();
+zeichneFilter();
+zeichneListe();
+</script>
+</body>
+</html>
