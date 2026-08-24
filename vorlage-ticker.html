@@ -11,7 +11,6 @@
     --blau-hell:#408fe5;
     --blau-flaeche:#d0e3f9;
     --signal:#b8003f;
-    --orange:#ff8d25;
     --text:#1c1c1c;
     --grau:#5a5a5a;
     --linie:#e3e6ea;
@@ -26,332 +25,224 @@
     font-family:"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
     font-size:17px;line-height:1.55;
   }
+  .mitte{max-width:1080px;margin:0 auto;padding:0 18px}
 
   /* ---------- Kopf ---------- */
-  header{background:var(--blau);color:#fff;padding:22px 18px 20px}
-  .kopf-innen{max-width:760px;margin:0 auto}
+  header{background:var(--blau);color:#fff;padding:20px 0 18px}
   h1{margin:0;font-size:1.5rem;letter-spacing:-.02em}
   .unterzeile{margin:6px 0 0;font-size:.95rem;opacity:.85}
-  .kennzahlen{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap}
+  .kennzahlen{display:flex;gap:8px;margin-top:15px;flex-wrap:wrap}
   .kennzahl{background:rgba(255,255,255,.12);border-radius:10px;padding:8px 12px;flex:1;min-width:96px}
-  .kennzahl b{display:block;font-size:1.3rem;line-height:1.2}
+  .kennzahl b{display:block;font-size:1.25rem;line-height:1.25}
   .kennzahl span{font-size:.75rem;opacity:.85}
 
-  /* ---------- Ansichtswechsel ---------- */
-  .reiter{display:flex;gap:8px;margin-top:16px}
-  .reiter button{flex:1;font:inherit;font-size:.95rem;font-weight:600;cursor:pointer;
-                 padding:11px 10px;border-radius:10px;min-height:44px;
-                 border:1px solid rgba(255,255,255,.35);background:transparent;color:#fff}
-  .reiter button[aria-selected="true"]{background:#fff;color:var(--blau);border-color:#fff}
+  /* ---------- Top-Forderungen: das Erste, was man sieht ---------- */
+  .forderungen{padding:18px 0 4px}
+  .forderungen-kopf{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:4px}
+  .forderungen-kopf h2{margin:0;font-size:1.12rem;color:var(--blau)}
+  .forderungen-kopf .kriterium{font-size:.78rem;color:var(--grau)}
+  .forderungs-reihe{display:grid;gap:11px;margin-top:12px}
+  .forderung{background:var(--blau);color:#fff;border-radius:var(--radius);padding:15px 16px}
+  .forderung summary{cursor:pointer;list-style:none;display:block;min-height:44px;padding:2px 0}
+  .forderung summary::-webkit-details-marker{display:none}
+  .forderung-kopfzeile{display:flex;gap:9px;align-items:flex-start}
+  .forderung-rang{background:#fff;color:var(--blau);font-weight:700;border-radius:6px;
+                  min-width:23px;height:23px;text-align:center;line-height:23px;font-size:.8rem;
+                  flex:0 0 auto;margin-top:2px}
+  .forderung-titel{font-size:1rem;font-weight:600;line-height:1.35}
+  .forderung-zeile2{display:flex;gap:7px;align-items:center;flex-wrap:wrap;margin:9px 0 0 32px}
+  .adressat{background:rgba(255,255,255,.18);border-radius:999px;padding:3px 10px;
+            font-size:.75rem;font-weight:600}
+  .wann{font-size:.78rem;opacity:.85}
+  .mehr-zeigen{font-size:.78rem;opacity:.8;margin:7px 0 0 32px;text-decoration:underline}
+  .forderung[open] .mehr-zeigen{display:none}
+  .forderung p.worum{font-size:.87rem;margin:11px 0 0;opacity:.94;line-height:1.5}
+  .forderung blockquote{background:rgba(255,255,255,.1);border-left:3px solid rgba(255,255,255,.5);
+                        color:#fff;font-size:.85rem;margin:11px 0 0;padding:9px 12px}
+  .beleg-fuss{font-size:.76rem;opacity:.85;margin:7px 0 0}
+  .beleg-fuss a{color:#fff}
 
-  /* ---------- Themen-Ansicht ---------- */
-  .lesehilfe{background:var(--blau-flaeche);border:1px solid #b9d4f4;border-radius:var(--radius);
-             padding:14px 16px;margin-bottom:14px;font-size:.87rem;color:#0d3163;line-height:1.5}
-  .feld{background:var(--weiss);border:1px solid var(--linie);border-radius:var(--radius);
-        padding:16px;margin-bottom:12px}
-  .feld h3{margin:0 0 10px;font-size:1.05rem}
-  .werte{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
-  .wert{flex:1;min-width:88px;background:var(--flaeche);border-radius:9px;padding:8px 10px}
-  .wert b{display:block;font-size:1.15rem;line-height:1.25}
-  .wert span{font-size:.72rem;color:var(--grau);display:block;line-height:1.3}
-  .wert.warn b{color:var(--signal)}
-  .verlauf{display:block;width:100%;height:46px;margin-bottom:6px}
-  .saeule.wenig{fill:var(--blau-flaeche)}
-  .saeule.viel{fill:var(--blau-hell)}
-  .saeule.leer{fill:#e6e9ed}
-  .monate{display:flex;gap:4px;font-size:.65rem;color:var(--grau);margin-bottom:12px}
-  .monate span{flex:1;text-align:center}
-  .befund{font-size:.88rem;margin:0 0 10px;color:#333}
-  .befund.mahnung{color:var(--signal);font-weight:600}
-  .feld-liste{margin:0;padding-left:18px;font-size:.88rem}
-  .feld-liste li{margin-bottom:4px}
-  .feld-liste a{color:var(--blau);text-decoration:none}
-  .feld-liste a:hover{text-decoration:underline}
-  .keine{font-size:.88rem;color:var(--grau);font-style:italic;margin:0}
-
-  /* ---------- Abgrenzung ---------- */
-  .hinweis{background:#fff8e8;border-bottom:1px solid #f0dfba;padding:11px 18px}
-  .hinweis-innen{max-width:760px;margin:0 auto;font-size:.84rem;color:#5c4708;line-height:1.45}
-  .hinweis b{color:#3d2f05}
-
-  /* ---------- Filter ---------- */
+  /* ---------- Filter: eine Reihe, feste Hoehe ---------- */
   .filter{position:sticky;top:0;z-index:10;background:var(--weiss);
-          border-bottom:1px solid var(--linie);padding:12px 18px}
-  .filter-innen{max-width:760px;margin:0 auto}
-  /* Die Knopfreihen scrollen seitlich. Damit auf dem Handy erkennbar ist,
-     dass rechts noch mehr kommt, blendet ein Verlauf die Kante weich aus. */
+          border-bottom:1px solid var(--linie);padding:11px 0 12px;margin-top:14px}
   .chip-reihe{position:relative}
   .chip-reihe::after{content:"";position:absolute;top:0;right:0;bottom:0;width:26px;
                      pointer-events:none;opacity:0;transition:opacity .15s;
                      background:linear-gradient(to right,rgba(255,255,255,0),var(--weiss))}
   .chip-reihe.mehr-rechts::after{opacity:1}
-  .chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:2px;-webkit-overflow-scrolling:touch;
-         scrollbar-width:none}
+  .chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none;
+         -webkit-overflow-scrolling:touch}
   .chips::-webkit-scrollbar{height:0}
   .chip{flex:0 0 auto;border:1px solid var(--linie);background:var(--weiss);color:var(--grau);
-        border-radius:999px;padding:9px 15px;font-size:.9rem;cursor:pointer;white-space:nowrap;
-        font-family:inherit;min-height:40px}
+        border-radius:999px;padding:10px 15px;font-size:.9rem;cursor:pointer;white-space:nowrap;
+        font-family:inherit;min-height:44px}
   .chip:hover{border-color:var(--blau-hell)}
   .chip[aria-pressed="true"]{background:var(--blau);border-color:var(--blau);color:#fff;font-weight:600}
-  .chip.wichtig{border-color:var(--signal);color:var(--signal);font-weight:600}
-  .chip.wichtig[aria-pressed="true"]{background:var(--signal);border-color:var(--signal);color:#fff}
-  .zeile2{display:flex;gap:8px;margin-top:10px}
-  .zeile2 input{
-    flex:1;min-width:0;font:inherit;font-size:.9rem;padding:9px 11px;
-    border:1px solid var(--linie);border-radius:10px;background:var(--weiss);color:var(--text);min-height:40px}
-  .zeile2 input::placeholder{color:#9aa1a9}
-  .chips.themen{margin-top:9px}
-  .chips.themen .chip{font-size:.85rem;padding:7px 13px;min-height:36px}
-  .chips.themen .chip[aria-pressed="true"]{background:var(--blau-hell);border-color:var(--blau-hell)}
-  .chips.themen .chip.nachrangig{opacity:.6}
+  .chip.forderungen-knopf{border-color:var(--signal);color:var(--signal);font-weight:600}
+  .chip.forderungen-knopf[aria-pressed="true"]{background:var(--signal);border-color:var(--signal);color:#fff}
+  .chip.nachrangig{opacity:.6}
+  .suchzeile{margin-top:9px}
+  .suchzeile input{width:100%;font:inherit;font-size:.92rem;padding:10px 12px;min-height:44px;
+    border:1px solid var(--linie);border-radius:10px;background:var(--weiss);color:var(--text)}
+  .suchzeile input::placeholder{color:#9aa1a9}
 
   /* ---------- Liste ---------- */
-  main{max-width:760px;margin:0 auto;padding:16px 18px 40px}
-  .zaehler{font-size:.85rem;color:var(--grau);margin:2px 0 14px}
-  .karte{background:var(--weiss);border:1px solid var(--linie);border-radius:var(--radius);
-         padding:16px;margin-bottom:12px}
-  .karte-kopf{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:9px}
-  .marke{font-size:.72rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
-         padding:4px 9px;border-radius:6px;background:var(--blau-flaeche);color:var(--blau)}
-  .marke.politik{background:var(--signal);color:#fff}
-  .marke.zahlen{background:var(--orange);color:#3a2000}
-  .marke.bericht{background:var(--blau-hell);color:#fff}
-  .marke.ehrung,.marke.termin{background:var(--blau-flaeche);color:var(--blau)}
-  .datum{font-size:.8rem;color:var(--grau);margin-left:auto;flex-shrink:0}
-  .datum .ungenau{cursor:help;border-bottom:1px dotted var(--grau)}
-  .thema{font-size:.8rem;color:var(--blau-hell);font-weight:600}
-  h2{margin:0 0 7px;font-size:1.12rem;line-height:1.35;letter-spacing:-.01em}
-  .dreizeiler{margin:0;color:#333}
-  blockquote{margin:12px 0 0;padding:10px 14px;background:var(--flaeche);
-             border-left:3px solid var(--blau-hell);border-radius:0 8px 8px 0;
-             font-size:.94rem;color:#333}
-  .karte-fuss{margin-top:13px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-  .original{display:inline-block;color:var(--blau);text-decoration:none;font-weight:600;
-            font-size:.9rem;border:1px solid var(--blau);border-radius:9px;padding:9px 14px;min-height:40px}
-  .original:hover{background:var(--blau);color:#fff}
-  .nummer{font-size:.78rem;color:var(--grau)}
-  .leer{text-align:center;color:var(--grau);padding:44px 10px}
-
-  /* ---------- Bloecke ---------- */
+  main{padding-bottom:36px}
+  .zaehler{font-size:.85rem;color:var(--grau);margin:14px 0 12px}
   .block-titel{margin:22px 0 10px;font-size:.82rem;font-weight:700;letter-spacing:.06em;
                text-transform:uppercase;color:var(--blau);display:flex;align-items:center;gap:8px}
   .block-titel:first-child{margin-top:0}
   .block-zahl{background:var(--blau-flaeche);color:var(--blau);border-radius:999px;
               padding:1px 9px;font-size:.78rem;letter-spacing:0}
-  .marke.neu{background:var(--signal);color:#fff}
-  .marke.unsortiert{background:var(--orange);color:#3a2000}
+  .karte{background:var(--weiss);border:1px solid var(--linie);border-radius:var(--radius);
+         padding:16px;margin-bottom:11px}
+  .karte-kopf{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+  .marke{font-size:.75rem;font-weight:600}
+  .marke.forderung-marke{color:var(--signal)}
+  .marke.forderung-marke::before{content:"● "}
+  .marke.neu{background:var(--signal);color:#fff;border-radius:6px;padding:3px 8px;font-weight:700}
+  .marke.unsortiert{color:#a15c00}
+  .thema{font-size:.82rem;color:var(--blau-hell);font-weight:600}
+  .datum{font-size:.82rem;color:var(--grau);margin-left:auto;flex-shrink:0}
+  .datum .ungenau{cursor:help;border-bottom:1px dotted var(--grau)}
   .karte.ist-neu{border-color:var(--signal);box-shadow:0 0 0 2px rgba(184,0,63,.09)}
+  h2.schlagzeile{margin:0 0 7px;font-size:1.14rem;line-height:1.35;letter-spacing:-.01em}
+  .dreizeiler{margin:0;color:#333}
   .dreizeiler.offen{color:var(--grau);font-style:italic}
-  details.nebensache{margin-top:26px;border-top:1px solid var(--linie);padding-top:16px}
-  details.nebensache summary{cursor:pointer;font-size:.82rem;font-weight:700;letter-spacing:.06em;
-                             text-transform:uppercase;color:var(--grau);padding:8px 0;
-                             display:flex;align-items:center;gap:8px}
-  details.nebensache summary::-webkit-details-marker{color:var(--grau)}
-  .nebensache-hinweis{font-size:.83rem;color:var(--grau);margin:2px 0 14px;font-style:italic}
+  blockquote.zitat{margin:12px 0 0;padding:10px 14px;background:var(--flaeche);
+             border-left:3px solid var(--blau-hell);border-radius:0 8px 8px 0;
+             font-size:.93rem;color:#333}
+  .karte-fuss{margin-top:13px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .original{display:inline-flex;align-items:center;color:var(--blau);text-decoration:none;
+            font-weight:600;font-size:.9rem;border:1px solid var(--blau);border-radius:9px;
+            padding:10px 14px;min-height:44px}
+  .original:hover{background:var(--blau);color:#fff}
+  .absender{font-size:.78rem;color:var(--grau)}
+  .leer{text-align:center;color:var(--grau);padding:40px 10px}
 
-  footer{max-width:760px;margin:0 auto;padding:0 18px 40px;font-size:.8rem;color:var(--grau)}
+  details.nebensache{margin-top:26px;border-top:1px solid var(--linie);padding-top:14px}
+  details.nebensache summary{cursor:pointer;font-size:.82rem;font-weight:700;letter-spacing:.06em;
+                             text-transform:uppercase;color:var(--grau);padding:10px 0;
+                             min-height:44px;display:flex;align-items:center;gap:8px}
+  .nebensache-hinweis{font-size:.85rem;color:var(--grau);margin:2px 0 14px;font-style:italic}
+
+  footer{padding:0 0 36px;font-size:.82rem;color:var(--grau)}
   footer p{margin:0 0 8px}
   footer a{color:var(--blau)}
 
-  /* ---------- Top-Forderungen ---------- */
-  .spalte-seite{margin-bottom:22px}
-  .forderungen-kasten{background:var(--blau);color:#fff;border-radius:var(--radius);padding:18px}
-  .forderungen-kasten h2{font-size:1.05rem;margin:0 0 4px;color:#fff}
-  .forderungen-kasten .kriterium{font-size:.75rem;opacity:.75;margin:0 0 14px;line-height:1.45}
-  .forderung{border-top:1px solid rgba(255,255,255,.2);padding:13px 0 0;margin-top:13px}
-  .forderung:first-of-type{border-top:0;margin-top:0;padding-top:0}
-  .forderung summary{cursor:pointer;list-style:none;display:grid;
-                     grid-template-columns:auto 1fr;gap:0 8px;align-items:start;
-                     padding:4px 0;min-height:40px}
-  .forderung summary::-webkit-details-marker{display:none}
-  .forderung-rang{background:#fff;color:var(--blau);font-weight:700;border-radius:6px;
-                  width:22px;height:22px;text-align:center;line-height:22px;font-size:.8rem;
-                  grid-row:1;margin-top:1px}
-  .forderung-titel{font-size:.98rem;font-weight:600;line-height:1.35;grid-row:1}
-  .adressat{grid-column:2;justify-self:start;margin-top:7px;background:rgba(255,255,255,.16);
-            border-radius:999px;padding:3px 10px;font-size:.72rem;font-weight:600}
-  .forderung:not([open]) summary .adressat{margin-bottom:2px}
-  .forderung p.worum{font-size:.84rem;margin:8px 0 0;opacity:.92;line-height:1.5}
-  .forderung blockquote{background:rgba(255,255,255,.1);border-left:3px solid rgba(255,255,255,.5);
-                        color:#fff;font-size:.82rem;margin:10px 0 0;padding:9px 12px}
-  .beleg-fuss{font-size:.72rem;opacity:.8;margin:6px 0 0}
-  .beleg-fuss a{color:#fff}
-
-  /* ---------- Handy ----------
-     Alles, was mit dem Daumen getroffen werden muss, ist mindestens 44 Pixel
-     hoch. Die kleinsten Schriften wachsen, damit man sie unterwegs lesen kann.
-     Die klebende Filterleiste bleibt schmal, sonst frisst sie den Bildschirm. */
+  /* ---------- Handy ---------- */
   @media (max-width:699px){
     body{font-size:16px}
-    header{padding:18px 16px 16px}
-    .filter{padding:9px 16px}
-    .hinweis{padding:10px 16px}
-    main{padding:14px 16px 32px}
-
-    .chip{min-height:44px;padding:11px 15px;font-size:.92rem}
-    .chips.themen .chip{min-height:44px;padding:11px 14px;font-size:.88rem}
-    .zeile2{margin-top:7px}
-    .zeile2 input{min-height:44px;font-size:1rem}
-    .chips.themen{margin-top:7px}
-    .reiter button{min-height:46px}
-    .original{min-height:44px;display:inline-flex;align-items:center;font-size:.95rem}
-
-    .marke{font-size:.76rem;padding:5px 9px}
-    .thema{font-size:.82rem}
-    .datum{font-size:.82rem}
-    .nummer{font-size:.8rem}
-    .adressat{font-size:.8rem;padding:4px 11px}
-    .beleg-fuss{font-size:.8rem;line-height:1.5}
+    h1{font-size:1.35rem}
+    .mitte{padding:0 16px}
+    .forderung-titel{font-size:.97rem}
+    .karte{padding:15px}
     .beleg-fuss a{display:inline-block;padding:7px 3px}
-
-    /* Beim Scrollen weicht das Suchfeld - die klebende Leiste soll nicht
-       ein Fuenftel des Bildschirms belegen. Oben ist es sofort wieder da. */
-    .filter.kompakt .zeile2{display:none}
-    .forderungen-kasten .kriterium{font-size:.8rem}
-    .forderung p.worum{font-size:.88rem}
-    .forderung blockquote{font-size:.86rem}
-    .lesehilfe{font-size:.9rem}
-    .wert span{font-size:.76rem}
-    .befund{font-size:.92rem}
-    .feld-liste{font-size:.92rem}
-    .nebensache-hinweis{font-size:.87rem}
-    details.nebensache summary{min-height:44px;font-size:.85rem}
-    h2{font-size:1.16rem}
-    .karte{padding:15px 15px}
   }
-
-  /* Sehr schmale Geraete (iPhone SE und aehnlich) */
   @media (max-width:359px){
     .kennzahl{min-width:0;padding:7px 8px}
     .kennzahl b{font-size:1.05rem}
     .kennzahl span{font-size:.76rem;line-height:1.25}
-    h1{font-size:1.3rem}
+    h1{font-size:1.25rem}
   }
 
-  @media (min-width:700px){
+  /* ---------- Breite Bildschirme ---------- */
+  @media (min-width:900px){
     h1{font-size:1.85rem}
-    .karte{padding:20px 22px}
-  }
-  @media (min-width:1000px){
-    main{max-width:1120px}
-    .inhalt{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:26px;align-items:start}
-    .spalte-liste{grid-column:1;grid-row:1}
-    .spalte-seite{grid-column:2;grid-row:1;position:sticky;top:150px;margin-bottom:0}
-    .filter-innen,.kopf-innen,.hinweis-innen,footer{max-width:1120px}
+    .forderungs-reihe{grid-template-columns:repeat(3,1fr)}
+    .karte{padding:19px 21px}
   }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="kopf-innen">
+  <div class="mitte">
     <h1>Handwerks-Ticker</h1>
-    <p class="unterzeile">Die Pressemitteilungen der Handwerkskammer Potsdam &ndash; kurz gefasst f&uuml;r die Handwerksjunioren.</p>
+    <p class="unterzeile">Was das Handwerk gerade fordert &ndash; aus den Pressemitteilungen
+       der Handwerkskammer Potsdam und des Handwerkskammertages Brandenburg.</p>
     <div class="kennzahlen" id="kennzahlen"></div>
-    <div class="reiter" role="tablist">
-      <button type="button" id="reiterMeldungen" role="tab" aria-selected="true">Meldungen</button>
-      <button type="button" id="reiterThemen" role="tab" aria-selected="false">Themen im Verlauf</button>
-    </div>
   </div>
 </header>
 
-<div class="hinweis">
-  <div class="hinweis-innen">
-    <b>Kein offizielles Angebot der Handwerkskammer Potsdam.</b>
-    Diese Seite ist ein privat gepflegter &Uuml;berblick f&uuml;r die Handwerksjunioren.
-    Schlagzeile und Kurztext sind redaktionelle Zusammenfassungen &ndash;
-    ma&szlig;geblich ist immer die verlinkte Originalmeldung auf hwk-potsdam.de.
+<section class="forderungen">
+  <div class="mitte">
+    <div class="forderungen-kopf">
+      <h2>Das fordert das Handwerk gerade</h2>
+      <span class="kriterium" id="kriterium"></span>
+    </div>
+    <div class="forderungs-reihe" id="forderungsReihe"></div>
   </div>
-</div>
+</section>
 
 <div class="filter">
-  <div class="filter-innen">
+  <div class="mitte">
     <div class="chip-reihe">
-      <div class="chips" id="artFilter" role="group" aria-label="Nach Art filtern"></div>
+      <div class="chips" id="filterKnoepfe" role="group" aria-label="Nach Thema filtern"></div>
     </div>
-    <div class="chip-reihe">
-      <div class="chips themen" id="themaFilter" role="group" aria-label="Nach Thema filtern"></div>
-    </div>
-    <div class="zeile2">
-      <input id="suche" type="search" placeholder="Suchen &hellip;" aria-label="Volltextsuche">
+    <div class="suchzeile">
+      <input id="suche" type="search" placeholder="In allen Meldungen suchen &hellip;"
+             aria-label="Volltextsuche">
     </div>
   </div>
 </div>
 
 <main>
-  <div id="ansichtMeldungen" class="inhalt">
-    <!-- Auf dem Handy stehen die Forderungen oben - dort sind sie die schnelle
-         Orientierung. Auf breiten Bildschirmen ruecken sie per Raster nach rechts. -->
-    <aside class="spalte-seite" id="forderungen"></aside>
-    <div class="spalte-liste">
-      <p class="zaehler" id="zaehler"></p>
-      <div id="liste"></div>
-    </div>
-  </div>
-  <div id="ansichtThemen" hidden>
-    <div class="lesehilfe">
-      <strong>Wie diese Ansicht zu lesen ist.</strong>
-      &bdquo;Genannt&ldquo; hei&szlig;t: Das Thema kommt in der Meldung vor &ndash; oft nur als
-      Aufz&auml;hlungspunkt in einer Meldung, die eigentlich von etwas anderem handelt.
-      &bdquo;Mit Substanz&ldquo; z&auml;hlt nur Meldungen, in denen das Thema mindestens
-      <span id="schwelleText"></span>-mal vorkommt. &bdquo;Eigene Meldung&ldquo; z&auml;hlt, wo es
-      das Hauptthema ist. Je weiter diese drei Zahlen auseinanderliegen, desto mehr wird ein
-      Thema mitgef&uuml;hrt, statt es zu f&uuml;hren.
-    </div>
-    <div id="felder"></div>
+  <div class="mitte">
+    <p class="zaehler" id="zaehler"></p>
+    <div id="liste"></div>
   </div>
 </main>
 
 <footer>
-  <p><strong>Zu den Zusammenfassungen:</strong> Schlagzeile und Kurztext sind redaktionelle
-     Zusammenfassungen der jeweiligen Pressemitteilung. Ma&szlig;geblich ist immer das verlinkte
-     Original auf hwk-potsdam.de. W&ouml;rtliche Zitate sind unver&auml;ndert &uuml;bernommen und
-     h&ouml;chstens am Satzende gek&uuml;rzt.</p>
-  <p>Quelle aller Meldungen: <a href="https://www.hwk-potsdam.de/artikel/pressemitteilungen-2026-9,735,6713.html"
-     target="_blank" rel="noopener">Handwerkskammer Potsdam, Pressemitteilungen 2026</a>.
-     Bilder der Kammer-Website werden bewusst nicht &uuml;bernommen.</p>
-  <p id="stand"></p>
+  <div class="mitte">
+    <p>Schlagzeile und Kurztext sind redaktionelle Zusammenfassungen der jeweiligen
+       Pressemitteilung. Ma&szlig;geblich ist immer die verlinkte Originalmeldung.
+       W&ouml;rtliche Zitate sind unver&auml;ndert &uuml;bernommen und h&ouml;chstens am
+       Satzende gek&uuml;rzt.</p>
+    <p>Quelle: <a href="https://www.hwk-potsdam.de/artikel/pressemitteilungen-2026-9,735,6713.html"
+       target="_blank" rel="noopener">Handwerkskammer Potsdam, Pressemitteilungen</a>.
+       <span id="stand"></span></p>
+  </div>
 </footer>
 
 <script>
 const DATEN = /*__DATEN__*/null/*__DATEN_ENDE__*/;
 
-/* Pflicht bei jedem innerHTML: Sonderzeichen entschaerfen (siehe KMS [L-0024]) */
+/* Pflicht bei jedem innerHTML: Sonderzeichen entschaerfen (KMS [L-0024]) */
 function esc(s){
   return String(s == null ? "" : s)
     .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
     .replace(/"/g,"&quot;").replace(/'/g,"&#39;");
 }
 
-const ARTEN = [
-  {schluessel:"alle",     name:"Alle"},
-  {schluessel:"politik",  name:"Politik & Forderungen", wichtig:true},
-  {schluessel:"zahlen",   name:"Zahlen & Fakten"},
-  {schluessel:"bericht",  name:"Aus den Betrieben"},
-  {schluessel:"ehrung",   name:"Ehrungen"},
-  {schluessel:"termin",   name:"Termine"}
-];
-
 const MONATSNAMEN = ["Januar","Februar","März","April","Mai","Juni",
                      "Juli","August","September","Oktober","November","Dezember"];
-
-let filterArt = "alle";
-let filterThema = "alle";
-let suchtext = "";
 
 function datumLesbar(iso){
   const t = iso.split("-");
   return parseInt(t[2],10) + ". " + MONATSNAMEN[parseInt(t[1],10)-1] + " " + t[0];
 }
 
-/* Eine Meldung kann zwei Themen tragen - der Knopf trifft beide. */
+function breiterBildschirm(){
+  return window.matchMedia("(min-width:900px)").matches;
+}
+
+/* Ein einziger Filter: entweder "alles", oder "nur Forderungen", oder ein Thema. */
+let filter = "alles";
+let suchtext = "";
+
 function hatThema(m, thema){
   return m.thema === thema || m.thema2 === thema;
 }
 
+function istForderung(m){
+  return m.art === "politik";
+}
+
 function passt(m){
-  if (filterArt !== "alle" && m.art !== filterArt) return false;
-  if (filterThema !== "alle" && !hatThema(m, filterThema)) return false;
+  if (filter === "forderungen" && !istForderung(m)) return false;
+  if (filter !== "alles" && filter !== "forderungen" && !hatThema(m, filter)) return false;
   if (suchtext) {
     const heu = (m.schlagzeile + " " + m.dreizeiler + " " + m.titel + " " + m.thema + " " +
                  (m.thema2 || "") + " " + m.absender + " " + (m.zitat || "")).toLowerCase();
@@ -360,104 +251,101 @@ function passt(m){
   return true;
 }
 
+/* ---------- Kopf ---------- */
 function zeichneKennzahlen(){
-  const politisch = DATEN.meldungen.filter(m => m.art === "politik").length;
+  const t = DATEN.letzter_abgleich.split("-");
+  const kurzDatum = parseInt(t[2],10) + ". " + MONATSNAMEN[parseInt(t[1],10)-1].slice(0,3) + ".";
   const felder = [
-    {wert: DATEN.meldungen.length, text: "Meldungen"},
-    {wert: politisch,              text: "davon politisch"},
-    {wert: DATEN.themen.length,    text: "Themen"}
+    {wert: DATEN.meldungen.length, text: "Meldungen " + DATEN.jahr},
+    {wert: DATEN.meldungen.filter(istForderung).length, text: "Forderungen"},
+    {wert: kurzDatum, text: "zuletzt geprüft"}
   ];
   document.getElementById("kennzahlen").innerHTML = felder.map(f =>
     '<div class="kennzahl"><b>' + esc(f.wert) + '</b><span>' + esc(f.text) + '</span></div>'
   ).join("");
 }
 
-function zeichneFilter(){
-  document.getElementById("artFilter").innerHTML = ARTEN.map(a => {
-    const anzahl = a.schluessel === "alle"
-      ? DATEN.meldungen.length
-      : DATEN.meldungen.filter(m => m.art === a.schluessel).length;
-    return '<button type="button" class="chip' + (a.wichtig ? " wichtig" : "") +
-           '" data-art="' + esc(a.schluessel) + '" aria-pressed="' +
-           (a.schluessel === filterArt) + '">' + esc(a.name) + " " + anzahl + "</button>";
-  }).join("");
+/* ---------- Die drei Forderungen ---------- */
+function zeichneForderungen(){
+  document.getElementById("kriterium").textContent = DATEN.forderungen_kriterium;
 
-  // Kriterien-Knoepfe: die Begriffe, unter denen man im Betrieb sucht.
-  // "Ehrungen & Termine" steht hinten und blasser - es ist der Nebenschauplatz.
-  document.getElementById("themaFilter").innerHTML =
-    '<button type="button" class="chip" data-thema="alle" aria-pressed="' +
-      (filterThema === "alle") + '">Alle Themen</button>' +
-    DATEN.themen.map(t => {
-      const anzahl = DATEN.meldungen.filter(m => hatThema(m, t)).length;
-      const blass = (t === "Ehrungen & Termine") ? " nachrangig" : "";
-      return '<button type="button" class="chip' + blass + '" data-thema="' + esc(t) +
-             '" aria-pressed="' + (t === filterThema) + '">' +
-             esc(t) + " " + anzahl + "</button>";
+  document.getElementById("forderungsReihe").innerHTML =
+    DATEN.forderungen.map((f, i) => {
+      const beleg = f.belege[0];
+      return '<details class="forderung"' + (breiterBildschirm() ? " open" : "") + '>' +
+        '<summary>' +
+          '<div class="forderung-kopfzeile">' +
+            '<span class="forderung-rang">' + (i + 1) + '</span>' +
+            '<span class="forderung-titel">' + esc(f.kurz) + '</span>' +
+          '</div>' +
+          '<div class="forderung-zeile2">' +
+            '<span class="adressat">an ' + esc(f.adressat) + '</span>' +
+            '<span class="wann">zuletzt ' + esc(datumLesbar(f.zuletzt)) +
+              (f.anzahl > 1 ? ' &middot; ' + f.anzahl + '&times; erhoben' : '') + '</span>' +
+          '</div>' +
+          '<div class="mehr-zeigen">Warum &ndash; und wer das sagt</div>' +
+        '</summary>' +
+        '<p class="worum">' + esc(f.worum) + '</p>' +
+        '<blockquote>&bdquo;' + esc(beleg.zitat) + '&ldquo;</blockquote>' +
+        '<p class="beleg-fuss">' + esc(beleg.absender) + ', ' + esc(datumLesbar(beleg.datum)) +
+          ' &middot; <a href="' + esc(beleg.url) + '" target="_blank" rel="noopener">Original lesen</a>' +
+        '</p>' +
+      '</details>';
     }).join("");
 }
 
-function zeichneForderungen(){
-  if (!DATEN.forderungen || !DATEN.forderungen.length) return;
+/* ---------- Filter ---------- */
+function zeichneFilter(){
+  const anzahlForderungen = DATEN.meldungen.filter(istForderung).length;
 
-  document.getElementById("forderungen").innerHTML =
-    '<div class="forderungen-kasten">' +
-      '<h2>Top 3 der politischen Forderungen</h2>' +
-      '<p class="kriterium">' + esc(DATEN.forderungen_kriterium) + '</p>' +
-      DATEN.forderungen.map((f, i) => {
-        const beleg = f.belege[0];
-        // Auf dem Handy zugeklappt: erst die drei Forderungen im Ueberblick,
-        // Begruendung und Beleg auf Wunsch. Am Rechner steht alles offen.
-        return '<details class="forderung"' + (breiterBildschirm() ? " open" : "") + '>' +
-          '<summary>' +
-            '<span class="forderung-rang">' + (i + 1) + '</span>' +
-            '<span class="forderung-titel">' + esc(f.kurz) + '</span>' +
-            '<span class="adressat">an ' + esc(f.adressat) + '</span>' +
-          '</summary>' +
-          '<p class="worum">' + esc(f.worum) + '</p>' +
-          '<blockquote>&bdquo;' + esc(beleg.zitat) + '&ldquo;</blockquote>' +
-          '<p class="beleg-fuss">' + esc(beleg.absender) + ', ' +
-            esc(datumLesbar(beleg.datum)) +
-            ' &middot; <a href="' + esc(beleg.url) + '" target="_blank" rel="noopener">Original</a>' +
-            (f.anzahl > 1 ? ' &middot; ' + f.anzahl + ' Meldungen dazu' : '') +
-          '</p>' +
-        '</details>';
-      }).join("") +
-    '</div>';
+  let html =
+    '<button type="button" class="chip" data-filter="alles" aria-pressed="' +
+      (filter === "alles") + '">Alles ' + DATEN.meldungen.length + '</button>' +
+    '<button type="button" class="chip forderungen-knopf" data-filter="forderungen" ' +
+      'aria-pressed="' + (filter === "forderungen") + '">Nur Forderungen ' +
+      anzahlForderungen + '</button>';
+
+  html += DATEN.themen.map(t => {
+    const anzahl = DATEN.meldungen.filter(m => hatThema(m, t)).length;
+    if (!anzahl) return "";                       // leere Knoepfe gar nicht erst zeigen
+    const blass = (t === "Ehrungen & Termine") ? " nachrangig" : "";
+    return '<button type="button" class="chip' + blass + '" data-filter="' + esc(t) +
+           '" aria-pressed="' + (t === filter) + '">' + esc(t) + " " + anzahl + "</button>";
+  }).join("");
+
+  document.getElementById("filterKnoepfe").innerHTML = html;
 }
 
-function breiterBildschirm(){
-  return window.matchMedia("(min-width:1000px)").matches;
-}
-
-/* Reihenfolge der Bloecke: politische Substanz zuerst,
-   Ehrungen und Termine ganz unten und eingeklappt. */
+/* ---------- Liste ---------- */
 const BLOECKE = [
-  {schluessel:"neu",        titel:"Neu seit dem letzten Abgleich"},
-  {schluessel:"unsortiert", titel:"Noch nicht eingeordnet"},
-  {schluessel:"politik",    titel:"Politik & Forderungen"},
-  {schluessel:"zahlen",     titel:"Zahlen & Fakten"},
-  {schluessel:"bericht",    titel:"Aus den Betrieben"}
+  {schluessel:"neu",         titel:"Neu seit dem letzten Abgleich"},
+  {schluessel:"unsortiert",  titel:"Noch nicht eingeordnet"},
+  {schluessel:"politik",     titel:"Forderungen & Positionen"},
+  {schluessel:"zahlen",      titel:"Zahlen & Fakten"},
+  {schluessel:"bericht",     titel:"Aus den Betrieben"}
 ];
 const NEBENSACHE = ["ehrung","termin"];
 
+const ART_NAME = {
+  politik:"Forderung", zahlen:"Zahlen", bericht:"Aus den Betrieben",
+  ehrung:"Ehrung", termin:"Termin", unsortiert:"Noch nicht eingeordnet"
+};
+
 function zeichneListe(){
   const treffer = DATEN.meldungen.filter(passt);
-  const zaehler = document.getElementById("zaehler");
-  zaehler.textContent = treffer.length === DATEN.meldungen.length
-    ? treffer.length + " Meldungen"
-    : treffer.length + " von " + DATEN.meldungen.length + " Meldungen";
+  document.getElementById("zaehler").textContent =
+    treffer.length === DATEN.meldungen.length
+      ? treffer.length + " Meldungen"
+      : treffer.length + " von " + DATEN.meldungen.length + " Meldungen";
 
   if (!treffer.length){
     document.getElementById("liste").innerHTML =
-      '<p class="leer">Dazu gibt es keine Meldung. Filter zur&uuml;cksetzen und neu suchen.</p>';
+      '<p class="leer">Dazu gibt es keine Meldung.</p>';
     return;
   }
 
-  // Gruppiert wird nur in der ungefilterten Gesamtansicht. Sobald jemand
-  // gezielt filtert oder sucht, ist eine flache Liste das Erwartbare.
-  const gruppiert = (filterArt === "alle" && filterThema === "alle" && !suchtext);
-
-  if (!gruppiert){
+  // Gruppiert nur in der ungefilterten Gesamtansicht; beim Filtern eine flache Liste.
+  if (filter !== "alles" || suchtext){
     document.getElementById("liste").innerHTML = treffer.map(karte).join("");
     return;
   }
@@ -489,54 +377,45 @@ function zeichneListe(){
   document.getElementById("liste").innerHTML = html;
 }
 
-const ART_NAME = {};
-ARTEN.forEach(a => ART_NAME[a.schluessel] = a.name);
-ART_NAME.unsortiert = "Noch nicht eingeordnet";
-
 function karte(m){
   const datum = m.datum_ungenau
     ? '<span class="ungenau" title="Diese Meldung nennt kein Datum. Aus der Reihenfolge der ' +
       'Übersichtsseite eingeordnet.">um den ' + esc(datumLesbar(m.datum)) + '</span>'
     : esc(datumLesbar(m.datum));
 
+  const markenKlasse = m.art === "politik" ? "marke forderung-marke"
+                     : m.art === "unsortiert" ? "marke unsortiert" : "marke";
+
   return '<article class="karte' + (m.neu ? " ist-neu" : "") + '">' +
     '<div class="karte-kopf">' +
       (m.neu ? '<span class="marke neu">Neu</span>' : '') +
-      '<span class="marke ' + esc(m.art) + '">' + esc(ART_NAME[m.art] || m.art) + '</span>' +
+      '<span class="' + markenKlasse + '">' + esc(ART_NAME[m.art] || m.art) + '</span>' +
       '<span class="thema">' + esc(m.thema) +
         (m.thema2 ? ' &middot; ' + esc(m.thema2) : '') + '</span>' +
       '<span class="datum">' + datum + '</span>' +
     '</div>' +
-    '<h2>' + esc(m.schlagzeile) + '</h2>' +
+    '<h2 class="schlagzeile">' + esc(m.schlagzeile) + '</h2>' +
     (m.dreizeiler
       ? '<p class="dreizeiler">' + esc(m.dreizeiler) + '</p>'
       : '<p class="dreizeiler offen">Noch nicht zusammengefasst &ndash; oben steht der ' +
         'Originaltitel der Handwerkskammer.</p>') +
-    (m.zitat ? '<blockquote>&bdquo;' + esc(m.zitat) + '&ldquo;</blockquote>' : '') +
+    (m.zitat ? '<blockquote class="zitat">&bdquo;' + esc(m.zitat) + '&ldquo;</blockquote>' : '') +
     '<div class="karte-fuss">' +
       '<a class="original" href="' + esc(m.url) + '" target="_blank" rel="noopener">Zum Original</a>' +
-      '<span class="nummer">' + esc(m.absender) +
+      '<span class="absender">' + esc(m.absender) +
         (m.nummer ? ' &middot; Nr. ' + esc(m.nummer) : '') + '</span>' +
     '</div>' +
   '</article>';
 }
 
-document.getElementById("artFilter").addEventListener("click", function(e){
+/* ---------- Bedienung ---------- */
+document.getElementById("filterKnoepfe").addEventListener("click", function(e){
   const knopf = e.target.closest(".chip");
   if (!knopf) return;
-  filterArt = knopf.dataset.art;
+  // Nochmal auf denselben Knopf tippen hebt die Auswahl auf
+  filter = (knopf.dataset.filter === filter && filter !== "alles") ? "alles" : knopf.dataset.filter;
   this.querySelectorAll(".chip").forEach(c =>
-    c.setAttribute("aria-pressed", String(c.dataset.art === filterArt)));
-  zeichneListe();
-});
-
-document.getElementById("themaFilter").addEventListener("click", function(e){
-  const knopf = e.target.closest(".chip");
-  if (!knopf) return;
-  // Nochmal auf denselben Knopf tippen hebt die Auswahl wieder auf
-  filterThema = (knopf.dataset.thema === filterThema) ? "alle" : knopf.dataset.thema;
-  this.querySelectorAll(".chip").forEach(c =>
-    c.setAttribute("aria-pressed", String(c.dataset.thema === filterThema)));
+    c.setAttribute("aria-pressed", String(c.dataset.filter === filter)));
   zeichneListe();
 });
 
@@ -545,131 +424,30 @@ document.getElementById("suche").addEventListener("input", function(){
   zeichneListe();
 });
 
-/* ---------- Themen im Verlauf ---------- */
-
-const MONATE_KURZ = ["J","F","M","A","M","J","J","A","S","O","N","D"];
-
-function befundText(f){
-  if (!f.hauptthema.length && f.erwaehnt >= 5){
-    return {klasse:"mahnung", text:"Wird in " + f.erwaehnt + " Meldungen genannt, aber in keiner " +
-            "einzigen selbst zum Thema gemacht."};
-  }
-  if (f.hauptthema.length === 1 && f.erwaehnt >= 8){
-    return {klasse:"mahnung", text:"In " + f.erwaehnt + " Meldungen genannt – aber nur einmal " +
-            "als eigenes Thema. Läuft fast immer im Nebensatz mit."};
-  }
-  if (!f.erwaehnt){
-    return {klasse:"", text:"Kommt in diesem Jahrgang gar nicht vor."};
-  }
-  if (f.hauptthema_politisch === 0 && f.hauptthema.length){
-    return {klasse:"", text:"Wird behandelt, aber nie als politische Forderung – " +
-            "sondern als Service, Termin oder Zahlenmeldung."};
-  }
-  return {klasse:"", text:"In " + f.monate_belegt + " von 12 Monaten präsent, " +
-          f.hauptthema_politisch + " politische Meldung(en) dazu."};
-}
-
-function zeichneThemen(){
-  const hoechst = Math.max.apply(null,
-    DATEN.themenfelder.map(f => Math.max.apply(null, f.monate)));
-
-  document.getElementById("felder").innerHTML = DATEN.themenfelder.map(f => {
-    const befund = befundText(f);
-
-    // Als SVG gezeichnet, nicht als Flex-Kaesten: Bei Flex-Elementen wurde die
-    // Hoehenangabe nicht zuverlaessig uebernommen - leere Monate erschienen
-    // dann als volle Balken, was das Gegenteil der Wahrheit anzeigt.
-    const saeulen =
-      '<svg class="verlauf" viewBox="0 0 236 46" preserveAspectRatio="none" ' +
-           'role="img" aria-label="Meldungen je Monat">' +
-      f.monate.map((z, i) => {
-        const hoehe = z ? Math.max(4, Math.round(z / hoechst * 44)) : 2;
-        const art = !z ? "leer" : (z >= hoechst * 0.6 ? "viel" : "wenig");
-        return '<rect class="saeule ' + art + '" x="' + (i * 20) + '" y="' + (46 - hoehe) +
-               '" width="16" height="' + hoehe + '" rx="2">' +
-               '<title>' + esc(MONATSNAMEN[i] + ": " + z + " Meldung(en)") + '</title>' +
-               '</rect>';
-      }).join("") +
-      '</svg>';
-
-    const eigene = DATEN.meldungen
-      .filter(m => f.hauptthema.indexOf(m.id) !== -1)
-      .map(m => '<li><a href="' + esc(m.url) + '" target="_blank" rel="noopener">' +
-                esc(m.schlagzeile) + '</a> <span class="nummer">' +
-                esc(datumLesbar(m.datum)) + '</span></li>')
-      .join("");
-
-    return '<section class="feld">' +
-      '<h3>' + esc(f.name) + '</h3>' +
-      '<div class="werte">' +
-        '<div class="wert"><b>' + f.erwaehnt + '</b><span>Meldungen nennen es</span></div>' +
-        '<div class="wert"><b>' + f.substanz + '</b><span>davon mit Substanz</span></div>' +
-        '<div class="wert' + (f.hauptthema.length ? '' : ' warn') + '"><b>' +
-          f.hauptthema.length + '</b><span>eigene Meldung</span></div>' +
-      '</div>' +
-      saeulen +
-      '<div class="monate">' + MONATE_KURZ.map(m => '<span>' + m + '</span>').join("") + '</div>' +
-      '<p class="befund ' + befund.klasse + '">' + esc(befund.text) + '</p>' +
-      (eigene
-        ? '<ul class="feld-liste">' + eigene + '</ul>'
-        : '<p class="keine">Keine Meldung hat dieses Thema als Hauptthema.</p>') +
-    '</section>';
-  }).join("");
-}
-
-function ansichtWechseln(zuThemen){
-  document.getElementById("ansichtMeldungen").hidden = zuThemen;
-  document.getElementById("ansichtThemen").hidden = !zuThemen;
-  document.querySelector(".filter").hidden = zuThemen;
-  document.getElementById("reiterMeldungen").setAttribute("aria-selected", String(!zuThemen));
-  document.getElementById("reiterThemen").setAttribute("aria-selected", String(zuThemen));
-  window.scrollTo(0, 0);
-}
-
-document.getElementById("reiterMeldungen")
-        .addEventListener("click", () => ansichtWechseln(false));
-document.getElementById("reiterThemen")
-        .addEventListener("click", () => ansichtWechseln(true));
-
-document.getElementById("schwelleText").textContent = DATEN.schwelle_substanz;
-
 /* Der Verlauf an der rechten Kante erscheint nur, solange dort noch Knoepfe
-   verborgen sind - sonst wuerde er den letzten Knopf dauerhaft verschleiern. */
+   verborgen sind - sonst verschleierte er dauerhaft den letzten Knopf. */
 function scrollHinweisePruefen(){
   document.querySelectorAll(".chip-reihe").forEach(reihe => {
     const spur = reihe.querySelector(".chips");
-    const nochWas = spur.scrollWidth - spur.clientWidth - spur.scrollLeft > 4;
-    reihe.classList.toggle("mehr-rechts", nochWas);
+    reihe.classList.toggle("mehr-rechts",
+      spur.scrollWidth - spur.clientWidth - spur.scrollLeft > 4);
   });
 }
-
 document.querySelectorAll(".chip-reihe .chips").forEach(spur =>
   spur.addEventListener("scroll", scrollHinweisePruefen, {passive:true}));
 
-/* Sobald man in die Liste hineingescrollt hat, schrumpft die klebende Leiste.
-   Eine leere Suche kann verschwinden - eine ausgefuellte bleibt sichtbar,
-   sonst wuesste man nicht mehr, warum so wenige Meldungen zu sehen sind. */
-const filterLeiste = document.querySelector(".filter");
-window.addEventListener("scroll", () => {
-  filterLeiste.classList.toggle("kompakt", window.scrollY > 260 && !suchtext);
-}, {passive:true});
-
-/* Beim Drehen des Handys: Hinweise neu pruefen und die Forderungen passend
-   auf- oder zuklappen. */
 window.addEventListener("resize", () => {
   scrollHinweisePruefen();
   document.querySelectorAll("details.forderung").forEach(d => d.open = breiterBildschirm());
 });
 
 document.getElementById("stand").textContent =
-  "Datenstand: " + datumLesbar(DATEN.stand) + " · " + DATEN.meldungen.length +
-  " Meldungen aus dem Jahr " + DATEN.jahr + ".";
+  "Zuletzt abgeglichen am " + datumLesbar(DATEN.letzter_abgleich) + ".";
 
 zeichneKennzahlen();
-zeichneFilter();
 zeichneForderungen();
+zeichneFilter();
 zeichneListe();
-zeichneThemen();
 scrollHinweisePruefen();
 </script>
 </body>

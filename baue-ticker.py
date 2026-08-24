@@ -160,39 +160,6 @@ def main():
         for k, t in ohne_redaktion:
             print("   ", k, t)
 
-    # ---- Themenfelder auswerten -------------------------------------------
-    # Die Frage dahinter: Welche Themen werden ueber die Zeit wirklich
-    # durchgehalten - und welche werden nur im Nebensatz mitgenannt?
-    felder_datei = json.load(open("daten/themenfelder.json", encoding="utf-8"))
-    schwelle = felder_datei.get("schwelle_substanz", 3)
-    volltexte = {artikel_id(m["url"]): (m["volltext"] + " " + m["titel"]).lower()
-                 for m in meldungen}
-
-    themenfelder = []
-    for feld in felder_datei["felder"]:
-        erwaehnt, substanz, haupt = [], [], []
-        monate = [0] * 12
-        for x in fertig:
-            treffer = sum(volltexte[x["id"]].count(w) for w in feld["stichworte"])
-            if treffer:
-                erwaehnt.append(x["id"])
-                monate[int(x["datum"][5:7]) - 1] += 1
-            if treffer >= schwelle:
-                substanz.append(x["id"])
-            if x["thema"] in feld["themen"]:
-                haupt.append(x["id"])
-        themenfelder.append({
-            "name": feld["name"],
-            "erwaehnt": len(erwaehnt),
-            "substanz": len(substanz),
-            "hauptthema": haupt,
-            "hauptthema_politisch": sum(1 for x in fertig
-                                        if x["id"] in haupt and x["art"] == "politik"),
-            "monate": monate,
-            "monate_belegt": sum(1 for z in monate if z),
-        })
-    themenfelder.sort(key=lambda f: -f["erwaehnt"])
-
     # Themen in der Reihenfolge ihrer Haeufigkeit. "Ehrungen & Termine" steht
     # immer hinten - das ist der nachrangige Bereich (siehe KMS [D-0173]).
     haeufigkeit = {}
@@ -249,8 +216,6 @@ def main():
         "forderungen_kriterium": forderungen_datei.get("kriterium", ""),
         "stand": redaktion_datei.get("stand", datetime.date.today().isoformat()),
         "themen": themen,
-        "themenfelder": themenfelder,
-        "schwelle_substanz": schwelle,
         "letzter_abgleich": heute,
         "neu_anzahl": sum(1 for x in fertig if x["neu"]),
         "meldungen": fertig,
@@ -271,11 +236,6 @@ def main():
 
     print("Meldungen:", len(fertig))
     print("Zitate uebernommen:", zitate)
-    print("Themenfelder:")
-    for f in themenfelder:
-        print("   %-32s erwaehnt %2d | mit Substanz %2d | Hauptthema %2d (davon politisch %d)"
-              % (f["name"], f["erwaehnt"], f["substanz"],
-                 len(f["hauptthema"]), f["hauptthema_politisch"]))
     print("Themen:", ", ".join("%s (%d)" % (t, haeufigkeit[t]) for t in themen))
     print("Geschrieben: ticker-prototyp.html (%.0f kB)" % (len(seite) / 1024))
 
