@@ -56,6 +56,57 @@ def absender_bestimmen(meldung):
     return "Handwerkskammer Potsdam"
 
 
+def zdh_laden():
+    """Die bundesweiten ZDH-Meldungen in dieselbe Form bringen wie die
+    Kammer-Meldungen. Bewusst NUR Pressemitteilungen mit echtem Datum von der
+    Seite - die Positionspapiere tragen kein Erscheinungsdatum, und das
+    lastmod der Sitemap ist bei 63 von 64 der Tag der Systemumstellung."""
+    pfad_daten = "daten/zdh-%s.json" % JAHR
+    pfad_redaktion = "daten/redaktion-zdh-%s.json" % JAHR
+    if not (os.path.exists(pfad_daten) and os.path.exists(pfad_redaktion)):
+        print("Hinweis: keine ZDH-Daten gefunden - der Ticker bleibt bei der Kammer.")
+        return []
+
+    roh = json.load(open(pfad_daten, encoding="utf-8"))
+    redaktion = json.load(open(pfad_redaktion, encoding="utf-8"))["eintraege"]
+
+    fertig = []
+    ohne = []
+    for x in roh:
+        if x["art_quelle"] != "pressemitteilung" or x["datum_quelle"] != "seite":
+            continue
+        kennung = x["url"].rstrip("/").split("/")[-1]
+        r = redaktion.get(kennung)
+        if not r:
+            ohne.append(kennung)
+            r = {"art": "unsortiert", "thema": "Noch nicht eingeordnet",
+                 "dreizeiler": "", "unredigiert": True}
+        fertig.append({
+            "id": "zdh-" + kennung,
+            "datum": x["datum"],
+            "datum_ungenau": False,
+            "nummer": None,
+            "titel": x["titel"],
+            "url": x["url"],
+            "art": r["art"],
+            "thema": r["thema"],
+            "thema2": r.get("thema2"),
+            "absender": "Zentralverband des Deutschen Handwerks",
+            "ebene": "Bund",
+            # Die Ueberschrift des ZDH wird unveraendert uebernommen - sie ist
+            # praezise formuliert, eine eigene Fassung koennte nur verzerren.
+            "schlagzeile": x["titel"],
+            "dreizeiler": r["dreizeiler"],
+            "unredigiert": bool(r.get("unredigiert")),
+            "zitat": None,
+        })
+    if ohne:
+        print("HINWEIS - ZDH-Meldungen ohne Redaktionseintrag:", len(ohne))
+        for k in ohne[:5]:
+            print("   ", k)
+    return fertig
+
+
 def zitat_finden(volltext):
     """Erstes ausreichend langes woertliches Zitat, exakt wie in der Quelle.
 
@@ -143,6 +194,18 @@ def main():
             "zitat": zitat,
         })
 
+    for x in fertig:
+        x["ebene"] = "Brandenburg"
+
+    zdh = zdh_laden()
+    for x in zdh:
+        if x["id"] not in bekannt:
+            bekannt[x["id"]] = ERSTBESTAND if erster_lauf else heute
+        x["zuerst_gesehen"] = bekannt[x["id"]]
+    fertig.extend(zdh)
+    fertig.sort(key=lambda x: (x["datum"] or ""), reverse=True)
+    print("Bundesebene (ZDH):", len(zdh), "Meldungen")
+
     # "Neu" heisst: beim juengsten Abgleich dazugekommen. Der Grundbestand
     # zaehlt nie mit.
     abgleichstage = [v for v in bekannt.values() if v != ERSTBESTAND]
@@ -176,6 +239,11 @@ def main():
     forderungen_datei = json.load(open("daten/forderungen.json", encoding="utf-8"))
     nach_id = {x["id"]: x for x in fertig}
     roh_nach_id = {artikel_id(m["url"]): m for m in meldungen}
+    # Belege duerfen auch aus der Bundesebene kommen - Kennung mit "zdh-" davor
+    zdh_pfad = "daten/zdh-%s.json" % JAHR
+    if os.path.exists(zdh_pfad):
+        for x in json.load(open(zdh_pfad, encoding="utf-8")):
+            roh_nach_id["zdh-" + x["url"].rstrip("/").split("/")[-1]] = x
     forderungen = []
 
     for f in forderungen_datei["forderungen"]:
@@ -193,12 +261,20 @@ def main():
             enden = [t.end() for t in SATZ_ENDE.finditer(ausschnitt)]
             if enden:
                 ausschnitt = ausschnitt[:enden[-1]]
+            # Der Absender kommt bei Bundes-Belegen NICHT aus der
+            # Kammer-Erkennung - die ist auf hwk-potsdam.de zugeschnitten
+            # und wuerde den ZDH faelschlich als Kammer Potsdam ausweisen.
+            if b["id"].startswith("zdh-"):
+                wer, ebene = "Zentralverband des Deutschen Handwerks", "Bund"
+            else:
+                wer, ebene = absender_bestimmen(quelle), "Brandenburg"
             belege.append({
                 "id": b["id"],
                 "zitat": ausschnitt,
                 "datum": nach_id[b["id"]]["datum"],
                 "url": quelle["url"],
-                "absender": absender_bestimmen(quelle),
+                "absender": wer,
+                "ebene": ebene,
             })
         belege.sort(key=lambda x: x["datum"], reverse=True)
         forderungen.append({
@@ -208,6 +284,7 @@ def main():
             "belege": belege,
             "zuletzt": belege[0]["datum"],
             "anzahl": len(belege),
+            "ebenen": sorted(set(b["ebene"] for b in belege)),
         })
 
     daten = {

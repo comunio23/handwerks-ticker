@@ -21,3 +21,7 @@ daten/_pruefung.txt
 
 # Netlify-Site-Kennung (lokal, keine Zugangsdaten)
 netlify-site.json
+
+# Zwischenspeicher der ZDH-Seiten
+daten/cache-zdh/
+daten/_zdh_lesen.txt

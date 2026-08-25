@@ -1,33 +1,36 @@
 {
-  "hinweis": "Die drei politischen Forderungen, die im laufenden Jahrgang am häufigsten wiederholt wurden - gemessen an der Zahl der Meldungen, die sie erheben, und am Datum der jüngsten Nennung. Jede Forderung MUSS mit mindestens einem Beleg hinterlegt sein. 'zitat_ab' ist ein wörtlicher Textanfang aus der genannten Meldung; baue-ticker.py schneidet ab dort ein Zitat heraus und bricht ab, wenn der Text dort nicht steht. So kann hier nichts Erfundenes stehen.",
-  "kriterium": "Sortiert nach Häufigkeit der Wiederholung, bei Gleichstand nach dem jüngsten Datum.",
-  "stand": "2026-08-21",
+  "hinweis": "Die drei Forderungen, die im laufenden Jahrgang am häufigsten wiederholt wurden - über beide Ebenen hinweg. Jede Forderung MUSS mit mindestens einem Beleg hinterlegt sein. 'zitat_ab' ist ein wörtlicher Textanfang aus der genannten Meldung; baue-ticker.py schneidet ab dort ein Zitat heraus und bricht ab, wenn der Text dort nicht steht. So kann hier nichts Erfundenes stehen. Kennungen mit 'zdh-' davor verweisen auf die Bundesebene.",
+  "kriterium": "Sortiert danach, wie oft die Forderung erhoben wurde und ob Bund und Land sie gemeinsam tragen.",
+  "stand": "2026-08-25",
   "forderungen": [
     {
-      "kurz": "Handwerkerbonus erhalten statt kürzen",
+      "kurz": "Steuerbonus für Handwerkerleistungen erhalten",
       "adressat": "Bund",
-      "worum": "Der Steuerbonus für Handwerkerleistungen nach § 35a Abs. 3 EStG steht im Bundeshaushalt 2027 als Einsparmaßnahme zur Debatte. Das Handwerk hält dagegen: Der Bonus halte Aufträge im legalen Wirtschaftskreislauf und wirke gegen Schwarzarbeit.",
+      "worum": "Der Steuerbonus nach § 35a Abs. 3 EStG steht bei der Haushaltskonsolidierung zur Disposition. Bundesebene und Brandenburg fordern übereinstimmend seinen Erhalt: Der Bonus halte Aufträge im legalen Wirtschaftskreislauf und wirke gegen Schwarzarbeit. Reformieren statt abschaffen.",
       "belege": [
+        {"id": "6871", "zitat_ab": "Kritisch sehen wir, dass der Steuerbonus"},
         {"id": "6847", "zitat_ab": "Eine Abschaffung des Handwerkerbonus wäre ein Fehler"},
-        {"id": "6871", "zitat_ab": "Kritisch sehen wir, dass der Steuerbonus"}
+        {"id": "zdh-steueranreiz-fuer-handwerkerleistungen-nicht-abschaffen", "zitat_ab": "Es verunsichert die Handwerksbetriebe massiv"}
       ]
     },
     {
       "kurz": "Dauerhafte Entlastung bei Energie und Kraftstoff",
       "adressat": "Bund und Land Brandenburg",
-      "worum": "Im Flächenland Brandenburg fahren Betriebe täglich weite Wege. Gefordert werden verlässliche Energiepreise statt kurzfristiger Maßnahmen – und befristete Preisgleitklauseln, damit außergewöhnliche Preissprünge bei öffentlichen Aufträgen nicht allein an den Betrieben hängen bleiben.",
+      "worum": "Im Flächenland Brandenburg fahren Betriebe täglich weite Wege. Gefordert werden verlässliche Energiepreise statt kurzfristiger Maßnahmen – und befristete Preisgleitklauseln, damit außergewöhnliche Preissprünge bei öffentlichen Aufträgen nicht allein an den Betrieben hängen bleiben. Bund und Land äußerten sich am selben Tag zur Senkung der Energiesteuer.",
       "belege": [
-        {"id": "6796", "zitat_ab": "Die brandenburgische Landesregierung wird daher aufgefordert"},
-        {"id": "6808", "zitat_ab": "Eine kurzfristige Senkung der Energiesteuer"}
+        {"id": "6808", "zitat_ab": "Eine kurzfristige Senkung der Energiesteuer"},
+        {"id": "zdh-abgewaelzte-entlastung-erhoeht-belastungsdruck-fuer-betriebe", "zitat_ab": "Die Senkung der Energiesteuer um 17 Cent"},
+        {"id": "6796", "zitat_ab": "Die brandenburgische Landesregierung wird daher aufgefordert"}
       ]
     },
     {
-      "kurz": "Verlässliche Rahmenbedingungen und Planungssicherheit",
-      "adressat": "Land Brandenburg",
-      "worum": "Die Forderung zieht sich durch das ganze Jahr – vom Koalitionsbruch im Januar über den Koalitionsvertrag im März bis zur Vereidigung der neuen Landesregierung. Verlangt werden klare Entscheidungen, planbare Rahmenbedingungen und eine beschleunigte Verwaltungsmodernisierung.",
+      "kurz": "Bürokratie abbauen, Verfahren beschleunigen",
+      "adressat": "Bund und Land Brandenburg",
+      "worum": "Weniger Berichtspflichten, schnellere Genehmigungen, einfachere Vorgaben: Die Forderung zieht sich durch das ganze Jahr und über beide Ebenen. Der Bund macht mit dem Entlastungskabinett Fortschritte sichtbar, das Handwerk nennt es bislang eine Zwischenetappe.",
       "belege": [
-        {"id": "6715", "zitat_ab": "Für das brandenburgische Handwerk steht fest"},
-        {"id": "6788", "zitat_ab": "Die neue Landesregierung steht in der Pflicht"}
+        {"id": "zdh-zweites-entlastungskabinett-nicht-mehr-als-eine-zwischenetappe", "zitat_ab": "Es ist wichtig, dass die Bundesregierung"},
+        {"id": "6871", "zitat_ab": "Zugleich sind weniger Berichtspflichten"},
+        {"id": "6747", "zitat_ab": "Der Handwerkerparkausweis ist ein spürbarer Schritt"}
       ]
     }
   ]

@@ -54,6 +54,10 @@
   .adressat{background:rgba(255,255,255,.18);border-radius:999px;padding:3px 10px;
             font-size:.75rem;font-weight:600}
   .wann{font-size:.78rem;opacity:.85}
+  .beide-ebenen{background:#fff;color:var(--blau);border-radius:999px;padding:3px 10px;
+                font-size:.72rem;font-weight:700}
+  .eine-ebene{background:rgba(255,255,255,.12);border-radius:999px;padding:3px 10px;
+              font-size:.72rem}
   .mehr-zeigen{font-size:.78rem;opacity:.8;margin:7px 0 0 32px;text-decoration:underline}
   .forderung[open] .mehr-zeigen{display:none}
   .forderung p.worum{font-size:.87rem;margin:11px 0 0;opacity:.94;line-height:1.5}
@@ -102,6 +106,11 @@
   .marke.forderung-marke::before{content:"● "}
   .marke.neu{background:var(--signal);color:#fff;border-radius:6px;padding:3px 8px;font-weight:700}
   .marke.unsortiert{color:#a15c00}
+  .ebene{font-size:.72rem;font-weight:700;border-radius:5px;padding:3px 7px;
+         letter-spacing:.02em}
+  .ebene-bund{background:#2b2b2b;color:#fff}
+  .ebene-land{background:var(--blau-flaeche);color:var(--blau)}
+  .chip.ebenen-knopf[aria-pressed="true"]{background:#2b2b2b;border-color:#2b2b2b}
   .thema{font-size:.82rem;color:var(--blau-hell);font-weight:600}
   .datum{font-size:.82rem;color:var(--grau);margin-left:auto;flex-shrink:0}
   .datum .ungenau{cursor:help;border-bottom:1px dotted var(--grau)}
@@ -159,8 +168,9 @@
 <header>
   <div class="mitte">
     <h1>Handwerks-Ticker</h1>
-    <p class="unterzeile">Was das Handwerk gerade fordert &ndash; aus den Pressemitteilungen
-       der Handwerkskammer Potsdam und des Handwerkskammertages Brandenburg.</p>
+    <p class="unterzeile">Was das Handwerk gerade fordert &ndash; aus den Ver&ouml;ffentlichungen
+       der Handwerkskammer Potsdam, des Handwerkskammertages Brandenburg und des
+       Zentralverbands des Deutschen Handwerks.</p>
     <div class="kennzahlen" id="kennzahlen"></div>
   </div>
 </header>
@@ -240,9 +250,15 @@ function istForderung(m){
   return m.art === "politik";
 }
 
+/* Bund oder Brandenburg - der eigentliche Mehrwert der zweiten Quelle:
+   Man sieht, ob beide Ebenen dasselbe Thema treiben oder nicht. */
+const EBENEN = ["Bund", "Brandenburg"];
+
 function passt(m){
   if (filter === "forderungen" && !istForderung(m)) return false;
-  if (filter !== "alles" && filter !== "forderungen" && !hatThema(m, filter)) return false;
+  if (filter.indexOf("ebene:") === 0 && m.ebene !== filter.slice(6)) return false;
+  if (filter !== "alles" && filter !== "forderungen" && filter.indexOf("ebene:") !== 0
+      && !hatThema(m, filter)) return false;
   if (suchtext) {
     const heu = (m.schlagzeile + " " + m.dreizeiler + " " + m.titel + " " + m.thema + " " +
                  (m.thema2 || "") + " " + m.absender + " " + (m.zitat || "")).toLowerCase();
@@ -258,6 +274,7 @@ function zeichneKennzahlen(){
   const felder = [
     {wert: DATEN.meldungen.length, text: "Meldungen " + DATEN.jahr},
     {wert: DATEN.meldungen.filter(istForderung).length, text: "Forderungen"},
+    {wert: DATEN.meldungen.filter(m => m.ebene === "Bund").length, text: "davon vom Bund"},
     {wert: kurzDatum, text: "zuletzt geprüft"}
   ];
   document.getElementById("kennzahlen").innerHTML = felder.map(f =>
@@ -280,6 +297,9 @@ function zeichneForderungen(){
           '</div>' +
           '<div class="forderung-zeile2">' +
             '<span class="adressat">an ' + esc(f.adressat) + '</span>' +
+            (f.ebenen.length > 1
+              ? '<span class="beide-ebenen">Bund + Brandenburg</span>'
+              : '<span class="eine-ebene">nur ' + esc(f.ebenen[0]) + '</span>') +
             '<span class="wann">zuletzt ' + esc(datumLesbar(f.zuletzt)) +
               (f.anzahl > 1 ? ' &middot; ' + f.anzahl + '&times; erhoben' : '') + '</span>' +
           '</div>' +
@@ -287,9 +307,10 @@ function zeichneForderungen(){
         '</summary>' +
         '<p class="worum">' + esc(f.worum) + '</p>' +
         '<blockquote>&bdquo;' + esc(beleg.zitat) + '&ldquo;</blockquote>' +
-        '<p class="beleg-fuss">' + esc(beleg.absender) + ', ' + esc(datumLesbar(beleg.datum)) +
-          ' &middot; <a href="' + esc(beleg.url) + '" target="_blank" rel="noopener">Original lesen</a>' +
-        '</p>' +
+        f.belege.map(b =>
+          '<p class="beleg-fuss">' + esc(b.absender) + ', ' + esc(datumLesbar(b.datum)) +
+          ' &middot; <a href="' + esc(b.url) + '" target="_blank" rel="noopener">Original lesen</a>' +
+          '</p>').join("") +
       '</details>';
     }).join("");
 }
@@ -303,7 +324,14 @@ function zeichneFilter(){
       (filter === "alles") + '">Alles ' + DATEN.meldungen.length + '</button>' +
     '<button type="button" class="chip forderungen-knopf" data-filter="forderungen" ' +
       'aria-pressed="' + (filter === "forderungen") + '">Nur Forderungen ' +
-      anzahlForderungen + '</button>';
+      anzahlForderungen + '</button>' +
+    EBENEN.map(e => {
+      const anzahl = DATEN.meldungen.filter(m => m.ebene === e).length;
+      if (!anzahl) return "";
+      return '<button type="button" class="chip ebenen-knopf" data-filter="ebene:' + esc(e) +
+             '" aria-pressed="' + (filter === "ebene:" + e) + '">' + esc(e) + " " +
+             anzahl + "</button>";
+    }).join("");
 
   html += DATEN.themen.map(t => {
     const anzahl = DATEN.meldungen.filter(m => hatThema(m, t)).length;
@@ -390,6 +418,8 @@ function karte(m){
     '<div class="karte-kopf">' +
       (m.neu ? '<span class="marke neu">Neu</span>' : '') +
       '<span class="' + markenKlasse + '">' + esc(ART_NAME[m.art] || m.art) + '</span>' +
+      '<span class="ebene ebene-' + (m.ebene === "Bund" ? "bund" : "land") + '">' +
+        esc(m.ebene) + '</span>' +
       '<span class="thema">' + esc(m.thema) +
         (m.thema2 ? ' &middot; ' + esc(m.thema2) : '') + '</span>' +
       '<span class="datum">' + datum + '</span>' +
