@@ -109,6 +109,9 @@ def main():
         print("daten/redaktion-%s.json - sie erscheinen bis dahin mit dem" % JAHR)
         print("Originaltitel der Kammer und der Markierung 'Noch nicht eingeordnet'.")
 
+    if "--nur-holen" in sys.argv:
+        return 1 if neue else 0
+
     print()
     print("Ticker neu bauen ...")
     lauf = subprocess.run([sys.executable, "baue-ticker.py"])

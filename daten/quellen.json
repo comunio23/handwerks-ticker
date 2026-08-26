@@ -1,0 +1,54 @@
+{
+  "hinweis": "Welche Quellen der Ticker einsammelt. Diese Datei darf jederzeit geändert werden - danach 'python abgleich.py' laufen lassen. 'pfad_enthaelt' ist der Teil der URL, an dem eine Seite erkannt wird. 'mindest_tiefe' verhindert, dass Übersichtsseiten mitgenommen werden: '/presse/veroeffentlichungen/pressemitteilungen/' ist die Liste, erst der Pfad dahinter eine Meldung.",
+  "zdh": {
+    "name": "Zentralverband des Deutschen Handwerks",
+    "ebene": "Bund",
+    "basis": "https://www.zdh.de",
+    "sitemap": "https://www.zdh.de/sitemap.xml",
+    "bereiche": [
+      {
+        "schluessel": "pressemitteilung",
+        "titel": "Pressemitteilung",
+        "pfad_enthaelt": "/presse/veroeffentlichungen/pressemitteilungen/",
+        "mindest_tiefe": 4,
+        "aktiv": true
+      },
+      {
+        "schluessel": "statement",
+        "titel": "Interview / Statement",
+        "pfad_enthaelt": "/presse/veroeffentlichungen/interviews-und-statements/",
+        "mindest_tiefe": 4,
+        "aktiv": true
+      },
+      {
+        "schluessel": "rede",
+        "titel": "Rede / Namensbeitrag",
+        "pfad_enthaelt": "/presse/veroeffentlichungen/reden-und-namensbeitraege/",
+        "mindest_tiefe": 4,
+        "aktiv": true
+      },
+      {
+        "schluessel": "position",
+        "titel": "ZDH-Position",
+        "pfad_enthaelt": "/zdh-positionen/",
+        "mindest_tiefe": 4,
+        "aktiv": true,
+        "bemerkung": "Wird eingesammelt, kommt aber NICHT in die Zeitleiste: Positionspapiere tragen kein Erscheinungsdatum. Nutzbar als Beleg für eine Forderung (siehe KMS [D-0182])."
+      },
+      {
+        "schluessel": "personalia",
+        "titel": "Personalia",
+        "pfad_enthaelt": "/presse/veroeffentlichungen/personalia/",
+        "mindest_tiefe": 4,
+        "aktiv": false,
+        "bemerkung": "Personalmeldungen - politisch ohne Gewicht, deshalb abgeschaltet."
+      }
+    ]
+  },
+  "hwk_potsdam": {
+    "name": "Handwerkskammer Potsdam",
+    "ebene": "Brandenburg",
+    "basis": "https://www.hwk-potsdam.de",
+    "bemerkung": "Eigener Weg über die Jahresübersicht der Pressemitteilungen, siehe scrape-pressemitteilungen.py. Die Übersichtsseite wird in der Navigation gesucht, damit der Jahreswechsel nichts kaputt macht."
+  }
+}

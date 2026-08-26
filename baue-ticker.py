@@ -56,6 +56,56 @@ def absender_bestimmen(meldung):
     return "Handwerkskammer Potsdam"
 
 
+# Die Schlagworte, die der ZDH selbst an seine Meldungen haengt, auf unsere
+# Themen abbilden. Damit bekommt auch eine Meldung ohne Redaktionseintrag
+# sofort ein sinnvolles Thema - ohne dass jemand etwas erfinden muss.
+SCHLAGWORT_THEMA = [
+    ("Steuern & Abgaben",
+     ["steuer", "grundsteuer", "lohnsteuer", "umsatzsteuer", "erbschaft"]),
+    ("Sozialabgaben & Rente",
+     ["sozialversicherung", "rente", "kranken", "pflege", "lohnzusatzkosten"]),
+    ("Arbeitszeit & Arbeitsrecht",
+     ["arbeitszeit", "arbeitsrecht", "gesundheitsschutz", "mindestlohn"]),
+    ("Ausbildung & Nachwuchs",
+     ["ausbildung", "berufsbildung", "bildungspolitik", "bafög", "bafoeg",
+      "euroskills", "weiterbildung", "allianz für aus", "azubi", "lehrstelle"]),
+    ("Personal & Fachkräfte",
+     ["fachkräfte", "fachkraft", "migrationshintergrund", "demografie",
+      "arbeitslosen", "arbeitsmarkt"]),
+    ("Energie & Sprit",
+     ["energiepreise", "stromsteuer", "energie- und"]),
+    ("Aufträge & Vergabe",
+     ["vergabe", "ausschreibung"]),
+    ("Betrieb & Nachfolge",
+     ["betriebsübergabe", "nachfolge", "gründung", "existenzgründ"]),
+    ("Bauen & Sanieren",
+     ["gebäude", "baurecht", "infrastruktur", "wohnungsbau", "klimapolitik",
+      "bauwirtschaft"]),
+    ("Entbürokratisierung",
+     ["bürokratie", "bürokratische", "e-rechnung", "recht auf reparatur",
+      "digitaler omnibus", "bonpflicht", "entlastung", "sonntagsback"]),
+    ("Wirtschaftslage",
+     ["wettbewerbsfähigkeit", "investitionen", "strukturpolitik", "strukturwandel",
+      "nachhaltige finanzierung", "konjunktur", "binnenmarkt"]),
+    ("Ehrungen & Termine",
+     ["handwerksmesse", "handwerksgeschichte", "kulturhandwerk", "kirche",
+      "spitzengespräch", "preis"]),
+]
+
+
+def thema_aus_schlagworten(schlagworte, titel=""):
+    """Thema zuerst aus den Schlagworten der Quelle, dann ersatzweise aus dem
+    Titel. Manche Meldungen tragen gar keine Schlagworte - dann ist der Titel
+    die naechstbeste Grundlage, die immer noch aus der Quelle stammt."""
+    for text in (" ".join(schlagworte).lower(), (titel or "").lower()):
+        if not text.strip():
+            continue
+        for thema, worte in SCHLAGWORT_THEMA:
+            if any(w in text for w in worte):
+                return thema
+    return None
+
+
 def zdh_laden():
     """Die bundesweiten ZDH-Meldungen in dieselbe Form bringen wie die
     Kammer-Meldungen. Bewusst NUR Pressemitteilungen mit echtem Datum von der
@@ -71,16 +121,28 @@ def zdh_laden():
     redaktion = json.load(open(pfad_redaktion, encoding="utf-8"))["eintraege"]
 
     fertig = []
-    ohne = []
+    ohne = 0
     for x in roh:
-        if x["art_quelle"] != "pressemitteilung" or x["datum_quelle"] != "seite":
+        # Positionspapiere bleiben draussen: kein Erscheinungsdatum (KMS [D-0182])
+        if x["art_quelle"] == "position" or x["datum_quelle"] != "seite":
             continue
         kennung = x["url"].rstrip("/").split("/")[-1]
         r = redaktion.get(kennung)
         if not r:
-            ohne.append(kennung)
-            r = {"art": "unsortiert", "thema": "Noch nicht eingeordnet",
-                 "dreizeiler": "", "unredigiert": True}
+            # Kein Redaktionseintrag - dann sprechen die Quelle selbst und ihre
+            # eigenen Schlagworte. Der Vorspann des ZDH ist dessen eigener
+            # Anrisstext, keine Zusammenfassung von uns. So faellt nichts unter
+            # den Tisch und trotzdem wird nichts erfunden.
+            ohne += 1
+            vorspann = (x["volltext"].splitlines() or [""])[0].strip()
+            r = {
+                "art": "politik" if x["art_quelle"] != "rede" else "bericht",
+                "thema": thema_aus_schlagworten(x.get("schlagworte", []),
+                                                x.get("titel", ""))
+                         or "Noch nicht eingeordnet",
+                "dreizeiler": vorspann,
+                "quelle_eigen": True,
+            }
         fertig.append({
             "id": "zdh-" + kennung,
             "datum": x["datum"],
@@ -97,13 +159,13 @@ def zdh_laden():
             # praezise formuliert, eine eigene Fassung koennte nur verzerren.
             "schlagzeile": x["titel"],
             "dreizeiler": r["dreizeiler"],
-            "unredigiert": bool(r.get("unredigiert")),
+            "unredigiert": bool(r.get("quelle_eigen")),
+            "quelle_eigen": bool(r.get("quelle_eigen")),
+            "gattung": x.get("art_titel", ""),
             "zitat": None,
         })
     if ohne:
-        print("HINWEIS - ZDH-Meldungen ohne Redaktionseintrag:", len(ohne))
-        for k in ohne[:5]:
-            print("   ", k)
+        print("   davon mit dem eigenen Anrisstext des ZDH statt Dreizeiler:", ohne)
     return fertig
 
 
@@ -145,6 +207,13 @@ def main():
     erster_lauf = not bekannt
     heute = datetime.date.today().isoformat()
 
+    # Welche QUELLEN kennen wir schon? Kommt eine neue dazu, ist ihr ganzer
+    # Bestand Grundbestand - sonst stuenden beim naechsten Aufruf hundert
+    # Meldungen als "neu" oben, nur weil eine Quelle angeschlossen wurde.
+    quellen_pfad = "daten/bekannte-quellen.json"
+    bekannte_quellen = set(json.load(open(quellen_pfad, encoding="utf-8"))
+                           if os.path.exists(quellen_pfad) else [])
+
     fertig = []
     ohne_redaktion = []
     zitate = 0
@@ -174,7 +243,8 @@ def main():
         # Laufs bekommt eine eigene Marke, sonst gaelte die juengste Meldung des
         # Jahrgangs faelschlich als Neuzugang.
         if kennung not in bekannt:
-            bekannt[kennung] = ERSTBESTAND if erster_lauf else heute
+            neue_quelle = "hwk" not in bekannte_quellen
+            bekannt[kennung] = ERSTBESTAND if (erster_lauf or neue_quelle) else heute
 
         fertig.append({
             "id": kennung,
@@ -198,9 +268,14 @@ def main():
         x["ebene"] = "Brandenburg"
 
     zdh = zdh_laden()
+    zdh_neu_angeschlossen = zdh and "zdh" not in bekannte_quellen
+    if zdh_neu_angeschlossen:
+        print("   ZDH ist neu angeschlossen - der Bestand zaehlt als Grundbestand,")
+        print("   nicht als Neuzugang. Ab dem naechsten Abgleich faellt Neues auf.")
     for x in zdh:
         if x["id"] not in bekannt:
-            bekannt[x["id"]] = ERSTBESTAND if erster_lauf else heute
+            bekannt[x["id"]] = (ERSTBESTAND
+                                if (erster_lauf or zdh_neu_angeschlossen) else heute)
         x["zuerst_gesehen"] = bekannt[x["id"]]
     fertig.extend(zdh)
     fertig.sort(key=lambda x: (x["datum"] or ""), reverse=True)
@@ -216,6 +291,12 @@ def main():
 
     json.dump(bekannt, open(bekannt_pfad, "w", encoding="utf-8"),
               ensure_ascii=False, indent=1, sort_keys=True)
+
+    bekannte_quellen.add("hwk")
+    if zdh:
+        bekannte_quellen.add("zdh")
+    json.dump(sorted(bekannte_quellen), open(quellen_pfad, "w", encoding="utf-8"),
+              ensure_ascii=False, indent=1)
 
     if ohne_redaktion:
         print("HINWEIS - diese Meldungen sind noch nicht redigiert und erscheinen")

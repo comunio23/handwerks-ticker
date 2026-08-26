@@ -73,20 +73,42 @@ def nur_zeilen(seite):
     return [z.strip() for z in text.split("\n") if z.strip()]
 
 
-def ist_inhaltsseite(url):
-    """Uebersichtsseiten aussortieren. '/presse/veroeffentlichungen/
-    pressemitteilungen/' ist eine Liste, erst der Pfad DAHINTER ist eine
-    Meldung. Dasselbe gilt fuer die Positionen."""
+def bereiche_laden():
+    """Welche Bereiche eingesammelt werden, steht in daten/quellen.json -
+    damit sich die Quellen ohne Eingriff in den Code aendern lassen."""
+    pfad = os.path.join("daten", "quellen.json")
+    if not os.path.exists(pfad):
+        sys.exit("daten/quellen.json fehlt.")
+    zdh = json.load(open(pfad, encoding="utf-8"))["zdh"]
+    return [b for b in zdh["bereiche"] if b.get("aktiv")]
+
+
+def bereich_von(url, bereiche):
+    """Zu welchem Bereich gehoert diese Seite - oder zu keinem?
+    Uebersichtsseiten liegen im selben Pfad wie die Meldungen, deshalb die
+    Tiefenpruefung: '/presse/veroeffentlichungen/pressemitteilungen/' ist die
+    Liste, erst der Pfad DAHINTER eine Meldung."""
     teile = [t for t in url.replace(BASIS, "").split("/") if t]
-    if "/presse/veroeffentlichungen/pressemitteilungen/" in url:
-        return len(teile) >= 4
-    if "/zdh-positionen/" in url:
-        return len(teile) >= 4
-    return False
+    for b in bereiche:
+        if b["pfad_enthaelt"] in url and len(teile) >= b.get("mindest_tiefe", 4):
+            return b
+    return None
 
 
-def urls_aus_sitemap():
-    """Pressemitteilungs- und Positions-URLs samt lastmod aus der Sitemap."""
+def sitemap_cache_leeren():
+    """Die Sitemap MUSS bei jedem Lauf frisch geholt werden - sonst sieht der
+    Abgleich nie etwas Neues. Die einzelnen Meldungsseiten bleiben im Cache,
+    die aendern sich nach dem Erscheinen nicht mehr."""
+    if not os.path.isdir(CACHE):
+        return
+    for name in os.listdir(CACHE):
+        if "sitemap" in name.lower():
+            os.remove(os.path.join(CACHE, name))
+
+
+def urls_aus_sitemap(bereiche):
+    """Alle URLs der aktiven Bereiche samt lastmod aus der Sitemap."""
+    sitemap_cache_leeren()
     index = hole(SITEMAP)
     if not index:
         sys.exit("Sitemap des ZDH nicht erreichbar.")
@@ -105,12 +127,13 @@ def urls_aus_sitemap():
             loc = loc.strip()
             if loc.endswith(".xml") or "sitemap=" in loc:
                 continue
-            if ist_inhaltsseite(loc):
-                gefunden[loc] = lastmod.strip()[:10]
+            b = bereich_von(loc, bereiche)
+            if b:
+                gefunden[loc] = (lastmod.strip()[:10], b)
     return gefunden
 
 
-def seite_lesen(url, lastmod=None):
+def seite_lesen(url, lastmod=None, bereich=None):
     """Datum, Titel, Bereiche, Text und Schlagworte einer ZDH-Seite."""
     seite = hole(url)
     if not seite:
@@ -119,7 +142,7 @@ def seite_lesen(url, lastmod=None):
     if not zeilen:
         return None
 
-    ist_position = "/zdh-positionen/" in url
+    schluessel = bereich["schluessel"] if bereich else "pressemitteilung"
 
     datum = None
     titel = ""
@@ -165,7 +188,8 @@ def seite_lesen(url, lastmod=None):
         "datum": datum,
         "datum_quelle": datum_quelle,
         "titel": titel,
-        "art_quelle": "position" if ist_position else "pressemitteilung",
+        "art_quelle": schluessel,
+        "art_titel": bereich["titel"] if bereich else "",
         "schlagworte": schlagworte,
         "volltext": "\n".join(text).strip(),
         "quelle": "Zentralverband des Deutschen Handwerks",
@@ -180,13 +204,16 @@ if __name__ == "__main__":
     jahr = sys.argv[1] if len(sys.argv) > 1 else str(datetime.date.today().year)
     print("ZDH-Abruf, Jahrgang", jahr)
 
-    urls = urls_aus_sitemap()
+    bereiche = bereiche_laden()
+    print("Aktive Bereiche:", ", ".join(b["titel"] for b in bereiche))
+
+    urls = urls_aus_sitemap(bereiche)
     print("Inhaltsseiten in der Sitemap:", len(urls))
 
     ergebnis = []
     ohne_datum = 0
-    for i, (u, lastmod) in enumerate(sorted(urls.items()), 1):
-        eintrag = seite_lesen(u, lastmod)
+    for i, (u, (lastmod, bereich)) in enumerate(sorted(urls.items()), 1):
+        eintrag = seite_lesen(u, lastmod, bereich)
         if not eintrag or not eintrag["titel"]:
             continue
         if eintrag["datum"] is None:
@@ -204,10 +231,12 @@ if __name__ == "__main__":
     with open(ziel, "w", encoding="utf-8") as f:
         json.dump(ergebnis, f, ensure_ascii=False, indent=2)
 
-    presse = sum(1 for x in ergebnis if x["art_quelle"] == "pressemitteilung")
+    import collections
+    verteilung = collections.Counter(x["art_quelle"] for x in ergebnis)
     ungenau = sum(1 for x in ergebnis if x["datum_quelle"] == "sitemap")
     print()
-    print("Uebernommen:", len(ergebnis),
-          "(%d Pressemitteilungen, %d Positionen; davon %d mit ungenauem Datum)"
-          % (presse, len(ergebnis) - presse, ungenau))
+    print("Uebernommen:", len(ergebnis))
+    for k, n in verteilung.most_common():
+        print("   %-18s %3d" % (k, n))
+    print("   davon ohne echtes Datum auf der Seite:", ungenau)
     print("Geschrieben:", ziel)

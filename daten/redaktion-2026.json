@@ -1,6 +1,6 @@
 {
   "hinweis": "Redaktionelle Ebene zu daten/meldungen-2026.json. Zuordnung ueber die Artikel-ID (letzte Zahl der URL). Schlagzeile und Dreizeiler sind eigene Formulierungen auf Grundlage der jeweiligen Pressemitteilung - massgeblich ist immer das verlinkte Original. Feld 'art': politik | zahlen | bericht | ehrung | termin. 'thema' und optional 'thema2' sind die Kriterien-Knoepfe im Ticker.",
-  "stand": "2026-08-21",
+  "stand": "2026-08-26",
   "eintraege": {
     "6895": {
       "art": "termin",
@@ -358,6 +358,12 @@
       "schlagzeile": "17.522 Betriebe – mehr Gründungen, aber weniger qualifizierte",
       "dreizeiler": "Zum 31. Dezember 2025 waren im Kammerbezirk 17.522 Betriebe gemeldet, 159 mehr als im Vorjahr. Neu eingetragen wurden 1.550 Betriebe, gelöscht 1.391. Die Zahl der qualifizierten Gründungen ging jedoch zurück.",
       "thema2": "Wirtschaftslage"
+    },
+    "6904": {
+      "art": "termin",
+      "thema": "Ehrungen & Termine",
+      "schlagzeile": "Der Terminkalender der Kammer für September",
+      "dreizeiler": "Überblick über die presseöffentlichen Termine im September 2026. Den Auftakt macht der Ausbildungsstart am 1. September: 1.007 junge Menschen beginnen in 58 Gewerken ihre Ausbildung (Stand 20. August 2026)."
     }
   }
 }

@@ -1,0 +1,130 @@
+# -*- coding: utf-8 -*-
+"""
+Der eine Abgleich fuer alle Quellen.
+
+Holt der Reihe nach:
+  1. Handwerkskammer Potsdam   (scrape-pressemitteilungen.py ueber pruefe-neues.py)
+  2. Zentralverband des Deutschen Handwerks (scrape-zdh.py)
+und baut anschliessend den Ticker neu.
+
+Welche ZDH-Bereiche eingesammelt werden, steht in daten/quellen.json und
+laesst sich dort ohne Eingriff in den Code aendern.
+
+Aufruf:
+    python abgleich.py                nur holen und bauen
+    python abgleich.py --hochladen    zusaetzlich auf Netlify veroeffentlichen
+
+Rueckgabewert: 0 = nichts Neues, 1 = es gibt Neues, 2 = Fehler.
+"""
+import json
+import os
+import io
+import subprocess
+import sys
+import datetime
+
+# Die Windows-Konsole kann nicht alle Zeichen darstellen. Ohne diese Umstellung
+# bricht der Lauf ab, sobald irgendwo ein Sonderzeichen auftaucht.
+if hasattr(sys.stdout, "buffer"):
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
+
+HIER = os.path.dirname(os.path.abspath(__file__))
+PROTOKOLL = os.path.join("daten", "abgleich-protokoll.txt")
+
+
+def melde(text=""):
+    print(text)
+    with open(PROTOKOLL, "a", encoding="utf-8") as f:
+        f.write(text + "\n")
+
+
+def bestand(pfad, schluessel="url"):
+    """Welche Eintraege kennen wir aktuell? Fuer den Vorher-Nachher-Vergleich."""
+    if not os.path.exists(pfad):
+        return set()
+    try:
+        return {x[schluessel] for x in json.load(open(pfad, encoding="utf-8"))}
+    except Exception:
+        return set()
+
+
+def lauf(script, *argumente):
+    """Ein Teilscript ausfuehren und seine Ausgabe durchreichen."""
+    ergebnis = subprocess.run([sys.executable, script] + list(argumente),
+                              capture_output=True, text=True,
+                              encoding="utf-8", errors="replace")
+    for zeile in (ergebnis.stdout or "").splitlines():
+        melde("   " + zeile)
+    if ergebnis.returncode not in (0, 1):
+        melde("   FEHLER in %s (Rueckgabewert %d)" % (script, ergebnis.returncode))
+        for zeile in (ergebnis.stderr or "").splitlines()[:10]:
+            melde("   ! " + zeile)
+    return ergebnis.returncode
+
+
+def main():
+    os.chdir(HIER)
+    jahr = str(datetime.date.today().year)
+    beginn = datetime.datetime.now()
+
+    melde()
+    melde("=" * 66)
+    melde("Abgleich am %s" % beginn.strftime("%d.%m.%Y um %H:%M"))
+    melde("=" * 66)
+
+    vorher_hwk = bestand("daten/meldungen-%s.json" % jahr)
+    vorher_zdh = bestand("daten/zdh-%s.json" % jahr)
+
+    melde()
+    melde("1. Handwerkskammer Potsdam")
+    # --nur-holen: pruefe-neues.py soll den Ticker NICHT selbst bauen -
+    # das macht Schritt 3, sonst wird zweimal gebaut.
+    fehler = lauf("pruefe-neues.py", "--nur-holen") == 2
+
+    melde()
+    melde("2. Zentralverband des Deutschen Handwerks")
+    if lauf("scrape-zdh.py", jahr) == 2:
+        fehler = True
+
+    nachher_hwk = bestand("daten/meldungen-%s.json" % jahr)
+    nachher_zdh = bestand("daten/zdh-%s.json" % jahr)
+    neu_hwk = nachher_hwk - vorher_hwk
+    neu_zdh = nachher_zdh - vorher_zdh
+
+    melde()
+    melde("3. Ticker bauen")
+    if lauf("baue-ticker.py") == 2:
+        fehler = True
+
+    melde()
+    melde("-" * 66)
+    if neu_hwk or neu_zdh:
+        melde("NEU: %d von der Kammer, %d vom ZDH" % (len(neu_hwk), len(neu_zdh)))
+        for u in sorted(neu_hwk | neu_zdh):
+            melde("   " + u)
+        melde()
+        melde("Diese Meldungen haben noch keinen Redaktionseintrag und erscheinen")
+        melde("bis dahin mit ihrem Originaltitel und der Markierung")
+        melde("'Noch nicht eingeordnet'.")
+    else:
+        melde("Nichts Neues.")
+
+    if "--hochladen" in sys.argv and not fehler:
+        melde()
+        melde("4. Veroeffentlichen")
+        if lauf("deploy-netlify.py") == 2:
+            fehler = True
+
+    melde("Dauer: %d Sekunden" % (datetime.datetime.now() - beginn).seconds)
+
+    if fehler:
+        return 2
+    return 1 if (neu_hwk or neu_zdh) else 0
+
+
+if __name__ == "__main__":
+    try:
+        sys.exit(main())
+    except Exception as f:
+        melde("FEHLER beim Abgleich: %s" % f)
+        sys.exit(2)

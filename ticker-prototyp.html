@@ -111,6 +111,10 @@
   .ebene-bund{background:#2b2b2b;color:#fff}
   .ebene-land{background:var(--blau-flaeche);color:var(--blau)}
   .chip.ebenen-knopf[aria-pressed="true"]{background:#2b2b2b;border-color:#2b2b2b}
+  .gattung{font-size:.72rem;color:var(--grau);border:1px solid var(--linie);
+           border-radius:5px;padding:2px 7px}
+  .eigener-text{font-size:.74rem;color:var(--grau);white-space:nowrap;
+                border:1px solid var(--linie);border-radius:5px;padding:1px 6px}
   .thema{font-size:.82rem;color:var(--blau-hell);font-weight:600}
   .datum{font-size:.82rem;color:var(--grau);margin-left:auto;flex-shrink:0}
   .datum .ungenau{cursor:help;border-bottom:1px dotted var(--grau)}
@@ -333,27 +337,47 @@ const DATEN = /*__DATEN__*/{
   }
  ],
  "forderungen_kriterium": "Sortiert danach, wie oft die Forderung erhoben wurde und ob Bund und Land sie gemeinsam tragen.",
- "stand": "2026-08-21",
+ "stand": "2026-08-26",
  "themen": [
   "Ausbildung & Nachwuchs",
-  "Politik & Regierung",
   "Steuern & Abgaben",
-  "Wirtschaftslage",
-  "Entbürokratisierung",
-  "Betrieb & Nachfolge",
   "Sozialabgaben & Rente",
-  "Bauen & Sanieren",
-  "Energie & Sprit",
+  "Wirtschaftslage",
+  "Politik & Regierung",
+  "Entbürokratisierung",
   "Arbeitszeit & Arbeitsrecht",
+  "Betrieb & Nachfolge",
+  "Energie & Sprit",
+  "Bauen & Sanieren",
+  "Personal & Fachkräfte",
   "Auflagen & Vorschriften",
   "Aufträge & Vergabe",
   "Kammer & Service",
-  "Personal & Fachkräfte",
+  "Noch nicht eingeordnet",
   "Ehrungen & Termine"
  ],
- "letzter_abgleich": "2026-08-25",
- "neu_anzahl": 51,
+ "letzter_abgleich": "2026-08-26",
+ "neu_anzahl": 1,
  "meldungen": [
+  {
+   "id": "6904",
+   "datum": "2026-08-25",
+   "datum_ungenau": false,
+   "nummer": "61",
+   "titel": "Ausgewählte presseöffentliche Termine und Veranstaltungen des Handwerks und der Handwerkskammer Potsdam im September 2026",
+   "url": "https://www.hwk-potsdam.de/artikel/ausgewaehlte-presseoeffentliche-termine-und-veranstaltungen-des-handwerks-und-der-handwerkskammer-potsdam-im-september-2026-9,735,6904.html",
+   "art": "termin",
+   "thema": "Ehrungen & Termine",
+   "thema2": null,
+   "absender": "Handwerkskammer Potsdam",
+   "schlagzeile": "Der Terminkalender der Kammer für September",
+   "dreizeiler": "Überblick über die presseöffentlichen Termine im September 2026. Den Auftakt macht der Ausbildungsstart am 1. September: 1.007 junge Menschen beginnen in 58 Gewerken ihre Ausbildung (Stand 20. August 2026).",
+   "unredigiert": false,
+   "zuerst_gesehen": "2026-08-26",
+   "zitat": null,
+   "ebene": "Brandenburg",
+   "neu": true
+  },
   {
    "id": "zdh-ausbildung-im-handwerk-staerken-statt-mit-umlage-belasten",
    "datum": "2026-08-20",
@@ -369,9 +393,32 @@ const DATEN = /*__DATEN__*/{
    "schlagzeile": "Ausbildung im Handwerk stärken statt mit Umlage belasten",
    "dreizeiler": "Die DGB-Jugend hat ihren Ausbildungsreport 2026 vorgelegt. Der ZDH verweist darauf, dass die neu abgeschlossenen Ausbildungsverträge im Handwerk im ersten Halbjahr 2026 deutlich gestiegen sind. Eine Ausbildungsumlage lehnt er ab – sie würde ausbildende Betriebe belasten statt stärken.",
    "unredigiert": false,
+   "quelle_eigen": false,
+   "gattung": "Pressemitteilung",
    "zitat": null,
-   "zuerst_gesehen": "2026-08-25",
-   "neu": true
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
+  },
+  {
+   "id": "zdh-passungsprobleme-auf-dem-ausbildungsmarkt-loesen",
+   "datum": "2026-08-19",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Passungsprobleme auf dem Ausbildungsmarkt lösen",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/interviews-und-statements/passungsprobleme-auf-dem-ausbildungsmarkt-loesen/",
+   "art": "politik",
+   "thema": "Ausbildung & Nachwuchs",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "schlagzeile": "Passungsprobleme auf dem Ausbildungsmarkt lösen",
+   "dreizeiler": "Viele Ausbildungsplätze sind vor allem wegen Passungsproblemen noch unbesetzt. Genau jetzt das Programm \"Passgenaue Besetzung und Willkommenslotsen\" zu streichen, sei politisch widersinnig, so ZDH-Generalsekretär Holger Schwannecke zu Johanna Apel vom RND.",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Interview / Statement",
+   "zitat": null,
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
   },
   {
    "id": "zdh-jahressteuergesetz-zwischen-vereinfachungen-und-neuen-belastungen",
@@ -388,9 +435,53 @@ const DATEN = /*__DATEN__*/{
    "schlagzeile": "Jahressteuergesetz zwischen Vereinfachungen und neuen Belastungen",
    "dreizeiler": "Das Bundeskabinett hat das Jahressteuergesetz 2026 beschlossen. Der ZDH sieht erste Verbesserungen, etwa mehr Rechtssicherheit bei der Kaufpreisaufteilung von Grundstücken und bei der umsatzsteuerlichen Organschaft. Zentrale Belastungen für Betriebe seien damit aber noch nicht beseitigt.",
    "unredigiert": false,
+   "quelle_eigen": false,
+   "gattung": "Pressemitteilung",
    "zitat": null,
-   "zuerst_gesehen": "2026-08-25",
-   "neu": true
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
+  },
+  {
+   "id": "zdh-leasing-schafft-finanzielle-spielraeume-fuer-wachstum-im-handwerk",
+   "datum": "2026-08-10",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Leasing schafft finanzielle Spielräume für Wachstum im Handwerk",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/reden-und-namensbeitraege/leasing-schafft-finanzielle-spielraeume-fuer-wachstum-im-handwerk/",
+   "art": "bericht",
+   "thema": "Noch nicht eingeordnet",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "schlagzeile": "Leasing schafft finanzielle Spielräume für Wachstum im Handwerk",
+   "dreizeiler": "Im Jahresbericht des Bundesverbandes Deutscher Leasing-Unternehmen e.V. beschreibt ZDH-Präsident Jörg Dittrich, wie Leasing Investitionen erleichtern, Modernisierung ermöglichen und so die Wettbewerbsfähigkeit des Handwerks stärken kann.",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Rede / Namensbeitrag",
+   "zitat": null,
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
+  },
+  {
+   "id": "zdh-berufliche-bildung-als-zukunftsaufgabe",
+   "datum": "2026-08-07",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Berufliche Bildung als Zukunftsaufgabe",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/interviews-und-statements/berufliche-bildung-als-zukunftsaufgabe/",
+   "art": "politik",
+   "thema": "Ausbildung & Nachwuchs",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "schlagzeile": "Berufliche Bildung als Zukunftsaufgabe",
+   "dreizeiler": "Wie gelingt die Fachkräftesicherung? ZDH-Präsident Jörg Dittrich spricht mit Sarah Materna vom Deutschen Handwerksblatt über die Gleichwertigkeit beruflicher Bildung, Investitionen in Bildungszentren und die Gewinnung internationaler Fachkräfte.",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Interview / Statement",
+   "zitat": null,
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
   },
   {
    "id": "6895",
@@ -431,6 +522,69 @@ const DATEN = /*__DATEN__*/{
    "neu": false
   },
   {
+   "id": "zdh-koalitionsvertrag-einhalten-sonntagsbackverbot-aufheben",
+   "datum": "2026-07-23",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Koalitionsvertrag einhalten: Sonntagsbackverbot aufheben",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/interviews-und-statements/koalitionsvertrag-einhalten-sonntagsbackverbot-aufheben/",
+   "art": "politik",
+   "thema": "Arbeitszeit & Arbeitsrecht",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "schlagzeile": "Koalitionsvertrag einhalten: Sonntagsbackverbot aufheben",
+   "dreizeiler": "Handwerksbäckereien dürfen sonntags nur drei Stunden produzieren, während Backshops unbegrenzt aufbacken dürfen. Die Ungerechtigkeit ist im Koalitionsvertrag erkannt und gehört endlich abgeschafft, so ZDH-Präsident Jörg Dittrich zu Andreas Hoenig, dpa.",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Interview / Statement",
+   "zitat": null,
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
+  },
+  {
+   "id": "zdh-weitere-ambitionierte-reformen-sind-unausweichlich",
+   "datum": "2026-07-21",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Weitere ambitionierte Reformen sind unausweichlich",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/interviews-und-statements/weitere-ambitionierte-reformen-sind-unausweichlich/",
+   "art": "politik",
+   "thema": "Sozialabgaben & Rente",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "schlagzeile": "Weitere ambitionierte Reformen sind unausweichlich",
+   "dreizeiler": "Die Reformbemühungen sind zu würdigen, doch davon kommt in den Betrieben bislang nichts an. Weitere Reformen sind unausweichlich, dann vor allem zur Senkung der Lohnzusatzkosten, so ZDH-Präsident Jörg Dittrich zu Andreas Hoenig von der dpa.",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Interview / Statement",
+   "zitat": null,
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
+  },
+  {
+   "id": "zdh-azubi-plus-im-handwerk-berufliche-bildung-gleichwertig-behandeln",
+   "datum": "2026-07-20",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Azubi-Plus im Handwerk: Berufliche Bildung gleichwertig behandeln",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/interviews-und-statements/azubi-plus-im-handwerk-berufliche-bildung-gleichwertig-behandeln/",
+   "art": "politik",
+   "thema": "Ausbildung & Nachwuchs",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "schlagzeile": "Azubi-Plus im Handwerk: Berufliche Bildung gleichwertig behandeln",
+   "dreizeiler": "Das Handwerk gewinnt im vierten Jahr in Folge mehr Nachwuchs. Politik muss dem Rechnung tragen und berufliche Bildung gleichwertig zur akademischen gesetzlich und finanziell absichern, so ZDH-Präsident Jörg Dittrich zu Andreas Hoenig von der dpa.",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Interview / Statement",
+   "zitat": null,
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
+  },
+  {
    "id": "zdh-mehr-mut-bei-der-reform-des-aufstiegs-bafoeg",
    "datum": "2026-07-15",
    "datum_ungenau": false,
@@ -445,9 +599,11 @@ const DATEN = /*__DATEN__*/{
    "schlagzeile": "Mehr Mut bei der Reform des Aufstiegs-BAföG",
    "dreizeiler": "Das Bundeskabinett hat den Entwurf für ein fünftes Änderungsgesetz zum Aufstiegs-BAföG beschlossen. Der ZDH erkennt wichtige Verbesserungen an. Damit die Teilnehmerinnen und Teilnehmer an Fortbildungen davon aber tatsächlich profitieren, brauche es mehr Mut.",
    "unredigiert": false,
+   "quelle_eigen": false,
+   "gattung": "Pressemitteilung",
    "zitat": null,
-   "zuerst_gesehen": "2026-08-25",
-   "neu": true
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
   },
   {
    "id": "zdh-zweites-entlastungskabinett-nicht-mehr-als-eine-zwischenetappe",
@@ -464,9 +620,11 @@ const DATEN = /*__DATEN__*/{
    "schlagzeile": "Zweites Entlastungskabinett nicht mehr als eine Zwischenetappe",
    "dreizeiler": "Die Bundesregierung hat ein zweites „Entlastungskabinett“ zur Entbürokratisierung abgehalten. Der ZDH begrüßt, dass sie den Erfolgsdruck selbst hochhält und transparent macht, wo sie steht. Trotz richtiger Ansätze und erkennbarer Fortschritte bleibe es eine Zwischenetappe.",
    "unredigiert": false,
+   "quelle_eigen": false,
+   "gattung": "Pressemitteilung",
    "zitat": null,
-   "zuerst_gesehen": "2026-08-25",
-   "neu": true
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
   },
   {
    "id": "6892",
@@ -488,6 +646,27 @@ const DATEN = /*__DATEN__*/{
    "neu": false
   },
   {
+   "id": "zdh-zeitgewinn-als-gradmesser-wirksamer-buerokratischer-entlastung",
+   "datum": "2026-07-13",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Zeitgewinn als Gradmesser wirksamer bürokratischer Entlastung",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/interviews-und-statements/zeitgewinn-als-gradmesser-wirksamer-buerokratischer-entlastung/",
+   "art": "politik",
+   "thema": "Entbürokratisierung",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "schlagzeile": "Zeitgewinn als Gradmesser wirksamer bürokratischer Entlastung",
+   "dreizeiler": "Bürokratie, fehlende Planungssicherheit und hohe Energie- und Lohnzusatzkosten belasten die Betriebe erheblich, sagt ZDH-Generalsekretär Holger Schwannecke in der Deutschen Handwerks Zeitung (DHZ). Wirksame Politische Entscheidungen seien jetzt notwendig.",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Interview / Statement",
+   "zitat": null,
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
+  },
+  {
    "id": "zdh-gkv-reform-laesst-entlastungspotenzial-ungenutzt",
    "datum": "2026-07-10",
    "datum_ungenau": false,
@@ -502,9 +681,32 @@ const DATEN = /*__DATEN__*/{
    "schlagzeile": "GKV-Reform lässt Entlastungspotenzial ungenutzt",
    "dreizeiler": "Der Bundestag hat das GKV-Beitragssatzstabilisierungsgesetz verabschiedet. Aus Sicht des ZDH bleibt es deutlich hinter dem Notwendigen zurück. Die Chance auf spürbare Entlastungen bleibe weitgehend ungenutzt.",
    "unredigiert": false,
+   "quelle_eigen": false,
+   "gattung": "Pressemitteilung",
    "zitat": null,
-   "zuerst_gesehen": "2026-08-25",
-   "neu": true
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
+  },
+  {
+   "id": "zdh-momentum-des-ersten-reformpakets-fuer-weiteres-reformpaket-nutzen",
+   "datum": "2026-07-06",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Momentum des ersten Reformpakets für weiteres Reformpaket nutzen",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/interviews-und-statements/momentum-des-ersten-reformpakets-fuer-weiteres-reformpaket-nutzen/",
+   "art": "politik",
+   "thema": "Steuern & Abgaben",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "schlagzeile": "Momentum des ersten Reformpakets für weiteres Reformpaket nutzen",
+   "dreizeiler": "Das erste Reformpaket sei ein wichtiger Anfang, das entstandene Momentum müsse Politik nun nutzen, um mit einem zweiten Reformpaket deutlich sinkende Sozialbeiträge auf den Weg zu bringen, so ZDH-Präsident Jörg Dittrich bei Jan W. Schäfer (BILD).",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Interview / Statement",
+   "zitat": null,
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
   },
   {
    "id": "zdh-haushaltsbeschluesse-ohne-ueberzeugenden-konsolidierungskurs",
@@ -521,9 +723,11 @@ const DATEN = /*__DATEN__*/{
    "schlagzeile": "Haushaltsbeschlüsse ohne überzeugenden Konsolidierungskurs",
    "dreizeiler": "Das Bundeskabinett hat den Regierungsentwurf zum Bundeshaushalt 2027 und den Finanzplan bis 2030 beschlossen. Der ZDH sieht darin keinen überzeugenden Konsolidierungskurs. Ein Haushalt, der auf immer neuen Schulden und unklaren Einsparversprechen aufbaue, schaffe kein Vertrauen.",
    "unredigiert": false,
+   "quelle_eigen": false,
+   "gattung": "Pressemitteilung",
    "zitat": null,
-   "zuerst_gesehen": "2026-08-25",
-   "neu": true
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
   },
   {
    "id": "6871",
@@ -559,9 +763,11 @@ const DATEN = /*__DATEN__*/{
    "schlagzeile": "Koalition zeigt Handlungsfähigkeit durch wichtige Reformschritte",
    "dreizeiler": "Der Koalitionsausschuss hat seine Ergebnisse vorgestellt. Der ZDH wertet die Einigung als Beleg dafür, dass die Koalition auch bei schwierigen Themen handlungs- und kompromissfähig ist. Angesichts der wirtschaftlichen Lage sei das eine zentrale Botschaft.",
    "unredigiert": false,
+   "quelle_eigen": false,
+   "gattung": "Pressemitteilung",
    "zitat": null,
-   "zuerst_gesehen": "2026-08-25",
-   "neu": true
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
   },
   {
    "id": "6869",
@@ -580,6 +786,27 @@ const DATEN = /*__DATEN__*/{
    "zuerst_gesehen": "erstbestand",
    "zitat": null,
    "ebene": "Brandenburg",
+   "neu": false
+  },
+  {
+   "id": "zdh-handwerk-staerken-und-nicht-weiter-zusaetzlich-belasten",
+   "datum": "2026-06-30",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Handwerk stärken und nicht weiter zusätzlich belasten",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/interviews-und-statements/handwerk-staerken-und-nicht-weiter-zusaetzlich-belasten/",
+   "art": "politik",
+   "thema": "Steuern & Abgaben",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "schlagzeile": "Handwerk stärken und nicht weiter zusätzlich belasten",
+   "dreizeiler": "Im Vorfeld des Koalitionsausschusses, bei dem Entscheidungen zu einem umfangreichen Reformpaket vor allem bei Steuern und Arbeitszeit getroffen werden sollen, appelliert Jörg Dittrich, Präsident des Zentralverbandes des Deutschen Handwerks (ZDH):",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Interview / Statement",
+   "zitat": null,
+   "zuerst_gesehen": "erstbestand",
    "neu": false
   },
   {
@@ -621,6 +848,27 @@ const DATEN = /*__DATEN__*/{
    "neu": false
   },
   {
+   "id": "zdh-entlastungen-fuer-wachstumsanschub-zwingend-noetig",
+   "datum": "2026-06-29",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Entlastungen für Wachstumsanschub zwingend nötig",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/interviews-und-statements/entlastungen-fuer-wachstumsanschub-zwingend-noetig/",
+   "art": "politik",
+   "thema": "Sozialabgaben & Rente",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "schlagzeile": "Entlastungen für Wachstumsanschub zwingend nötig",
+   "dreizeiler": "Um kurzfristig Wachstum anzuschieben und um die anfänglichen Belastungen des erst langfristig wirkenden Rentenpakets auszugleichen, sei ein Entlastungs-Reformpaket nötig, so ZDH-Präsident Jörg Dittrich zu Karsten Seibel und Daniel Zwick (WAMS).",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Interview / Statement",
+   "zitat": null,
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
+  },
+  {
    "id": "6858",
    "datum": "2026-06-26",
    "datum_ungenau": false,
@@ -654,9 +902,32 @@ const DATEN = /*__DATEN__*/{
    "schlagzeile": "Infrastrukturgesetz setzt richtige Prioritäten",
    "dreizeiler": "Der Bundestag hat das Infrastruktur-Zukunftsgesetz verabschiedet. Der ZDH sieht darin ein wichtiges Signal für schnellere Planungs- und Genehmigungsverfahren. Das Gesetz schaffe die Grundlage, bei der Modernisierung der Infrastruktur schneller voranzukommen.",
    "unredigiert": false,
+   "quelle_eigen": false,
+   "gattung": "Pressemitteilung",
    "zitat": null,
-   "zuerst_gesehen": "2026-08-25",
-   "neu": true
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
+  },
+  {
+   "id": "zdh-krisenvorsorge-staerkt-handwerksbetriebe-und-handlungsfaehigkeit",
+   "datum": "2026-06-25",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Krisenvorsorge stärkt Handwerksbetriebe und Handlungsfähigkeit",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/interviews-und-statements/krisenvorsorge-staerkt-handwerksbetriebe-und-handlungsfaehigkeit/",
+   "art": "politik",
+   "thema": "Arbeitszeit & Arbeitsrecht",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "schlagzeile": "Krisenvorsorge stärkt Handwerksbetriebe und Handlungsfähigkeit",
+   "dreizeiler": "Ob Systembackup, Telefonliste oder Notstromaggregat: Krisenvorsorge hilft in Ausnahmesituationen handlungsfähig zu bleiben. Betriebe sollten deshalb Notfallpläne regelmäßig prüfen, so ZDH-Bereichsleiter Dr. Constantin Terton zu Martina Jahn (handwerk.com).",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Interview / Statement",
+   "zitat": null,
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
   },
   {
    "id": "zdh-rentenreformvorschlaege-zielen-richtung-generationengerechtigkeit",
@@ -673,9 +944,11 @@ const DATEN = /*__DATEN__*/{
    "schlagzeile": "Rentenreformvorschläge zielen Richtung Generationengerechtigkeit",
    "dreizeiler": "Die Rentenkommission hat ihre Empfehlungen an die Bundesregierung übergeben. Der ZDH sieht darin das Potenzial, das Rentensystem durch einen strukturellen Umbau generationengerechter aufzustellen. Die Koalition müsse nun den Mut aufbringen, das Gesamtpaket anzugehen.",
    "unredigiert": false,
+   "quelle_eigen": false,
+   "gattung": "Pressemitteilung",
    "zitat": null,
-   "zuerst_gesehen": "2026-08-25",
-   "neu": true
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
   },
   {
    "id": "6854",
@@ -730,9 +1003,11 @@ const DATEN = /*__DATEN__*/{
    "schlagzeile": "Arbeitszeitgesetz: Entwurf geht an betrieblicher Realität vorbei",
    "dreizeiler": "Ein Referentenentwurf zur Änderung des Arbeitszeitgesetzes ist bekannt geworden. Der ZDH nennt ihn keinen Aufbruch, sondern einen Bruch mit den Zusagen des Koalitionsvertrags. Lange Anfahrten, witterungsabhängige Arbeiten und Notdienste kämen darin nicht vor.",
    "unredigiert": false,
+   "quelle_eigen": false,
+   "gattung": "Pressemitteilung",
    "zitat": null,
-   "zuerst_gesehen": "2026-08-25",
-   "neu": true
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
   },
   {
    "id": "6851",
@@ -825,9 +1100,11 @@ const DATEN = /*__DATEN__*/{
    "schlagzeile": "Koalition muss Konsens über Reformnotwendigkeit mit Leben füllen",
    "dreizeiler": "Beim Koalitionsausschuss mit den Sozialpartnern war allen Beteiligten die Notwendigkeit tiefgreifender wirtschaftspolitischer Reformen bewusst. Über die nötigen Maßnahmen bestehen laut ZDH aber weiterhin unterschiedliche Sichtweisen.",
    "unredigiert": false,
+   "quelle_eigen": false,
+   "gattung": "Pressemitteilung",
    "zitat": null,
-   "zuerst_gesehen": "2026-08-25",
-   "neu": true
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
   },
   {
    "id": "zdh-studie-mahnt-hebelreformen-in-schluessigem-reform-gesamtpaket-an",
@@ -844,9 +1121,11 @@ const DATEN = /*__DATEN__*/{
    "schlagzeile": "Studie mahnt \"Hebelreformen\" in schlüssigem Reform-Gesamtpaket an",
    "dreizeiler": "Im Haus des Deutschen Handwerks in Berlin haben zwei Wirtschaftswissenschaftlerinnen eine Studie zu „Hebelreformen“ vorgestellt. Der Gemeinschaftsausschuss der Deutschen Gewerblichen Wirtschaft diskutierte über Synergieeffekte für Wachstum und finanzielle Tragfähigkeit.",
    "unredigiert": false,
+   "quelle_eigen": false,
+   "gattung": "Pressemitteilung",
    "zitat": null,
-   "zuerst_gesehen": "2026-08-25",
-   "neu": true
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
   },
   {
    "id": "zdh-deutsche-wirtschaft-setzt-auf-gemeinsamen-reformkurs",
@@ -863,9 +1142,32 @@ const DATEN = /*__DATEN__*/{
    "schlagzeile": "Deutsche Wirtschaft setzt auf gemeinsamen Reformkurs",
    "dreizeiler": "BDA, BDI, DIHK und ZDH haben eine gemeinsame Erklärung zum Meinungsaustausch im Kanzleramt veröffentlicht. Sie wollen möglichst große Schnittmengen in umstrittenen Reformfeldern ausloten. Es geht um soziale Sicherungssysteme, Arbeitsmarkt und Standortbedingungen.",
    "unredigiert": false,
+   "quelle_eigen": false,
+   "gattung": "Pressemitteilung",
    "zitat": null,
-   "zuerst_gesehen": "2026-08-25",
-   "neu": true
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
+  },
+  {
+   "id": "zdh-dittrich-fordert-schluessiges-reformpaket-fuer-mehr-wachstum",
+   "datum": "2026-06-08",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Dittrich fordert schlüssiges Reformpaket für mehr Wachstum",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/interviews-und-statements/dittrich-fordert-schluessiges-reformpaket-fuer-mehr-wachstum/",
+   "art": "politik",
+   "thema": "Sozialabgaben & Rente",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "schlagzeile": "Dittrich fordert schlüssiges Reformpaket für mehr Wachstum",
+   "dreizeiler": "Um Deutschlands Wettbewerbsfähigkeit wiederherzustellen und mehr Wachstum zu erreichen, braucht es aufeinander abgestimmte Strukturreformen, Prioritätensetzung und einen klaren Fahrplan, so ZDH-Präsident Jörg Dittrich zu Rena Lehmann (NOZ).",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Interview / Statement",
+   "zitat": null,
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
   },
   {
    "id": "6837",
@@ -920,9 +1222,32 @@ const DATEN = /*__DATEN__*/{
    "schlagzeile": "OECD-Economic Outlook sieht großen Reformbedarf in Deutschland",
    "dreizeiler": "Die OECD hat ihren Economic Outlook veröffentlicht. Der ZDH liest daraus einen eindeutigen Handlungsauftrag an die Bundesregierung. Für spürbar bessere Bedingungen bei Wachstum, Investitionen und Beschäftigung brauche Deutschland umfassende Reformen.",
    "unredigiert": false,
+   "quelle_eigen": false,
+   "gattung": "Pressemitteilung",
    "zitat": null,
-   "zuerst_gesehen": "2026-08-25",
-   "neu": true
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
+  },
+  {
+   "id": "zdh-regierungs-gkv-reformplan-laesst-entlastungspotenzial-ungenutzt",
+   "datum": "2026-06-02",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Regierungs-GKV-Reformplan lässt Entlastungspotenzial ungenutzt",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/interviews-und-statements/regierungs-gkv-reformplan-laesst-entlastungspotenzial-ungenutzt/",
+   "art": "politik",
+   "thema": "Sozialabgaben & Rente",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "schlagzeile": "Regierungs-GKV-Reformplan lässt Entlastungspotenzial ungenutzt",
+   "dreizeiler": "ZDH-Geschäftsführer Karl-Sebastian Schulte sieht in den Regierungsplänen zur GKV-Reform eine verpasste Gelegenheit, eine strukturelle Reform einzuleiten, durch die die Lohnzusatzkosten spürbar sinken, wie er Katharina Wolf von handwerk.com erläutert.",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Interview / Statement",
+   "zitat": null,
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
   },
   {
    "id": "6835",
@@ -958,9 +1283,32 @@ const DATEN = /*__DATEN__*/{
    "schlagzeile": "Neue Allianzvereinbarung zum \"Sommer der Berufsausbildung\"-Start",
    "dreizeiler": "Zum Start des „Sommers der Berufsausbildung“ wurde die neue Vereinbarung der Allianz für Aus- und Weiterbildung für 2026 bis 2029 veröffentlicht. Bundesbildungsministerium und ZDH betonen die Bedeutung der beruflichen Bildung für die Fachkräftesicherung.",
    "unredigiert": false,
+   "quelle_eigen": false,
+   "gattung": "Pressemitteilung",
    "zitat": null,
-   "zuerst_gesehen": "2026-08-25",
-   "neu": true
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
+  },
+  {
+   "id": "zdh-reformerwartungen-zur-gesetzlichen-krankenversicherung",
+   "datum": "2026-05-28",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Reformerwartungen zur Gesetzlichen Krankenversicherung",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/interviews-und-statements/reformerwartungen-zur-gesetzlichen-krankenversicherung/",
+   "art": "politik",
+   "thema": "Sozialabgaben & Rente",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "schlagzeile": "Reformerwartungen zur Gesetzlichen Krankenversicherung",
+   "dreizeiler": "Wie lässt sich die gesetzliche Krankenversicherung reformieren und was bedeutet das für Betriebe und Beschäftigte? Darüber sprechen ZDH-Präsident Jörg Dittrich und Frank Hippler, Vorstandsvorsitzender der IKK classic, im Podcast \"Alles geregelt\".",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Interview / Statement",
+   "zitat": null,
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
   },
   {
    "id": "zdh-wirtschaftsweise-dringen-zu-recht-auf-umfassende-strukturreformen",
@@ -977,9 +1325,11 @@ const DATEN = /*__DATEN__*/{
    "schlagzeile": "Wirtschaftsweise dringen zu Recht auf umfassende Strukturreformen",
    "dreizeiler": "Der Sachverständigenrat hat sein Frühjahrsgutachten vorgelegt. Der ZDH sieht den Reformdruck auf die Bundesregierung dadurch zu Recht nochmals deutlich erhöht.",
    "unredigiert": false,
+   "quelle_eigen": false,
+   "gattung": "Pressemitteilung",
    "zitat": null,
-   "zuerst_gesehen": "2026-08-25",
-   "neu": true
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
   },
   {
    "id": "6843",
@@ -1072,9 +1422,11 @@ const DATEN = /*__DATEN__*/{
    "schlagzeile": "ZDH und EuroSkills 2027 GmbH besiegeln Zusammenarbeit",
    "dreizeiler": "ZDH und EuroSkills 2027 GmbH haben in Berlin eine Absichtserklärung unterzeichnet. Sie vereinbaren die Zusammenarbeit für die Europameisterschaft der Berufe EuroSkills 2027.",
    "unredigiert": false,
+   "quelle_eigen": false,
+   "gattung": "Pressemitteilung",
    "zitat": null,
-   "zuerst_gesehen": "2026-08-25",
-   "neu": true
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
   },
   {
    "id": "zdh-e-rechnung-fuer-betriebe-noch-mehr-aufwand-statt-entlastung",
@@ -1091,9 +1443,53 @@ const DATEN = /*__DATEN__*/{
    "schlagzeile": "E-Rechnung für Betriebe noch mehr Aufwand statt Entlastung",
    "dreizeiler": "Eine bundesweite ZDH-Umfrage unter knapp 2000 Handwerksbetrieben zeigt: Hoher Aufwand, zusätzliche Kosten und fehlende Vorgaben bremsen die Umsetzung der E-Rechnung deutlich. Statt Entlastung bedeutet sie für viele Betriebe derzeit Mehrarbeit.",
    "unredigiert": false,
+   "quelle_eigen": false,
+   "gattung": "Pressemitteilung",
    "zitat": null,
-   "zuerst_gesehen": "2026-08-25",
-   "neu": true
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
+  },
+  {
+   "id": "zdh-dittrich-druck-auf-betriebe-und-beschaeftigte-ist-massiv",
+   "datum": "2026-05-15",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Dittrich: \"Druck auf Betriebe und Beschäftigte ist massiv\"",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/interviews-und-statements/dittrich-druck-auf-betriebe-und-beschaeftigte-ist-massiv/",
+   "art": "politik",
+   "thema": "Wirtschaftslage",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "schlagzeile": "Dittrich: \"Druck auf Betriebe und Beschäftigte ist massiv\"",
+   "dreizeiler": "Der Druck auf Betriebe und Beschäftigte wächst. Es braucht jetzt Entscheidungen für ein Reformgesamtpaket bei Sozialversicherung, Steuern und Arbeitsmarkt, so ZDH-Präsident Jörg Dittrich zu Jochen Gaugele und Dominik Bath (Funkemedien).",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Interview / Statement",
+   "zitat": null,
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
+  },
+  {
+   "id": "zdh-reformdiskurs-braucht-respekt-statt-abwehrreflexe",
+   "datum": "2026-05-13",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Reformdiskurs braucht Respekt statt Abwehrreflexe",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/interviews-und-statements/reformdiskurs-braucht-respekt-statt-abwehrreflexe/",
+   "art": "politik",
+   "thema": "Wirtschaftslage",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "schlagzeile": "Reformdiskurs braucht Respekt statt Abwehrreflexe",
+   "dreizeiler": "Der Ernst der wirtschaftlichen Lage erfordere von allen Veränderungs- und Reformbereitschaft, wenig hilfreich seien die reflexartige Ablehnung und Diskreditierung jeglichen Reformvorschlags, so ZDH-Präsident Jörg Dittrich zu Stefan Braun von Table.Media.",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Interview / Statement",
+   "zitat": null,
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
   },
   {
    "id": "zdh-besser-sorgfaeltige-reformen-als-weitere-schnellschuesse",
@@ -1110,9 +1506,11 @@ const DATEN = /*__DATEN__*/{
    "schlagzeile": "Besser sorgfältige Reformen als weitere Schnellschüsse",
    "dreizeiler": "Der Koalitionsausschuss von Union und SPD hat sich auf einen Arbeitsprozess verständigt, statt schnelle Beschlüsse zu fassen. Der ZDH hält das für richtig: Wer bei Sozialstaat und Steuern dauerhaft etwas verändern wolle, dürfe nicht hektisch handeln.",
    "unredigiert": false,
+   "quelle_eigen": false,
+   "gattung": "Pressemitteilung",
    "zitat": null,
-   "zuerst_gesehen": "2026-08-25",
-   "neu": true
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
   },
   {
    "id": "zdh-verlaesslichkeit-im-heizungskeller-ist-jetzt-entscheidend",
@@ -1129,9 +1527,32 @@ const DATEN = /*__DATEN__*/{
    "schlagzeile": "Verlässlichkeit im Heizungskeller ist jetzt entscheidend",
    "dreizeiler": "Das Bundeskabinett hat das Gebäudemodernisierungsgesetz beschlossen. Damit wird die Wärmewende im Gebäudesektor neu ausgerichtet. Der ZDH nennt den Ansatz richtig – weniger Bürokratie, mehr Technologieoffenheit, einfacherer Rechtsrahmen – und mahnt jetzt Verlässlichkeit an.",
    "unredigiert": false,
+   "quelle_eigen": false,
+   "gattung": "Pressemitteilung",
    "zitat": null,
-   "zuerst_gesehen": "2026-08-25",
-   "neu": true
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
+  },
+  {
+   "id": "zdh-dittrich-hohe-abgaben-und-steuern-belasten-leistungstraeger",
+   "datum": "2026-05-11",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Dittrich: Hohe Abgaben und Steuern belasten Leistungsträger",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/interviews-und-statements/dittrich-hohe-abgaben-und-steuern-belasten-leistungstraeger/",
+   "art": "politik",
+   "thema": "Steuern & Abgaben",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "schlagzeile": "Dittrich: Hohe Abgaben und Steuern belasten Leistungsträger",
+   "dreizeiler": "Erwartungen im Handwerk sind ein Jahr nach Regierungsstart vielfach enttäuscht, grundlegende Reformen lassen auf sich warten, so ZDH-Präsident Jörg Dittrich zu Roman Eichinger/Diana Kassal. Das Interview wurde wie folgend in BILD am Sonntag veröffentlicht:",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Interview / Statement",
+   "zitat": null,
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
   },
   {
    "id": "zdh-stopp-der-entlastungspraemie-korrigiert-zu-recht-fehlentscheidung",
@@ -1148,9 +1569,11 @@ const DATEN = /*__DATEN__*/{
    "schlagzeile": "Stopp der Entlastungsprämie korrigiert zu Recht Fehlentscheidung",
    "dreizeiler": "Der Bundesrat hat der sogenannten Entlastungsprämie die Zustimmung verweigert. Der ZDH wertet das als Korrektur einer gravierenden Fehlentscheidung. Sie wäre zu Lasten von Betrieben und Unternehmen gegangen.",
    "unredigiert": false,
+   "quelle_eigen": false,
+   "gattung": "Pressemitteilung",
    "zitat": null,
-   "zuerst_gesehen": "2026-08-25",
-   "neu": true
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
   },
   {
    "id": "zdh-handwerk-warnt-vor-weiterer-belastungsspirale",
@@ -1167,9 +1590,32 @@ const DATEN = /*__DATEN__*/{
    "schlagzeile": "Handwerk warnt vor weiterer Belastungsspirale",
    "dreizeiler": "Der Arbeitskreis Steuerschätzung hat seine Frühjahrsprognose vorgelegt. Der ZDH liest darin ein Warnsignal: Die wirtschaftliche Dynamik in Deutschland bleibe hinter dem zurück, was nötig wäre.",
    "unredigiert": false,
+   "quelle_eigen": false,
+   "gattung": "Pressemitteilung",
    "zitat": null,
-   "zuerst_gesehen": "2026-08-25",
-   "neu": true
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
+  },
+  {
+   "id": "zdh-ausbildung-und-arbeit-im-handwerk-attraktiver-denn-je",
+   "datum": "2026-05-06",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Ausbildung und Arbeit im Handwerk attraktiver denn je",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/interviews-und-statements/ausbildung-und-arbeit-im-handwerk-attraktiver-denn-je/",
+   "art": "politik",
+   "thema": "Ausbildung & Nachwuchs",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "schlagzeile": "Ausbildung und Arbeit im Handwerk attraktiver denn je",
+   "dreizeiler": "Das Handwerk ist attraktiver denn je, der Ausbildungseinsatz der Betriebe bleibt hoch, Verbesserungen immer möglich, so ZDH-Präsident Jörg Dittrich im von Dr. Astrid Herbold / Stefan Schirmer moderierten ZEIT-Streitgespräch mit Tischlerin Sophie Renfftlen.",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Interview / Statement",
+   "zitat": null,
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
   },
   {
    "id": "zdh-berufsbildung-staerken-uebergang-in-ausbildung-unterstuetzen",
@@ -1186,9 +1632,11 @@ const DATEN = /*__DATEN__*/{
    "schlagzeile": "Berufsbildung stärken, Übergang in Ausbildung unterstützen",
    "dreizeiler": "Die Bundesregierung hat den Berufsbildungsbericht veröffentlicht. Der ZDH begrüßt, dass er die Bedeutung der dualen Ausbildung für Fachkräftesicherung und Wohlstand hervorhebt. Der Übergang in die Ausbildung müsse besser unterstützt werden.",
    "unredigiert": false,
+   "quelle_eigen": false,
+   "gattung": "Pressemitteilung",
    "zitat": null,
-   "zuerst_gesehen": "2026-08-25",
-   "neu": true
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
   },
   {
    "id": "zdh-1-jahr-schwarz-rot-reformfrust-statt-wirtschaftsaufbruch",
@@ -1205,9 +1653,11 @@ const DATEN = /*__DATEN__*/{
    "schlagzeile": "1 Jahr Schwarz-Rot: Reformfrust statt Wirtschaftsaufbruch",
    "dreizeiler": "Ein Jahr nach dem Start der schwarz-roten Koalition zieht der ZDH eine ernüchternde Bilanz. Aus der Erwartung eines wirtschaftspolitischen Aufbruchs sei spürbarer Frust im Handwerk geworden. Statt Entlastung und Strukturreformen entstehe der Eindruck von Stückwerk.",
    "unredigiert": false,
+   "quelle_eigen": false,
+   "gattung": "Pressemitteilung",
    "zitat": null,
-   "zuerst_gesehen": "2026-08-25",
-   "neu": true
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
   },
   {
    "id": "6825",
@@ -1229,6 +1679,27 @@ const DATEN = /*__DATEN__*/{
    "neu": false
   },
   {
+   "id": "zdh-konjunkturwende-vertagt-risiken-wachsen",
+   "datum": "2026-05-04",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Konjunkturwende vertagt, Risiken wachsen",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/interviews-und-statements/konjunkturwende-vertagt-risiken-wachsen/",
+   "art": "politik",
+   "thema": "Wirtschaftslage",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "schlagzeile": "Konjunkturwende vertagt, Risiken wachsen",
+   "dreizeiler": "Der aktuelle ZDH-Konjunkturbericht zeigt: Das Handwerk gerät zunehmend unter Druck, die wirtschaftliche Lage verschärft sich. Es braucht dringend strukturelle Reformen, so ZDH-Generalsekretär Holger Schwannecke zu Andreas Hoenig von der dpa.",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Interview / Statement",
+   "zitat": null,
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
+  },
+  {
    "id": "zdh-arbeitsplatzsicherung-ist-bester-schutz-von-arbeitnehmerrechten",
    "datum": "2026-04-30",
    "datum_ungenau": false,
@@ -1243,9 +1714,11 @@ const DATEN = /*__DATEN__*/{
    "schlagzeile": "Arbeitsplatzsicherung ist bester Schutz von Arbeitnehmerrechten",
    "dreizeiler": "Zum Tag der Arbeit dankt der ZDH-Präsident den Beschäftigten und stellt zugleich klar: Der beste Schutz von Arbeitnehmerrechten seien sichere Arbeitsplätze. Ohne Beschäftigung gebe es weder Lohn noch soziale Absicherung.",
    "unredigiert": false,
+   "quelle_eigen": false,
+   "gattung": "Pressemitteilung",
    "zitat": null,
-   "zuerst_gesehen": "2026-08-25",
-   "neu": true
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
   },
   {
    "id": "6823",
@@ -1267,6 +1740,27 @@ const DATEN = /*__DATEN__*/{
    "neu": false
   },
   {
+   "id": "zdh-handwerk-und-landwirtschaft-brauchen-zukunftsfeste-bedingungen",
+   "datum": "2026-04-29",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Handwerk und Landwirtschaft brauchen zukunftsfeste Bedingungen",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/interviews-und-statements/handwerk-und-landwirtschaft-brauchen-zukunftsfeste-bedingungen/",
+   "art": "politik",
+   "thema": "Steuern & Abgaben",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "schlagzeile": "Handwerk und Landwirtschaft brauchen zukunftsfeste Bedingungen",
+   "dreizeiler": "Geopolitische Krisen, steigende Energiepreise und Transformation setzen Handwerk wie Landwirtschaft unter Druck. Über die nötigen politischen Weichenstellung spricht ZDH-Präsident Jörg Dittrich mit Dr. Anni Neu vom Bauernverbandsmagazin DBVexklusiv.",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Interview / Statement",
+   "zitat": null,
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
+  },
+  {
    "id": "zdh-regierung-geht-unzureichende-reformentlastungsschritte",
    "datum": "2026-04-29",
    "datum_ungenau": false,
@@ -1281,9 +1775,11 @@ const DATEN = /*__DATEN__*/{
    "schlagzeile": "Regierung geht unzureichende Reformentlastungsschritte",
    "dreizeiler": "Das Kabinett hat das GKV-Beitragssatzstabilisierungsgesetz und die Eckwerte zum Bundeshaushalt 2027 beschlossen. Beides bleibt aus Sicht des ZDH hinter den angekündigten Reformvorhaben zurück. Eine erkennbare strategische Linie fehle.",
    "unredigiert": false,
+   "quelle_eigen": false,
+   "gattung": "Pressemitteilung",
    "zitat": null,
-   "zuerst_gesehen": "2026-08-25",
-   "neu": true
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
   },
   {
    "id": "6821",
@@ -1305,6 +1801,27 @@ const DATEN = /*__DATEN__*/{
    "neu": false
   },
   {
+   "id": "zdh-handwerk-fuer-steuer-und-abgabenfreie-lohnanteile-statt-praemie",
+   "datum": "2026-04-28",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Handwerk für steuer- und abgabenfreie Lohnanteile statt Prämie",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/interviews-und-statements/handwerk-fuer-steuer-und-abgabenfreie-lohnanteile-statt-praemie/",
+   "art": "politik",
+   "thema": "Steuern & Abgaben",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "schlagzeile": "Handwerk für steuer- und abgabenfreie Lohnanteile statt Prämie",
+   "dreizeiler": "Lohnanteile steuer- und abgabenfrei zu stellen, wäre sinnvoller und würde Beschäftigte wie Betriebe entlasten. Die geplante 1.000 Euro-Prämie belaste hingegen einseitig die Betriebe, so ZDH-Präsident Jörg Dittrich zu Stefan Lange und Johanna Apel (RND).",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Interview / Statement",
+   "zitat": null,
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
+  },
+  {
    "id": "zdh-steueranreiz-fuer-handwerkerleistungen-nicht-abschaffen",
    "datum": "2026-04-28",
    "datum_ungenau": false,
@@ -1319,9 +1836,11 @@ const DATEN = /*__DATEN__*/{
    "schlagzeile": "Steueranreiz für Handwerkerleistungen nicht abschaffen",
    "dreizeiler": "Vor dem Eckwertebeschluss zum Bundeshaushalt 2027 warnt der ZDH davor, den Steueranreiz für Handwerkerleistungen zu streichen. Es bleibe unklar, was der Bundesfinanzminister unter dem Abbau von Steuervergünstigungen verstehe. Das verunsichere die Handwerksbetriebe massiv.",
    "unredigiert": false,
+   "quelle_eigen": false,
+   "gattung": "Pressemitteilung",
    "zitat": null,
-   "zuerst_gesehen": "2026-08-25",
-   "neu": true
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
   },
   {
    "id": "zdh-erhalt-des-losgrundsatzes-ist-wichtiges-signal-fuer-das-handwerk",
@@ -1338,9 +1857,11 @@ const DATEN = /*__DATEN__*/{
    "schlagzeile": "Erhalt des Losgrundsatzes ist wichtiges Signal für das Handwerk",
    "dreizeiler": "Der Bundestag hat das Vergabebeschleunigungsgesetz verabschiedet. Der ZDH sieht darin einen ausgewogenen Weg: mehr Tempo bei öffentlichen Aufträgen, ohne die starke Rolle von Handwerk und Mittelstand zu schwächen.",
    "unredigiert": false,
+   "quelle_eigen": false,
+   "gattung": "Pressemitteilung",
    "zitat": null,
-   "zuerst_gesehen": "2026-08-25",
-   "neu": true
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
   },
   {
    "id": "6816",
@@ -1362,6 +1883,27 @@ const DATEN = /*__DATEN__*/{
    "neu": false
   },
   {
+   "id": "zdh-handwerkspraesident-fordert-entlastungspraemie-wieder-einkassieren",
+   "datum": "2026-04-22",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Handwerkspräsident fordert: Entlastungsprämie wieder einkassieren",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/interviews-und-statements/handwerkspraesident-fordert-entlastungspraemie-wieder-einkassieren/",
+   "art": "politik",
+   "thema": "Steuern & Abgaben",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "schlagzeile": "Handwerkspräsident fordert: Entlastungsprämie wieder einkassieren",
+   "dreizeiler": "Statt einer Entlastung der Betriebe macht die Bundesregierung diesen zusätzlichen Belastungsdruck mit der sogenannten Entlastungsprämie, die deshalb einkassiert gehört, fordert ZDH-Präsident Jörg Dittrich bei Jan Schäfer in BILD.",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Interview / Statement",
+   "zitat": null,
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
+  },
+  {
    "id": "zdh-reformaufschub-gefaehrdet-massiv-deutschlands-mittelstand",
    "datum": "2026-04-22",
    "datum_ungenau": false,
@@ -1376,9 +1918,11 @@ const DATEN = /*__DATEN__*/{
    "schlagzeile": "Reformaufschub gefährdet massiv Deutschlands Mittelstand",
    "dreizeiler": "Die Bundesregierung hat ihre Frühjahrsprojektion mit deutlich reduzierter Wachstumsprognose für 2026 vorgelegt. Der ZDH warnt, der Reformstau gefährde Mittelstand und Handwerk massiv – und damit das Rückgrat der deutschen Wirtschaft.",
    "unredigiert": false,
+   "quelle_eigen": false,
+   "gattung": "Pressemitteilung",
    "zitat": null,
-   "zuerst_gesehen": "2026-08-25",
-   "neu": true
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
   },
   {
    "id": "6814",
@@ -1414,9 +1958,11 @@ const DATEN = /*__DATEN__*/{
    "schlagzeile": "GKV-Reformauftakt müssen weitere strukturelle Reformen folgen",
    "dreizeiler": "Zum Referentenentwurf des GKV-Beitragssatzstabilisierungsgesetzes sieht der ZDH ein wichtiges Signal zur Stabilisierung der Kassenfinanzen. Positiv sei, dass zentrale Vorschläge der FinanzKommission Gesundheit aufgegriffen werden. Weitere strukturelle Reformen müssten folgen.",
    "unredigiert": false,
+   "quelle_eigen": false,
+   "gattung": "Pressemitteilung",
    "zitat": null,
-   "zuerst_gesehen": "2026-08-25",
-   "neu": true
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
   },
   {
    "id": "6809",
@@ -1509,9 +2055,53 @@ const DATEN = /*__DATEN__*/{
    "schlagzeile": "Abgewälzte Entlastung erhöht Belastungsdruck für Betriebe",
    "dreizeiler": "Die Koalitionsklausur hat eine Senkung der Energiesteuer um 17 Cent pro Liter beschlossen. Der ZDH nennt das einen überfälligen ersten Schritt zur Entlastung von Wirtschaft und Verbrauchern. Der Staat solle nicht von der Krise profitieren.",
    "unredigiert": false,
+   "quelle_eigen": false,
+   "gattung": "Pressemitteilung",
    "zitat": null,
-   "zuerst_gesehen": "2026-08-25",
-   "neu": true
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
+  },
+  {
+   "id": "zdh-dittrich-zu-ddr-wirtschaftssystem-wende-seinem-weg-im-handwerk",
+   "datum": "2026-04-09",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Dittrich zu DDR-Wirtschaftssystem, Wende, seinem Weg im Handwerk",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/interviews-und-statements/dittrich-zu-ddr-wirtschaftssystem-wende-seinem-weg-im-handwerk/",
+   "art": "politik",
+   "thema": "Ehrungen & Termine",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "schlagzeile": "Dittrich zu DDR-Wirtschaftssystem, Wende, seinem Weg im Handwerk",
+   "dreizeiler": "Im FUNKE-Podcast \"Meine schwerste Entscheidung\" spricht ZDH-Präsident Jörg Dittrich mit Julia Emmrich und Jochen Gaugele über den Familienbetrieb im DDR-Wirtschaftssystem, die Wendezeit und darüber, wie diese Zeit seine Demokratiehaltung bis heute prägt",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Interview / Statement",
+   "zitat": null,
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
+  },
+  {
+   "id": "zdh-gesamtreformkonzept-noetig-statt-aktueller-einzelmassnahmendebatte",
+   "datum": "2026-04-08",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Gesamtreformkonzept nötig statt aktueller Einzelmaßnahmendebatte",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/interviews-und-statements/gesamtreformkonzept-noetig-statt-aktueller-einzelmassnahmendebatte/",
+   "art": "politik",
+   "thema": "Sozialabgaben & Rente",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "schlagzeile": "Gesamtreformkonzept nötig statt aktueller Einzelmaßnahmendebatte",
+   "dreizeiler": "Angesichts hoher Energiepreise und Lohnzusatzkosten braucht es ein für Betriebe entlastendes Gesamtreformpaket, das auf mehr Eigenverantwortung setzt und Wachstum anregt, so ZDH-Präsident Jörg Dittrich zu Jakob Hartung & Nilofar Breuer / t-online.",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Interview / Statement",
+   "zitat": null,
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
   },
   {
    "id": "6801",
@@ -1604,9 +2194,11 @@ const DATEN = /*__DATEN__*/{
    "schlagzeile": "Parkraumbedarf des Handwerks wird endlich mitgedacht",
    "dreizeiler": "Der Bundestag hat die Novellierung des Straßenverkehrsgesetzes verabschiedet. Sie schafft die Grundlage für digitale Führerscheine und digitale Parkraumkontrolle. Für das Handwerk wichtig: Die Verordnungsermächtigung wurde erweitert.",
    "unredigiert": false,
+   "quelle_eigen": false,
+   "gattung": "Pressemitteilung",
    "zitat": null,
-   "zuerst_gesehen": "2026-08-25",
-   "neu": true
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
   },
   {
    "id": "zdh-handwerk-mahnt-seriositaet-in-der-reformdebatte-an",
@@ -1623,9 +2215,11 @@ const DATEN = /*__DATEN__*/{
    "schlagzeile": "Handwerk mahnt Seriosität in der Reformdebatte an",
    "dreizeiler": "Der ZDH-Präsident kritisiert die ständigen Einzelvorstöße aus Koalitionskreisen. Es sei ärgerlich und kontraproduktiv, dass jeden Tag ein neuer Testballon in die Luft gehe. Die Koalition müsse ihre Kommunikation hinterfragen.",
    "unredigiert": false,
+   "quelle_eigen": false,
+   "gattung": "Pressemitteilung",
    "zitat": null,
-   "zuerst_gesehen": "2026-08-25",
-   "neu": true
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
   },
   {
    "id": "zdh-bundesregierung-haelt-beim-gold-plating-wort",
@@ -1642,9 +2236,11 @@ const DATEN = /*__DATEN__*/{
    "schlagzeile": "Bundesregierung hält beim Gold-Plating Wort",
    "dreizeiler": "Das Bundeskabinett hat den Gesetzentwurf zur Umsetzung der europäischen Recht-auf-Reparatur-Richtlinie beschlossen. Der ZDH lobt, dass die europäischen Vorgaben nicht zu Lasten von Handwerk und Mittelstand verschärft werden.",
    "unredigiert": false,
+   "quelle_eigen": false,
+   "gattung": "Pressemitteilung",
    "zitat": null,
-   "zuerst_gesehen": "2026-08-25",
-   "neu": true
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
   },
   {
    "id": "zdh-wochenarbeitszeit-staerkt-flexibilitaet-im-handwerk",
@@ -1661,9 +2257,11 @@ const DATEN = /*__DATEN__*/{
    "schlagzeile": "Wochenarbeitszeit stärkt Flexibilität im Handwerk",
    "dreizeiler": "In einem Interview fordert der ZDH-Generalsekretär ein Arbeitszeitgesetz, das zu modernen Arbeits- und Lebenswelten passt. Starre Tagesgrenzen hälfen niemandem. Eine Wochenarbeitszeit stärke Flexibilität und Wettbewerbsfähigkeit und verbessere die Vereinbarkeit von Beruf und Privatleben.",
    "unredigiert": false,
+   "quelle_eigen": false,
+   "gattung": "Pressemitteilung",
    "zitat": null,
-   "zuerst_gesehen": "2026-08-25",
-   "neu": true
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
   },
   {
    "id": "zdh-deutschland-braucht-jetzt-eine-agenda-des-aufbruchs",
@@ -1680,9 +2278,11 @@ const DATEN = /*__DATEN__*/{
    "schlagzeile": "Deutschland braucht jetzt eine Agenda des Aufbruchs",
    "dreizeiler": "Nach den Wahlergebnissen im März fordert der ZDH-Präsident eine Agenda des Aufbruchs. Seine Kernaussage: Nicht die Veränderung sei der ärgste Gegner, sondern der Stillstand.",
    "unredigiert": false,
+   "quelle_eigen": false,
+   "gattung": "Pressemitteilung",
    "zitat": null,
-   "zuerst_gesehen": "2026-08-25",
-   "neu": true
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
   },
   {
    "id": "zdh-staat-darf-nicht-selbst-zum-profiteur-der-krise-werden",
@@ -1699,9 +2299,11 @@ const DATEN = /*__DATEN__*/{
    "schlagzeile": "Staat darf nicht selbst zum Profiteur der Krise werden",
    "dreizeiler": "Die Kostenexplosion bei Energie und Treibstoffen infolge des Irankrieges schlägt in vielen Betrieben durch. Der ZDH hält es für richtig, dass die Bundesregierung den Druck auf die Mineralölindustrie erhöht. Der Staat dürfe nicht selbst zum Profiteur der Krise werden.",
    "unredigiert": false,
+   "quelle_eigen": false,
+   "gattung": "Pressemitteilung",
    "zitat": null,
-   "zuerst_gesehen": "2026-08-25",
-   "neu": true
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
   },
   {
    "id": "6788",
@@ -1756,9 +2358,74 @@ const DATEN = /*__DATEN__*/{
    "schlagzeile": "Investitionen stärken, nicht Haushaltslöcher stopfen",
    "dreizeiler": "IW Köln und ifo-Institut haben Berechnungen zum Einsatz des Sondervermögens Infrastruktur und Klimaneutralität vorgelegt. Der ZDH fordert: Das Geld müsse in Infrastruktur fließen und dürfe nicht in Haushaltslöchern versickern.",
    "unredigiert": false,
+   "quelle_eigen": false,
+   "gattung": "Pressemitteilung",
    "zitat": null,
-   "zuerst_gesehen": "2026-08-25",
-   "neu": true
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
+  },
+  {
+   "id": "zdh-krisenlage-verschaerft-reformdruck-fuer-politik",
+   "datum": "2026-03-16",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Krisenlage verschärft Reformdruck für Politik",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/interviews-und-statements/krisenlage-verschaerft-reformdruck-fuer-politik/",
+   "art": "politik",
+   "thema": "Steuern & Abgaben",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "schlagzeile": "Krisenlage verschärft Reformdruck für Politik",
+   "dreizeiler": "Neue Konfliktherde drücken die Hoffnung auf konjunkturelle Erholung. Hohe Lohnzusatzkosten und steigende Energiepreise treffen die Wirtschaft ins Mark. Der Reformdruck steigt, sagt ZDH-Präsident Dittrich im Interview mit Birgit Marschall (Rheinische Post).",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Interview / Statement",
+   "zitat": null,
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
+  },
+  {
+   "id": "zdh-reformaufschub-gefaehrdet-wirtschaftliche-stabilitaet",
+   "datum": "2026-03-16",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Reformaufschub gefährdet wirtschaftliche Stabilität",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/interviews-und-statements/reformaufschub-gefaehrdet-wirtschaftliche-stabilitaet/",
+   "art": "politik",
+   "thema": "Sozialabgaben & Rente",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "schlagzeile": "Reformaufschub gefährdet wirtschaftliche Stabilität",
+   "dreizeiler": "Nach dem \"Herbst der Reförmchen\" brauche es umfassende Strukturreformen. Geopolitik oder Landtagswahlen dürften nicht länger Grund für Reformaufschub sein. Das Handwerk spüre keine Entlastung, so ZDH-Präsident Dittrich zu Daniel Zwick von WELT am Sonntag.",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Interview / Statement",
+   "zitat": null,
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
+  },
+  {
+   "id": "zdh-geplante-steuererhoehung-wuerde-das-handwerk-treffen",
+   "datum": "2026-03-13",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Geplante Steuererhöhung würde das Handwerk treffen",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/interviews-und-statements/geplante-steuererhoehung-wuerde-das-handwerk-treffen/",
+   "art": "politik",
+   "thema": "Steuern & Abgaben",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "schlagzeile": "Geplante Steuererhöhung würde das Handwerk treffen",
+   "dreizeiler": "Eine Erhöhung des Spitzensteuersatzes träfe viele Handwerksbetriebe direkt. Dringend notwendige Investitionen und Fachkräftesicherung könnten darunter leiden, so ZDH-Präsident Jörg Dittrich zu Martin Greive und Jan Hildebrand (Handelsblatt).",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Interview / Statement",
+   "zitat": null,
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
   },
   {
    "id": "zdh-zukunftssicher-mit-dem-handwerk",
@@ -1775,9 +2442,53 @@ const DATEN = /*__DATEN__*/{
    "schlagzeile": "Zukunftssicher mit dem Handwerk!",
    "dreizeiler": "Zur Woche der Ausbildung wirbt der ZDH-Präsident bei jungen Menschen für das Handwerk. Handwerksberufe seien durch Künstliche Intelligenz kaum zu ersetzen, sinnstiftend, innovativ und böten gute Karrierechancen.",
    "unredigiert": false,
+   "quelle_eigen": false,
+   "gattung": "Pressemitteilung",
    "zitat": null,
-   "zuerst_gesehen": "2026-08-25",
-   "neu": true
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
+  },
+  {
+   "id": "zdh-handwerk-bietet-beste-perspektiven-fuer-fachkraefte",
+   "datum": "2026-03-12",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Handwerk bietet beste Perspektiven für Fachkräfte",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/interviews-und-statements/handwerk-bietet-beste-perspektiven-fuer-fachkraefte/",
+   "art": "politik",
+   "thema": "Personal & Fachkräfte",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "schlagzeile": "Handwerk bietet beste Perspektiven für Fachkräfte",
+   "dreizeiler": "Das Handwerk bietet zahlreiche, zur akademischen Laufbahn gleichwertige Berufsperspektiven. „Wer Können mit neuen Technologien vereint, kann bei uns Innovationen in die Praxis bringen“, so ZDH-Präsident Jörg Dittrich in den VDI-Nachrichten.",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Interview / Statement",
+   "zitat": null,
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
+  },
+  {
+   "id": "zdh-nur-eine-tankstellen-preisanpassung-taeglich-macht-es-planbarer",
+   "datum": "2026-03-12",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Nur eine Tankstellen-Preisanpassung täglich macht es planbarer",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/interviews-und-statements/nur-eine-tankstellen-preisanpassung-taeglich-macht-es-planbarer/",
+   "art": "politik",
+   "thema": "Energie & Sprit",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "schlagzeile": "Nur eine Tankstellen-Preisanpassung täglich macht es planbarer",
+   "dreizeiler": "Tankstellen nur noch eine tägliche Preisanpassung zu erlauben, könne Preissprünge dämpfen und Betrieben mehr Planbarkeit geben, auch wenn die Preiseffekte begrenzt bleiben, so ZDH-Präsident Jörg Dittrich zu Birgit Marschall von der Rheinischen Post.",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Interview / Statement",
+   "zitat": null,
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
   },
   {
    "id": "zdh-ein-gerechter-sozialstaat-muss-alle-in-den-blick-nehmen",
@@ -1794,9 +2505,11 @@ const DATEN = /*__DATEN__*/{
    "schlagzeile": "Ein gerechter Sozialstaat muss alle in den Blick nehmen",
    "dreizeiler": "Zur Initiative „20 Millionen Stimmen für einen gerechten Sozialstaat“ erklärt der ZDH: Ein zukunftsfester Sozialstaat entstehe nicht durch Festhalten am Status quo. Es brauche Mut zu Reformen und Ehrlichkeit im Dialog.",
    "unredigiert": false,
+   "quelle_eigen": false,
+   "gattung": "Pressemitteilung",
    "zitat": null,
-   "zuerst_gesehen": "2026-08-25",
-   "neu": true
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
   },
   {
    "id": "6785",
@@ -1832,9 +2545,53 @@ const DATEN = /*__DATEN__*/{
    "schlagzeile": "Gemeinsame Erklärung zum Münchener Spitzengespräch am 06.03.2026",
    "dreizeiler": "Beim Münchener Spitzengespräch fordern die Wirtschaftsverbände, 2026 zum „Jahr der Reformen“ zu machen. Der Wirtschaftsstandort Deutschland stehe unter Druck wie selten zuvor in der Nachkriegsgeschichte. Genannt werden veränderte Weltordnung, härterer Wettbewerb, technologische Umbrüche und demografischer Wandel.",
    "unredigiert": false,
+   "quelle_eigen": false,
+   "gattung": "Pressemitteilung",
    "zitat": null,
-   "zuerst_gesehen": "2026-08-25",
-   "neu": true
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
+  },
+  {
+   "id": "zdh-handwerk-fuer-arbeitszeitflexibilisierung",
+   "datum": "2026-03-05",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Handwerk für Arbeitszeitflexibilisierung",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/interviews-und-statements/handwerk-fuer-arbeitszeitflexibilisierung/",
+   "art": "politik",
+   "thema": "Arbeitszeit & Arbeitsrecht",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "schlagzeile": "Handwerk für Arbeitszeitflexibilisierung",
+   "dreizeiler": "Über Arbeitszeitflexibilisierung, betriebliche Spielräume und verlässliche Arbeitszeiten diskutierten ZDH-Vizepräsident Thomas Bürkle und Nadine Boguslawski von der IG Metall im von Steffen Range moderierten DHZ-Streitgespräch.",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Interview / Statement",
+   "zitat": null,
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
+  },
+  {
+   "id": "zdh-handwerk-zieht-wirtschaftspolitische-zwischenbilanz",
+   "datum": "2026-03-05",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Handwerk zieht wirtschaftspolitische Zwischenbilanz",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/interviews-und-statements/handwerk-zieht-wirtschaftspolitische-zwischenbilanz/",
+   "art": "politik",
+   "thema": "Sozialabgaben & Rente",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "schlagzeile": "Handwerk zieht wirtschaftspolitische Zwischenbilanz",
+   "dreizeiler": "\"Im Handwerk entscheidet sich täglich, ob investiert, ausgebildet, eingestellt wird.\" Dafür braucht es Reformtempo, Verlässlichkeit und eine klare wirtschaftspolitische Prioritätensetzung, so ZDH-Präsident Jörg Dittrich bei Carsten Hoefer von dpa.",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Interview / Statement",
+   "zitat": null,
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
   },
   {
    "id": "zdh-zdh-und-aif-vereinbaren-innovationspartnerschaft",
@@ -1851,9 +2608,11 @@ const DATEN = /*__DATEN__*/{
    "schlagzeile": "ZDH und AIF vereinbaren Innovationspartnerschaft",
    "dreizeiler": "ZDH und die Allianz für Industrie und Forschung haben auf der Internationalen Handwerksmesse eine strategische Absichtserklärung unterzeichnet. Ziel ist, kleinen und mittleren Betrieben den Zugang zu aktuellen wissenschaftlichen Erkenntnissen zu erleichtern.",
    "unredigiert": false,
+   "quelle_eigen": false,
+   "gattung": "Pressemitteilung",
    "zitat": null,
-   "zuerst_gesehen": "2026-08-25",
-   "neu": true
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
   },
   {
    "id": "6779",
@@ -1894,6 +2653,27 @@ const DATEN = /*__DATEN__*/{
    "neu": false
   },
   {
+   "id": "zdh-handwerksleistungen-bezahlbar-halten",
+   "datum": "2026-03-04",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Handwerksleistungen bezahlbar halten",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/interviews-und-statements/handwerksleistungen-bezahlbar-halten/",
+   "art": "politik",
+   "thema": "Sozialabgaben & Rente",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "schlagzeile": "Handwerksleistungen bezahlbar halten",
+   "dreizeiler": "Strukturreformen müssen zu geringeren Lohnzusatzkosten und weniger Bürokratie führen, damit Handwerksleistungen bezahlbar bleiben, so ZDH-Präsident Jörg Dittrich zu Christian Grimm von der Augsburger Allgemeinen zum Start von ZUKUNFT HANDWERK und IHM.",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Interview / Statement",
+   "zitat": null,
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
+  },
+  {
    "id": "zdh-startschuss-fuer-zukunft-handwerk-und-ihm-2026",
    "datum": "2026-03-04",
    "datum_ungenau": false,
@@ -1908,9 +2688,11 @@ const DATEN = /*__DATEN__*/{
    "schlagzeile": "Startschuss für ZUKUNFT HANDWERK und IHM 2026",
    "dreizeiler": "Der Kongress ZUKUNFT HANDWERK und die Internationale Handwerksmesse 2026 sind in München eröffnet worden. Es sind die größten Branchenveranstaltungen des Handwerks.",
    "unredigiert": false,
+   "quelle_eigen": false,
+   "gattung": "Pressemitteilung",
    "zitat": null,
-   "zuerst_gesehen": "2026-08-25",
-   "neu": true
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
   },
   {
    "id": "zdh-stolz-und-zuversicht-im-handwerk",
@@ -1927,9 +2709,11 @@ const DATEN = /*__DATEN__*/{
    "schlagzeile": "Stolz und Zuversicht im Handwerk",
    "dreizeiler": "Beim Panel „Stolz, stolzer, Handwerk“ auf dem Kongress ZUKUNFT HANDWERK standen Überzeugung und Zusammenhalt im Mittelpunkt. Teilgenommen haben Bundesforschungsministerin Dorothee Bär und Handwerkspräsident Jörg Dittrich.",
    "unredigiert": false,
+   "quelle_eigen": false,
+   "gattung": "Pressemitteilung",
    "zitat": null,
-   "zuerst_gesehen": "2026-08-25",
-   "neu": true
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
   },
   {
    "id": "zdh-verleihung-des-14-handwerkspreises-der-buergschaftsbanken",
@@ -1946,9 +2730,11 @@ const DATEN = /*__DATEN__*/{
    "schlagzeile": "Verleihung des 14. Handwerkspreises der Bürgschaftsbanken",
    "dreizeiler": "Auf der Internationalen Handwerksmesse in München wurden drei Betriebe mit dem 14. Handwerkspreis der Bürgschaftsbanken ausgezeichnet. Gewürdigt wurden Integrationsengagement, nachhaltige Betriebsführung, moderne Weiterbildung und der Einsatz digitaler Werkzeuge.",
    "unredigiert": false,
+   "quelle_eigen": false,
+   "gattung": "Pressemitteilung",
    "zitat": null,
-   "zuerst_gesehen": "2026-08-25",
-   "neu": true
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
   },
   {
    "id": "6777",
@@ -1989,6 +2775,27 @@ const DATEN = /*__DATEN__*/{
    "neu": false
   },
   {
+   "id": "zdh-entscheidend-sind-jetzt-reformtempo-und-klare-prioritaeten",
+   "datum": "2026-02-26",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Entscheidend sind jetzt Reformtempo und klare Prioritäten",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/interviews-und-statements/entscheidend-sind-jetzt-reformtempo-und-klare-prioritaeten/",
+   "art": "politik",
+   "thema": "Sozialabgaben & Rente",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "schlagzeile": "Entscheidend sind jetzt Reformtempo und klare Prioritäten",
+   "dreizeiler": "Im Vorfeld von ZUKUNFT HANDWERK und der Internationalen Handwerksmesse (IHM) erklärt Holger Schwannecke, Generalsekretär des Zentralverbandes des Deutschen Handwerks (ZDH), am 26. Februar 2026 beim Wirtschaftspressegespräch in München:",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Interview / Statement",
+   "zitat": null,
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
+  },
+  {
    "id": "zdh-endlich-eine-orientierungsgrundlage-zur-waermewende",
    "datum": "2026-02-25",
    "datum_ungenau": false,
@@ -2003,9 +2810,11 @@ const DATEN = /*__DATEN__*/{
    "schlagzeile": "Endlich eine Orientierungsgrundlage zur Wärmewende",
    "dreizeiler": "Die Koalitionsfraktionen haben Eckpunkte zum neuen Gebäudemodernisierungsgesetz veröffentlicht. Der ZDH begrüßt das Ende der monatelangen Hängepartie beim Gebäudeenergiegesetz. Damit gebe es endlich eine Orientierungsgrundlage.",
    "unredigiert": false,
+   "quelle_eigen": false,
+   "gattung": "Pressemitteilung",
    "zitat": null,
-   "zuerst_gesehen": "2026-08-25",
-   "neu": true
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
   },
   {
    "id": "6765",
@@ -2065,6 +2874,27 @@ const DATEN = /*__DATEN__*/{
    "neu": false
   },
   {
+   "id": "zdh-entschlossen-handeln-fuer-wirtschaftswachstum",
+   "datum": "2026-02-19",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Entschlossen handeln für Wirtschaftswachstum",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/interviews-und-statements/entschlossen-handeln-fuer-wirtschaftswachstum/",
+   "art": "politik",
+   "thema": "Sozialabgaben & Rente",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "schlagzeile": "Entschlossen handeln für Wirtschaftswachstum",
+   "dreizeiler": "Die wirtschaftliche Dynamik bleibe fragil, solange Reformen nur angekündigt würden. Ein tragfähiges Wachstum verlange strukturelle Entlastungen bei Sozialabgaben, Energiepreisen und Bürokratie, so ZDH-Präsident Jörg Dittrich bei Karin Birk in der DHZ.",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Interview / Statement",
+   "zitat": null,
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
+  },
+  {
    "id": "6758",
    "datum": "2026-02-18",
    "datum_ungenau": false,
@@ -2084,6 +2914,27 @@ const DATEN = /*__DATEN__*/{
    "neu": false
   },
   {
+   "id": "zdh-master-professional-wichtiger-schritt-zu-mehr-gleichwertigkeit",
+   "datum": "2026-02-18",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Master Professional: wichtiger Schritt zu mehr Gleichwertigkeit",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/interviews-und-statements/master-professional-wichtiger-schritt-zu-mehr-gleichwertigkeit/",
+   "art": "politik",
+   "thema": "Ausbildung & Nachwuchs",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "schlagzeile": "Master Professional: wichtiger Schritt zu mehr Gleichwertigkeit",
+   "dreizeiler": "Dass der Master Professional analog zum akademischen Master die höchste Qualifikation im Handwerk ist, wird oft übersehen. Die Verrechtlichung des DQR könnte Berufswahlentscheidungen stärken, so ZDH-Geschäftsführer Dirk Palige zu Barbara Oberst in der DHZ.",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Interview / Statement",
+   "zitat": null,
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
+  },
+  {
    "id": "6756",
    "datum": "2026-02-17",
    "datum_ungenau": false,
@@ -2100,6 +2951,27 @@ const DATEN = /*__DATEN__*/{
    "zuerst_gesehen": "erstbestand",
    "zitat": null,
    "ebene": "Brandenburg",
+   "neu": false
+  },
+  {
+   "id": "zdh-aufgeben-war-und-ist-keine-option",
+   "datum": "2026-02-17",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Aufgeben war und ist keine Option",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/reden-und-namensbeitraege/aufgeben-war-und-ist-keine-option/",
+   "art": "bericht",
+   "thema": "Noch nicht eingeordnet",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "schlagzeile": "Aufgeben war und ist keine Option",
+   "dreizeiler": "ZDH-Präsident Jörg Dittrich blickt in der WirtschaftsWoche auf seinen prägenden Moment während der Wendezeit zurück, der für ihn Grund für Hoffnung, Mut und Durchhaltevermögen auf seinem Lebensweg war. Das Protokoll führte Claudia Tödtmann.",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Rede / Namensbeitrag",
+   "zitat": null,
+   "zuerst_gesehen": "erstbestand",
    "neu": false
   },
   {
@@ -2141,6 +3013,69 @@ const DATEN = /*__DATEN__*/{
    "neu": false
   },
   {
+   "id": "zdh-ausbleibende-reformen-treiben-kosten-im-handwerk",
+   "datum": "2026-02-09",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Ausbleibende Reformen treiben Kosten im Handwerk",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/interviews-und-statements/ausbleibende-reformen-treiben-kosten-im-handwerk/",
+   "art": "politik",
+   "thema": "Sozialabgaben & Rente",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "schlagzeile": "Ausbleibende Reformen treiben Kosten im Handwerk",
+   "dreizeiler": "Mehr Wachstum und sichere Sozialsysteme erfordern Effizienz und Flexibilität, ausbleibende Reformen verteuern Handwerksleistungen und befördern das Ausweichen in die Schwarzarbeit, so ZDH-Präsident Jörg Dittrich zu Rena Lehmann von der NOZ.",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Interview / Statement",
+   "zitat": null,
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
+  },
+  {
+   "id": "zdh-zeit-wohlfeiler-reformrhetorik-ist-vorbei",
+   "datum": "2026-02-09",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Zeit wohlfeiler Reformrhetorik ist vorbei",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/interviews-und-statements/zeit-wohlfeiler-reformrhetorik-ist-vorbei/",
+   "art": "politik",
+   "thema": "Sozialabgaben & Rente",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "schlagzeile": "Zeit wohlfeiler Reformrhetorik ist vorbei",
+   "dreizeiler": "\"Fehlende Umsetzung und ausbleibende Reformen blockieren Betriebe, bremsen Investitionen, gefährden die Sozialsysteme. Es braucht weitere spürbare Entlastungsreformen\", so ZDH-Präsident Jörg Dittrich zu Jan Schroeder bei Media Pioneer.",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Interview / Statement",
+   "zitat": null,
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
+  },
+  {
+   "id": "zdh-flexiblere-arbeitszeiten-statt-debatte-um-teilzeitrechtsanspruch",
+   "datum": "2026-02-06",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Flexiblere Arbeitszeiten statt Debatte um Teilzeitrechtsanspruch",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/interviews-und-statements/flexiblere-arbeitszeiten-statt-debatte-um-teilzeitrechtsanspruch/",
+   "art": "politik",
+   "thema": "Arbeitszeit & Arbeitsrecht",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "schlagzeile": "Flexiblere Arbeitszeiten statt Debatte um Teilzeitrechtsanspruch",
+   "dreizeiler": "Um Beschäftigten und Betrieben eine bessere Arbeitszeitgestaltung zu ermöglichen, sollte von einer täglichen auf eine wöchentliche Höchstarbeitszeit umgestellt werden, so ZDH-Generalsekretär Holger Schwannecke zu Michelle Vicente von BILD der Frau.",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Interview / Statement",
+   "zitat": null,
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
+  },
+  {
    "id": "6738",
    "datum": "2026-02-04",
    "datum_ungenau": false,
@@ -2160,6 +3095,27 @@ const DATEN = /*__DATEN__*/{
    "neu": false
   },
   {
+   "id": "zdh-dittrich-arbeitslosenzahl-im-januar-zeigt-reformdruck",
+   "datum": "2026-02-02",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Dittrich: Arbeitslosenzahl im Januar zeigt Reformdruck",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/interviews-und-statements/dittrich-arbeitslosenzahl-im-januar-zeigt-reformdruck/",
+   "art": "politik",
+   "thema": "Personal & Fachkräfte",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "schlagzeile": "Dittrich: Arbeitslosenzahl im Januar zeigt Reformdruck",
+   "dreizeiler": "Angesichts des Alarmsignals der höchsten Arbeitslosenzahlen seit 12 Jahren fordert ZDH-Präsident Jörg Dittrich in der BILD von der Bundesregierung \"mehr Mut zu Reformen und Entlastungen, die bisherigen Schritte sind nicht ausreichend.\"",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Interview / Statement",
+   "zitat": null,
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
+  },
+  {
    "id": "zdh-zdh-verleiht-zum-zweiten-mal-den-preis-fuer-handwerksgeschichte",
    "datum": "2026-01-30",
    "datum_ungenau": false,
@@ -2174,9 +3130,11 @@ const DATEN = /*__DATEN__*/{
    "schlagzeile": "ZDH verleiht zum zweiten Mal den Preis für Handwerksgeschichte",
    "dreizeiler": "Der ZDH hat zum zweiten Mal den bundesweiten Preis für Handwerksgeschichte verliehen. Ausgezeichnet wurden vier Geschichtsprojekte.",
    "unredigiert": false,
+   "quelle_eigen": false,
+   "gattung": "Pressemitteilung",
    "zitat": null,
-   "zuerst_gesehen": "2026-08-25",
-   "neu": true
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
   },
   {
    "id": "zdh-reformverweigerung-gefaehrdet-den-sozialstaat",
@@ -2193,9 +3151,11 @@ const DATEN = /*__DATEN__*/{
    "schlagzeile": "Reformverweigerung gefährdet den Sozialstaat",
    "dreizeiler": "Zur DGB-Sozialstaatskonferenz erklärt der ZDH-Präsident: Wer den Sozialstaat sichern wolle, müsse ihn reformieren. Angesichts des demografischen Wandels, steigender Kosten und wachsender Belastungen führe ein Weiter-so in die Überforderung der Systeme.",
    "unredigiert": false,
+   "quelle_eigen": false,
+   "gattung": "Pressemitteilung",
    "zitat": null,
-   "zuerst_gesehen": "2026-08-25",
-   "neu": true
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
   },
   {
    "id": "zdh-was-jetzt-zaehlt-strukturreformen-entlastung-und-verlaesslichkeit",
@@ -2212,9 +3172,11 @@ const DATEN = /*__DATEN__*/{
    "schlagzeile": "Was jetzt zählt: Strukturreformen, Entlastung und Verlässlichkeit",
    "dreizeiler": "Die Bundesregierung hat den Jahreswirtschaftsbericht 2026 veröffentlicht. Der ZDH sieht den Befund bestätigt, dass die deutsche Wirtschaft seit Jahren nicht vorankommt. Das für 2026 in Aussicht gestellte Wachstum beruhe maßgeblich auf schuldenfinanzierten Staatsausgaben.",
    "unredigiert": false,
+   "quelle_eigen": false,
+   "gattung": "Pressemitteilung",
    "zitat": null,
-   "zuerst_gesehen": "2026-08-25",
-   "neu": true
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
   },
   {
    "id": "6732",
@@ -2255,6 +3217,27 @@ const DATEN = /*__DATEN__*/{
    "neu": false
   },
   {
+   "id": "zdh-politik-muss-mut-und-kraft-fuer-grosse-reformen-aufbringen",
+   "datum": "2026-01-23",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Politik muss Mut und Kraft für große Reformen aufbringen",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/interviews-und-statements/politik-muss-mut-und-kraft-fuer-grosse-reformen-aufbringen/",
+   "art": "politik",
+   "thema": "Wirtschaftslage",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "schlagzeile": "Politik muss Mut und Kraft für große Reformen aufbringen",
+   "dreizeiler": "ZDH-Generalsekretär Holger Schwannecke fordert in der DHZ-Regionalausgabe entschlossenes Handeln und Entlastungen für mittelständische Betriebe, um die Wettbewerbsfähigkeit des Handwerks nachhaltig zu stärken.",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Interview / Statement",
+   "zitat": null,
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
+  },
+  {
    "id": "zdh-besprechungskreis-kirche-handwerk-seit-60-jahren-impulsgeber",
    "datum": "2026-01-20",
    "datum_ungenau": false,
@@ -2269,9 +3252,32 @@ const DATEN = /*__DATEN__*/{
    "schlagzeile": "Besprechungskreis Kirche-Handwerk: Seit 60 Jahren Impulsgeber",
    "dreizeiler": "Der Zentrale Besprechungskreis Kirche-Handwerk trifft sich in Braunschweig und feiert 2026 sein 60-jähriges Bestehen. Im Mittelpunkt steht eine gemeinsame Standortbestimmung für die kommenden Jahre.",
    "unredigiert": false,
+   "quelle_eigen": false,
+   "gattung": "Pressemitteilung",
    "zitat": null,
-   "zuerst_gesehen": "2026-08-25",
-   "neu": true
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
+  },
+  {
+   "id": "zdh-politik-muss-wirtschaftsrealitaet-des-handwerks-ernster-nehmen",
+   "datum": "2026-01-16",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Politik muss Wirtschaftsrealität des Handwerks ernster nehmen",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/interviews-und-statements/politik-muss-wirtschaftsrealitaet-des-handwerks-ernster-nehmen/",
+   "art": "politik",
+   "thema": "Sozialabgaben & Rente",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "schlagzeile": "Politik muss Wirtschaftsrealität des Handwerks ernster nehmen",
+   "dreizeiler": "Politikpläne und Gesetze gehen zu oft an den Realitäten von Mittelstand und Handwerk vorbei. Steuer- und Strukturreformen müssten mittelstandsorientiert sein und Betriebe ent- statt belasten, so ZDH-Präsident Jörg Dittrich zu Frank Specht vom Handelsblatt.",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Interview / Statement",
+   "zitat": null,
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
   },
   {
    "id": "6720",
@@ -2307,9 +3313,32 @@ const DATEN = /*__DATEN__*/{
    "schlagzeile": "Finger weg vom Betriebsvermögen bei der Erbschaftsteuer!",
    "dreizeiler": "Die SPD hat Reformpläne zur Erbschaftsteuer vorgestellt. Der ZDH fordert, das Betriebsvermögen unangetastet zu lassen und zunächst das Urteil des Bundesverfassungsgerichts abzuwarten. Alles andere gefährde Arbeits- und Ausbildungsplätze.",
    "unredigiert": false,
+   "quelle_eigen": false,
+   "gattung": "Pressemitteilung",
    "zitat": null,
-   "zuerst_gesehen": "2026-08-25",
-   "neu": true
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
+  },
+  {
+   "id": "zdh-buerokratieentlastungen-muessen-im-handwerksbetriebsalltag-ankommen",
+   "datum": "2026-01-12",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Bürokratieentlastungen müssen im Handwerksbetriebsalltag ankommen",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/interviews-und-statements/buerokratieentlastungen-muessen-im-handwerksbetriebsalltag-ankommen/",
+   "art": "politik",
+   "thema": "Entbürokratisierung",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "schlagzeile": "Bürokratieentlastungen müssen im Handwerksbetriebsalltag ankommen",
+   "dreizeiler": "Betriebe kämpfen sich nach wie vor durch einen Bürokratiedschungel. Politik muss nun schnell umsetzen, was sie zum Bürokratieabbau angekündigt hat, denn es zählt nur, was im Alltag ankommt, so ZDH-Präsident Jörg Dittrich zu Julian Loevenich von BILD.",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Interview / Statement",
+   "zitat": null,
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
   },
   {
    "id": "6721",
@@ -2328,6 +3357,27 @@ const DATEN = /*__DATEN__*/{
    "zuerst_gesehen": "erstbestand",
    "zitat": "Die Bewerbung um eine Auszeichnung der Handwerkskammer für den angehenden Automobilkaufmann überzeugte. Kilian Böhm wird deshalb am 15. Januar durch die Handwerkskammer Potsdam in seinem Ausbildungsbetrieb in Geltow (Schwielowsee) als Auszubildender des Monats Januar geehrt.",
    "ebene": "Brandenburg",
+   "neu": false
+  },
+  {
+   "id": "zdh-unternehmenssteuer-entlastung-muss-fuer-gesamte-wirtschaft-kommen",
+   "datum": "2026-01-08",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Unternehmenssteuer-Entlastung muss für gesamte Wirtschaft kommen",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/interviews-und-statements/unternehmenssteuer-entlastung-muss-fuer-gesamte-wirtschaft-kommen/",
+   "art": "politik",
+   "thema": "Steuern & Abgaben",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "schlagzeile": "Unternehmenssteuer-Entlastung muss für gesamte Wirtschaft kommen",
+   "dreizeiler": "Eine Unternehmenssteuerentlastung muss alle Unternehmensformen einbeziehen. Nur die Körperschaftssteuer zu senken, lässt weite Teile der Wirtschaft außen vor, im Handwerk rund 75 % der Betriebe, so ZDH-Präsident Jörg Dittrich zu Jan-Wolf Schäfer von BILD.",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Interview / Statement",
+   "zitat": null,
+   "zuerst_gesehen": "erstbestand",
    "neu": false
   },
   {
@@ -2366,6 +3416,48 @@ const DATEN = /*__DATEN__*/{
    "zuerst_gesehen": "erstbestand",
    "zitat": null,
    "ebene": "Brandenburg",
+   "neu": false
+  },
+  {
+   "id": "zdh-sonntagsbackverbot-und-bonpflicht-symbole-fuer-reformlethargie",
+   "datum": "2026-01-06",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Sonntagsbackverbot und Bonpflicht: Symbole für Reformlethargie",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/interviews-und-statements/sonntagsbackverbot-und-bonpflicht-symbole-fuer-reformlethargie/",
+   "art": "politik",
+   "thema": "Entbürokratisierung",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "schlagzeile": "Sonntagsbackverbot und Bonpflicht: Symbole für Reformlethargie",
+   "dreizeiler": "\"Sonntagsbackverbot und Bonpflicht sind laut Koalitionsvertrag abzuschaffen, bislang nicht passiert. Gut, dass in der Modernisierungsagenda die Bonpflicht steht, doch was zählt, ist die Umsetzung,\" so ZDH-Präsident Jörg Dittrich zu Andreas Hoenig von dpa.",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Interview / Statement",
+   "zitat": null,
+   "zuerst_gesehen": "erstbestand",
+   "neu": false
+  },
+  {
+   "id": "zdh-politik-muss-2026-reformmut-zur-demokratiestaerkung-beweisen",
+   "datum": "2026-01-05",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Politik muss 2026 Reformmut zur Demokratiestärkung beweisen",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/interviews-und-statements/politik-muss-2026-reformmut-zur-demokratiestaerkung-beweisen/",
+   "art": "politik",
+   "thema": "Arbeitszeit & Arbeitsrecht",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "schlagzeile": "Politik muss 2026 Reformmut zur Demokratiestärkung beweisen",
+   "dreizeiler": "Das Handwerk erwartet 2026 von der Politik mehr Reformmut und -entschlossenheit, um wieder mehr Wachstum und Wettbewerbsfähigkeit zu erreichen, was wiederum zur Demokratiestärkung beitrage, so ZDH-Präsident Jörg Dittrich zu Andreas Hoenig von der dpa.",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Interview / Statement",
+   "zitat": null,
+   "zuerst_gesehen": "erstbestand",
    "neu": false
   }
  ]
@@ -2572,15 +3664,19 @@ function karte(m){
       '<span class="' + markenKlasse + '">' + esc(ART_NAME[m.art] || m.art) + '</span>' +
       '<span class="ebene ebene-' + (m.ebene === "Bund" ? "bund" : "land") + '">' +
         esc(m.ebene) + '</span>' +
+      (m.gattung ? '<span class="gattung">' + esc(m.gattung) + '</span>' : '') +
       '<span class="thema">' + esc(m.thema) +
         (m.thema2 ? ' &middot; ' + esc(m.thema2) : '') + '</span>' +
       '<span class="datum">' + datum + '</span>' +
     '</div>' +
     '<h2 class="schlagzeile">' + esc(m.schlagzeile) + '</h2>' +
     (m.dreizeiler
-      ? '<p class="dreizeiler">' + esc(m.dreizeiler) + '</p>'
+      ? '<p class="dreizeiler">' + esc(m.dreizeiler) +
+        (m.quelle_eigen
+          ? ' <span class="eigener-text">Anrisstext der Quelle</span>'
+          : '') + '</p>'
       : '<p class="dreizeiler offen">Noch nicht zusammengefasst &ndash; oben steht der ' +
-        'Originaltitel der Handwerkskammer.</p>') +
+        'Originaltitel der Quelle.</p>') +
     (m.zitat ? '<blockquote class="zitat">&bdquo;' + esc(m.zitat) + '&ldquo;</blockquote>' : '') +
     '<div class="karte-fuss">' +
       '<a class="original" href="' + esc(m.url) + '" target="_blank" rel="noopener">Zum Original</a>' +
