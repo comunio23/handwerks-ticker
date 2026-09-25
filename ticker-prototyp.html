@@ -5,199 +5,306 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Handwerks-Ticker</title>
 <style>
-  /* Farben aus dem Original-CSS der Handwerkskammer Potsdam (style/cdi21/custom.css) */
+  /* ------------------------------------------------------------------
+     Farben und Formen stammen aus dem Live-CSS der Handwerkskammer
+     Potsdam (style/cdi21/custom.css) und aus dem Styleguide der
+     Handwerkskammern. Sie sind gemessen, nicht geschaetzt.
+
+     Grundsatz der Kammer: HELL. Seitenflaeche #f3f6fa, Inhalt auf
+     weissen Kacheln mit weichem Grauschatten, ohne runde Ecken
+     (die Kammer setzt durchgehend border-radius:0). Dunkelblau ist
+     Schriftfarbe, Kopfband und Zustandsfarbe - keine grosse Flaeche.
+
+     Kontrast: Weisse Schrift steht nur auf #073070 (12,6:1) oder
+     #b8003f (6,8:1). Auf Hellblau #408fe5 erreicht Weiss nur 3,3:1
+     und auf Orange #ff8d25 nur 2,3:1 - beides wird hier nie als
+     Schriftgrund benutzt.
+     ------------------------------------------------------------------ */
   :root{
-    --blau:#073070;
-    --blau-hell:#408fe5;
+    --blau:#073070;           /* Kopfband, Ueberschriften, aktiver Reiter */
+    --blau-tief:#11447b;
+    --blau-link:#1964b6;      /* Links: 5,93:1 auf Weiss */
+    --blau-akzent:#408fe5;    /* nur Flaeche und Linie, nie Schrift */
     --blau-flaeche:#d0e3f9;
-    --signal:#b8003f;
-    --text:#1c1c1c;
-    --grau:#5a5a5a;
-    --linie:#e3e6ea;
-    --flaeche:#f5f7fa;
-    --weiss:#fff;
-    --radius:14px;
+    --blau-zart:#e8f1fc;
+    --seite:#f3f6fa;
+    --weiss:#ffffff;
+    --grau-flaeche:#efefef;
+    --linie:#dfe4ea;
+    --text:#444444;
+    --text-stark:#252525;
+    --text-leise:#5a5a5a;
+    --rot:#b8003f;            /* Kammer-Ampel: wichtig */
+    --orange:#ff8d25;         /* Kammer-Ampel: Hinweis */
+    --orange-zart:#ffe2c8;
+    --gelb:#ffc51a;
+    --grau-blau:#8397b7;
+    --schatten:1px 1px 6px rgba(127,127,127,.3);
+    --schatten-hoch:1px 1px 12px rgba(127,127,127,.55);
   }
   *{box-sizing:border-box}
   html{-webkit-text-size-adjust:100%}
   body{
-    margin:0;background:var(--flaeche);color:var(--text);
-    font-family:"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
-    font-size:17px;line-height:1.55;
+    margin:0;
+    background:var(--seite);
+    color:var(--text);
+    /* Die Hausschrift TheSans ist lizenzpflichtig. Segoe UI, San Francisco
+       und Roboto liegen ihr im Buchstabenbild am naechsten; Calibri steht
+       als Office-Hausschrift der Kammer dahinter. Kein CDN-Webfont. */
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,
+                "Helvetica Neue",Calibri,Arial,sans-serif;
+    font-size:17px;
+    line-height:1.5;
+    font-variant-numeric:tabular-nums;
   }
-  .mitte{max-width:1080px;margin:0 auto;padding:0 18px}
+  h1,h2,h3{
+    margin:0;font-weight:700;line-height:1.25;color:var(--text-stark);
+    hyphens:auto;overflow-wrap:break-word;
+  }
+  a{color:var(--blau-link)}
+  a:hover,a:focus{color:var(--blau);text-decoration:underline}
+  :focus-visible{outline:3px dashed var(--blau);outline-offset:3px}
+  .mitte{max-width:1180px;margin:0 auto;padding:0 20px}
+  .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);
+      white-space:nowrap}
 
-  /* ---------- Kopf ---------- */
-  header{background:var(--blau);color:#fff;padding:20px 0 18px}
-  h1{margin:0;font-size:1.5rem;letter-spacing:-.02em}
-  .unterzeile{margin:6px 0 0;font-size:.95rem;opacity:.85}
-  .kennzahlen{display:flex;gap:8px;margin-top:15px;flex-wrap:wrap}
-  .kennzahl{background:rgba(255,255,255,.12);border-radius:10px;padding:8px 12px;flex:1;min-width:96px}
-  .kennzahl b{display:block;font-size:1.25rem;line-height:1.25}
-  .kennzahl span{font-size:.75rem;opacity:.85}
+  /* ---------- Kopfband: schmal, wie die Navigationsleiste der Kammer ---------- */
+  .kopfband{background:var(--blau);color:#fff;box-shadow:0 2px 4px rgba(0,0,0,.2)}
+  .kopf-innen{display:flex;align-items:center;justify-content:space-between;
+              gap:16px;min-height:66px;padding-top:12px;padding-bottom:12px}
+  .kopfband h1{color:#fff;font-size:26px;letter-spacing:-.01em}
+  .kopfband .stand{margin:0;font-size:14px;color:#cddcf0;text-align:right;flex:0 0 auto}
+  .kopfband .stand b{color:#fff;font-size:15px;white-space:nowrap}
 
-  /* ---------- Top-Forderungen: das Erste, was man sieht ---------- */
-  .forderungen{padding:18px 0 4px}
-  .forderungen-kopf{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:4px}
-  .forderungen-kopf h2{margin:0;font-size:1.12rem;color:var(--blau)}
-  .forderungen-kopf .kriterium{font-size:.78rem;color:var(--grau)}
-  .forderungs-reihe{display:grid;gap:11px;margin-top:12px}
-  .forderung{background:var(--blau);color:#fff;border-radius:var(--radius);padding:15px 16px}
-  .forderung summary{cursor:pointer;list-style:none;display:block;min-height:44px;padding:2px 0}
+  /* ---------- Kennzahlen ---------- */
+  .kennzahlen{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;
+              margin:20px 0 0}
+  .kennzahl{background:var(--weiss);box-shadow:var(--schatten);padding:14px 16px;
+            min-width:0}
+  .kennzahl b{display:block;font-size:30px;line-height:1.1;color:var(--blau);
+              font-weight:700}
+  .kennzahl span{display:block;font-size:13px;color:var(--text-leise);margin-top:3px;
+                 hyphens:auto;overflow-wrap:break-word}
+  .kennzahl.hebt b{color:var(--rot)}
+
+  /* ---------- Abschnittsueberschriften ---------- */
+  .abschnitt{padding:28px 0 0}
+  .abschnitt-titel{font-size:24px;color:var(--blau);margin:0}
+  .abschnitt-unter{margin:4px 0 0;font-size:14px;color:var(--text-leise)}
+
+  /* ---------- Die drei Forderungen ---------- */
+  .forderungs-reihe{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;
+                    margin-top:16px}
+  .forderung{background:var(--weiss);box-shadow:var(--schatten);
+             border-left:5px solid var(--rot);padding:0;min-width:0}
+  .forderung summary{cursor:pointer;list-style:none;display:block;padding:16px 18px}
   .forderung summary::-webkit-details-marker{display:none}
-  .forderung-kopfzeile{display:flex;gap:9px;align-items:flex-start}
-  .forderung-rang{background:#fff;color:var(--blau);font-weight:700;border-radius:6px;
-                  min-width:23px;height:23px;text-align:center;line-height:23px;font-size:.8rem;
-                  flex:0 0 auto;margin-top:2px}
-  .forderung-titel{font-size:1rem;font-weight:600;line-height:1.35}
-  .forderung-zeile2{display:flex;gap:7px;align-items:center;flex-wrap:wrap;margin:9px 0 0 32px}
-  .adressat{background:rgba(255,255,255,.18);border-radius:999px;padding:3px 10px;
-            font-size:.75rem;font-weight:600}
-  .wann{font-size:.78rem;opacity:.85}
-  .beide-ebenen{background:#fff;color:var(--blau);border-radius:999px;padding:3px 10px;
-                font-size:.72rem;font-weight:700}
-  .eine-ebene{background:rgba(255,255,255,.12);border-radius:999px;padding:3px 10px;
-              font-size:.72rem}
-  .mehr-zeigen{font-size:.78rem;opacity:.8;margin:7px 0 0 32px;text-decoration:underline}
-  .forderung[open] .mehr-zeigen{display:none}
-  .forderung p.worum{font-size:.87rem;margin:11px 0 0;opacity:.94;line-height:1.5}
-  .forderung blockquote{background:rgba(255,255,255,.1);border-left:3px solid rgba(255,255,255,.5);
-                        color:#fff;font-size:.85rem;margin:11px 0 0;padding:9px 12px}
-  .beleg-fuss{font-size:.76rem;opacity:.85;margin:7px 0 0}
-  .beleg-fuss a{color:#fff}
+  .forderung summary:hover{background:var(--blau-zart)}
+  .forderung-rang{display:inline-block;background:var(--rot);color:#fff;
+                  font-size:12px;font-weight:700;letter-spacing:.06em;
+                  padding:3px 8px;margin-bottom:8px}
+  .forderung-titel{display:block;font-size:20px;font-weight:700;color:var(--blau);
+                   line-height:1.3;hyphens:auto;overflow-wrap:break-word}
+  .forderung-zeile{margin:10px 0 0;display:flex;flex-wrap:wrap;gap:6px;
+                   align-items:center}
+  .marke{display:inline-block;font-size:12px;line-height:1.4;padding:3px 8px;
+         white-space:nowrap}
+  .marke.adressat{background:var(--blau);color:#fff;font-weight:700}
+  .marke.beide{background:var(--blau-flaeche);color:var(--blau);font-weight:700}
+  .marke.wann{background:var(--grau-flaeche);color:var(--text-stark)}
+  .forderung-mehr{display:block;margin-top:10px;font-size:14px;
+                  color:var(--blau-link);text-decoration:underline}
+  .forderung[open] .forderung-mehr{display:none}
+  .forderung-inhalt{padding:0 18px 16px}
+  .forderung-inhalt p.worum{margin:0;font-size:15px;line-height:1.5}
+  .forderung blockquote{margin:12px 0 0;padding:10px 14px;background:var(--blau-zart);
+                        border-left:3px solid var(--blau-akzent);font-size:15px;
+                        color:var(--text-stark)}
+  /* Tippflaeche 44px auch fuer die Links in den Belegen (KMS [D-0176]) */
+  .beleg{margin:0;font-size:13px;color:var(--text-leise);
+         display:flex;flex-wrap:wrap;align-items:center;gap:0 6px;min-height:44px}
+  .beleg a{display:inline-flex;align-items:center;min-height:44px}
 
-  /* ---------- Filter: eine Reihe, feste Hoehe ---------- */
-  .filter{position:sticky;top:0;z-index:10;background:var(--weiss);
-          border-bottom:1px solid var(--linie);padding:11px 0 12px;margin-top:14px}
-  .chip-reihe{position:relative}
-  .chip-reihe::after{content:"";position:absolute;top:0;right:0;bottom:0;width:26px;
-                     pointer-events:none;opacity:0;transition:opacity .15s;
-                     background:linear-gradient(to right,rgba(255,255,255,0),var(--weiss))}
-  .chip-reihe.mehr-rechts::after{opacity:1}
-  .chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none;
-         -webkit-overflow-scrolling:touch}
-  .chips::-webkit-scrollbar{height:0}
-  .chip{flex:0 0 auto;border:1px solid var(--linie);background:var(--weiss);color:var(--grau);
-        border-radius:999px;padding:10px 15px;font-size:.9rem;cursor:pointer;white-space:nowrap;
-        font-family:inherit;min-height:44px}
-  .chip:hover{border-color:var(--blau-hell)}
-  .chip[aria-pressed="true"]{background:var(--blau);border-color:var(--blau);color:#fff;font-weight:600}
-  .chip.forderungen-knopf{border-color:var(--signal);color:var(--signal);font-weight:600}
-  .chip.forderungen-knopf[aria-pressed="true"]{background:var(--signal);border-color:var(--signal);color:#fff}
-  .chip.nachrangig{opacity:.6}
-  .suchzeile{margin-top:9px}
-  .suchzeile input{width:100%;font:inherit;font-size:.92rem;padding:10px 12px;min-height:44px;
-    border:1px solid var(--linie);border-radius:10px;background:var(--weiss);color:var(--text)}
-  .suchzeile input::placeholder{color:#9aa1a9}
+  /* ---------- Themenkacheln ---------- */
+  .kacheln{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:16px}
+  .kachel{display:block;width:100%;text-align:left;font:inherit;cursor:pointer;
+          background:var(--weiss);box-shadow:var(--schatten);border:0;
+          border-top:4px solid var(--blau);padding:14px 16px 12px;min-width:0}
+  .kachel:hover{box-shadow:var(--schatten-hoch)}
+  .kachel.nachrangig{border-top-color:var(--grau-blau)}
+  .kachel[aria-pressed="true"]{background:var(--blau-zart)}
+  .kachel-kopf{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+  .kachel-name{font-size:19px;font-weight:700;color:var(--blau);line-height:1.25;
+               hyphens:auto;overflow-wrap:break-word}
+  .kachel-zahl{flex:0 0 auto;background:var(--blau-flaeche);color:var(--blau);
+               font-size:13px;font-weight:700;padding:2px 9px;border-radius:10px}
+  .kachel.nachrangig .kachel-zahl{background:var(--grau-flaeche);color:var(--text-stark)}
+  .kachel-zeile{display:block;font-size:14px;line-height:1.35;color:var(--text);
+                margin-top:9px;overflow-wrap:break-word}
+  .kachel-datum{color:var(--text-leise);font-size:12px;display:block}
+  .kachel-mehr{display:block;margin-top:11px;font-size:13px;font-weight:700;
+               color:var(--blau-link)}
+
+  /* ---------- Suche ---------- */
+  .suchband{padding:24px 0 0}
+  .suchband input{width:100%;font:inherit;font-size:16px;padding:11px 14px;
+                  min-height:46px;border:1px solid var(--text);border-radius:0;
+                  background:var(--weiss);color:var(--text)}
+  .suchband input:hover{border-color:var(--blau-akzent)}
+  .suchband input::placeholder{color:#7b828a}
+
+  /* ---------- Reiterleiste: Muster der Kammer (Farbwelt blue-dark) ----------
+     Feste Hoehe, damit beim Scrollen nichts springt. */
+  .reiterband{position:sticky;top:0;z-index:20;background:var(--seite);
+              border-bottom:2px solid var(--blau);margin-top:12px}
+  .reiter-spur{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;
+               -webkit-overflow-scrolling:touch;height:56px;align-items:stretch}
+  .reiter-spur::-webkit-scrollbar{height:0}
+  .reiter{flex:0 0 auto;border:0;border-radius:0;font:inherit;font-size:15px;
+          font-weight:700;cursor:pointer;white-space:nowrap;padding:0 16px;
+          background:var(--grau-flaeche);color:var(--blau);min-height:44px;
+          align-self:center;height:44px;line-height:44px}
+  .reiter:hover{background:var(--blau);color:#fff}
+  .reiter[aria-pressed="true"]{background:var(--blau);color:#fff}
+  .reiter .zahl{font-weight:400;opacity:.85;margin-left:6px}
+  .reiter.hinweis{background:var(--orange-zart);color:var(--blau)}
+  .reiter.hinweis[aria-pressed="true"]{background:var(--blau);color:#fff}
+  .reiter.leise{background:var(--weiss);color:var(--text-leise);font-weight:400}
+  .reiter.leise[aria-pressed="true"]{background:var(--blau);color:#fff;font-weight:700}
 
   /* ---------- Liste ---------- */
-  main{padding-bottom:36px}
-  .zaehler{font-size:.85rem;color:var(--grau);margin:14px 0 12px}
-  .block-titel{margin:22px 0 10px;font-size:.82rem;font-weight:700;letter-spacing:.06em;
-               text-transform:uppercase;color:var(--blau);display:flex;align-items:center;gap:8px}
+  main{padding-bottom:44px}
+  .zaehler{font-size:14px;color:var(--text-leise);margin:16px 0 14px}
+  .block-titel{display:flex;align-items:center;gap:10px;margin:26px 0 10px;
+               font-size:20px;color:var(--blau)}
   .block-titel:first-child{margin-top:0}
-  .block-zahl{background:var(--blau-flaeche);color:var(--blau);border-radius:999px;
-              padding:1px 9px;font-size:.78rem;letter-spacing:0}
-  .karte{background:var(--weiss);border:1px solid var(--linie);border-radius:var(--radius);
-         padding:16px;margin-bottom:11px}
-  .karte-kopf{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}
-  .marke{font-size:.75rem;font-weight:600}
-  .marke.forderung-marke{color:var(--signal)}
-  .marke.forderung-marke::before{content:"● "}
-  .marke.neu{background:var(--signal);color:#fff;border-radius:6px;padding:3px 8px;font-weight:700}
-  .marke.unsortiert{color:#a15c00}
-  .ebene{font-size:.72rem;font-weight:700;border-radius:5px;padding:3px 7px;
-         letter-spacing:.02em}
-  .ebene-bund{background:#2b2b2b;color:#fff}
+  .block-zahl{background:var(--blau-flaeche);color:var(--blau);font-size:13px;
+              font-weight:700;padding:2px 9px;border-radius:10px}
+  .block-mehr{display:block;width:100%;margin:0 0 6px;padding:12px;min-height:44px;
+              background:var(--weiss);box-shadow:var(--schatten);border:0;
+              border-radius:0;font:inherit;font-size:15px;font-weight:700;
+              color:var(--blau-link);cursor:pointer;text-align:center}
+  .block-mehr:hover{box-shadow:var(--schatten-hoch)}
+
+  .karte{background:var(--weiss);box-shadow:var(--schatten);padding:14px 18px 12px;
+         margin-bottom:4px;border-left:5px solid transparent}
+  .karte.politisch{border-left-color:var(--rot)}
+  .karte.ist-neu{border-left-color:var(--gelb)}
+  .karte.politisch.ist-neu{border-left-color:var(--rot);
+                           box-shadow:var(--schatten),inset 4px 0 0 var(--gelb)}
+  .karte-dach{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:0 0 8px;
+              font-size:12px}
+  .ebene{padding:3px 8px;font-weight:700;white-space:nowrap}
+  .ebene-bund{background:var(--blau);color:#fff}
   .ebene-land{background:var(--blau-flaeche);color:var(--blau)}
-  .chip.ebenen-knopf[aria-pressed="true"]{background:#2b2b2b;border-color:#2b2b2b}
-  .gattung{font-size:.72rem;color:var(--grau);border:1px solid var(--linie);
-           border-radius:5px;padding:2px 7px}
-  .eigener-text{font-size:.74rem;color:var(--grau);white-space:nowrap;
-                border:1px solid var(--linie);border-radius:5px;padding:1px 6px}
-  .thema{font-size:.82rem;color:var(--blau-hell);font-weight:600}
-  .datum{font-size:.82rem;color:var(--grau);margin-left:auto;flex-shrink:0}
-  .datum .ungenau{cursor:help;border-bottom:1px dotted var(--grau)}
-  .karte.ist-neu{border-color:var(--signal);box-shadow:0 0 0 2px rgba(184,0,63,.09)}
-  h2.schlagzeile{margin:0 0 7px;font-size:1.14rem;line-height:1.35;letter-spacing:-.01em}
-  .dreizeiler{margin:0;color:#333}
-  .dreizeiler.offen{color:var(--grau);font-style:italic}
-  blockquote.zitat{margin:12px 0 0;padding:10px 14px;background:var(--flaeche);
-             border-left:3px solid var(--blau-hell);border-radius:0 8px 8px 0;
-             font-size:.93rem;color:#333}
-  .karte-fuss{margin-top:13px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-  .original{display:inline-flex;align-items:center;color:var(--blau);text-decoration:none;
-            font-weight:600;font-size:.9rem;border:1px solid var(--blau);border-radius:9px;
-            padding:10px 14px;min-height:44px}
-  .original:hover{background:var(--blau);color:#fff}
-  .absender{font-size:.78rem;color:var(--grau)}
-  .leer{text-align:center;color:var(--grau);padding:40px 10px}
+  .neu-marke{background:var(--gelb);color:var(--blau);font-weight:700;padding:3px 8px}
+  .gattung{background:var(--grau-flaeche);color:var(--text-stark);padding:3px 8px}
+  .thema{color:var(--text-leise)}
+  .datum{margin-left:auto;color:var(--text-leise);white-space:nowrap}
+  .ungenau{border-bottom:1px dotted var(--text-leise);cursor:help}
+  .schlagzeile{font-size:20px;color:var(--blau);margin:0 0 6px;line-height:1.3}
+  .dreizeiler{margin:0;font-size:15px;line-height:1.5}
+  .quelle-marke{display:inline-block;background:var(--grau-flaeche);
+                color:var(--text-leise);font-size:12px;padding:2px 7px;
+                margin-left:4px;vertical-align:1px;white-space:nowrap}
+  .karte blockquote{margin:10px 0 0;padding:9px 13px;background:var(--blau-zart);
+                    border-left:3px solid var(--blau-akzent);font-size:15px;
+                    color:var(--text-stark)}
+  .karte-fuss{display:flex;flex-wrap:wrap;gap:0 14px;align-items:center;
+              margin:8px 0 0;padding-top:0;border-top:1px solid var(--linie);
+              font-size:13px}
+  .original{font-weight:700;min-height:44px;display:inline-flex;align-items:center}
+  .absender{color:var(--text-leise)}
+  .leer{background:var(--weiss);box-shadow:var(--schatten);padding:22px 18px;
+        font-size:16px}
 
-  details.nebensache{margin-top:26px;border-top:1px solid var(--linie);padding-top:14px}
-  details.nebensache summary{cursor:pointer;font-size:.82rem;font-weight:700;letter-spacing:.06em;
-                             text-transform:uppercase;color:var(--grau);padding:10px 0;
-                             min-height:44px;display:flex;align-items:center;gap:8px}
-  .nebensache-hinweis{font-size:.85rem;color:var(--grau);margin:2px 0 14px;font-style:italic}
+  .nebensache{background:var(--weiss);box-shadow:var(--schatten);margin-top:26px}
+  .nebensache>summary{cursor:pointer;list-style:none;padding:15px 18px;
+                      font-size:18px;font-weight:700;color:var(--blau);
+                      display:flex;align-items:center;gap:10px;min-height:44px}
+  .nebensache>summary::-webkit-details-marker{display:none}
+  .nebensache>summary:hover{background:var(--blau-zart)}
+  .nebensache-inhalt{padding:0 4px 4px}
+  .nebensache-hinweis{margin:0 14px 10px;font-size:14px;color:var(--text-leise)}
 
-  footer{padding:0 0 36px;font-size:.82rem;color:var(--grau)}
-  footer p{margin:0 0 8px}
-  footer a{color:var(--blau)}
+  footer{background:var(--weiss);border-top:2px solid var(--blau);padding:22px 0 30px;
+         font-size:13px;color:var(--text-leise)}
+  footer p{margin:0 0 6px;max-width:750px}
 
+  /* ---------- Tablet ---------- */
+  @media (max-width:1000px){
+    .kacheln{grid-template-columns:repeat(3,1fr)}
+  }
+  @media (max-width:900px){
+    .forderungs-reihe{grid-template-columns:1fr}
+    .kacheln{grid-template-columns:repeat(2,1fr)}
+  }
   /* ---------- Handy ---------- */
-  @media (max-width:699px){
+  @media (max-width:767px){
     body{font-size:16px}
-    h1{font-size:1.35rem}
+    h1,h2,h3,.kachel-name,.forderung-titel{overflow-wrap:anywhere}
     .mitte{padding:0 16px}
-    .forderung-titel{font-size:.97rem}
-    .karte{padding:15px}
-    .beleg-fuss a{display:inline-block;padding:7px 3px}
-  }
-  @media (max-width:359px){
-    .kennzahl{min-width:0;padding:7px 8px}
-    .kennzahl b{font-size:1.05rem}
-    .kennzahl span{font-size:.76rem;line-height:1.25}
-    h1{font-size:1.25rem}
-  }
-
-  /* ---------- Breite Bildschirme ---------- */
-  @media (min-width:900px){
-    h1{font-size:1.85rem}
-    .forderungs-reihe{grid-template-columns:repeat(3,1fr)}
-    .karte{padding:19px 21px}
+    .kopf-innen{flex-direction:column;align-items:flex-start;gap:2px;
+                min-height:56px;padding-top:9px;padding-bottom:9px}
+    .kopfband h1{font-size:22px}
+    .kopfband .stand{text-align:left;font-size:13px}
+    .kennzahlen{grid-template-columns:repeat(2,1fr);margin-top:16px}
+    .kennzahl b{font-size:26px}
+    .abschnitt-titel{font-size:21px}
+    .kacheln{grid-template-columns:1fr}
+    .kachel{padding:12px 14px 10px}
+    .kachel-zeile{margin-top:7px}
+    .kachel-mehr{margin-top:8px}
+    .nur-breit{display:none}
+    .schlagzeile{font-size:18px}
+    .forderung summary{padding:13px 15px}
+    .forderung-titel{font-size:18px}
+    .forderung-zeile{margin-top:8px;gap:5px}
+    .abschnitt{padding-top:22px}
+    .datum{margin-left:0}
   }
 </style>
 </head>
 <body>
 
-<header>
-  <div class="mitte">
+<header class="kopfband">
+  <div class="mitte kopf-innen">
     <h1>Handwerks-Ticker</h1>
-    <p class="unterzeile">Was das Handwerk gerade fordert &ndash; aus den Ver&ouml;ffentlichungen
-       der Handwerkskammer Potsdam, des Handwerkskammertages Brandenburg und des
-       Zentralverbands des Deutschen Handwerks.</p>
-    <div class="kennzahlen" id="kennzahlen"></div>
+    <p class="stand" id="stand"></p>
   </div>
 </header>
 
-<section class="forderungen">
+<div class="mitte">
+  <div class="kennzahlen" id="kennzahlen"></div>
+</div>
+
+<section class="abschnitt">
   <div class="mitte">
-    <div class="forderungen-kopf">
-      <h2>Das fordert das Handwerk gerade</h2>
-      <span class="kriterium" id="kriterium"></span>
-    </div>
+    <h2 class="abschnitt-titel">Die drei am h&auml;ufigsten belegten Forderungen</h2>
+    <p class="abschnitt-unter" id="kriterium"></p>
     <div class="forderungs-reihe" id="forderungsReihe"></div>
   </div>
 </section>
 
-<div class="filter">
+<section class="abschnitt">
   <div class="mitte">
-    <div class="chip-reihe">
-      <div class="chips" id="filterKnoepfe" role="group" aria-label="Nach Thema filtern"></div>
-    </div>
-    <div class="suchzeile">
-      <input id="suche" type="search" placeholder="In allen Meldungen suchen &hellip;"
-             aria-label="Volltextsuche">
-    </div>
+    <h2 class="abschnitt-titel">Worum es gerade geht</h2>
+    <p class="abschnitt-unter">Ein Klick auf ein Thema zeigt alle Meldungen dazu.</p>
+    <div class="kacheln" id="themenKacheln"></div>
+  </div>
+</section>
+
+<div class="suchband">
+  <div class="mitte">
+    <label class="sr" for="suche">In allen Meldungen suchen</label>
+    <input id="suche" type="search" autocomplete="off"
+           placeholder="In allen Meldungen suchen &hellip;">
+  </div>
+</div>
+
+<div class="reiterband">
+  <div class="mitte">
+    <div class="reiter-spur" id="filterKnoepfe" role="group" aria-label="Meldungen filtern"></div>
   </div>
 </div>
 
@@ -210,13 +317,11 @@
 
 <footer>
   <div class="mitte">
-    <p>Schlagzeile und Kurztext sind redaktionelle Zusammenfassungen der jeweiligen
-       Pressemitteilung. Ma&szlig;geblich ist immer die verlinkte Originalmeldung.
-       W&ouml;rtliche Zitate sind unver&auml;ndert &uuml;bernommen und h&ouml;chstens am
-       Satzende gek&uuml;rzt.</p>
-    <p>Quelle: <a href="https://www.hwk-potsdam.de/artikel/pressemitteilungen-2026-9,735,6713.html"
-       target="_blank" rel="noopener">Handwerkskammer Potsdam, Pressemitteilungen</a>.
-       <span id="stand"></span></p>
+    <p>Die Kurzfassungen sind redaktionell. Massgeblich ist immer der Originaltext
+       der jeweiligen Quelle &ndash; jede Meldung verlinkt ihn.</p>
+    <p><b>Quellen:</b> Handwerkskammer Potsdam, Brandenburgischer
+       Handwerkskammertag und Zentralverband des Deutschen Handwerks (Bundesebene).
+       Die Seite gleicht diese Quellen w&ouml;chentlich ab.</p>
   </div>
 </footer>
 
@@ -227,8 +332,16 @@ const DATEN = /*__DATEN__*/{
   {
    "kurz": "Steuerbonus für Handwerkerleistungen erhalten",
    "adressat": "Bund",
-   "worum": "Der Steuerbonus nach § 35a Abs. 3 EStG steht bei der Haushaltskonsolidierung zur Disposition. Bundesebene und Brandenburg fordern übereinstimmend seinen Erhalt: Der Bonus halte Aufträge im legalen Wirtschaftskreislauf und wirke gegen Schwarzarbeit. Reformieren statt abschaffen.",
+   "worum": "Der Steuerbonus nach § 35a Abs. 3 EStG steht bei der Haushaltskonsolidierung zur Disposition. Bundesebene und Brandenburg fordern übereinstimmend seinen Erhalt: Der Bonus halte Aufträge im legalen Wirtschaftskreislauf und wirke gegen Schwarzarbeit. Reformieren statt abschaffen. Im Entwurf der Einkommensteuerreform vom September bleibt die Steuerbegünstigung im Grundsatz erhalten – der ZDH nennt das erfreulich und richtig.",
    "belege": [
+    {
+     "id": "zdh-eine-atmosphaere-des-ermoeglichens-schaffen",
+     "zitat": "Eine vollständige Streichung wäre ein Schlag ins Gesicht des Handwerks. Umso mehr, weil auf Handwerksbetriebe derzeit erst einmal höhere Belastungen durch das Rentenkonzept, steigende Lohnzusatzkosten und steigende Energiepreise zukommen. Spürbare Entlastungen hingegen lassen auf sich warten.",
+     "datum": "2026-09-18",
+     "url": "https://www.zdh.de/presse/veroeffentlichungen/interviews-und-statements/eine-atmosphaere-des-ermoeglichens-schaffen/",
+     "absender": "Zentralverband des Deutschen Handwerks",
+     "ebene": "Bund"
+    },
     {
      "id": "6871",
      "zitat": "Kritisch sehen wir, dass der Steuerbonus für Handwerkerleistungen reduziert werden soll. Er stärkt legale Aufträge, entlastet private Haushalte und wirkt gegen Schwarzarbeit. Nachholbedarf bleibt auch bei Personenunternehmen, die gegenüber Kapitalgesellschaften nicht benachteiligt werden dürfen.",
@@ -254,8 +367,8 @@ const DATEN = /*__DATEN__*/{
      "ebene": "Bund"
     }
    ],
-   "zuletzt": "2026-07-03",
-   "anzahl": 3,
+   "zuletzt": "2026-09-18",
+   "anzahl": 4,
    "ebenen": [
     "Brandenburg",
     "Bund"
@@ -264,8 +377,16 @@ const DATEN = /*__DATEN__*/{
   {
    "kurz": "Dauerhafte Entlastung bei Energie und Kraftstoff",
    "adressat": "Bund und Land Brandenburg",
-   "worum": "Im Flächenland Brandenburg fahren Betriebe täglich weite Wege. Gefordert werden verlässliche Energiepreise statt kurzfristiger Maßnahmen – und befristete Preisgleitklauseln, damit außergewöhnliche Preissprünge bei öffentlichen Aufträgen nicht allein an den Betrieben hängen bleiben. Bund und Land äußerten sich am selben Tag zur Senkung der Energiesteuer.",
+   "worum": "Im Flächenland Brandenburg fahren Betriebe täglich weite Wege. Gefordert werden verlässliche Energiepreise statt kurzfristiger Maßnahmen – und befristete Preisgleitklauseln, damit außergewöhnliche Preissprünge bei öffentlichen Aufträgen nicht allein an den Betrieben hängen bleiben. Bund und Land äußerten sich am selben Tag zur Senkung der Energiesteuer. Im September verweist der ZDH auf die im Koalitionsvertrag vereinbarte Stromsteuersenkung für alle, die bislang ausgeblieben ist.",
    "belege": [
+    {
+     "id": "zdh-politischen-stillstand-koennen-wir-uns-nicht-leisten",
+     "zitat": "Es wäre schon viel geholfen, wenn die Bundesregierung zunächst ihre eigenen Versprechen bei den Energiekosten einhält, etwa die im Koalitionsvertrag vereinbarte Stromsteuersenkung für alle. Hohe Spritpreise treffen das Handwerk hart. Wer mehr fürs Tanken ausgeben muss, hat weniger für anderes übrig.",
+     "datum": "2026-09-21",
+     "url": "https://www.zdh.de/presse/veroeffentlichungen/interviews-und-statements/politischen-stillstand-koennen-wir-uns-nicht-leisten/",
+     "absender": "Zentralverband des Deutschen Handwerks",
+     "ebene": "Bund"
+    },
     {
      "id": "6808",
      "zitat": "Eine kurzfristige Senkung der Energiesteuer bei Diesel und Benzin um jeweils rund 17 Cent brutto pro Liter ist für viele Handwerksbetriebe grundsätzlich ein richtiges Signal. Sie bleibt aber ein Strohfeuer, wenn wir über eine zweimonatige Senkung sprechen.",
@@ -291,8 +412,8 @@ const DATEN = /*__DATEN__*/{
      "ebene": "Brandenburg"
     }
    ],
-   "zuletzt": "2026-04-13",
-   "anzahl": 3,
+   "zuletzt": "2026-09-21",
+   "anzahl": 4,
    "ebenen": [
     "Brandenburg",
     "Bund"
@@ -301,8 +422,24 @@ const DATEN = /*__DATEN__*/{
   {
    "kurz": "Bürokratie abbauen, Verfahren beschleunigen",
    "adressat": "Bund und Land Brandenburg",
-   "worum": "Weniger Berichtspflichten, schnellere Genehmigungen, einfachere Vorgaben: Die Forderung zieht sich durch das ganze Jahr und über beide Ebenen. Der Bund macht mit dem Entlastungskabinett Fortschritte sichtbar, das Handwerk nennt es bislang eine Zwischenetappe.",
+   "worum": "Weniger Berichtspflichten, schnellere Genehmigungen, einfachere Vorgaben: Die Forderung zieht sich durch das ganze Jahr und über beide Ebenen. Der Bund macht mit dem Entlastungskabinett Fortschritte sichtbar, das Handwerk nennt es bislang eine Zwischenetappe. Im September kritisiert der ZDH, dass die zugesagte Abschaffung der Bonpflicht ausbleibt und stattdessen zur digitalen Belegbereitstellungspflicht wird.",
    "belege": [
+    {
+     "id": "zdh-bonpflichtabschaffung-bleibt-aus-erneut-zusage-nicht-eingehalten",
+     "zitat": "Statt die im Koalitionsvertrag zugesagte Abschaffung der Bonpflicht umzusetzen, wird diese zur digitalen Belegbereitstellungspflicht. Das ist mehr als ein Wortspiel. Das ist zusätzliche Belastung durch notwendige Nachrüstungen.",
+     "datum": "2026-09-23",
+     "url": "https://www.zdh.de/presse/veroeffentlichungen/pressemitteilungen/bonpflichtabschaffung-bleibt-aus-erneut-zusage-nicht-eingehalten/",
+     "absender": "Zentralverband des Deutschen Handwerks",
+     "ebene": "Bund"
+    },
+    {
+     "id": "6916",
+     "zitat": "Sie brauchen Regeln, die sich im Betriebsalltag umsetzen lassen und nicht noch mehr Zeit, Personal und Geld binden. Die Stadt Potsdam muss diese Belastungen bei der Ausgestaltung berücksichtigen.“ Hinzu kommt immense Bürokratie. Dr.",
+     "datum": "2026-09-08",
+     "url": "https://www.hwk-potsdam.de/artikel/85-prozent-sagen-nein-potsdams-unternehmen-lehnen-verpackungssteuer-ab-9,735,6916.html",
+     "absender": "Gemeinsam mit Partnern",
+     "ebene": "Brandenburg"
+    },
     {
      "id": "zdh-zweites-entlastungskabinett-nicht-mehr-als-eine-zwischenetappe",
      "zitat": "Es ist wichtig, dass die Bundesregierung mit ihrem zweiten Entlastungskabinett selbst den Erfolgsdruck hochhält und transparent macht, wo sie gegenwärtig steht.",
@@ -328,8 +465,8 @@ const DATEN = /*__DATEN__*/{
      "ebene": "Brandenburg"
     }
    ],
-   "zuletzt": "2026-07-15",
-   "anzahl": 3,
+   "zuletzt": "2026-09-23",
+   "anzahl": 5,
    "ebenen": [
     "Brandenburg",
     "Bund"
@@ -337,28 +474,455 @@ const DATEN = /*__DATEN__*/{
   }
  ],
  "forderungen_kriterium": "Sortiert danach, wie oft die Forderung erhoben wurde und ob Bund und Land sie gemeinsam tragen.",
- "stand": "2026-08-26",
+ "stand": "2026-09-25",
  "themen": [
   "Ausbildung & Nachwuchs",
   "Steuern & Abgaben",
   "Sozialabgaben & Rente",
   "Wirtschaftslage",
-  "Politik & Regierung",
   "Entbürokratisierung",
-  "Arbeitszeit & Arbeitsrecht",
+  "Politik & Regierung",
   "Betrieb & Nachfolge",
+  "Arbeitszeit & Arbeitsrecht",
   "Energie & Sprit",
   "Bauen & Sanieren",
   "Personal & Fachkräfte",
   "Auflagen & Vorschriften",
-  "Aufträge & Vergabe",
   "Kammer & Service",
+  "Aufträge & Vergabe",
   "Noch nicht eingeordnet",
   "Ehrungen & Termine"
  ],
- "letzter_abgleich": "2026-08-26",
- "neu_anzahl": 1,
+ "letzter_abgleich": "2026-09-25",
+ "neu_anzahl": 21,
  "meldungen": [
+  {
+   "id": "zdh-fuer-eine-trendwende-braucht-es-mehr-reformtempo",
+   "datum": "2026-09-24",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Für eine Trendwende braucht es mehr Reformtempo",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/pressemitteilungen/fuer-eine-trendwende-braucht-es-mehr-reformtempo/",
+   "art": "politik",
+   "thema": "Wirtschaftslage",
+   "thema2": "Sozialabgaben & Rente",
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "schlagzeile": "Für eine Trendwende braucht es mehr Reformtempo",
+   "dreizeiler": "Zur Gemeinschaftsdiagnose Herbst 2026 der fünf führenden deutschen Wirtschaftsforschungsinstitute vom 24. September erklärt Jörg Dittrich, Präsident des Zentralverbandes des Deutschen Handwerks (ZDH):",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Pressemitteilung",
+   "zitat": null,
+   "zuerst_gesehen": "2026-09-25",
+   "neu": true
+  },
+  {
+   "id": "6935",
+   "datum": "2026-09-23",
+   "datum_ungenau": false,
+   "nummer": "68",
+   "titel": "Unternehmensnachfolge braucht gute Vorbereitung und starke Netzwerke",
+   "url": "https://www.hwk-potsdam.de/artikel/unternehmensnachfolge-braucht-gute-vorbereitung-und-starke-netzwerke-9,735,6935.html",
+   "art": "politik",
+   "thema": "Betrieb & Nachfolge",
+   "thema2": "Entbürokratisierung",
+   "absender": "Gemeinsam mit Partnern",
+   "schlagzeile": "Nachfolge: Wüst nennt drei Bedingungen",
+   "dreizeiler": "Auf der 18. NEXXT Night in Brandenburg an der Havel warben Handwerkskammer und IHK Potsdam für die Betriebsübernahme als Weg in die Selbstständigkeit. Kammerpräsident Robert Wüst nennt drei Bedingungen, damit mehr junge Handwerker den Schritt wagen: weniger Bürokratie, verlässliche Finanzierungsmöglichkeiten und mehr Anerkennung für unternehmerische Verantwortung. Geht ein Betrieb mangels Nachfolger verloren, verschwinden laut Wüst auch Arbeits- und Ausbildungsplätze, Know-how und regionale Wertschöpfung.",
+   "unredigiert": false,
+   "zuerst_gesehen": "2026-09-25",
+   "zitat": "Die Übernahme eines bestehenden Unternehmens wird als Weg in die Selbstständigkeit immer attraktiver. Sie bietet den Vorteil, auf gewachsene Strukturen, Kunden und Mitarbeiter zurückgreifen zu können.",
+   "ebene": "Brandenburg",
+   "neu": true
+  },
+  {
+   "id": "zdh-bonpflichtabschaffung-bleibt-aus-erneut-zusage-nicht-eingehalten",
+   "datum": "2026-09-23",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Bonpflichtabschaffung bleibt aus: erneut Zusage nicht eingehalten",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/pressemitteilungen/bonpflichtabschaffung-bleibt-aus-erneut-zusage-nicht-eingehalten/",
+   "art": "politik",
+   "thema": "Entbürokratisierung",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "schlagzeile": "Bonpflichtabschaffung bleibt aus: erneut Zusage nicht eingehalten",
+   "dreizeiler": "Zum Kabinettsbeschluss über das Gesetz zur Einführung einer Kassenpflicht am Mittwoch, 23. September 2026, erklärt Holger Schwannecke, Generalsekretär des Zentralverbandes des Deutschen Handwerks (ZDH):",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Pressemitteilung",
+   "zitat": null,
+   "zuerst_gesehen": "2026-09-25",
+   "neu": true
+  },
+  {
+   "id": "zdh-gute-schul-und-ausbildung-ist-wirtschaftlicher-erfolgsfaktor",
+   "datum": "2026-09-22",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Gute Schul- und Ausbildung ist wirtschaftlicher Erfolgsfaktor",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/pressemitteilungen/gute-schul-und-ausbildung-ist-wirtschaftlicher-erfolgsfaktor/",
+   "art": "politik",
+   "thema": "Ausbildung & Nachwuchs",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "schlagzeile": "Gute Schul- und Ausbildung ist wirtschaftlicher Erfolgsfaktor",
+   "dreizeiler": "Anlässlich der gemeinsamen BDA-DGB-Bildungskonferenz am 22. September 2026 erklärt Jörg Dittrich, Präsident des Zentralverbandes des Deutschen Handwerks (ZDH):",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Pressemitteilung",
+   "zitat": null,
+   "zuerst_gesehen": "2026-09-25",
+   "neu": true
+  },
+  {
+   "id": "zdh-politischen-stillstand-koennen-wir-uns-nicht-leisten",
+   "datum": "2026-09-21",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Politischen Stillstand können wir uns nicht leisten",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/interviews-und-statements/politischen-stillstand-koennen-wir-uns-nicht-leisten/",
+   "art": "politik",
+   "thema": "Steuern & Abgaben",
+   "thema2": "Energie & Sprit",
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "schlagzeile": "Politischen Stillstand können wir uns nicht leisten",
+   "dreizeiler": "Die Regierungskoalition muss sich jetzt zusammenreißen, ihre Mehrheit nutzen für weitere Reformen und endlich regieren, statt sich mit sich selbst zu beschäftigen, so ZDH-Generalsekretär Holger Schwannecke zu Dr. Antje Höning (Rheinische Post).",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Interview / Statement",
+   "zitat": null,
+   "zuerst_gesehen": "2026-09-25",
+   "neu": true
+  },
+  {
+   "id": "zdh-das-handwerk-bietet-sinnstiftende-arbeit-im-sozialen-miteinander",
+   "datum": "2026-09-18",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Das Handwerk bietet sinnstiftende Arbeit im sozialen Miteinander",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/interviews-und-statements/das-handwerk-bietet-sinnstiftende-arbeit-im-sozialen-miteinander/",
+   "art": "politik",
+   "thema": "Ausbildung & Nachwuchs",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "schlagzeile": "Das Handwerk bietet sinnstiftende Arbeit im sozialen Miteinander",
+   "dreizeiler": "Über KI als Chance für Handwerksbetriebe, über unverzichtbare Handwerksberufe für die Transformation und darüber, warum sich die Bewerbung auf einen Ausbildungsplatz auch jetzt noch lohnt, spricht ZDH-Präsident Jörg Dittrich mit Michael Schelenz von BILD.",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Interview / Statement",
+   "zitat": null,
+   "zuerst_gesehen": "2026-09-25",
+   "neu": true
+  },
+  {
+   "id": "zdh-eine-atmosphaere-des-ermoeglichens-schaffen",
+   "datum": "2026-09-18",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Eine Atmosphäre des Ermöglichens schaffen!",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/interviews-und-statements/eine-atmosphaere-des-ermoeglichens-schaffen/",
+   "art": "politik",
+   "thema": "Steuern & Abgaben",
+   "thema2": "Sozialabgaben & Rente",
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "schlagzeile": "Eine Atmosphäre des Ermöglichens schaffen!",
+   "dreizeiler": "Über Wege zu spürbarer Entlastung von Betrieben und Beschäftigten, die Stärke des Mittelstands und darüber, wie Politik jetzt Wachstum und Zuversicht ermöglichen kann, sprach ZDH-Präsident Jörg Dittrich mit Stefan Lange (RedaktionsNetzwerk Deutschland).",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Interview / Statement",
+   "zitat": null,
+   "zuerst_gesehen": "2026-09-25",
+   "neu": true
+  },
+  {
+   "id": "6934",
+   "datum": "2026-09-17",
+   "datum_ungenau": false,
+   "nummer": "67",
+   "titel": "Handwerkskammern für Beratungsangebot „Nachhaltigkeitscheck 360°“ ausgezeichnet",
+   "url": "https://www.hwk-potsdam.de/artikel/handwerkskammern-fuer-beratungsangebot-nachhaltigkeitscheck-360-ausgezeichnet-9,735,6934.html",
+   "art": "bericht",
+   "thema": "Kammer & Service",
+   "thema2": null,
+   "absender": "Handwerkskammer Potsdam",
+   "schlagzeile": "Auszeichnung für den Nachhaltigkeitscheck 360°",
+   "dreizeiler": "Die Handwerkskammer Potsdam wurde am 17. September zusammen mit den Kammern Dortmund, Frankfurt-Rhein-Main und Mittelfranken mit dem Deutschen Award für Nachhaltigkeitsprojekte ausgezeichnet. Der „Nachhaltigkeitscheck 360°“ ist eine etwa dreistündige Beratung, die sich an den Nachhaltigkeitszielen der Vereinten Nationen orientiert; bundesweit haben ihn über 700 Handwerksbetriebe genutzt. Das Projekt setzte sich unter mehr als 430 Einreichungen durch.",
+   "unredigiert": false,
+   "zuerst_gesehen": "2026-09-25",
+   "zitat": null,
+   "ebene": "Brandenburg",
+   "neu": true
+  },
+  {
+   "id": "zdh-das-handwerk-ist-vielfaeltig-sicher-innovativ-und-sinnstiftend",
+   "datum": "2026-09-14",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Das Handwerk ist vielfältig, sicher, innovativ und sinnstiftend",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/interviews-und-statements/das-handwerk-ist-vielfaeltig-sicher-innovativ-und-sinnstiftend/",
+   "art": "politik",
+   "thema": "Ausbildung & Nachwuchs",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "schlagzeile": "Das Handwerk ist vielfältig, sicher, innovativ und sinnstiftend",
+   "dreizeiler": "Handwerk verbindet technologische Innovationen mit sichtbaren Ergebnissen und bietet jungen Menschen vielfältige Chancen, ihre Talente einzubringen und beruflich erfolgreich zu sein, so ZDH-Präsident Jörg Dittrich zu Michael Niehus (BILD am Sonntag).",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Interview / Statement",
+   "zitat": null,
+   "zuerst_gesehen": "2026-09-25",
+   "neu": true
+  },
+  {
+   "id": "6919",
+   "datum": "2026-09-09",
+   "datum_ungenau": false,
+   "nummer": "66",
+   "titel": "„Karriere mit Gefühl“: Gerüstbaumeisterin Sina Scheffler aus Plötzin wird bundesweit ein Gesicht des Handwerks",
+   "url": "https://www.hwk-potsdam.de/artikel/karriere-mit-gefuehl-geruestbaumeisterin-sina-scheffler-aus-ploetzin-wird-bundesweit-ein-gesicht-des-handwerks-9,735,6919.html",
+   "art": "bericht",
+   "thema": "Ausbildung & Nachwuchs",
+   "thema2": "Betrieb & Nachfolge",
+   "absender": "Handwerkskammer Potsdam",
+   "schlagzeile": "Gerüstbaumeisterin wird Gesicht der Handwerkskampagne",
+   "dreizeiler": "Ab 11. September ist Sina Scheffler, Geschäftsführerin der Gerüstbau Scheffler GmbH, mit dem Motiv „Karriere mit Gefühl: Erschaff dir Respekt.“ auf Großflächen und in den sozialen Medien zu sehen. Ihr Weg: 2004 Einstieg in den Betrieb des Vaters, zunächst in Teilzeit, 2008 Abschluss der Meisterausbildung, 2012 die Geschäftsführung, zehn Jahre später die Übernahme – heute knapp 40 Beschäftigte. Als sie vor etwa 20 Jahren im Gerüstbau anfing, begegnete sie dort keiner einzigen Frau.",
+   "unredigiert": false,
+   "zuerst_gesehen": "2026-09-25",
+   "zitat": null,
+   "ebene": "Brandenburg",
+   "neu": true
+  },
+  {
+   "id": "6927",
+   "datum": "2026-09-09",
+   "datum_ungenau": false,
+   "nummer": "65",
+   "titel": "Erste Schritte zur Unternehmensnachfolge - Einladung zur 18. NEXXT Night am 23. September 2026",
+   "url": "https://www.hwk-potsdam.de/artikel/erste-schritte-zur-unternehmensnachfolge-einladung-zur-18-nexxt-night-am-23-september-2026-9,735,6927.html",
+   "art": "termin",
+   "thema": "Ehrungen & Termine",
+   "thema2": "Betrieb & Nachfolge",
+   "absender": "Handwerkskammer Potsdam",
+   "schlagzeile": "Einladung: 18. NEXXT Night zur Unternehmensnachfolge",
+   "dreizeiler": "Am 23. September 2026 von 17 bis 20 Uhr im Rolandsaal in Brandenburg an der Havel. Unternehmerinnen und Unternehmer zeigen, wie sie die Übergabe ihres Betriebes an die nächste Generation gemeistert haben; dazu Podiumsrunden zu Übernahme, Suche, Finanzierung und Übergabe. Gemeinschaftsveranstaltung von Handwerkskammer Potsdam und IHK Potsdam, die Teilnahme ist kostenfrei.",
+   "unredigiert": false,
+   "zuerst_gesehen": "2026-09-25",
+   "zitat": null,
+   "ebene": "Brandenburg",
+   "neu": true
+  },
+  {
+   "id": "zdh-rekordhaushalt-erfordert-reformen-mit-rekordwirkung",
+   "datum": "2026-09-09",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Rekordhaushalt erfordert Reformen mit Rekordwirkung",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/pressemitteilungen/rekordhaushalt-erfordert-reformen-mit-rekordwirkung/",
+   "art": "politik",
+   "thema": "Steuern & Abgaben",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "schlagzeile": "Rekordhaushalt erfordert Reformen mit Rekordwirkung",
+   "dreizeiler": "Anlässlich der Generaldebatte im Deutschen Bundestag zum Bundeshaushalt 2027 am 9. September erklärt Jörg Dittrich, Präsident des Zentralverbandes des Deutschen Handwerks (ZDH):",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Pressemitteilung",
+   "zitat": null,
+   "zuerst_gesehen": "2026-09-25",
+   "neu": true
+  },
+  {
+   "id": "6917",
+   "datum": "2026-09-08",
+   "datum_ungenau": false,
+   "nummer": "64",
+   "titel": "Handwerk regional: Landrätin und Handwerkskammer im Austausch mit Handwerksbetrieben in Teltow-Fläming",
+   "url": "https://www.hwk-potsdam.de/artikel/handwerk-regional-landraetin-und-handwerkskammer-im-austausch-mit-handwerksbetrieben-in-teltow-flaeming-9,735,6917.html",
+   "art": "termin",
+   "thema": "Ehrungen & Termine",
+   "thema2": "Entbürokratisierung",
+   "absender": "Handwerkskammer Potsdam",
+   "schlagzeile": "Handwerk regional: Betriebsbesuche in Teltow-Fläming",
+   "dreizeiler": "Am 16. September besuchen Kammerpräsident Robert Wüst und Hauptgeschäftsführer Ralph Bührig gemeinsam mit Landrätin Kornelia Wehlan und Kreishandwerksmeister Sven Thielicke zwei Betriebe im Landkreis: die KONRAD Bäckerei & Café GmbH in Niedergörsdorf und die Klinkhammer – Wärme & Wasser erleben GmbH in Ludwigsfelde. Im Mittelpunkt stehen die Fachkräftesicherung, die Entlastung kleinerer und mittlerer Handwerksbetriebe von Bürokratie und gute Rahmenbedingungen vor Ort.",
+   "unredigiert": false,
+   "zuerst_gesehen": "2026-09-25",
+   "zitat": null,
+   "ebene": "Brandenburg",
+   "neu": true
+  },
+  {
+   "id": "6916",
+   "datum": "2026-09-08",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "85 Prozent sagen Nein: Potsdams Unternehmen lehnen Verpackungssteuer ab",
+   "url": "https://www.hwk-potsdam.de/artikel/85-prozent-sagen-nein-potsdams-unternehmen-lehnen-verpackungssteuer-ab-9,735,6916.html",
+   "art": "politik",
+   "thema": "Steuern & Abgaben",
+   "thema2": "Entbürokratisierung",
+   "absender": "Gemeinsam mit Partnern",
+   "schlagzeile": "85 Prozent der Betriebe lehnen die Verpackungssteuer ab",
+   "dreizeiler": "Fünf Verbände – darunter die Handwerkskammer Potsdam – haben ihre Mitglieder befragt: 85 Prozent der 110 teilnehmenden Unternehmen lehnen die kommunale Verpackungssteuer ab, die in Potsdam am 1. Oktober 2026 startet. Als Hürden für Mehrweg nennen rund 72 Prozent die hohen Anschaffungskosten, 70 Prozent die Reinigungskosten und rund 60 Prozent den zusätzlichen Personalaufwand. Hauptgeschäftsführer Ralph Bührig fordert Regeln, die sich im Betriebsalltag umsetzen lassen.",
+   "unredigiert": false,
+   "zuerst_gesehen": "2026-09-25",
+   "zitat": "Unsere Umfrage zeigt, dass rund 72 Prozent der Betriebe hohe Anschaffungskosten als Hürde für Mehrwegsysteme nennen. Hinzu kommen Reinigungskosten, zusätzlicher Personalaufwand und weitere bürokratische Anforderungen.",
+   "ebene": "Brandenburg",
+   "neu": true
+  },
+  {
+   "id": "zdh-grundkompetenzen-entscheiden-ueber-start-ins-berufsleben",
+   "datum": "2026-09-08",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Grundkompetenzen entscheiden über Start ins Berufsleben",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/pressemitteilungen/grundkompetenzen-entscheiden-ueber-start-ins-berufsleben/",
+   "art": "politik",
+   "thema": "Ausbildung & Nachwuchs",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "schlagzeile": "Grundkompetenzen entscheiden über Start ins Berufsleben",
+   "dreizeiler": "Anlässlich der Veröffentlichung der Ergebnisse der aktuellen PISA-Studie am 8. September 2026 erklärt Holger Schwannecke, Generalsekretär des Zentralverbandes des Deutschen Handwerks (ZDH):",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Pressemitteilung",
+   "zitat": null,
+   "zuerst_gesehen": "2026-09-25",
+   "neu": true
+  },
+  {
+   "id": "zdh-wirtschaftspolitik-in-den-mittelpunkt-ruecken",
+   "datum": "2026-09-07",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Wirtschaftspolitik in den Mittelpunkt rücken",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/interviews-und-statements/wirtschaftspolitik-in-den-mittelpunkt-ruecken/",
+   "art": "politik",
+   "thema": "Sozialabgaben & Rente",
+   "thema2": "Energie & Sprit",
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "schlagzeile": "Wirtschaftspolitik in den Mittelpunkt rücken",
+   "dreizeiler": "Im Handelsblatt-Interview nach der Wahl in Sachsen-Anhalt nennt ZDH-Präsident Jörg Dittrich die Senkung der Lohnzusatzkosten als Gamechanger. Bei den Strompreisen verweist er auf die im Koalitionsvertrag vereinbarte Stromsteuersenkung für alle: Wärmepumpe oder E-Auto rechneten sich dann eher, auch ohne Förderung.",
+   "unredigiert": false,
+   "quelle_eigen": false,
+   "gattung": "Interview / Statement",
+   "zitat": null,
+   "zuerst_gesehen": "2026-09-25",
+   "neu": true
+  },
+  {
+   "id": "zdh-einkommensteuerreform-entwurf-bleibt-hinter-erwartungen-zurueck",
+   "datum": "2026-09-02",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Einkommensteuerreform-Entwurf bleibt hinter Erwartungen zurück",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/pressemitteilungen/einkommensteuerreform-entwurf-bleibt-hinter-erwartungen-zurueck/",
+   "art": "politik",
+   "thema": "Steuern & Abgaben",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "schlagzeile": "Einkommensteuerreform-Entwurf bleibt hinter Erwartungen zurück",
+   "dreizeiler": "Zum Beschluss des Entwurfes eines Einkommensteuertarifreformgesetzes im Bundeskabinett am 2. September erklärt Holger Schwannecke, Generalsekretär des Zentralverbandes des Deutschen Handwerks (ZDH):",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Pressemitteilung",
+   "zitat": null,
+   "zuerst_gesehen": "2026-09-25",
+   "neu": true
+  },
+  {
+   "id": "zdh-ausbildungszahlen-im-handwerk-viertes-jahr-mit-plus-in-sicht",
+   "datum": "2026-09-01",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Ausbildungszahlen im Handwerk: Viertes Jahr mit Plus in Sicht",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/interviews-und-statements/ausbildungszahlen-im-handwerk-viertes-jahr-mit-plus-in-sicht/",
+   "art": "politik",
+   "thema": "Ausbildung & Nachwuchs",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "schlagzeile": "Ausbildungszahlen im Handwerk: Viertes Jahr mit Plus in Sicht",
+   "dreizeiler": "Die Ausbildungszahlen im Handwerk könnten 2026 das vierte Jahr in Folge steigen, doch es bleiben Passungsprobleme und fehlende Grundkompetenzen als große Herausforderungen, sagte ZDH-Präsident Jörg Dittrich zu Andreas Schmid von Ippen.Media.",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Interview / Statement",
+   "zitat": null,
+   "zuerst_gesehen": "2026-09-25",
+   "neu": true
+  },
+  {
+   "id": "zdh-die-schulpflicht-ist-grundlage-fuer-eine-gelingende-ausbildung",
+   "datum": "2026-09-01",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Die Schulpflicht ist Grundlage für eine gelingende Ausbildung",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/interviews-und-statements/die-schulpflicht-ist-grundlage-fuer-eine-gelingende-ausbildung/",
+   "art": "politik",
+   "thema": "Ausbildung & Nachwuchs",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "schlagzeile": "Die Schulpflicht ist Grundlage für eine gelingende Ausbildung",
+   "dreizeiler": "Die Schulpflicht ist unverzichtbar für die Ausbildung junger Menschen und damit für die Fachkräftesicherung. Eine Abschaffung würde die Zukunftschancen junger Menschen gefährden, so ZDH-Generalsekretär Holger Schwannecke zu Jan-Wolf Schäfer (BILD).",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Interview / Statement",
+   "zitat": null,
+   "zuerst_gesehen": "2026-09-25",
+   "neu": true
+  },
+  {
+   "id": "zdh-lohnzusatzkosten-muessen-runter-weitere-reformen-dafuer-noetig",
+   "datum": "2026-09-01",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Lohnzusatzkosten müssen runter: weitere Reformen dafür nötig!",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/interviews-und-statements/lohnzusatzkosten-muessen-runter-weitere-reformen-dafuer-noetig/",
+   "art": "politik",
+   "thema": "Sozialabgaben & Rente",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "schlagzeile": "Lohnzusatzkosten müssen runter: weitere Reformen dafür nötig!",
+   "dreizeiler": "Die zu hohen Lohnzusatzkosten verteuern Arbeit in einem Maße, dass Leistungen für Verbraucher unbezahlbar zu werden drohen, weshalb sie dringend durch weitere Reformen verringert werden müssen, so ZDH-Präsident Jörg Dittrich zu Stefan Paravicini (FAZ).",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Interview / Statement",
+   "zitat": null,
+   "zuerst_gesehen": "2026-09-25",
+   "neu": true
+  },
+  {
+   "id": "6908",
+   "datum": "2026-08-27",
+   "datum_ungenau": false,
+   "nummer": "62",
+   "titel": "Die Handwerkskammer Potsdam informiert zu ausgewählten Jubiläen im Handwerk im Monat September 2026",
+   "url": "https://www.hwk-potsdam.de/artikel/die-handwerkskammer-potsdam-informiert-zu-ausgewaehlten-jubilaeen-im-handwerk-im-monat-september-2026-9,735,6908.html",
+   "art": "ehrung",
+   "thema": "Ehrungen & Termine",
+   "thema2": null,
+   "absender": "Handwerkskammer Potsdam",
+   "schlagzeile": "Diese Betriebe feiern im September Jubiläum",
+   "dreizeiler": "Die monatliche Liste der Betriebs- und Meisterjubiläen im Kammerbezirk. Sie reicht von 30 Jahren Holzideen René Kissinger in Ludwigsfelde bis zu 65 Jahren Bäckerei Angermüller in Hennigsdorf. Dazu Meisterjubiläen von 25 Jahren Fleischermeister Torsten Schmelzer bis zu 30 Jahren Keramikmeisterin Manuela Malenz in Velten.",
+   "unredigiert": false,
+   "zuerst_gesehen": "2026-09-25",
+   "zitat": null,
+   "ebene": "Brandenburg",
+   "neu": true
+  },
   {
    "id": "6904",
    "datum": "2026-08-25",
@@ -376,7 +940,7 @@ const DATEN = /*__DATEN__*/{
    "zuerst_gesehen": "2026-08-26",
    "zitat": null,
    "ebene": "Brandenburg",
-   "neu": true
+   "neu": false
   },
   {
    "id": "zdh-ausbildung-im-handwerk-staerken-statt-mit-umlage-belasten",
@@ -449,14 +1013,14 @@ const DATEN = /*__DATEN__*/{
    "titel": "Leasing schafft finanzielle Spielräume für Wachstum im Handwerk",
    "url": "https://www.zdh.de/presse/veroeffentlichungen/reden-und-namensbeitraege/leasing-schafft-finanzielle-spielraeume-fuer-wachstum-im-handwerk/",
    "art": "bericht",
-   "thema": "Noch nicht eingeordnet",
+   "thema": "Wirtschaftslage",
    "thema2": null,
    "absender": "Zentralverband des Deutschen Handwerks",
    "ebene": "Bund",
    "schlagzeile": "Leasing schafft finanzielle Spielräume für Wachstum im Handwerk",
-   "dreizeiler": "Im Jahresbericht des Bundesverbandes Deutscher Leasing-Unternehmen e.V. beschreibt ZDH-Präsident Jörg Dittrich, wie Leasing Investitionen erleichtern, Modernisierung ermöglichen und so die Wettbewerbsfähigkeit des Handwerks stärken kann.",
-   "unredigiert": true,
-   "quelle_eigen": true,
+   "dreizeiler": "Im Jahresbericht des Bundesverbandes Deutscher Leasing-Unternehmen beschreibt ZDH-Präsident Jörg Dittrich, wie Leasing Investitionen erleichtern, Modernisierung ermöglichen und damit die Wettbewerbsfähigkeit des Handwerks stärken kann.",
+   "unredigiert": false,
+   "quelle_eigen": false,
    "gattung": "Rede / Namensbeitrag",
    "zitat": null,
    "zuerst_gesehen": "erstbestand",
@@ -3470,59 +4034,116 @@ function esc(s){
     .replace(/"/g,"&quot;").replace(/'/g,"&#39;");
 }
 
-const MONATSNAMEN = ["Januar","Februar","März","April","Mai","Juni",
-                     "Juli","August","September","Oktober","November","Dezember"];
+const MONATE = ["Januar","Februar","März","April","Mai","Juni",
+                "Juli","August","September","Oktober","November","Dezember"];
 
+/* Ohne Absicherung reisst eine einzige Meldung ohne Datum die ganze Liste ab. */
 function datumLesbar(iso){
+  if (!iso || typeof iso !== "string") return "ohne Datum";
   const t = iso.split("-");
-  return parseInt(t[2],10) + ". " + MONATSNAMEN[parseInt(t[1],10)-1] + " " + t[0];
+  if (t.length !== 3) return "ohne Datum";
+  const monat = MONATE[parseInt(t[1],10) - 1];
+  if (!monat) return "ohne Datum";
+  return parseInt(t[2],10) + ". " + monat + " " + t[0];
+}
+function datumKurz(iso){
+  if (!iso || typeof iso !== "string") return "";
+  const t = iso.split("-");
+  if (t.length !== 3) return "";
+  const monat = MONATE[parseInt(t[1],10) - 1];
+  if (!monat) return "";
+  return parseInt(t[2],10) + ". " + monat.slice(0,3) + ".";
 }
 
-function breiterBildschirm(){
-  return window.matchMedia("(min-width:900px)").matches;
-}
+/* ------------------------------------------------------------------
+   Oberthemen. Die 16 Einzelthemen der Daten sind sehr ungleich gross -
+   von 32 bis 1 Meldung. Gebuendelt werden sie zu sieben Oberthemen,
+   die ein Betrieb sofort versteht.
 
-/* Ein einziger Filter: entweder "alles", oder "nur Forderungen", oder ein Thema. */
+   WICHTIG: Jede Meldung zaehlt genau einmal, naemlich ueber ihr
+   Hauptthema. Nur so stimmt die Zahl auf dem Knopf mit dem ueberein,
+   was nach dem Klick erscheint (KMS [L-0238]).
+   ------------------------------------------------------------------ */
+const BUENDEL = [
+  {name:"Geld & Steuern",
+   themen:["Steuern & Abgaben","Sozialabgaben & Rente","Energie & Sprit"]},
+  {name:"Nachwuchs & Personal",
+   themen:["Ausbildung & Nachwuchs","Personal & Fachkräfte","Arbeitszeit & Arbeitsrecht"]},
+  {name:"Aufträge & Konjunktur",
+   themen:["Wirtschaftslage","Aufträge & Vergabe","Bauen & Sanieren"]},
+  {name:"Papierkram & Vorschriften",
+   themen:["Entbürokratisierung","Auflagen & Vorschriften"]},
+  {name:"Betrieb & Zukunft",
+   themen:["Betrieb & Nachfolge","Kammer & Service"]},
+  {name:"Politik & Regierung",
+   themen:["Politik & Regierung","Noch nicht eingeordnet"]},
+  {name:"Ehrungen & Termine", nachrangig:true,
+   themen:["Ehrungen & Termine"]}
+];
+
+/* Selbstkontrolle: Ein Thema, das in keinem Buendel steht, wuerde sonst
+   spurlos verschwinden. Es bekommt stattdessen ein eigenes Buendel. */
+(function buendelPruefen(){
+  const bekannt = {};
+  BUENDEL.forEach(b => b.themen.forEach(t => bekannt[t] = true));
+  const offen = [];
+  DATEN.meldungen.forEach(m => {
+    if (!bekannt[m.thema] && offen.indexOf(m.thema) === -1) offen.push(m.thema);
+  });
+  if (offen.length){
+    BUENDEL.splice(BUENDEL.length - 1, 0, {name:"Weitere Themen", themen:offen});
+    if (window.console) console.warn("Ohne Oberthema, eigenes Buendel gebildet:", offen);
+  }
+})();
+
+function buendelVon(m){
+  for (let i = 0; i < BUENDEL.length; i++){
+    if (BUENDEL[i].themen.indexOf(m.thema) !== -1) return BUENDEL[i];
+  }
+  return null;
+}
+function istPolitisch(m){ return m.art === "politik"; }
+
+/* ---------- Zustand ---------- */
 let filter = "alles";
 let suchtext = "";
-
-function hatThema(m, thema){
-  return m.thema === thema || m.thema2 === thema;
-}
-
-function istForderung(m){
-  return m.art === "politik";
-}
-
-/* Bund oder Brandenburg - der eigentliche Mehrwert der zweiten Quelle:
-   Man sieht, ob beide Ebenen dasselbe Thema treiben oder nicht. */
-const EBENEN = ["Bund", "Brandenburg"];
+const offeneBloecke = {};
+const ANRISS = 5;            /* so viele Karten je Block, bevor es "mehr" gibt */
 
 function passt(m){
-  if (filter === "forderungen" && !istForderung(m)) return false;
+  if (filter === "politik" && !istPolitisch(m)) return false;
+  if (filter === "neu" && !m.neu) return false;
   if (filter.indexOf("ebene:") === 0 && m.ebene !== filter.slice(6)) return false;
-  if (filter !== "alles" && filter !== "forderungen" && filter.indexOf("ebene:") !== 0
-      && !hatThema(m, filter)) return false;
-  if (suchtext) {
-    const heu = (m.schlagzeile + " " + m.dreizeiler + " " + m.titel + " " + m.thema + " " +
-                 (m.thema2 || "") + " " + m.absender + " " + (m.zitat || "")).toLowerCase();
+  if (filter.indexOf("buendel:") === 0){
+    const b = buendelVon(m);
+    if (!b || b.name !== filter.slice(8)) return false;
+  }
+  if (suchtext){
+    const heu = (m.schlagzeile + " " + m.dreizeiler + " " + m.titel + " " +
+                 m.thema + " " + (m.thema2 || "") + " " + m.absender + " " +
+                 (m.zitat || "")).toLowerCase();
     if (heu.indexOf(suchtext) === -1) return false;
   }
   return true;
 }
 
 /* ---------- Kopf ---------- */
-function zeichneKennzahlen(){
-  const t = DATEN.letzter_abgleich.split("-");
-  const kurzDatum = parseInt(t[2],10) + ". " + MONATSNAMEN[parseInt(t[1],10)-1].slice(0,3) + ".";
+function zeichneKopf(){
+  document.getElementById("stand").innerHTML =
+    "Zuletzt abgeglichen <b>" + esc(datumLesbar(DATEN.letzter_abgleich)) + "</b>";
+
   const felder = [
-    {wert: DATEN.meldungen.length, text: "Meldungen " + DATEN.jahr},
-    {wert: DATEN.meldungen.filter(istForderung).length, text: "Forderungen"},
-    {wert: DATEN.meldungen.filter(m => m.ebene === "Bund").length, text: "davon vom Bund"},
-    {wert: kurzDatum, text: "zuletzt geprüft"}
+    {wert: DATEN.meldungen.length, text: "Meldungen im Jahr " + DATEN.jahr},
+    {wert: DATEN.meldungen.filter(istPolitisch).length,
+     text: "davon politische Meldungen"},
+    {wert: DATEN.meldungen.filter(m => m.ebene === "Bund").length,
+     text: "aus der Bundesebene"},
+    {wert: DATEN.meldungen.filter(m => m.neu).length,
+     text: "neu seit dem letzten Abgleich", hebt: true}
   ];
   document.getElementById("kennzahlen").innerHTML = felder.map(f =>
-    '<div class="kennzahl"><b>' + esc(f.wert) + '</b><span>' + esc(f.text) + '</span></div>'
+    '<div class="kennzahl' + (f.hebt && f.wert ? " hebt" : "") + '">' +
+      '<b>' + esc(f.wert) + '</b><span>' + esc(f.text) + '</span></div>'
   ).join("");
 }
 
@@ -3533,167 +4154,230 @@ function zeichneForderungen(){
   document.getElementById("forderungsReihe").innerHTML =
     DATEN.forderungen.map((f, i) => {
       const beleg = f.belege[0];
-      return '<details class="forderung"' + (breiterBildschirm() ? " open" : "") + '>' +
+      return '<details class="forderung">' +
         '<summary>' +
-          '<div class="forderung-kopfzeile">' +
-            '<span class="forderung-rang">' + (i + 1) + '</span>' +
-            '<span class="forderung-titel">' + esc(f.kurz) + '</span>' +
-          '</div>' +
-          '<div class="forderung-zeile2">' +
-            '<span class="adressat">an ' + esc(f.adressat) + '</span>' +
+          '<span class="forderung-rang">FORDERUNG ' + (i + 1) + '</span>' +
+          '<span class="forderung-titel">' + esc(f.kurz) + '</span>' +
+          '<span class="forderung-zeile">' +
+            '<span class="marke adressat">an ' + esc(f.adressat) + '</span>' +
             (f.ebenen.length > 1
-              ? '<span class="beide-ebenen">Bund + Brandenburg</span>'
-              : '<span class="eine-ebene">nur ' + esc(f.ebenen[0]) + '</span>') +
-            '<span class="wann">zuletzt ' + esc(datumLesbar(f.zuletzt)) +
-              (f.anzahl > 1 ? ' &middot; ' + f.anzahl + '&times; erhoben' : '') + '</span>' +
-          '</div>' +
-          '<div class="mehr-zeigen">Warum &ndash; und wer das sagt</div>' +
+              ? '<span class="marke beide">Bund + Brandenburg</span>'
+              : '<span class="marke beide">nur ' + esc(f.ebenen[0]) + '</span>') +
+            '<span class="marke wann">zuletzt ' + esc(datumLesbar(f.zuletzt)) + '</span>' +
+            (f.anzahl > 1
+              ? '<span class="marke wann nur-breit">' + esc(f.anzahl) +
+                '&times; belegt</span>'
+              : '') +
+          '</span>' +
+          '<span class="forderung-mehr">Worum es geht &ndash; und wer das sagt</span>' +
         '</summary>' +
-        '<p class="worum">' + esc(f.worum) + '</p>' +
-        '<blockquote>&bdquo;' + esc(beleg.zitat) + '&ldquo;</blockquote>' +
-        f.belege.map(b =>
-          '<p class="beleg-fuss">' + esc(b.absender) + ', ' + esc(datumLesbar(b.datum)) +
-          ' &middot; <a href="' + esc(b.url) + '" target="_blank" rel="noopener">Original lesen</a>' +
-          '</p>').join("") +
+        '<div class="forderung-inhalt">' +
+          '<p class="worum">' + esc(f.worum) + '</p>' +
+          '<blockquote>&bdquo;' + esc(beleg.zitat) + '&ldquo;</blockquote>' +
+          f.belege.map(b =>
+            '<p class="beleg">' + esc(b.absender) + ', ' + esc(datumLesbar(b.datum)) +
+            ' &middot; <a href="' + esc(b.url) + '" target="_blank" rel="noopener">' +
+            'Original lesen</a></p>').join("") +
+        '</div>' +
       '</details>';
     }).join("");
 }
 
-/* ---------- Filter ---------- */
-function zeichneFilter(){
-  const anzahlForderungen = DATEN.meldungen.filter(istForderung).length;
-
-  let html =
-    '<button type="button" class="chip" data-filter="alles" aria-pressed="' +
-      (filter === "alles") + '">Alles ' + DATEN.meldungen.length + '</button>' +
-    '<button type="button" class="chip forderungen-knopf" data-filter="forderungen" ' +
-      'aria-pressed="' + (filter === "forderungen") + '">Nur Forderungen ' +
-      anzahlForderungen + '</button>' +
-    EBENEN.map(e => {
-      const anzahl = DATEN.meldungen.filter(m => m.ebene === e).length;
-      if (!anzahl) return "";
-      return '<button type="button" class="chip ebenen-knopf" data-filter="ebene:' + esc(e) +
-             '" aria-pressed="' + (filter === "ebene:" + e) + '">' + esc(e) + " " +
-             anzahl + "</button>";
-    }).join("");
-
-  html += DATEN.themen.map(t => {
-    const anzahl = DATEN.meldungen.filter(m => hatThema(m, t)).length;
-    if (!anzahl) return "";                       // leere Knoepfe gar nicht erst zeigen
-    const blass = (t === "Ehrungen & Termine") ? " nachrangig" : "";
-    return '<button type="button" class="chip' + blass + '" data-filter="' + esc(t) +
-           '" aria-pressed="' + (t === filter) + '">' + esc(t) + " " + anzahl + "</button>";
+/* ---------- Themenkacheln ---------- */
+function zeichneKacheln(){
+  const html = BUENDEL.map(b => {
+    const treffer = DATEN.meldungen.filter(m => buendelVon(m) === b);
+    if (!treffer.length) return "";          /* leere Kachel gar nicht erst zeigen */
+    treffer.sort((x, y) => (y.datum || "").localeCompare(x.datum || ""));
+    const gewaehlt = (filter === "buendel:" + b.name);
+    return '<button type="button" class="kachel' +
+             (b.nachrangig ? " nachrangig" : "") + '" ' +
+             'data-filter="buendel:' + esc(b.name) + '" ' +
+             'aria-pressed="' + gewaehlt + '">' +
+      '<span class="kachel-kopf">' +
+        '<span class="kachel-name">' + esc(b.name) + '</span>' +
+        '<span class="kachel-zahl">' + treffer.length + '</span>' +
+      '</span>' +
+      /* Am Handy nur die juengste Schlagzeile - sonst waere die Kachelwand
+         dort drei Bildschirme hoch, bevor die erste Meldung kommt. */
+      treffer.slice(0, 2).map((m, i) =>
+        '<span class="kachel-zeile' + (i ? " nur-breit" : "") + '">' +
+          '<span class="kachel-datum">' + esc(datumKurz(m.datum)) + ' &middot; ' +
+            esc(m.ebene) + '</span>' + esc(m.schlagzeile) +
+        '</span>').join("") +
+      '<span class="kachel-mehr">alle ' + treffer.length + ' anzeigen</span>' +
+    '</button>';
   }).join("");
+  document.getElementById("themenKacheln").innerHTML = html;
+}
 
+/* ---------- Reiterleiste ---------- */
+function zeichneFilter(){
+  const knopf = (wert, beschriftung, anzahl, klasse) =>
+    '<button type="button" class="reiter' + (klasse ? " " + klasse : "") + '" ' +
+      'data-filter="' + esc(wert) + '" aria-pressed="' + (filter === wert) + '">' +
+      esc(beschriftung) +
+      (anzahl === null ? "" : '<span class="zahl">' + anzahl + '</span>') +
+    '</button>';
+
+  const neu = DATEN.meldungen.filter(m => m.neu).length;
+  let html = knopf("alles", "Alles", DATEN.meldungen.length);
+  if (neu) html += knopf("neu", "Neu", neu, "hinweis");
+  html += knopf("politik", "Politisches",
+                DATEN.meldungen.filter(istPolitisch).length);
+  ["Bund","Brandenburg"].forEach(e => {
+    const n = DATEN.meldungen.filter(m => m.ebene === e).length;
+    if (n) html += knopf("ebene:" + e, e, n);
+  });
+  BUENDEL.forEach(b => {
+    const n = DATEN.meldungen.filter(m => buendelVon(m) === b).length;
+    if (n) html += knopf("buendel:" + b.name, b.name, n,
+                         b.nachrangig ? "leise" : "");
+  });
   document.getElementById("filterKnoepfe").innerHTML = html;
 }
 
 /* ---------- Liste ---------- */
-const BLOECKE = [
-  {schluessel:"neu",         titel:"Neu seit dem letzten Abgleich"},
-  {schluessel:"unsortiert",  titel:"Noch nicht eingeordnet"},
-  {schluessel:"politik",     titel:"Forderungen & Positionen"},
-  {schluessel:"zahlen",      titel:"Zahlen & Fakten"},
-  {schluessel:"bericht",     titel:"Aus den Betrieben"}
-];
-const NEBENSACHE = ["ehrung","termin"];
-
-const ART_NAME = {
-  politik:"Forderung", zahlen:"Zahlen", bericht:"Aus den Betrieben",
-  ehrung:"Ehrung", termin:"Termin", unsortiert:"Noch nicht eingeordnet"
-};
-
 function zeichneListe(){
   const treffer = DATEN.meldungen.filter(passt);
-  document.getElementById("zaehler").textContent =
-    treffer.length === DATEN.meldungen.length
-      ? treffer.length + " Meldungen"
-      : treffer.length + " von " + DATEN.meldungen.length + " Meldungen";
+  treffer.sort((a, b) => (b.datum || "").localeCompare(a.datum || ""));
 
+  const gegliedert = (filter === "alles" && !suchtext);
+  document.getElementById("zaehler").textContent =
+    gegliedert
+      ? treffer.length + " Meldungen, nach Thema geordnet – je Thema die " +
+        ANRISS + " neuesten, der Rest auf Knopfdruck"
+      : treffer.length + " von " + DATEN.meldungen.length +
+        " Meldungen, neueste zuerst";
+
+  const ziel = document.getElementById("liste");
   if (!treffer.length){
-    document.getElementById("liste").innerHTML =
-      '<p class="leer">Dazu gibt es keine Meldung.</p>';
+    ziel.innerHTML = '<p class="leer">Dazu gibt es derzeit keine Meldung. ' +
+      'Mit &bdquo;Alles&ldquo; kommen Sie zur vollst&auml;ndigen Liste zur&uuml;ck.</p>';
     return;
   }
 
-  // Gruppiert nur in der ungefilterten Gesamtansicht; beim Filtern eine flache Liste.
+  /* Gefiltert oder gesucht: eine flache Liste. Sonst nach Oberthema gegliedert. */
   if (filter !== "alles" || suchtext){
-    document.getElementById("liste").innerHTML = treffer.map(karte).join("");
+    ziel.innerHTML = treffer.map(karte).join("");
     return;
   }
 
   let html = "";
-  const vergeben = {};
-
-  BLOECKE.forEach(b => {
-    const teil = treffer.filter(m => !vergeben[m.id] &&
-      (b.schluessel === "neu" ? m.neu : m.art === b.schluessel));
+  BUENDEL.forEach(b => {
+    if (b.nachrangig) return;
+    const teil = treffer.filter(m => buendelVon(m) === b);
     if (!teil.length) return;
-    teil.forEach(m => vergeben[m.id] = true);
-    html += '<h3 class="block-titel">' + esc(b.titel) +
-            ' <span class="block-zahl">' + teil.length + '</span></h3>' +
-            teil.map(karte).join("");
+    const alle = offeneBloecke[b.name];
+    const zeigen = alle ? teil : teil.slice(0, ANRISS);
+    html += '<h2 class="block-titel">' + esc(b.name) +
+            '<span class="block-zahl">' + teil.length + '</span></h2>' +
+            zeigen.map(karte).join("");
+    if (teil.length > ANRISS){
+      html += '<button type="button" class="block-mehr" data-block="' + esc(b.name) + '">' +
+        (alle ? "Weniger anzeigen"
+              : "Alle " + teil.length + " Meldungen zu &bdquo;" + esc(b.name) +
+                "&ldquo; anzeigen") +
+        '</button>';
+    }
   });
 
-  const rest = treffer.filter(m => !vergeben[m.id] && NEBENSACHE.indexOf(m.art) !== -1);
-  if (rest.length){
+  BUENDEL.filter(b => b.nachrangig).forEach(b => {
+    const teil = treffer.filter(m => buendelVon(m) === b);
+    if (!teil.length) return;
     html += '<details class="nebensache">' +
-              '<summary>Ehrungen, Jubil&auml;en und Termine <span class="block-zahl">' +
-                rest.length + '</span></summary>' +
-              '<p class="nebensache-hinweis">Sch&ouml;n, aber politisch ohne Gewicht &ndash; ' +
-                'deshalb hier unten und zugeklappt.</p>' +
-              rest.map(karte).join("") +
-            '</details>';
-  }
+      '<summary>' + esc(b.name) +
+        '<span class="block-zahl">' + teil.length + '</span></summary>' +
+      '<p class="nebensache-hinweis">Jubil&auml;en, Ehrungen und Veranstaltungen ' +
+        'der Kammer &ndash; zugeklappt, damit die politischen Themen oben bleiben.</p>' +
+      '<div class="nebensache-inhalt">' + teil.map(karte).join("") + '</div>' +
+    '</details>';
+  });
 
-  document.getElementById("liste").innerHTML = html;
+  ziel.innerHTML = html;
 }
+
+const ART_NAME = {
+  zahlen:"Zahlen & Fakten", bericht:"Aus den Betrieben",
+  ehrung:"Ehrung", termin:"Termin"
+};
 
 function karte(m){
   const datum = m.datum_ungenau
-    ? '<span class="ungenau" title="Diese Meldung nennt kein Datum. Aus der Reihenfolge der ' +
-      'Übersichtsseite eingeordnet.">um den ' + esc(datumLesbar(m.datum)) + '</span>'
+    ? '<span class="ungenau" title="Diese Meldung nennt kein Datum. Aus der ' +
+      'Reihenfolge der &Uuml;bersichtsseite eingeordnet.">um den ' +
+      esc(datumLesbar(m.datum)) + '</span>'
     : esc(datumLesbar(m.datum));
 
-  const markenKlasse = m.art === "politik" ? "marke forderung-marke"
-                     : m.art === "unsortiert" ? "marke unsortiert" : "marke";
+  let klasse = "karte";
+  if (istPolitisch(m)) klasse += " politisch";
+  if (m.neu) klasse += " ist-neu";
 
-  return '<article class="karte' + (m.neu ? " ist-neu" : "") + '">' +
-    '<div class="karte-kopf">' +
-      (m.neu ? '<span class="marke neu">Neu</span>' : '') +
-      '<span class="' + markenKlasse + '">' + esc(ART_NAME[m.art] || m.art) + '</span>' +
+  return '<article class="' + klasse + '">' +
+    '<p class="karte-dach">' +
+      (m.neu ? '<span class="neu-marke">Neu</span>' : '') +
       '<span class="ebene ebene-' + (m.ebene === "Bund" ? "bund" : "land") + '">' +
         esc(m.ebene) + '</span>' +
-      (m.gattung ? '<span class="gattung">' + esc(m.gattung) + '</span>' : '') +
+      (ART_NAME[m.art]
+        ? '<span class="gattung">' + esc(ART_NAME[m.art]) + '</span>' : '') +
       '<span class="thema">' + esc(m.thema) +
         (m.thema2 ? ' &middot; ' + esc(m.thema2) : '') + '</span>' +
       '<span class="datum">' + datum + '</span>' +
-    '</div>' +
-    '<h2 class="schlagzeile">' + esc(m.schlagzeile) + '</h2>' +
+    '</p>' +
+    '<h3 class="schlagzeile">' + esc(m.schlagzeile) + '</h3>' +
     (m.dreizeiler
       ? '<p class="dreizeiler">' + esc(m.dreizeiler) +
         (m.quelle_eigen
-          ? ' <span class="eigener-text">Anrisstext der Quelle</span>'
-          : '') + '</p>'
-      : '<p class="dreizeiler offen">Noch nicht zusammengefasst &ndash; oben steht der ' +
+          ? '<span class="quelle-marke">Anrisstext der Quelle</span>' : '') + '</p>'
+      : '<p class="dreizeiler">Noch nicht zusammengefasst &ndash; oben steht der ' +
         'Originaltitel der Quelle.</p>') +
-    (m.zitat ? '<blockquote class="zitat">&bdquo;' + esc(m.zitat) + '&ldquo;</blockquote>' : '') +
-    '<div class="karte-fuss">' +
-      '<a class="original" href="' + esc(m.url) + '" target="_blank" rel="noopener">Zum Original</a>' +
+    (m.zitat
+      ? '<blockquote>&bdquo;' + esc(m.zitat) + '&ldquo;</blockquote>' : '') +
+    '<p class="karte-fuss">' +
+      '<a class="original" href="' + esc(m.url) + '" target="_blank" rel="noopener">' +
+        'Zum Original</a>' +
       '<span class="absender">' + esc(m.absender) +
         (m.nummer ? ' &middot; Nr. ' + esc(m.nummer) : '') + '</span>' +
-    '</div>' +
+    '</p>' +
   '</article>';
 }
 
 /* ---------- Bedienung ---------- */
+function filterSetzen(wert, springen){
+  filter = (wert === filter && filter !== "alles") ? "alles" : wert;
+  zeichneFilter();
+  zeichneKacheln();
+  zeichneListe();
+  /* Der gewaehlte Reiter muss sichtbar sein - sonst weiss man nach einem
+     Klick auf eine Themenkachel nicht, welcher Filter gerade greift. */
+  const spur = document.getElementById("filterKnoepfe");
+  const aktiv = spur.querySelector('.reiter[aria-pressed="true"]');
+  if (aktiv){
+    const s = spur.getBoundingClientRect(), a = aktiv.getBoundingClientRect();
+    spur.scrollLeft = Math.max(0, spur.scrollLeft + (a.left - s.left) - 8);
+  }
+  if (springen){
+    const band = document.querySelector(".reiterband");
+    const y = band.getBoundingClientRect().top + window.pageYOffset;
+    window.scrollTo({top: y - 2, behavior: "smooth"});
+  }
+}
+
 document.getElementById("filterKnoepfe").addEventListener("click", function(e){
-  const knopf = e.target.closest(".chip");
-  if (!knopf) return;
-  // Nochmal auf denselben Knopf tippen hebt die Auswahl auf
-  filter = (knopf.dataset.filter === filter && filter !== "alles") ? "alles" : knopf.dataset.filter;
-  this.querySelectorAll(".chip").forEach(c =>
-    c.setAttribute("aria-pressed", String(c.dataset.filter === filter)));
+  const k = e.target.closest(".reiter");
+  if (k) filterSetzen(k.dataset.filter, false);
+});
+
+document.getElementById("themenKacheln").addEventListener("click", function(e){
+  const k = e.target.closest(".kachel");
+  if (k) filterSetzen(k.dataset.filter, true);
+});
+
+document.getElementById("liste").addEventListener("click", function(e){
+  const k = e.target.closest(".block-mehr");
+  if (!k) return;
+  const name = k.dataset.block;
+  offeneBloecke[name] = !offeneBloecke[name];
   zeichneListe();
 });
 
@@ -3702,31 +4386,11 @@ document.getElementById("suche").addEventListener("input", function(){
   zeichneListe();
 });
 
-/* Der Verlauf an der rechten Kante erscheint nur, solange dort noch Knoepfe
-   verborgen sind - sonst verschleierte er dauerhaft den letzten Knopf. */
-function scrollHinweisePruefen(){
-  document.querySelectorAll(".chip-reihe").forEach(reihe => {
-    const spur = reihe.querySelector(".chips");
-    reihe.classList.toggle("mehr-rechts",
-      spur.scrollWidth - spur.clientWidth - spur.scrollLeft > 4);
-  });
-}
-document.querySelectorAll(".chip-reihe .chips").forEach(spur =>
-  spur.addEventListener("scroll", scrollHinweisePruefen, {passive:true}));
-
-window.addEventListener("resize", () => {
-  scrollHinweisePruefen();
-  document.querySelectorAll("details.forderung").forEach(d => d.open = breiterBildschirm());
-});
-
-document.getElementById("stand").textContent =
-  "Zuletzt abgeglichen am " + datumLesbar(DATEN.letzter_abgleich) + ".";
-
-zeichneKennzahlen();
+zeichneKopf();
 zeichneForderungen();
+zeichneKacheln();
 zeichneFilter();
 zeichneListe();
-scrollHinweisePruefen();
 </script>
 </body>
 </html>

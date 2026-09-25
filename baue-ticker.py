@@ -128,21 +128,30 @@ def zdh_laden():
             continue
         kennung = x["url"].rstrip("/").split("/")[-1]
         r = redaktion.get(kennung)
+        vorspann = (x["volltext"].splitlines() or [""])[0].strip()
+        grundart = "politik" if x["art_quelle"] != "rede" else "bericht"
         if not r:
             # Kein Redaktionseintrag - dann sprechen die Quelle selbst und ihre
             # eigenen Schlagworte. Der Vorspann des ZDH ist dessen eigener
             # Anrisstext, keine Zusammenfassung von uns. So faellt nichts unter
             # den Tisch und trotzdem wird nichts erfunden.
             ohne += 1
-            vorspann = (x["volltext"].splitlines() or [""])[0].strip()
             r = {
-                "art": "politik" if x["art_quelle"] != "rede" else "bericht",
+                "art": grundart,
                 "thema": thema_aus_schlagworten(x.get("schlagworte", []),
                                                 x.get("titel", ""))
                          or "Noch nicht eingeordnet",
                 "dreizeiler": vorspann,
                 "quelle_eigen": True,
             }
+        elif not r.get("dreizeiler"):
+            # Nur die Einordnung wurde korrigiert, zusammengefasst wurde nicht.
+            # Dann bleibt der Anrisstext der Quelle stehen - samt Kennzeichnung.
+            ohne += 1
+            r = dict(r)
+            r.setdefault("art", grundart)
+            r["dreizeiler"] = vorspann
+            r["quelle_eigen"] = True
         fertig.append({
             "id": "zdh-" + kennung,
             "datum": x["datum"],

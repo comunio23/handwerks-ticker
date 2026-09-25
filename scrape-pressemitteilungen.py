@@ -45,6 +45,11 @@ KOPF_MUSTER = re.compile(
     r"^(Gemeinsame\s+)?Presse(information|einladung|mitteilung|meldung)\b", re.I)
 FUSS_MUSTER = re.compile(r"^(Pressesprecher|Tel\. \+49|Mobil \+49|Ansprechpartner|Inhalt$)")
 
+# Nennt eine gemeinsame Kopfzeile viele Absender, wird sie zu lang und das Datum
+# rutscht in die naechste Zeile: "... und Bundesverband der Systemgastronomie (BdS)"
+# / "vom 8. September 2026". Diese Fortsetzung ist nie der Titel.
+KOPF_FORTSETZUNG = re.compile(r"^vom\s+\d{1,2}\.\s*\w+\s*\d{4}\.?$", re.I)
+
 # Bildnachweis-Zeile ganz oben, z.B. "AdobeStock_lev dolgachov" oder "Tom - Fotolia"
 BILD_MUSTER = re.compile(r"(AdobeStock|Adobe Stock|Fotolia|HWK Potsdam/|"
                          r"Handwerkskammer Potsdam/|Phovoir|stockpics|Pixabay|Unsplash)", re.I)
@@ -147,8 +152,13 @@ def kopf_finden(zeilen):
     # Fall 1: es gibt eine Presseinformations-Kopfzeile
     for i, z in enumerate(zeilen[:10]):
         if KOPF_MUSTER.match(z):
-            titel = zeilen[i + 1] if i + 1 < len(zeilen) else ""
-            return z, "", titel, i + 2
+            kopf, j = z, i + 1
+            # Umgebrochene Kopfzeile: die Datumszeile gehoert noch zum Kopf
+            while j < len(zeilen) and KOPF_FORTSETZUNG.match(zeilen[j]):
+                kopf += " " + zeilen[j]
+                j += 1
+            titel = zeilen[j] if j < len(zeilen) else ""
+            return kopf, "", titel, j + 1
 
     # Fall 2: keine Kopfzeile. Zuerst den Bildnachweis ueberspringen, dann eine
     # moegliche Dachzeile ("Brandenburger Handwerk warnt:"), dann der Titel.

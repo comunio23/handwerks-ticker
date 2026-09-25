@@ -1,369 +1,418 @@
 {
-  "hinweis": "Redaktionelle Ebene zu daten/meldungen-2026.json. Zuordnung ueber die Artikel-ID (letzte Zahl der URL). Schlagzeile und Dreizeiler sind eigene Formulierungen auf Grundlage der jeweiligen Pressemitteilung - massgeblich ist immer das verlinkte Original. Feld 'art': politik | zahlen | bericht | ehrung | termin. 'thema' und optional 'thema2' sind die Kriterien-Knoepfe im Ticker.",
-  "stand": "2026-08-26",
-  "eintraege": {
-    "6895": {
-      "art": "termin",
-      "thema": "Ehrungen & Termine",
-      "schlagzeile": "Der Terminkalender der Kammer für August",
-      "dreizeiler": "Die Handwerkskammer listet ihre presseöffentlichen Termine im August 2026 auf. Darunter das 60-jährige Bestehen des Raumausstatterbetriebs Haupt in Lindow (Mark). Wer Präsenz zeigen will, findet hier die Gelegenheiten."
-    },
-    "6894": {
-      "art": "ehrung",
-      "thema": "Ehrungen & Termine",
-      "schlagzeile": "Diese Betriebe feiern im August Jubiläum",
-      "dreizeiler": "Die monatliche Liste der Betriebs- und Meisterjubiläen im Kammerbezirk. Sie reicht von 30 Jahren Bauklempnerei Neumann in Leegebruch bis zu Meisterbriefen, die ein halbes Jahrhundert alt sind. Eine gute Gelegenheit für Glückwünsche aus der eigenen Innung."
-    },
-    "6892": {
-      "art": "ehrung",
-      "thema": "Ehrungen & Termine",
-      "schlagzeile": "70 Jahre Meister – mit 94 Jahren",
-      "dreizeiler": "Fleischermeister Kurt Pirsch erhält den Platin-Meisterbrief. Seinen Meisterbrief bekam er 1956, als die Berliner Mauer noch nicht stand. Die Kammer würdigt damit sieben Jahrzehnte Meisterwürde und ein Lebenswerk, das bis heute Bestand hat.",
-      "zitat_zeigen": true
-    },
-    "6871": {
-      "art": "politik",
-      "thema": "Steuern & Abgaben",
-      "schlagzeile": "Reformpaket: Lob und Kritik zugleich",
-      "dreizeiler": "Der Brandenburgische Handwerkskammertag bewertet das Reformpaket der Bundesregierung als Schritt in die richtige Richtung, sieht aber Nachbesserungsbedarf. Positiv sei, dass auf Steuererhöhungen für den breiten Mittelstand verzichtet wird. Kritisch sieht die Kammer, dass der Steuerbonus für Handwerkerleistungen reduziert werden soll – weniger Berichtspflichten und schnellere Genehmigungen nennt sie dringend notwendig.",
-      "zitat_zeigen": true,
-      "thema2": "Entbürokratisierung"
-    },
-    "6869": {
-      "art": "zahlen",
-      "thema": "Ausbildung & Nachwuchs",
-      "schlagzeile": "473 neue Ausbildungsverträge – ein Plus von 5,9 Prozent",
-      "dreizeiler": "Bis zum 30. Juni 2026 wurden im Kammerbezirk 473 neue Ausbildungsverträge abgeschlossen, 26 mehr als im Vorjahreszeitraum. Mehr junge Menschen entscheiden sich damit für das Handwerk. Wer noch sucht, hat in den Sommerferien weiterhin Chancen."
-    },
-    "6867": {
-      "art": "termin",
-      "thema": "Ehrungen & Termine",
-      "schlagzeile": "Vorstand besucht Betriebe in der Prignitz",
-      "dreizeiler": "Am 2. Juli besuchen Präsident und Vorstand Handwerksbetriebe im Landkreis Prignitz. Die Vor-Ort-Gespräche gibt es seit 1997. Themen sind Wirtschaftslage, Ausbildung und Fachkräfte."
-    },
-    "6859": {
-      "art": "termin",
-      "thema": "Ehrungen & Termine",
-      "schlagzeile": "Der Terminkalender der Kammer für Juli",
-      "dreizeiler": "Überblick über die presseöffentlichen Termine im Juli 2026. Den Auftakt macht der kostenlose Service „Individueller Nachfolgefahrplan“ am 1. Juli. Es geht um Betriebsnachfolge, Arbeitsschutz und mehr."
-    },
-    "6858": {
-      "art": "ehrung",
-      "thema": "Ehrungen & Termine",
-      "schlagzeile": "Diese Betriebe feiern im Juli Jubiläum",
-      "dreizeiler": "Die monatliche Liste der Betriebs- und Meisterjubiläen im Kammerbezirk. Von 30 Jahren Töpferei Malenz in Velten bis zu Betrieben, die seit Jahrzehnten bestehen. Wer gratulieren will, findet hier Namen und Termine."
-    },
-    "6854": {
-      "art": "ehrung",
-      "thema": "Ehrungen & Termine",
-      "schlagzeile": "Zwölf Unternehmen im Finale des Zukunftspreises",
-      "dreizeiler": "Zwölf Unternehmen stehen im Finale des Zukunftspreises Brandenburg 2026. Sie setzten sich unter 73 Bewerbungen durch. Die Preisverleihung ist am 20. November in Schönefeld."
-    },
-    "6853": {
-      "art": "politik",
-      "thema": "Ausbildung & Nachwuchs",
-      "schlagzeile": "Handwerk warnt: Unterrichtsausfall gefährdet die Fachkräfte von morgen",
-      "dreizeiler": "Der Unterricht an Brandenburgs Schulen kann im kommenden Schuljahr nicht überall abgesichert werden. Das Handwerk sieht darin ein Risiko für die Fachkräftesicherung und ein Armutszeugnis. Auch die bundesweite Anerkennung brandenburgischer Schulabschlüsse steht laut Bildungsminister auf dem Spiel.",
-      "zitat_zeigen": true,
-      "thema2": "Personal & Fachkräfte"
-    },
-    "6851": {
-      "art": "ehrung",
-      "thema": "Ausbildung & Nachwuchs",
-      "schlagzeile": "Kita gewinnt Landeswettbewerb mit dem Dachdeckerhandwerk",
-      "dreizeiler": "Die Kita Bärenhaus in Groß Pankow gewinnt den Landeswettbewerb „Kleine Hände, große Zukunft“. Grundlage war ein Projekttag bei Lublow Bedachungen in Pritzwalk. Nachwuchsgewinnung fängt früher an, als man denkt."
-    },
-    "6848": {
-      "art": "termin",
-      "thema": "Betrieb & Nachfolge",
-      "schlagzeile": "Nachfolgetag: Wo Betrieb und Nachfolger sich finden",
-      "dreizeiler": "IHK und Handwerkskammer Potsdam laden am 23. Juni zum Nachfolgetag Brandenburg „It’s a match“. Viele Betriebe stehen vor dem Generationswechsel, gleichzeitig suchen Qualifizierte einen Betrieb. Der Tag soll beide Seiten zusammenbringen."
-    },
-    "6847": {
-      "art": "politik",
-      "thema": "Steuern & Abgaben",
-      "schlagzeile": "Handwerkerbonus stärken statt streichen",
-      "dreizeiler": "Der Handwerkerbonus nach § 35a Abs. 3 EStG steht bei den Beratungen zum Bundeshaushalt 2027 als mögliche Einsparmaßnahme zur Diskussion. Der Handwerkskammertag warnt vor der Abschaffung. Der Bonus sorge dafür, dass handwerkliche Leistungen offiziell beauftragt, sauber abgerechnet und legal versteuert werden.",
-      "zitat_zeigen": true
-    },
-    "6842": {
-      "art": "politik",
-      "thema": "Politik & Regierung",
-      "schlagzeile": "Aktionsprogramm 2026–2029 unterzeichnet",
-      "dreizeiler": "Landesregierung, die brandenburgischen Handwerkskammern und der DGB Berlin-Brandenburg haben das Aktionsprogramm „Zukunft des Handwerks im Land Brandenburg“ für 2026 bis 2029 unterzeichnet. Es richtet sich an rund 37.500 Betriebe mit fast 185.000 Beschäftigten. Vereinbart sind Maßnahmen zum Fachkräftenachwuchs, zur Energiewende, zu Existenzgründung und Unternehmensnachfolge sowie zur Stärkung der Selbstverwaltung im Handwerk.",
-      "zitat_zeigen": true,
-      "thema2": "Ausbildung & Nachwuchs"
-    },
-    "6837": {
-      "art": "ehrung",
-      "thema": "Ehrungen & Termine",
-      "schlagzeile": "Handwerkszeichen in Gold für Robert Wüst",
-      "dreizeiler": "Kammerpräsident Robert Wüst erhält die höchste Auszeichnung des deutschen Handwerks. Der Metallbauermeister aus Pritzwalk führt sein Familienunternehmen in fünfter Generation. Seit 2016 steht er ehrenamtlich an der Spitze der Handwerkskammer Potsdam."
-    },
-    "6841": {
-      "art": "bericht",
-      "thema": "Ehrungen & Termine",
-      "schlagzeile": "450 Gäste beim Gartenfest – mit klaren Botschaften an die Politik",
-      "dreizeiler": "Rund 450 Gäste kamen zum 32. Gartenfest der Kammer nach Caputh, im Jahr ihres 80-jährigen Bestehens. Die Gespräche prägten die angespannte wirtschaftliche Lage, Ausbildung, Fachkräftesicherung, Unternehmensnachfolge und Bürokratieabbau. Erstmals nutzten auch mehrere Mitglieder der neu gewählten Landesregierung die Gelegenheit zum direkten Austausch."
-    },
-    "6835": {
-      "art": "termin",
-      "thema": "Politik & Regierung",
-      "schlagzeile": "Einladung zur Unterzeichnung des Aktionsprogramms",
-      "dreizeiler": "Am 5. Juni unterzeichnen Landesregierung, Handwerkskammern und DGB das Aktionsprogramm 2026–2029. Es betrifft rund 37.500 Handwerksbetriebe im Land. Ort ist der Meistersaal der Handwerkskammer Potsdam."
-    },
-    "6843": {
-      "art": "ehrung",
-      "thema": "Ehrungen & Termine",
-      "schlagzeile": "Diese Betriebe feiern im Juni Jubiläum",
-      "dreizeiler": "Die monatliche Liste der Betriebs- und Meisterjubiläen im Kammerbezirk. Darunter 80 Jahre Tischlerei Matthias John in Potsdam. Namen, Orte und Termine auf einen Blick."
-    },
-    "6833": {
-      "art": "termin",
-      "thema": "Ehrungen & Termine",
-      "schlagzeile": "Der Terminkalender der Kammer für Juni",
-      "dreizeiler": "Überblick über die presseöffentlichen Termine im Juni 2026. Den Auftakt macht eine Praxislernwoche am Bildungs- und Innovationscampus Handwerk in Götz. 50 Achtklässler testen dort ihre handwerklichen Fähigkeiten."
-    },
-    "6831": {
-      "art": "zahlen",
-      "thema": "Wirtschaftslage",
-      "schlagzeile": "Jahresbericht: 18,6 Milliarden Euro Umsatz, aber weniger Betriebe",
-      "dreizeiler": "Der Handwerkskammertag hat den Jahresbericht „Handwerk in Brandenburg 2025“ vorgelegt. 37.429 Betriebe, 184.890 Beschäftigte und 8.052 Auszubildende stehen für 18,6 Milliarden Euro Umsatz. Die Zahl der Betriebe ging im Vorjahresvergleich um 274 zurück.",
-      "thema2": "Ausbildung & Nachwuchs"
-    },
-    "6832": {
-      "art": "termin",
-      "thema": "Ehrungen & Termine",
-      "schlagzeile": "Einladung: 80 Jahre Handwerkskammer Potsdam",
-      "dreizeiler": "Die Kammer wurde 1946 gegründet und feiert das Jubiläum beim 32. Gartenfest am 4. Juni in Caputh. Seit 1992 gehört das Fest zu den wichtigsten Netzwerkveranstaltungen des brandenburgischen Handwerks. Medienvertreter sind eingeladen."
-    },
-    "6825": {
-      "art": "bericht",
-      "thema": "Personal & Fachkräfte",
-      "schlagzeile": "Fachkräfte aus Usbekistan: Was Zuwanderung praktisch bedeutet",
-      "dreizeiler": "Zwei Fachkräfte aus Usbekistan arbeiten seit vier Monaten bei der HTB Haustechnik GmbH in Brandenburg an der Havel. Vermittelt wurden sie über das bundesweite Pilotprojekt FIT, an dem die Kammer beteiligt ist. Die Erfahrung zeigt viel Potenzial – aber auch hohen Aufwand für alle Beteiligten."
-    },
-    "6823": {
-      "art": "ehrung",
-      "thema": "Ehrungen & Termine",
-      "schlagzeile": "Diese Betriebe feiern im Mai Jubiläum",
-      "dreizeiler": "Die monatliche Liste der Betriebs- und Meisterjubiläen im Kammerbezirk. Darunter 80 Jahre Malereibetrieb Roland Geißler in Hohen Neuendorf. Wer gratulieren will, findet hier die Termine."
-    },
-    "6821": {
-      "art": "termin",
-      "thema": "Ehrungen & Termine",
-      "schlagzeile": "Der Terminkalender der Kammer für Mai",
-      "dreizeiler": "Überblick über die presseöffentlichen Termine im Mai 2026. Auftakt ist am 4. Mai ein Pressegespräch zur Fachkräfteintegration am Bildungscampus in Groß Kreutz. Weitere Termine folgen im Monatsverlauf."
-    },
-    "6816": {
-      "art": "termin",
-      "thema": "Ausbildung & Nachwuchs",
-      "schlagzeile": "Einladung: Wie Fachkräfteintegration praktisch funktioniert",
-      "dreizeiler": "Pressegespräch am 4. Mai am Bildungs- und Innovationscampus Handwerk in Groß Kreutz. Ein Betrieb und zwei usbekische Fachkräfte berichten aus der Praxis. Hintergrund ist das bundesweite Pilotprojekt FIT."
-    },
-    "6814": {
-      "art": "termin",
-      "thema": "Politik & Regierung",
-      "schlagzeile": "Spitzengespräch mit der neuen Wirtschaftsministerin",
-      "dreizeiler": "Am 27. April trifft der Handwerkskammertag erstmals die neue Wirtschaftsministerin Martina Klement. Im Anschluss informieren Ministerin und Kammerpräsidenten gemeinsam über Schwerpunkte und Erwartungen. Ort ist das Märkische Gildehaus in Caputh."
-    },
-    "6809": {
-      "art": "termin",
-      "thema": "Ehrungen & Termine",
-      "schlagzeile": "Stadtspitze und Kammer besuchen Potsdamer Betriebe",
-      "dreizeiler": "Am 22. April geht die Besuchsreihe „Handwerk regional“ in der Landeshauptstadt weiter. Es geht um Fachkräftesicherung, Bürokratieentlastung und die Bedingungen für das regionale Handwerk. Gefragt wird direkt bei den Betrieben."
-    },
-    "6807": {
-      "art": "zahlen",
-      "thema": "Wirtschaftslage",
-      "schlagzeile": "Frühjahrsbericht: Geschäftslage im Land verschlechtert sich",
-      "dreizeiler": "Die Umfrageergebnisse für das erste Quartal 2026 zeigen eine weiter verschlechterte Geschäftslage. 73,8 Prozent der brandenburgischen Handwerksbetriebe bezeichnen ihre Geschäftslage als gut oder zumindest zufriedenstellend – ein Rückgang um 1,1 Prozentpunkte gegenüber dem Vorjahr. Die Umsatzentwicklung ist ebenfalls rückläufig."
-    },
-    "6806": {
-      "art": "zahlen",
-      "thema": "Wirtschaftslage",
-      "schlagzeile": "Kammerbezirk: Erwartungen verhalten, Investitionen schwach",
-      "dreizeiler": "Die Frühjahrskonjunkturumfrage zeigt für den Kammerbezirk Potsdam eine weiter verschlechterte Lage. Auftragsreichweiten haben sich verkürzt, die Nachfrage bleibt schwach, die Preissituation ist angespannt. Auch die Investitionsbereitschaft ist niedrig."
-    },
-    "6808": {
-      "art": "politik",
-      "thema": "Energie & Sprit",
-      "schlagzeile": "Spritpreis-Entlastung: „ein Strohfeuer“",
-      "dreizeiler": "Der Koalitionsausschuss hat eine Senkung der Energiesteuer auf Diesel und Benzin um rund 17 Cent brutto pro Liter beschlossen. Das Handwerk nennt das grundsätzlich ein richtiges Signal. Bei einer nur zweimonatigen Senkung bleibe es aber ein Strohfeuer – die Betriebe brauchten Planungssicherheit.",
-      "zitat_zeigen": true,
-      "thema2": "Steuern & Abgaben"
-    },
-    "6801": {
-      "art": "termin",
-      "thema": "Wirtschaftslage",
-      "schlagzeile": "Einladung: Wirtschaftslage im westbrandenburgischen Handwerk",
-      "dreizeiler": "Pressegespräch zur Frühjahrs-Bilanz 2026 der Handwerkskammer Potsdam. Grundlage ist die halbjährliche Konjunkturumfrage unter 6000 Handwerksbetrieben. Es geht um Geschäftslage und Erwartungen für die kommenden Monate."
-    },
-    "6796": {
-      "art": "politik",
-      "thema": "Energie & Sprit",
-      "schlagzeile": "Handwerk fordert Entlastung bei Kraftstoffen und faire Preisgleitklauseln",
-      "dreizeiler": "Steigende Kosten für Kraftstoff, Energie und Material setzen die Betriebe unter Druck. Der Handwerkskammertag fordert die Landesregierung auf, sich im Bund für wirksame Entlastungen einzusetzen. Zusätzlich verlangt er praxistaugliche Regelungen bei öffentlichen Aufträgen.",
-      "zitat_zeigen": true,
-      "thema2": "Aufträge & Vergabe"
-    },
-    "6800": {
-      "art": "ehrung",
-      "thema": "Ehrungen & Termine",
-      "schlagzeile": "Diese Betriebe feiern im April Jubiläum",
-      "dreizeiler": "Die monatliche Liste der Betriebs- und Meisterjubiläen im Kammerbezirk. Darunter 70 Jahre Tischlerei Gänserich in Potsdam OT Fahrland. Namen, Orte und Termine auf einen Blick."
-    },
-    "6795": {
-      "art": "termin",
-      "thema": "Ehrungen & Termine",
-      "schlagzeile": "Der Terminkalender der Kammer für April",
-      "dreizeiler": "Überblick über die presseöffentlichen Termine der Kammer. Zum Auftakt gratuliert die Kammer der Tischlerei Gänserich zum 70-jährigen Bestehen. Der Meisterbetrieb wird in vierter Generation geführt."
-    },
-    "6788": {
-      "art": "politik",
-      "thema": "Politik & Regierung",
-      "schlagzeile": "Neue Landesregierung: Handwerk erwartet Stabilität und Verlässlichkeit",
-      "dreizeiler": "Zur Vereidigung der neuen rot-schwarzen Landesregierung meldet sich das Handwerk zu Wort. Brandenburg brauche jetzt Sicherheit und Stabilität – politisch und für die Betriebe. Die neue Regierung stehe in der Pflicht, verlässliche Rahmenbedingungen zu schaffen.",
-      "zitat_zeigen": true,
-      "thema2": "Entbürokratisierung"
-    },
-    "6787": {
-      "art": "bericht",
-      "thema": "Ausbildung & Nachwuchs",
-      "schlagzeile": "50 junge Handwerker waren in Europa unterwegs",
-      "dreizeiler": "Zwischen 2025 und Februar 2026 absolvierten 50 junge Handwerkerinnen und Handwerker aus dem Kammerbezirk einen Lernaufenthalt im Ausland. Sie arbeiteten unter anderem in Dänemark, Italien und Finnland. Am 24. März werden diese Leistungen in der Staatskanzlei gewürdigt.",
-      "zitat_zeigen": true
-    },
-    "6785": {
-      "art": "ehrung",
-      "thema": "Ausbildung & Nachwuchs",
-      "schlagzeile": "232 neue Meisterinnen und Meister",
-      "dreizeiler": "Am 7. März erhielten 232 Absolventinnen und Absolventen im Hans Otto Theater ihre Meisterbriefe. Überreicht wurden sie von Kammerpräsident Robert Wüst und Wirtschaftsminister Daniel Keller. Der Meisterbrief bleibt der wichtigste Karriereschritt im Handwerk."
-    },
-    "6779": {
-      "art": "politik",
-      "thema": "Politik & Regierung",
-      "schlagzeile": "Koalitionsvertrag: Handwerk erwartet jetzt Taten",
-      "dreizeiler": "Der Handwerkskammertag begrüßt, dass SPD und CDU ihren Koalitionsvertrag zügig vorgelegt haben. Nach den politischen Turbulenzen der Vorwochen erwartet das Handwerk klare und entschlossene Maßnahmen. Die Betriebe bräuchten Planungssicherheit und klare politische Leitplanken.",
-      "zitat_zeigen": true,
-      "thema2": "Betrieb & Nachfolge"
-    },
-    "6778": {
-      "art": "bericht",
-      "thema": "Betrieb & Nachfolge",
-      "schlagzeile": "Mit pinkem Ordner in die Selbstständigkeit",
-      "dreizeiler": "Augenoptikmeisterin Lisa Pittelkow übernimmt mit Mitte 30 den Betrieb „Carreé Optik“ in Potsdam. Vorher war sie festangestellte Filialleiterin bei einer großen Kette in Berlin. Ihre Geschichte zeigt, wie eine Übernahme im Handwerk konkret abläuft.",
-      "zitat_zeigen": true
-    },
-    "6777": {
-      "art": "bericht",
-      "thema": "Kammer & Service",
-      "schlagzeile": "Neue Beschwerdestelle bei der Kammer",
-      "dreizeiler": "Seit dem 1. März 2026 gibt es bei der Handwerkskammer Potsdam ein Beschwerdemanagement. Es ist für Betriebe und Kunden da, wenn Rückmeldungen ausbleiben oder Abläufe Anlass zur Kritik geben. Die Bearbeitung erfolgt vertraulich, neutral und transparent."
-    },
-    "6776": {
-      "art": "ehrung",
-      "thema": "Ausbildung & Nachwuchs",
-      "schlagzeile": "Azubi des Monats März: Luca Herrfurth",
-      "dreizeiler": "Der angehende Kraftfahrzeugmechatroniker aus Dahnsdorf wird von der Kammer ausgezeichnet. Sein Ausbildungsbetrieb, die Autohaus Heinrich GmbH, hatte ihn empfohlen. Gelobt werden Zuverlässigkeit, Wissbegier und Freude an schwierigen technischen Aufgaben.",
-      "zitat_zeigen": true
-    },
-    "6765": {
-      "art": "ehrung",
-      "thema": "Ehrungen & Termine",
-      "schlagzeile": "Diese Betriebe feiern im März Jubiläum",
-      "dreizeiler": "Die monatliche Liste der Betriebs- und Meisterjubiläen im Kammerbezirk. Von Schornsteinfegern über Elektroinstallateure bis zum Reifendienst. Namen, Orte und Termine auf einen Blick."
-    },
-    "6764": {
-      "art": "termin",
-      "thema": "Ehrungen & Termine",
-      "schlagzeile": "Der Terminkalender der Kammer für März",
-      "dreizeiler": "Überblick über die presseöffentlichen Termine im März 2026. Zum Auftakt testen 100 Achtklässler der Hans-Klakow-Gesamtschule Brieselang ihre handwerklichen Fähigkeiten. Ort ist der Bildungscampus in Götz."
-    },
-    "6759": {
-      "art": "politik",
-      "thema": "Ausbildung & Nachwuchs",
-      "schlagzeile": "Azubi-Ticket kommt zurück – Handwerk begrüßt das",
-      "dreizeiler": "SPD und CDU wollen das Azubi-Ticket zum Ausbildungsjahr im September 2026 wieder einführen. Auszubildende sollen statt 63 Euro dann 37,80 Euro monatlich für das Deutschland-Ticket zahlen. Das Handwerk sieht darin einen wichtigen Schritt für faire Chancen in der Ausbildung.",
-      "zitat_zeigen": true
-    },
-    "6758": {
-      "art": "termin",
-      "thema": "Ehrungen & Termine",
-      "schlagzeile": "Vorstand besucht Betriebe rund um Brandenburg und Belzig",
-      "dreizeiler": "Am 25. Februar besuchen Präsident und Vorstand Betriebe in der Region Brandenburg an der Havel und Bad Belzig. Diese Vor-Ort-Gespräche gibt es seit 29 Jahren. Themen sind Wirtschaftslage, Ausbildung und Fachkräfte."
-    },
-    "6756": {
-      "art": "termin",
-      "thema": "Ausbildung & Nachwuchs",
-      "schlagzeile": "Einladung: 232 Meisterbriefe werden überreicht",
-      "dreizeiler": "232 Absolventinnen und Absolventen aus 14 Gewerken haben ihre Meisterprüfung bestanden – 47 Frauen und 185 Männer. Die jüngste Meisterin war 19 Jahre alt, der älteste Absolvent 58. Die Meisterbriefe werden am 7. März im Hans Otto Theater überreicht."
-    },
-    "6755": {
-      "art": "bericht",
-      "thema": "Betrieb & Nachfolge",
-      "schlagzeile": "Wenn Investieren zur Hürde wird: Praxischeck im Bootsbau",
-      "dreizeiler": "Bootsbauermeister Norman Julien Melke aus Teltow zeigt, wie eine Gründung im Handwerk wächst. Sein Werdegang macht aber auch sichtbar, was viele Gründungen bremst: Finanzierung und Förderlogik passen für kleine Betriebe und Einzelunternehmen oft nicht. Hauptgeschäftsführer Ralph Bührig war vor Ort."
-    },
-    "6747": {
-      "art": "politik",
-      "thema": "Auflagen & Vorschriften",
-      "schlagzeile": "Handwerkerparkausweis in OPR – Handwerk will landesweite Lösung",
-      "dreizeiler": "Der Landkreis Ostprignitz-Ruppin ermöglicht seit dem 1. Februar 2026 einen einheitlichen Handwerkerparkausweis. Die Kammer begrüßt den Schritt als spürbare Entlastung. Sie fordert, dass eine solche Regelung landesweit gilt.",
-      "zitat_zeigen": true,
-      "thema2": "Entbürokratisierung"
-    },
-    "6738": {
-      "art": "politik",
-      "thema": "Steuern & Abgaben",
-      "schlagzeile": "Vier Verbände gegen die Potsdamer Verpackungssteuer",
-      "dreizeiler": "IHK, Handwerkskammer, Handelsverband und DEHOGA kritisieren die zum 1. Juli 2026 geplante Verpackungssteuer in Potsdam. Sie treffe Gewerbetreibende, ohne der Umwelt zu nützen, und bringe neue Bürokratie. Gemeinsam fordern sie die Stadtverordneten auf, die Haushaltsvorlage abzulehnen.",
-      "thema2": "Auflagen & Vorschriften"
-    },
-    "6732": {
-      "art": "ehrung",
-      "thema": "Ehrungen & Termine",
-      "schlagzeile": "Diese Betriebe feiern im Februar Jubiläum",
-      "dreizeiler": "Die monatliche Liste der Betriebs- und Meisterjubiläen im Kammerbezirk. Darunter 80 Jahre Drechslerei und Treppenbau Dobbeck in Leegebruch. Namen, Orte und Termine auf einen Blick."
-    },
-    "6731": {
-      "art": "termin",
-      "thema": "Ehrungen & Termine",
-      "schlagzeile": "Der Terminkalender der Kammer für Februar",
-      "dreizeiler": "Überblick über die presseöffentlichen Termine im Februar 2026. Den Auftakt macht das 80-jährige Bestehen der Drechslerei und Treppenbau Dobbeck in Leegebruch. Der Familienbetrieb wurde 1946 gegründet."
-    },
-    "6720": {
-      "art": "zahlen",
-      "thema": "Ausbildung & Nachwuchs",
-      "schlagzeile": "1.377 neue Ausbildungsverträge – 6,2 Prozent mehr",
-      "dreizeiler": "Zum 31. Dezember 2025 wurden im Kammerbezirk 1.377 neue Ausbildungsverträge abgeschlossen, 80 mehr als 2024. Die stärksten Zuwächse gab es in Potsdam, Potsdam-Mittelmark und Teltow-Fläming. Rückgänge verzeichnete vor allem Brandenburg an der Havel."
-    },
-    "6721": {
-      "art": "ehrung",
-      "thema": "Ausbildung & Nachwuchs",
-      "schlagzeile": "Azubi des Monats Januar: Kilian Böhm",
-      "dreizeiler": "Der angehende Automobilkaufmann wird am 15. Januar in seinem Ausbildungsbetrieb in Geltow ausgezeichnet. Sein Betrieb, die Autohaus Biering GmbH, hatte ihn vorgeschlagen. Gelobt werden Talent, Kreativität und Offenheit.",
-      "zitat_zeigen": true
-    },
-    "6715": {
-      "art": "politik",
-      "thema": "Politik & Regierung",
-      "schlagzeile": "Nach dem Koalitionsbruch: Handwerk pocht auf Handlungsfähigkeit",
-      "dreizeiler": "Ministerpräsident Dietmar Woidke hat am 6. Januar die Koalition mit dem BSW beendet. Das Handwerk erklärt, das Land brauche in der aktuellen Wirtschaftslage eine handlungsfähige und verlässliche Landesregierung. Die Betriebe seien auf klare Entscheidungen und planbare Rahmenbedingungen angewiesen.",
-      "zitat_zeigen": true
-    },
-    "6712": {
-      "art": "zahlen",
-      "thema": "Betrieb & Nachfolge",
-      "schlagzeile": "17.522 Betriebe – mehr Gründungen, aber weniger qualifizierte",
-      "dreizeiler": "Zum 31. Dezember 2025 waren im Kammerbezirk 17.522 Betriebe gemeldet, 159 mehr als im Vorjahr. Neu eingetragen wurden 1.550 Betriebe, gelöscht 1.391. Die Zahl der qualifizierten Gründungen ging jedoch zurück.",
-      "thema2": "Wirtschaftslage"
-    },
-    "6904": {
-      "art": "termin",
-      "thema": "Ehrungen & Termine",
-      "schlagzeile": "Der Terminkalender der Kammer für September",
-      "dreizeiler": "Überblick über die presseöffentlichen Termine im September 2026. Den Auftakt macht der Ausbildungsstart am 1. September: 1.007 junge Menschen beginnen in 58 Gewerken ihre Ausbildung (Stand 20. August 2026)."
-    }
+ "hinweis": "Redaktionelle Ebene zu daten/meldungen-2026.json. Zuordnung ueber die Artikel-ID (letzte Zahl der URL). Schlagzeile und Dreizeiler sind eigene Formulierungen auf Grundlage der jeweiligen Pressemitteilung - massgeblich ist immer das verlinkte Original. Feld 'art': politik | zahlen | bericht | ehrung | termin. 'thema' und optional 'thema2' sind die Kriterien-Knoepfe im Ticker.",
+ "stand": "2026-09-25",
+ "eintraege": {
+  "6935": {
+   "art": "politik",
+   "thema": "Betrieb & Nachfolge",
+   "thema2": "Entbürokratisierung",
+   "schlagzeile": "Nachfolge: Wüst nennt drei Bedingungen",
+   "dreizeiler": "Auf der 18. NEXXT Night in Brandenburg an der Havel warben Handwerkskammer und IHK Potsdam für die Betriebsübernahme als Weg in die Selbstständigkeit. Kammerpräsident Robert Wüst nennt drei Bedingungen, damit mehr junge Handwerker den Schritt wagen: weniger Bürokratie, verlässliche Finanzierungsmöglichkeiten und mehr Anerkennung für unternehmerische Verantwortung. Geht ein Betrieb mangels Nachfolger verloren, verschwinden laut Wüst auch Arbeits- und Ausbildungsplätze, Know-how und regionale Wertschöpfung.",
+   "zitat_zeigen": true
+  },
+  "6934": {
+   "art": "bericht",
+   "thema": "Kammer & Service",
+   "schlagzeile": "Auszeichnung für den Nachhaltigkeitscheck 360°",
+   "dreizeiler": "Die Handwerkskammer Potsdam wurde am 17. September zusammen mit den Kammern Dortmund, Frankfurt-Rhein-Main und Mittelfranken mit dem Deutschen Award für Nachhaltigkeitsprojekte ausgezeichnet. Der „Nachhaltigkeitscheck 360°“ ist eine etwa dreistündige Beratung, die sich an den Nachhaltigkeitszielen der Vereinten Nationen orientiert; bundesweit haben ihn über 700 Handwerksbetriebe genutzt. Das Projekt setzte sich unter mehr als 430 Einreichungen durch."
+  },
+  "6927": {
+   "art": "termin",
+   "thema": "Ehrungen & Termine",
+   "thema2": "Betrieb & Nachfolge",
+   "schlagzeile": "Einladung: 18. NEXXT Night zur Unternehmensnachfolge",
+   "dreizeiler": "Am 23. September 2026 von 17 bis 20 Uhr im Rolandsaal in Brandenburg an der Havel. Unternehmerinnen und Unternehmer zeigen, wie sie die Übergabe ihres Betriebes an die nächste Generation gemeistert haben; dazu Podiumsrunden zu Übernahme, Suche, Finanzierung und Übergabe. Gemeinschaftsveranstaltung von Handwerkskammer Potsdam und IHK Potsdam, die Teilnahme ist kostenfrei."
+  },
+  "6919": {
+   "art": "bericht",
+   "thema": "Ausbildung & Nachwuchs",
+   "thema2": "Betrieb & Nachfolge",
+   "schlagzeile": "Gerüstbaumeisterin wird Gesicht der Handwerkskampagne",
+   "dreizeiler": "Ab 11. September ist Sina Scheffler, Geschäftsführerin der Gerüstbau Scheffler GmbH, mit dem Motiv „Karriere mit Gefühl: Erschaff dir Respekt.“ auf Großflächen und in den sozialen Medien zu sehen. Ihr Weg: 2004 Einstieg in den Betrieb des Vaters, zunächst in Teilzeit, 2008 Abschluss der Meisterausbildung, 2012 die Geschäftsführung, zehn Jahre später die Übernahme – heute knapp 40 Beschäftigte. Als sie vor etwa 20 Jahren im Gerüstbau anfing, begegnete sie dort keiner einzigen Frau."
+  },
+  "6917": {
+   "art": "termin",
+   "thema": "Ehrungen & Termine",
+   "thema2": "Entbürokratisierung",
+   "schlagzeile": "Handwerk regional: Betriebsbesuche in Teltow-Fläming",
+   "dreizeiler": "Am 16. September besuchen Kammerpräsident Robert Wüst und Hauptgeschäftsführer Ralph Bührig gemeinsam mit Landrätin Kornelia Wehlan und Kreishandwerksmeister Sven Thielicke zwei Betriebe im Landkreis: die KONRAD Bäckerei & Café GmbH in Niedergörsdorf und die Klinkhammer – Wärme & Wasser erleben GmbH in Ludwigsfelde. Im Mittelpunkt stehen die Fachkräftesicherung, die Entlastung kleinerer und mittlerer Handwerksbetriebe von Bürokratie und gute Rahmenbedingungen vor Ort."
+  },
+  "6916": {
+   "art": "politik",
+   "thema": "Steuern & Abgaben",
+   "thema2": "Entbürokratisierung",
+   "schlagzeile": "85 Prozent der Betriebe lehnen die Verpackungssteuer ab",
+   "dreizeiler": "Fünf Verbände – darunter die Handwerkskammer Potsdam – haben ihre Mitglieder befragt: 85 Prozent der 110 teilnehmenden Unternehmen lehnen die kommunale Verpackungssteuer ab, die in Potsdam am 1. Oktober 2026 startet. Als Hürden für Mehrweg nennen rund 72 Prozent die hohen Anschaffungskosten, 70 Prozent die Reinigungskosten und rund 60 Prozent den zusätzlichen Personalaufwand. Hauptgeschäftsführer Ralph Bührig fordert Regeln, die sich im Betriebsalltag umsetzen lassen.",
+   "zitat_zeigen": true
+  },
+  "6908": {
+   "art": "ehrung",
+   "thema": "Ehrungen & Termine",
+   "schlagzeile": "Diese Betriebe feiern im September Jubiläum",
+   "dreizeiler": "Die monatliche Liste der Betriebs- und Meisterjubiläen im Kammerbezirk. Sie reicht von 30 Jahren Holzideen René Kissinger in Ludwigsfelde bis zu 65 Jahren Bäckerei Angermüller in Hennigsdorf. Dazu Meisterjubiläen von 25 Jahren Fleischermeister Torsten Schmelzer bis zu 30 Jahren Keramikmeisterin Manuela Malenz in Velten."
+  },
+  "6904": {
+   "art": "termin",
+   "thema": "Ehrungen & Termine",
+   "schlagzeile": "Der Terminkalender der Kammer für September",
+   "dreizeiler": "Überblick über die presseöffentlichen Termine im September 2026. Den Auftakt macht der Ausbildungsstart am 1. September: 1.007 junge Menschen beginnen in 58 Gewerken ihre Ausbildung (Stand 20. August 2026)."
+  },
+  "6895": {
+   "art": "termin",
+   "thema": "Ehrungen & Termine",
+   "schlagzeile": "Der Terminkalender der Kammer für August",
+   "dreizeiler": "Die Handwerkskammer listet ihre presseöffentlichen Termine im August 2026 auf. Darunter das 60-jährige Bestehen des Raumausstatterbetriebs Haupt in Lindow (Mark). Wer Präsenz zeigen will, findet hier die Gelegenheiten."
+  },
+  "6894": {
+   "art": "ehrung",
+   "thema": "Ehrungen & Termine",
+   "schlagzeile": "Diese Betriebe feiern im August Jubiläum",
+   "dreizeiler": "Die monatliche Liste der Betriebs- und Meisterjubiläen im Kammerbezirk. Sie reicht von 30 Jahren Bauklempnerei Neumann in Leegebruch bis zu Meisterbriefen, die ein halbes Jahrhundert alt sind. Eine gute Gelegenheit für Glückwünsche aus der eigenen Innung."
+  },
+  "6892": {
+   "art": "ehrung",
+   "thema": "Ehrungen & Termine",
+   "schlagzeile": "70 Jahre Meister – mit 94 Jahren",
+   "dreizeiler": "Fleischermeister Kurt Pirsch erhält den Platin-Meisterbrief. Seinen Meisterbrief bekam er 1956, als die Berliner Mauer noch nicht stand. Die Kammer würdigt damit sieben Jahrzehnte Meisterwürde und ein Lebenswerk, das bis heute Bestand hat.",
+   "zitat_zeigen": true
+  },
+  "6871": {
+   "art": "politik",
+   "thema": "Steuern & Abgaben",
+   "schlagzeile": "Reformpaket: Lob und Kritik zugleich",
+   "dreizeiler": "Der Brandenburgische Handwerkskammertag bewertet das Reformpaket der Bundesregierung als Schritt in die richtige Richtung, sieht aber Nachbesserungsbedarf. Positiv sei, dass auf Steuererhöhungen für den breiten Mittelstand verzichtet wird. Kritisch sieht die Kammer, dass der Steuerbonus für Handwerkerleistungen reduziert werden soll – weniger Berichtspflichten und schnellere Genehmigungen nennt sie dringend notwendig.",
+   "zitat_zeigen": true,
+   "thema2": "Entbürokratisierung"
+  },
+  "6869": {
+   "art": "zahlen",
+   "thema": "Ausbildung & Nachwuchs",
+   "schlagzeile": "473 neue Ausbildungsverträge – ein Plus von 5,9 Prozent",
+   "dreizeiler": "Bis zum 30. Juni 2026 wurden im Kammerbezirk 473 neue Ausbildungsverträge abgeschlossen, 26 mehr als im Vorjahreszeitraum. Mehr junge Menschen entscheiden sich damit für das Handwerk. Wer noch sucht, hat in den Sommerferien weiterhin Chancen."
+  },
+  "6867": {
+   "art": "termin",
+   "thema": "Ehrungen & Termine",
+   "schlagzeile": "Vorstand besucht Betriebe in der Prignitz",
+   "dreizeiler": "Am 2. Juli besuchen Präsident und Vorstand Handwerksbetriebe im Landkreis Prignitz. Die Vor-Ort-Gespräche gibt es seit 1997. Themen sind Wirtschaftslage, Ausbildung und Fachkräfte."
+  },
+  "6859": {
+   "art": "termin",
+   "thema": "Ehrungen & Termine",
+   "schlagzeile": "Der Terminkalender der Kammer für Juli",
+   "dreizeiler": "Überblick über die presseöffentlichen Termine im Juli 2026. Den Auftakt macht der kostenlose Service „Individueller Nachfolgefahrplan“ am 1. Juli. Es geht um Betriebsnachfolge, Arbeitsschutz und mehr."
+  },
+  "6858": {
+   "art": "ehrung",
+   "thema": "Ehrungen & Termine",
+   "schlagzeile": "Diese Betriebe feiern im Juli Jubiläum",
+   "dreizeiler": "Die monatliche Liste der Betriebs- und Meisterjubiläen im Kammerbezirk. Von 30 Jahren Töpferei Malenz in Velten bis zu Betrieben, die seit Jahrzehnten bestehen. Wer gratulieren will, findet hier Namen und Termine."
+  },
+  "6854": {
+   "art": "ehrung",
+   "thema": "Ehrungen & Termine",
+   "schlagzeile": "Zwölf Unternehmen im Finale des Zukunftspreises",
+   "dreizeiler": "Zwölf Unternehmen stehen im Finale des Zukunftspreises Brandenburg 2026. Sie setzten sich unter 73 Bewerbungen durch. Die Preisverleihung ist am 20. November in Schönefeld."
+  },
+  "6853": {
+   "art": "politik",
+   "thema": "Ausbildung & Nachwuchs",
+   "schlagzeile": "Handwerk warnt: Unterrichtsausfall gefährdet die Fachkräfte von morgen",
+   "dreizeiler": "Der Unterricht an Brandenburgs Schulen kann im kommenden Schuljahr nicht überall abgesichert werden. Das Handwerk sieht darin ein Risiko für die Fachkräftesicherung und ein Armutszeugnis. Auch die bundesweite Anerkennung brandenburgischer Schulabschlüsse steht laut Bildungsminister auf dem Spiel.",
+   "zitat_zeigen": true,
+   "thema2": "Personal & Fachkräfte"
+  },
+  "6851": {
+   "art": "ehrung",
+   "thema": "Ausbildung & Nachwuchs",
+   "schlagzeile": "Kita gewinnt Landeswettbewerb mit dem Dachdeckerhandwerk",
+   "dreizeiler": "Die Kita Bärenhaus in Groß Pankow gewinnt den Landeswettbewerb „Kleine Hände, große Zukunft“. Grundlage war ein Projekttag bei Lublow Bedachungen in Pritzwalk. Nachwuchsgewinnung fängt früher an, als man denkt."
+  },
+  "6848": {
+   "art": "termin",
+   "thema": "Betrieb & Nachfolge",
+   "schlagzeile": "Nachfolgetag: Wo Betrieb und Nachfolger sich finden",
+   "dreizeiler": "IHK und Handwerkskammer Potsdam laden am 23. Juni zum Nachfolgetag Brandenburg „It’s a match“. Viele Betriebe stehen vor dem Generationswechsel, gleichzeitig suchen Qualifizierte einen Betrieb. Der Tag soll beide Seiten zusammenbringen."
+  },
+  "6847": {
+   "art": "politik",
+   "thema": "Steuern & Abgaben",
+   "schlagzeile": "Handwerkerbonus stärken statt streichen",
+   "dreizeiler": "Der Handwerkerbonus nach § 35a Abs. 3 EStG steht bei den Beratungen zum Bundeshaushalt 2027 als mögliche Einsparmaßnahme zur Diskussion. Der Handwerkskammertag warnt vor der Abschaffung. Der Bonus sorge dafür, dass handwerkliche Leistungen offiziell beauftragt, sauber abgerechnet und legal versteuert werden.",
+   "zitat_zeigen": true
+  },
+  "6843": {
+   "art": "ehrung",
+   "thema": "Ehrungen & Termine",
+   "schlagzeile": "Diese Betriebe feiern im Juni Jubiläum",
+   "dreizeiler": "Die monatliche Liste der Betriebs- und Meisterjubiläen im Kammerbezirk. Darunter 80 Jahre Tischlerei Matthias John in Potsdam. Namen, Orte und Termine auf einen Blick."
+  },
+  "6842": {
+   "art": "politik",
+   "thema": "Politik & Regierung",
+   "schlagzeile": "Aktionsprogramm 2026–2029 unterzeichnet",
+   "dreizeiler": "Landesregierung, die brandenburgischen Handwerkskammern und der DGB Berlin-Brandenburg haben das Aktionsprogramm „Zukunft des Handwerks im Land Brandenburg“ für 2026 bis 2029 unterzeichnet. Es richtet sich an rund 37.500 Betriebe mit fast 185.000 Beschäftigten. Vereinbart sind Maßnahmen zum Fachkräftenachwuchs, zur Energiewende, zu Existenzgründung und Unternehmensnachfolge sowie zur Stärkung der Selbstverwaltung im Handwerk.",
+   "zitat_zeigen": true,
+   "thema2": "Ausbildung & Nachwuchs"
+  },
+  "6841": {
+   "art": "bericht",
+   "thema": "Ehrungen & Termine",
+   "schlagzeile": "450 Gäste beim Gartenfest – mit klaren Botschaften an die Politik",
+   "dreizeiler": "Rund 450 Gäste kamen zum 32. Gartenfest der Kammer nach Caputh, im Jahr ihres 80-jährigen Bestehens. Die Gespräche prägten die angespannte wirtschaftliche Lage, Ausbildung, Fachkräftesicherung, Unternehmensnachfolge und Bürokratieabbau. Erstmals nutzten auch mehrere Mitglieder der neu gewählten Landesregierung die Gelegenheit zum direkten Austausch."
+  },
+  "6837": {
+   "art": "ehrung",
+   "thema": "Ehrungen & Termine",
+   "schlagzeile": "Handwerkszeichen in Gold für Robert Wüst",
+   "dreizeiler": "Kammerpräsident Robert Wüst erhält die höchste Auszeichnung des deutschen Handwerks. Der Metallbauermeister aus Pritzwalk führt sein Familienunternehmen in fünfter Generation. Seit 2016 steht er ehrenamtlich an der Spitze der Handwerkskammer Potsdam."
+  },
+  "6835": {
+   "art": "termin",
+   "thema": "Politik & Regierung",
+   "schlagzeile": "Einladung zur Unterzeichnung des Aktionsprogramms",
+   "dreizeiler": "Am 5. Juni unterzeichnen Landesregierung, Handwerkskammern und DGB das Aktionsprogramm 2026–2029. Es betrifft rund 37.500 Handwerksbetriebe im Land. Ort ist der Meistersaal der Handwerkskammer Potsdam."
+  },
+  "6833": {
+   "art": "termin",
+   "thema": "Ehrungen & Termine",
+   "schlagzeile": "Der Terminkalender der Kammer für Juni",
+   "dreizeiler": "Überblick über die presseöffentlichen Termine im Juni 2026. Den Auftakt macht eine Praxislernwoche am Bildungs- und Innovationscampus Handwerk in Götz. 50 Achtklässler testen dort ihre handwerklichen Fähigkeiten."
+  },
+  "6832": {
+   "art": "termin",
+   "thema": "Ehrungen & Termine",
+   "schlagzeile": "Einladung: 80 Jahre Handwerkskammer Potsdam",
+   "dreizeiler": "Die Kammer wurde 1946 gegründet und feiert das Jubiläum beim 32. Gartenfest am 4. Juni in Caputh. Seit 1992 gehört das Fest zu den wichtigsten Netzwerkveranstaltungen des brandenburgischen Handwerks. Medienvertreter sind eingeladen."
+  },
+  "6831": {
+   "art": "zahlen",
+   "thema": "Wirtschaftslage",
+   "schlagzeile": "Jahresbericht: 18,6 Milliarden Euro Umsatz, aber weniger Betriebe",
+   "dreizeiler": "Der Handwerkskammertag hat den Jahresbericht „Handwerk in Brandenburg 2025“ vorgelegt. 37.429 Betriebe, 184.890 Beschäftigte und 8.052 Auszubildende stehen für 18,6 Milliarden Euro Umsatz. Die Zahl der Betriebe ging im Vorjahresvergleich um 274 zurück.",
+   "thema2": "Ausbildung & Nachwuchs"
+  },
+  "6825": {
+   "art": "bericht",
+   "thema": "Personal & Fachkräfte",
+   "schlagzeile": "Fachkräfte aus Usbekistan: Was Zuwanderung praktisch bedeutet",
+   "dreizeiler": "Zwei Fachkräfte aus Usbekistan arbeiten seit vier Monaten bei der HTB Haustechnik GmbH in Brandenburg an der Havel. Vermittelt wurden sie über das bundesweite Pilotprojekt FIT, an dem die Kammer beteiligt ist. Die Erfahrung zeigt viel Potenzial – aber auch hohen Aufwand für alle Beteiligten."
+  },
+  "6823": {
+   "art": "ehrung",
+   "thema": "Ehrungen & Termine",
+   "schlagzeile": "Diese Betriebe feiern im Mai Jubiläum",
+   "dreizeiler": "Die monatliche Liste der Betriebs- und Meisterjubiläen im Kammerbezirk. Darunter 80 Jahre Malereibetrieb Roland Geißler in Hohen Neuendorf. Wer gratulieren will, findet hier die Termine."
+  },
+  "6821": {
+   "art": "termin",
+   "thema": "Ehrungen & Termine",
+   "schlagzeile": "Der Terminkalender der Kammer für Mai",
+   "dreizeiler": "Überblick über die presseöffentlichen Termine im Mai 2026. Auftakt ist am 4. Mai ein Pressegespräch zur Fachkräfteintegration am Bildungscampus in Groß Kreutz. Weitere Termine folgen im Monatsverlauf."
+  },
+  "6816": {
+   "art": "termin",
+   "thema": "Ausbildung & Nachwuchs",
+   "schlagzeile": "Einladung: Wie Fachkräfteintegration praktisch funktioniert",
+   "dreizeiler": "Pressegespräch am 4. Mai am Bildungs- und Innovationscampus Handwerk in Groß Kreutz. Ein Betrieb und zwei usbekische Fachkräfte berichten aus der Praxis. Hintergrund ist das bundesweite Pilotprojekt FIT."
+  },
+  "6814": {
+   "art": "termin",
+   "thema": "Politik & Regierung",
+   "schlagzeile": "Spitzengespräch mit der neuen Wirtschaftsministerin",
+   "dreizeiler": "Am 27. April trifft der Handwerkskammertag erstmals die neue Wirtschaftsministerin Martina Klement. Im Anschluss informieren Ministerin und Kammerpräsidenten gemeinsam über Schwerpunkte und Erwartungen. Ort ist das Märkische Gildehaus in Caputh."
+  },
+  "6809": {
+   "art": "termin",
+   "thema": "Ehrungen & Termine",
+   "schlagzeile": "Stadtspitze und Kammer besuchen Potsdamer Betriebe",
+   "dreizeiler": "Am 22. April geht die Besuchsreihe „Handwerk regional“ in der Landeshauptstadt weiter. Es geht um Fachkräftesicherung, Bürokratieentlastung und die Bedingungen für das regionale Handwerk. Gefragt wird direkt bei den Betrieben."
+  },
+  "6808": {
+   "art": "politik",
+   "thema": "Energie & Sprit",
+   "schlagzeile": "Spritpreis-Entlastung: „ein Strohfeuer“",
+   "dreizeiler": "Der Koalitionsausschuss hat eine Senkung der Energiesteuer auf Diesel und Benzin um rund 17 Cent brutto pro Liter beschlossen. Das Handwerk nennt das grundsätzlich ein richtiges Signal. Bei einer nur zweimonatigen Senkung bleibe es aber ein Strohfeuer – die Betriebe brauchten Planungssicherheit.",
+   "zitat_zeigen": true,
+   "thema2": "Steuern & Abgaben"
+  },
+  "6807": {
+   "art": "zahlen",
+   "thema": "Wirtschaftslage",
+   "schlagzeile": "Frühjahrsbericht: Geschäftslage im Land verschlechtert sich",
+   "dreizeiler": "Die Umfrageergebnisse für das erste Quartal 2026 zeigen eine weiter verschlechterte Geschäftslage. 73,8 Prozent der brandenburgischen Handwerksbetriebe bezeichnen ihre Geschäftslage als gut oder zumindest zufriedenstellend – ein Rückgang um 1,1 Prozentpunkte gegenüber dem Vorjahr. Die Umsatzentwicklung ist ebenfalls rückläufig."
+  },
+  "6806": {
+   "art": "zahlen",
+   "thema": "Wirtschaftslage",
+   "schlagzeile": "Kammerbezirk: Erwartungen verhalten, Investitionen schwach",
+   "dreizeiler": "Die Frühjahrskonjunkturumfrage zeigt für den Kammerbezirk Potsdam eine weiter verschlechterte Lage. Auftragsreichweiten haben sich verkürzt, die Nachfrage bleibt schwach, die Preissituation ist angespannt. Auch die Investitionsbereitschaft ist niedrig."
+  },
+  "6801": {
+   "art": "termin",
+   "thema": "Wirtschaftslage",
+   "schlagzeile": "Einladung: Wirtschaftslage im westbrandenburgischen Handwerk",
+   "dreizeiler": "Pressegespräch zur Frühjahrs-Bilanz 2026 der Handwerkskammer Potsdam. Grundlage ist die halbjährliche Konjunkturumfrage unter 6000 Handwerksbetrieben. Es geht um Geschäftslage und Erwartungen für die kommenden Monate."
+  },
+  "6800": {
+   "art": "ehrung",
+   "thema": "Ehrungen & Termine",
+   "schlagzeile": "Diese Betriebe feiern im April Jubiläum",
+   "dreizeiler": "Die monatliche Liste der Betriebs- und Meisterjubiläen im Kammerbezirk. Darunter 70 Jahre Tischlerei Gänserich in Potsdam OT Fahrland. Namen, Orte und Termine auf einen Blick."
+  },
+  "6796": {
+   "art": "politik",
+   "thema": "Energie & Sprit",
+   "schlagzeile": "Handwerk fordert Entlastung bei Kraftstoffen und faire Preisgleitklauseln",
+   "dreizeiler": "Steigende Kosten für Kraftstoff, Energie und Material setzen die Betriebe unter Druck. Der Handwerkskammertag fordert die Landesregierung auf, sich im Bund für wirksame Entlastungen einzusetzen. Zusätzlich verlangt er praxistaugliche Regelungen bei öffentlichen Aufträgen.",
+   "zitat_zeigen": true,
+   "thema2": "Aufträge & Vergabe"
+  },
+  "6795": {
+   "art": "termin",
+   "thema": "Ehrungen & Termine",
+   "schlagzeile": "Der Terminkalender der Kammer für April",
+   "dreizeiler": "Überblick über die presseöffentlichen Termine der Kammer. Zum Auftakt gratuliert die Kammer der Tischlerei Gänserich zum 70-jährigen Bestehen. Der Meisterbetrieb wird in vierter Generation geführt."
+  },
+  "6788": {
+   "art": "politik",
+   "thema": "Politik & Regierung",
+   "schlagzeile": "Neue Landesregierung: Handwerk erwartet Stabilität und Verlässlichkeit",
+   "dreizeiler": "Zur Vereidigung der neuen rot-schwarzen Landesregierung meldet sich das Handwerk zu Wort. Brandenburg brauche jetzt Sicherheit und Stabilität – politisch und für die Betriebe. Die neue Regierung stehe in der Pflicht, verlässliche Rahmenbedingungen zu schaffen.",
+   "zitat_zeigen": true,
+   "thema2": "Entbürokratisierung"
+  },
+  "6787": {
+   "art": "bericht",
+   "thema": "Ausbildung & Nachwuchs",
+   "schlagzeile": "50 junge Handwerker waren in Europa unterwegs",
+   "dreizeiler": "Zwischen 2025 und Februar 2026 absolvierten 50 junge Handwerkerinnen und Handwerker aus dem Kammerbezirk einen Lernaufenthalt im Ausland. Sie arbeiteten unter anderem in Dänemark, Italien und Finnland. Am 24. März werden diese Leistungen in der Staatskanzlei gewürdigt.",
+   "zitat_zeigen": true
+  },
+  "6785": {
+   "art": "ehrung",
+   "thema": "Ausbildung & Nachwuchs",
+   "schlagzeile": "232 neue Meisterinnen und Meister",
+   "dreizeiler": "Am 7. März erhielten 232 Absolventinnen und Absolventen im Hans Otto Theater ihre Meisterbriefe. Überreicht wurden sie von Kammerpräsident Robert Wüst und Wirtschaftsminister Daniel Keller. Der Meisterbrief bleibt der wichtigste Karriereschritt im Handwerk."
+  },
+  "6779": {
+   "art": "politik",
+   "thema": "Politik & Regierung",
+   "schlagzeile": "Koalitionsvertrag: Handwerk erwartet jetzt Taten",
+   "dreizeiler": "Der Handwerkskammertag begrüßt, dass SPD und CDU ihren Koalitionsvertrag zügig vorgelegt haben. Nach den politischen Turbulenzen der Vorwochen erwartet das Handwerk klare und entschlossene Maßnahmen. Die Betriebe bräuchten Planungssicherheit und klare politische Leitplanken.",
+   "zitat_zeigen": true,
+   "thema2": "Betrieb & Nachfolge"
+  },
+  "6778": {
+   "art": "bericht",
+   "thema": "Betrieb & Nachfolge",
+   "schlagzeile": "Mit pinkem Ordner in die Selbstständigkeit",
+   "dreizeiler": "Augenoptikmeisterin Lisa Pittelkow übernimmt mit Mitte 30 den Betrieb „Carreé Optik“ in Potsdam. Vorher war sie festangestellte Filialleiterin bei einer großen Kette in Berlin. Ihre Geschichte zeigt, wie eine Übernahme im Handwerk konkret abläuft.",
+   "zitat_zeigen": true
+  },
+  "6777": {
+   "art": "bericht",
+   "thema": "Kammer & Service",
+   "schlagzeile": "Neue Beschwerdestelle bei der Kammer",
+   "dreizeiler": "Seit dem 1. März 2026 gibt es bei der Handwerkskammer Potsdam ein Beschwerdemanagement. Es ist für Betriebe und Kunden da, wenn Rückmeldungen ausbleiben oder Abläufe Anlass zur Kritik geben. Die Bearbeitung erfolgt vertraulich, neutral und transparent."
+  },
+  "6776": {
+   "art": "ehrung",
+   "thema": "Ausbildung & Nachwuchs",
+   "schlagzeile": "Azubi des Monats März: Luca Herrfurth",
+   "dreizeiler": "Der angehende Kraftfahrzeugmechatroniker aus Dahnsdorf wird von der Kammer ausgezeichnet. Sein Ausbildungsbetrieb, die Autohaus Heinrich GmbH, hatte ihn empfohlen. Gelobt werden Zuverlässigkeit, Wissbegier und Freude an schwierigen technischen Aufgaben.",
+   "zitat_zeigen": true
+  },
+  "6765": {
+   "art": "ehrung",
+   "thema": "Ehrungen & Termine",
+   "schlagzeile": "Diese Betriebe feiern im März Jubiläum",
+   "dreizeiler": "Die monatliche Liste der Betriebs- und Meisterjubiläen im Kammerbezirk. Von Schornsteinfegern über Elektroinstallateure bis zum Reifendienst. Namen, Orte und Termine auf einen Blick."
+  },
+  "6764": {
+   "art": "termin",
+   "thema": "Ehrungen & Termine",
+   "schlagzeile": "Der Terminkalender der Kammer für März",
+   "dreizeiler": "Überblick über die presseöffentlichen Termine im März 2026. Zum Auftakt testen 100 Achtklässler der Hans-Klakow-Gesamtschule Brieselang ihre handwerklichen Fähigkeiten. Ort ist der Bildungscampus in Götz."
+  },
+  "6759": {
+   "art": "politik",
+   "thema": "Ausbildung & Nachwuchs",
+   "schlagzeile": "Azubi-Ticket kommt zurück – Handwerk begrüßt das",
+   "dreizeiler": "SPD und CDU wollen das Azubi-Ticket zum Ausbildungsjahr im September 2026 wieder einführen. Auszubildende sollen statt 63 Euro dann 37,80 Euro monatlich für das Deutschland-Ticket zahlen. Das Handwerk sieht darin einen wichtigen Schritt für faire Chancen in der Ausbildung.",
+   "zitat_zeigen": true
+  },
+  "6758": {
+   "art": "termin",
+   "thema": "Ehrungen & Termine",
+   "schlagzeile": "Vorstand besucht Betriebe rund um Brandenburg und Belzig",
+   "dreizeiler": "Am 25. Februar besuchen Präsident und Vorstand Betriebe in der Region Brandenburg an der Havel und Bad Belzig. Diese Vor-Ort-Gespräche gibt es seit 29 Jahren. Themen sind Wirtschaftslage, Ausbildung und Fachkräfte."
+  },
+  "6756": {
+   "art": "termin",
+   "thema": "Ausbildung & Nachwuchs",
+   "schlagzeile": "Einladung: 232 Meisterbriefe werden überreicht",
+   "dreizeiler": "232 Absolventinnen und Absolventen aus 14 Gewerken haben ihre Meisterprüfung bestanden – 47 Frauen und 185 Männer. Die jüngste Meisterin war 19 Jahre alt, der älteste Absolvent 58. Die Meisterbriefe werden am 7. März im Hans Otto Theater überreicht."
+  },
+  "6755": {
+   "art": "bericht",
+   "thema": "Betrieb & Nachfolge",
+   "schlagzeile": "Wenn Investieren zur Hürde wird: Praxischeck im Bootsbau",
+   "dreizeiler": "Bootsbauermeister Norman Julien Melke aus Teltow zeigt, wie eine Gründung im Handwerk wächst. Sein Werdegang macht aber auch sichtbar, was viele Gründungen bremst: Finanzierung und Förderlogik passen für kleine Betriebe und Einzelunternehmen oft nicht. Hauptgeschäftsführer Ralph Bührig war vor Ort."
+  },
+  "6747": {
+   "art": "politik",
+   "thema": "Auflagen & Vorschriften",
+   "schlagzeile": "Handwerkerparkausweis in OPR – Handwerk will landesweite Lösung",
+   "dreizeiler": "Der Landkreis Ostprignitz-Ruppin ermöglicht seit dem 1. Februar 2026 einen einheitlichen Handwerkerparkausweis. Die Kammer begrüßt den Schritt als spürbare Entlastung. Sie fordert, dass eine solche Regelung landesweit gilt.",
+   "zitat_zeigen": true,
+   "thema2": "Entbürokratisierung"
+  },
+  "6738": {
+   "art": "politik",
+   "thema": "Steuern & Abgaben",
+   "schlagzeile": "Vier Verbände gegen die Potsdamer Verpackungssteuer",
+   "dreizeiler": "IHK, Handwerkskammer, Handelsverband und DEHOGA kritisieren die zum 1. Juli 2026 geplante Verpackungssteuer in Potsdam. Sie treffe Gewerbetreibende, ohne der Umwelt zu nützen, und bringe neue Bürokratie. Gemeinsam fordern sie die Stadtverordneten auf, die Haushaltsvorlage abzulehnen.",
+   "thema2": "Auflagen & Vorschriften"
+  },
+  "6732": {
+   "art": "ehrung",
+   "thema": "Ehrungen & Termine",
+   "schlagzeile": "Diese Betriebe feiern im Februar Jubiläum",
+   "dreizeiler": "Die monatliche Liste der Betriebs- und Meisterjubiläen im Kammerbezirk. Darunter 80 Jahre Drechslerei und Treppenbau Dobbeck in Leegebruch. Namen, Orte und Termine auf einen Blick."
+  },
+  "6731": {
+   "art": "termin",
+   "thema": "Ehrungen & Termine",
+   "schlagzeile": "Der Terminkalender der Kammer für Februar",
+   "dreizeiler": "Überblick über die presseöffentlichen Termine im Februar 2026. Den Auftakt macht das 80-jährige Bestehen der Drechslerei und Treppenbau Dobbeck in Leegebruch. Der Familienbetrieb wurde 1946 gegründet."
+  },
+  "6721": {
+   "art": "ehrung",
+   "thema": "Ausbildung & Nachwuchs",
+   "schlagzeile": "Azubi des Monats Januar: Kilian Böhm",
+   "dreizeiler": "Der angehende Automobilkaufmann wird am 15. Januar in seinem Ausbildungsbetrieb in Geltow ausgezeichnet. Sein Betrieb, die Autohaus Biering GmbH, hatte ihn vorgeschlagen. Gelobt werden Talent, Kreativität und Offenheit.",
+   "zitat_zeigen": true
+  },
+  "6720": {
+   "art": "zahlen",
+   "thema": "Ausbildung & Nachwuchs",
+   "schlagzeile": "1.377 neue Ausbildungsverträge – 6,2 Prozent mehr",
+   "dreizeiler": "Zum 31. Dezember 2025 wurden im Kammerbezirk 1.377 neue Ausbildungsverträge abgeschlossen, 80 mehr als 2024. Die stärksten Zuwächse gab es in Potsdam, Potsdam-Mittelmark und Teltow-Fläming. Rückgänge verzeichnete vor allem Brandenburg an der Havel."
+  },
+  "6715": {
+   "art": "politik",
+   "thema": "Politik & Regierung",
+   "schlagzeile": "Nach dem Koalitionsbruch: Handwerk pocht auf Handlungsfähigkeit",
+   "dreizeiler": "Ministerpräsident Dietmar Woidke hat am 6. Januar die Koalition mit dem BSW beendet. Das Handwerk erklärt, das Land brauche in der aktuellen Wirtschaftslage eine handlungsfähige und verlässliche Landesregierung. Die Betriebe seien auf klare Entscheidungen und planbare Rahmenbedingungen angewiesen.",
+   "zitat_zeigen": true
+  },
+  "6712": {
+   "art": "zahlen",
+   "thema": "Betrieb & Nachfolge",
+   "schlagzeile": "17.522 Betriebe – mehr Gründungen, aber weniger qualifizierte",
+   "dreizeiler": "Zum 31. Dezember 2025 waren im Kammerbezirk 17.522 Betriebe gemeldet, 159 mehr als im Vorjahr. Neu eingetragen wurden 1.550 Betriebe, gelöscht 1.391. Die Zahl der qualifizierten Gründungen ging jedoch zurück.",
+   "thema2": "Wirtschaftslage"
   }
+ }
 }

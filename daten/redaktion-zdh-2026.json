@@ -1,266 +1,296 @@
 {
-  "hinweis": "Redaktionelle Ebene zu daten/zdh-2026.json. Zuordnung ueber die Kennung (letztes Pfadstueck der URL). Anders als bei den Kammer-Meldungen wird hier KEINE eigene Schlagzeile geschrieben: Die Ueberschriften des ZDH sind bereits praezise formuliert und werden unveraendert uebernommen. Geschrieben wird nur der Dreizeiler.",
-  "stand": "2026-08-25",
-  "eintraege": {
-    "ausbildung-im-handwerk-staerken-statt-mit-umlage-belasten": {
-      "art": "politik",
-      "thema": "Ausbildung & Nachwuchs",
-      "dreizeiler": "Die DGB-Jugend hat ihren Ausbildungsreport 2026 vorgelegt. Der ZDH verweist darauf, dass die neu abgeschlossenen Ausbildungsverträge im Handwerk im ersten Halbjahr 2026 deutlich gestiegen sind. Eine Ausbildungsumlage lehnt er ab – sie würde ausbildende Betriebe belasten statt stärken."
-    },
-    "jahressteuergesetz-zwischen-vereinfachungen-und-neuen-belastungen": {
-      "art": "politik",
-      "thema": "Steuern & Abgaben",
-      "dreizeiler": "Das Bundeskabinett hat das Jahressteuergesetz 2026 beschlossen. Der ZDH sieht erste Verbesserungen, etwa mehr Rechtssicherheit bei der Kaufpreisaufteilung von Grundstücken und bei der umsatzsteuerlichen Organschaft. Zentrale Belastungen für Betriebe seien damit aber noch nicht beseitigt."
-    },
-    "mehr-mut-bei-der-reform-des-aufstiegs-bafoeg": {
-      "art": "politik",
-      "thema": "Ausbildung & Nachwuchs",
-      "dreizeiler": "Das Bundeskabinett hat den Entwurf für ein fünftes Änderungsgesetz zum Aufstiegs-BAföG beschlossen. Der ZDH erkennt wichtige Verbesserungen an. Damit die Teilnehmerinnen und Teilnehmer an Fortbildungen davon aber tatsächlich profitieren, brauche es mehr Mut."
-    },
-    "zweites-entlastungskabinett-nicht-mehr-als-eine-zwischenetappe": {
-      "art": "politik",
-      "thema": "Entbürokratisierung",
-      "dreizeiler": "Die Bundesregierung hat ein zweites „Entlastungskabinett“ zur Entbürokratisierung abgehalten. Der ZDH begrüßt, dass sie den Erfolgsdruck selbst hochhält und transparent macht, wo sie steht. Trotz richtiger Ansätze und erkennbarer Fortschritte bleibe es eine Zwischenetappe."
-    },
-    "gkv-reform-laesst-entlastungspotenzial-ungenutzt": {
-      "art": "politik",
-      "thema": "Sozialabgaben & Rente",
-      "dreizeiler": "Der Bundestag hat das GKV-Beitragssatzstabilisierungsgesetz verabschiedet. Aus Sicht des ZDH bleibt es deutlich hinter dem Notwendigen zurück. Die Chance auf spürbare Entlastungen bleibe weitgehend ungenutzt."
-    },
-    "haushaltsbeschluesse-ohne-ueberzeugenden-konsolidierungskurs": {
-      "art": "politik",
-      "thema": "Steuern & Abgaben",
-      "dreizeiler": "Das Bundeskabinett hat den Regierungsentwurf zum Bundeshaushalt 2027 und den Finanzplan bis 2030 beschlossen. Der ZDH sieht darin keinen überzeugenden Konsolidierungskurs. Ein Haushalt, der auf immer neuen Schulden und unklaren Einsparversprechen aufbaue, schaffe kein Vertrauen."
-    },
-    "koalition-zeigt-handlungsfaehigkeit-durch-wichtige-reformschritte": {
-      "art": "politik",
-      "thema": "Politik & Regierung",
-      "dreizeiler": "Der Koalitionsausschuss hat seine Ergebnisse vorgestellt. Der ZDH wertet die Einigung als Beleg dafür, dass die Koalition auch bei schwierigen Themen handlungs- und kompromissfähig ist. Angesichts der wirtschaftlichen Lage sei das eine zentrale Botschaft."
-    },
-    "infrastrukturgesetz-setzt-richtige-prioritaeten": {
-      "art": "politik",
-      "thema": "Bauen & Sanieren",
-      "thema2": "Entbürokratisierung",
-      "dreizeiler": "Der Bundestag hat das Infrastruktur-Zukunftsgesetz verabschiedet. Der ZDH sieht darin ein wichtiges Signal für schnellere Planungs- und Genehmigungsverfahren. Das Gesetz schaffe die Grundlage, bei der Modernisierung der Infrastruktur schneller voranzukommen."
-    },
-    "rentenreformvorschlaege-zielen-richtung-generationengerechtigkeit": {
-      "art": "politik",
-      "thema": "Sozialabgaben & Rente",
-      "dreizeiler": "Die Rentenkommission hat ihre Empfehlungen an die Bundesregierung übergeben. Der ZDH sieht darin das Potenzial, das Rentensystem durch einen strukturellen Umbau generationengerechter aufzustellen. Die Koalition müsse nun den Mut aufbringen, das Gesamtpaket anzugehen."
-    },
-    "arbeitszeitgesetz-entwurf-geht-an-betrieblicher-realitaet-vorbei": {
-      "art": "politik",
-      "thema": "Arbeitszeit & Arbeitsrecht",
-      "dreizeiler": "Ein Referentenentwurf zur Änderung des Arbeitszeitgesetzes ist bekannt geworden. Der ZDH nennt ihn keinen Aufbruch, sondern einen Bruch mit den Zusagen des Koalitionsvertrags. Lange Anfahrten, witterungsabhängige Arbeiten und Notdienste kämen darin nicht vor."
-    },
-    "koalition-muss-konsens-ueber-reformnotwendigkeit-mit-leben-fuellen": {
-      "art": "politik",
-      "thema": "Politik & Regierung",
-      "dreizeiler": "Beim Koalitionsausschuss mit den Sozialpartnern war allen Beteiligten die Notwendigkeit tiefgreifender wirtschaftspolitischer Reformen bewusst. Über die nötigen Maßnahmen bestehen laut ZDH aber weiterhin unterschiedliche Sichtweisen."
-    },
-    "studie-mahnt-hebelreformen-in-schluessigem-reform-gesamtpaket-an": {
-      "art": "bericht",
-      "thema": "Wirtschaftslage",
-      "dreizeiler": "Im Haus des Deutschen Handwerks in Berlin haben zwei Wirtschaftswissenschaftlerinnen eine Studie zu „Hebelreformen“ vorgestellt. Der Gemeinschaftsausschuss der Deutschen Gewerblichen Wirtschaft diskutierte über Synergieeffekte für Wachstum und finanzielle Tragfähigkeit."
-    },
-    "deutsche-wirtschaft-setzt-auf-gemeinsamen-reformkurs": {
-      "art": "politik",
-      "thema": "Politik & Regierung",
-      "dreizeiler": "BDA, BDI, DIHK und ZDH haben eine gemeinsame Erklärung zum Meinungsaustausch im Kanzleramt veröffentlicht. Sie wollen möglichst große Schnittmengen in umstrittenen Reformfeldern ausloten. Es geht um soziale Sicherungssysteme, Arbeitsmarkt und Standortbedingungen."
-    },
-    "oecd-economic-outlook-sieht-grossen-reformbedarf-in-deutschland": {
-      "art": "politik",
-      "thema": "Wirtschaftslage",
-      "dreizeiler": "Die OECD hat ihren Economic Outlook veröffentlicht. Der ZDH liest daraus einen eindeutigen Handlungsauftrag an die Bundesregierung. Für spürbar bessere Bedingungen bei Wachstum, Investitionen und Beschäftigung brauche Deutschland umfassende Reformen."
-    },
-    "neue-allianzvereinbarung-zum-sommer-der-berufsausbildung-start": {
-      "art": "bericht",
-      "thema": "Ausbildung & Nachwuchs",
-      "dreizeiler": "Zum Start des „Sommers der Berufsausbildung“ wurde die neue Vereinbarung der Allianz für Aus- und Weiterbildung für 2026 bis 2029 veröffentlicht. Bundesbildungsministerium und ZDH betonen die Bedeutung der beruflichen Bildung für die Fachkräftesicherung."
-    },
-    "wirtschaftsweise-dringen-zu-recht-auf-umfassende-strukturreformen": {
-      "art": "politik",
-      "thema": "Wirtschaftslage",
-      "dreizeiler": "Der Sachverständigenrat hat sein Frühjahrsgutachten vorgelegt. Der ZDH sieht den Reformdruck auf die Bundesregierung dadurch zu Recht nochmals deutlich erhöht."
-    },
-    "zdh-und-euroskills-2027-gmbh-besiegeln-zusammenarbeit": {
-      "art": "bericht",
-      "thema": "Ausbildung & Nachwuchs",
-      "dreizeiler": "ZDH und EuroSkills 2027 GmbH haben in Berlin eine Absichtserklärung unterzeichnet. Sie vereinbaren die Zusammenarbeit für die Europameisterschaft der Berufe EuroSkills 2027."
-    },
-    "e-rechnung-fuer-betriebe-noch-mehr-aufwand-statt-entlastung": {
-      "art": "zahlen",
-      "thema": "Entbürokratisierung",
-      "dreizeiler": "Eine bundesweite ZDH-Umfrage unter knapp 2000 Handwerksbetrieben zeigt: Hoher Aufwand, zusätzliche Kosten und fehlende Vorgaben bremsen die Umsetzung der E-Rechnung deutlich. Statt Entlastung bedeutet sie für viele Betriebe derzeit Mehrarbeit."
-    },
-    "besser-sorgfaeltige-reformen-als-weitere-schnellschuesse": {
-      "art": "politik",
-      "thema": "Politik & Regierung",
-      "dreizeiler": "Der Koalitionsausschuss von Union und SPD hat sich auf einen Arbeitsprozess verständigt, statt schnelle Beschlüsse zu fassen. Der ZDH hält das für richtig: Wer bei Sozialstaat und Steuern dauerhaft etwas verändern wolle, dürfe nicht hektisch handeln."
-    },
-    "verlaesslichkeit-im-heizungskeller-ist-jetzt-entscheidend": {
-      "art": "politik",
-      "thema": "Bauen & Sanieren",
-      "dreizeiler": "Das Bundeskabinett hat das Gebäudemodernisierungsgesetz beschlossen. Damit wird die Wärmewende im Gebäudesektor neu ausgerichtet. Der ZDH nennt den Ansatz richtig – weniger Bürokratie, mehr Technologieoffenheit, einfacherer Rechtsrahmen – und mahnt jetzt Verlässlichkeit an."
-    },
-    "stopp-der-entlastungspraemie-korrigiert-zu-recht-fehlentscheidung": {
-      "art": "politik",
-      "thema": "Steuern & Abgaben",
-      "dreizeiler": "Der Bundesrat hat der sogenannten Entlastungsprämie die Zustimmung verweigert. Der ZDH wertet das als Korrektur einer gravierenden Fehlentscheidung. Sie wäre zu Lasten von Betrieben und Unternehmen gegangen."
-    },
-    "handwerk-warnt-vor-weiterer-belastungsspirale": {
-      "art": "politik",
-      "thema": "Wirtschaftslage",
-      "thema2": "Steuern & Abgaben",
-      "dreizeiler": "Der Arbeitskreis Steuerschätzung hat seine Frühjahrsprognose vorgelegt. Der ZDH liest darin ein Warnsignal: Die wirtschaftliche Dynamik in Deutschland bleibe hinter dem zurück, was nötig wäre."
-    },
-    "berufsbildung-staerken-uebergang-in-ausbildung-unterstuetzen": {
-      "art": "politik",
-      "thema": "Ausbildung & Nachwuchs",
-      "dreizeiler": "Die Bundesregierung hat den Berufsbildungsbericht veröffentlicht. Der ZDH begrüßt, dass er die Bedeutung der dualen Ausbildung für Fachkräftesicherung und Wohlstand hervorhebt. Der Übergang in die Ausbildung müsse besser unterstützt werden."
-    },
-    "1-jahr-schwarz-rot-reformfrust-statt-wirtschaftsaufbruch": {
-      "art": "politik",
-      "thema": "Politik & Regierung",
-      "dreizeiler": "Ein Jahr nach dem Start der schwarz-roten Koalition zieht der ZDH eine ernüchternde Bilanz. Aus der Erwartung eines wirtschaftspolitischen Aufbruchs sei spürbarer Frust im Handwerk geworden. Statt Entlastung und Strukturreformen entstehe der Eindruck von Stückwerk."
-    },
-    "arbeitsplatzsicherung-ist-bester-schutz-von-arbeitnehmerrechten": {
-      "art": "politik",
-      "thema": "Arbeitszeit & Arbeitsrecht",
-      "dreizeiler": "Zum Tag der Arbeit dankt der ZDH-Präsident den Beschäftigten und stellt zugleich klar: Der beste Schutz von Arbeitnehmerrechten seien sichere Arbeitsplätze. Ohne Beschäftigung gebe es weder Lohn noch soziale Absicherung."
-    },
-    "regierung-geht-unzureichende-reformentlastungsschritte": {
-      "art": "politik",
-      "thema": "Sozialabgaben & Rente",
-      "thema2": "Steuern & Abgaben",
-      "dreizeiler": "Das Kabinett hat das GKV-Beitragssatzstabilisierungsgesetz und die Eckwerte zum Bundeshaushalt 2027 beschlossen. Beides bleibt aus Sicht des ZDH hinter den angekündigten Reformvorhaben zurück. Eine erkennbare strategische Linie fehle."
-    },
-    "steueranreiz-fuer-handwerkerleistungen-nicht-abschaffen": {
-      "art": "politik",
-      "thema": "Steuern & Abgaben",
-      "dreizeiler": "Vor dem Eckwertebeschluss zum Bundeshaushalt 2027 warnt der ZDH davor, den Steueranreiz für Handwerkerleistungen zu streichen. Es bleibe unklar, was der Bundesfinanzminister unter dem Abbau von Steuervergünstigungen verstehe. Das verunsichere die Handwerksbetriebe massiv."
-    },
-    "erhalt-des-losgrundsatzes-ist-wichtiges-signal-fuer-das-handwerk": {
-      "art": "politik",
-      "thema": "Aufträge & Vergabe",
-      "dreizeiler": "Der Bundestag hat das Vergabebeschleunigungsgesetz verabschiedet. Der ZDH sieht darin einen ausgewogenen Weg: mehr Tempo bei öffentlichen Aufträgen, ohne die starke Rolle von Handwerk und Mittelstand zu schwächen."
-    },
-    "reformaufschub-gefaehrdet-massiv-deutschlands-mittelstand": {
-      "art": "politik",
-      "thema": "Wirtschaftslage",
-      "dreizeiler": "Die Bundesregierung hat ihre Frühjahrsprojektion mit deutlich reduzierter Wachstumsprognose für 2026 vorgelegt. Der ZDH warnt, der Reformstau gefährde Mittelstand und Handwerk massiv – und damit das Rückgrat der deutschen Wirtschaft."
-    },
-    "gkv-reformauftakt-muessen-weitere-strukturelle-reformen-folgen": {
-      "art": "politik",
-      "thema": "Sozialabgaben & Rente",
-      "dreizeiler": "Zum Referentenentwurf des GKV-Beitragssatzstabilisierungsgesetzes sieht der ZDH ein wichtiges Signal zur Stabilisierung der Kassenfinanzen. Positiv sei, dass zentrale Vorschläge der FinanzKommission Gesundheit aufgegriffen werden. Weitere strukturelle Reformen müssten folgen."
-    },
-    "abgewaelzte-entlastung-erhoeht-belastungsdruck-fuer-betriebe": {
-      "art": "politik",
-      "thema": "Energie & Sprit",
-      "thema2": "Steuern & Abgaben",
-      "dreizeiler": "Die Koalitionsklausur hat eine Senkung der Energiesteuer um 17 Cent pro Liter beschlossen. Der ZDH nennt das einen überfälligen ersten Schritt zur Entlastung von Wirtschaft und Verbrauchern. Der Staat solle nicht von der Krise profitieren."
-    },
-    "parkraumbedarf-des-handwerks-wird-endlich-mitgedacht": {
-      "art": "politik",
-      "thema": "Auflagen & Vorschriften",
-      "dreizeiler": "Der Bundestag hat die Novellierung des Straßenverkehrsgesetzes verabschiedet. Sie schafft die Grundlage für digitale Führerscheine und digitale Parkraumkontrolle. Für das Handwerk wichtig: Die Verordnungsermächtigung wurde erweitert."
-    },
-    "handwerk-mahnt-seriositaet-in-der-reformdebatte-an": {
-      "art": "politik",
-      "thema": "Politik & Regierung",
-      "dreizeiler": "Der ZDH-Präsident kritisiert die ständigen Einzelvorstöße aus Koalitionskreisen. Es sei ärgerlich und kontraproduktiv, dass jeden Tag ein neuer Testballon in die Luft gehe. Die Koalition müsse ihre Kommunikation hinterfragen."
-    },
-    "bundesregierung-haelt-beim-gold-plating-wort": {
-      "art": "politik",
-      "thema": "Entbürokratisierung",
-      "dreizeiler": "Das Bundeskabinett hat den Gesetzentwurf zur Umsetzung der europäischen Recht-auf-Reparatur-Richtlinie beschlossen. Der ZDH lobt, dass die europäischen Vorgaben nicht zu Lasten von Handwerk und Mittelstand verschärft werden."
-    },
-    "wochenarbeitszeit-staerkt-flexibilitaet-im-handwerk": {
-      "art": "politik",
-      "thema": "Arbeitszeit & Arbeitsrecht",
-      "dreizeiler": "In einem Interview fordert der ZDH-Generalsekretär ein Arbeitszeitgesetz, das zu modernen Arbeits- und Lebenswelten passt. Starre Tagesgrenzen hälfen niemandem. Eine Wochenarbeitszeit stärke Flexibilität und Wettbewerbsfähigkeit und verbessere die Vereinbarkeit von Beruf und Privatleben."
-    },
-    "deutschland-braucht-jetzt-eine-agenda-des-aufbruchs": {
-      "art": "politik",
-      "thema": "Politik & Regierung",
-      "dreizeiler": "Nach den Wahlergebnissen im März fordert der ZDH-Präsident eine Agenda des Aufbruchs. Seine Kernaussage: Nicht die Veränderung sei der ärgste Gegner, sondern der Stillstand."
-    },
-    "staat-darf-nicht-selbst-zum-profiteur-der-krise-werden": {
-      "art": "politik",
-      "thema": "Energie & Sprit",
-      "dreizeiler": "Die Kostenexplosion bei Energie und Treibstoffen infolge des Irankrieges schlägt in vielen Betrieben durch. Der ZDH hält es für richtig, dass die Bundesregierung den Druck auf die Mineralölindustrie erhöht. Der Staat dürfe nicht selbst zum Profiteur der Krise werden."
-    },
-    "investitionen-staerken-nicht-haushaltsloecher-stopfen": {
-      "art": "politik",
-      "thema": "Bauen & Sanieren",
-      "dreizeiler": "IW Köln und ifo-Institut haben Berechnungen zum Einsatz des Sondervermögens Infrastruktur und Klimaneutralität vorgelegt. Der ZDH fordert: Das Geld müsse in Infrastruktur fließen und dürfe nicht in Haushaltslöchern versickern."
-    },
-    "zukunftssicher-mit-dem-handwerk": {
-      "art": "bericht",
-      "thema": "Ausbildung & Nachwuchs",
-      "dreizeiler": "Zur Woche der Ausbildung wirbt der ZDH-Präsident bei jungen Menschen für das Handwerk. Handwerksberufe seien durch Künstliche Intelligenz kaum zu ersetzen, sinnstiftend, innovativ und böten gute Karrierechancen."
-    },
-    "ein-gerechter-sozialstaat-muss-alle-in-den-blick-nehmen": {
-      "art": "politik",
-      "thema": "Sozialabgaben & Rente",
-      "dreizeiler": "Zur Initiative „20 Millionen Stimmen für einen gerechten Sozialstaat“ erklärt der ZDH: Ein zukunftsfester Sozialstaat entstehe nicht durch Festhalten am Status quo. Es brauche Mut zu Reformen und Ehrlichkeit im Dialog."
-    },
-    "zdh-und-aif-vereinbaren-innovationspartnerschaft": {
-      "art": "bericht",
-      "thema": "Kammer & Service",
-      "dreizeiler": "ZDH und die Allianz für Industrie und Forschung haben auf der Internationalen Handwerksmesse eine strategische Absichtserklärung unterzeichnet. Ziel ist, kleinen und mittleren Betrieben den Zugang zu aktuellen wissenschaftlichen Erkenntnissen zu erleichtern."
-    },
-    "startschuss-fuer-zukunft-handwerk-und-ihm-2026": {
-      "art": "termin",
-      "thema": "Ehrungen & Termine",
-      "dreizeiler": "Der Kongress ZUKUNFT HANDWERK und die Internationale Handwerksmesse 2026 sind in München eröffnet worden. Es sind die größten Branchenveranstaltungen des Handwerks."
-    },
-    "stolz-und-zuversicht-im-handwerk": {
-      "art": "bericht",
-      "thema": "Ehrungen & Termine",
-      "dreizeiler": "Beim Panel „Stolz, stolzer, Handwerk“ auf dem Kongress ZUKUNFT HANDWERK standen Überzeugung und Zusammenhalt im Mittelpunkt. Teilgenommen haben Bundesforschungsministerin Dorothee Bär und Handwerkspräsident Jörg Dittrich."
-    },
-    "verleihung-des-14-handwerkspreises-der-buergschaftsbanken": {
-      "art": "ehrung",
-      "thema": "Ehrungen & Termine",
-      "dreizeiler": "Auf der Internationalen Handwerksmesse in München wurden drei Betriebe mit dem 14. Handwerkspreis der Bürgschaftsbanken ausgezeichnet. Gewürdigt wurden Integrationsengagement, nachhaltige Betriebsführung, moderne Weiterbildung und der Einsatz digitaler Werkzeuge."
-    },
-    "endlich-eine-orientierungsgrundlage-zur-waermewende": {
-      "art": "politik",
-      "thema": "Bauen & Sanieren",
-      "dreizeiler": "Die Koalitionsfraktionen haben Eckpunkte zum neuen Gebäudemodernisierungsgesetz veröffentlicht. Der ZDH begrüßt das Ende der monatelangen Hängepartie beim Gebäudeenergiegesetz. Damit gebe es endlich eine Orientierungsgrundlage."
-    },
-    "zdh-verleiht-zum-zweiten-mal-den-preis-fuer-handwerksgeschichte": {
-      "art": "ehrung",
-      "thema": "Ehrungen & Termine",
-      "dreizeiler": "Der ZDH hat zum zweiten Mal den bundesweiten Preis für Handwerksgeschichte verliehen. Ausgezeichnet wurden vier Geschichtsprojekte."
-    },
-    "reformverweigerung-gefaehrdet-den-sozialstaat": {
-      "art": "politik",
-      "thema": "Sozialabgaben & Rente",
-      "dreizeiler": "Zur DGB-Sozialstaatskonferenz erklärt der ZDH-Präsident: Wer den Sozialstaat sichern wolle, müsse ihn reformieren. Angesichts des demografischen Wandels, steigender Kosten und wachsender Belastungen führe ein Weiter-so in die Überforderung der Systeme."
-    },
-    "was-jetzt-zaehlt-strukturreformen-entlastung-und-verlaesslichkeit": {
-      "art": "politik",
-      "thema": "Wirtschaftslage",
-      "dreizeiler": "Die Bundesregierung hat den Jahreswirtschaftsbericht 2026 veröffentlicht. Der ZDH sieht den Befund bestätigt, dass die deutsche Wirtschaft seit Jahren nicht vorankommt. Das für 2026 in Aussicht gestellte Wachstum beruhe maßgeblich auf schuldenfinanzierten Staatsausgaben."
-    },
-    "besprechungskreis-kirche-handwerk-seit-60-jahren-impulsgeber": {
-      "art": "bericht",
-      "thema": "Ehrungen & Termine",
-      "dreizeiler": "Der Zentrale Besprechungskreis Kirche-Handwerk trifft sich in Braunschweig und feiert 2026 sein 60-jähriges Bestehen. Im Mittelpunkt steht eine gemeinsame Standortbestimmung für die kommenden Jahre."
-    },
-    "finger-weg-vom-betriebsvermoegen-bei-der-erbschaftsteuer": {
-      "art": "politik",
-      "thema": "Betrieb & Nachfolge",
-      "thema2": "Steuern & Abgaben",
-      "dreizeiler": "Die SPD hat Reformpläne zur Erbschaftsteuer vorgestellt. Der ZDH fordert, das Betriebsvermögen unangetastet zu lassen und zunächst das Urteil des Bundesverfassungsgerichts abzuwarten. Alles andere gefährde Arbeits- und Ausbildungsplätze."
-    },
-    "gemeinsame-erklaerung-zum-muenchener-spitzengespraech-am-06032026": {
-      "art": "politik",
-      "thema": "Wirtschaftslage",
-      "dreizeiler": "Beim Münchener Spitzengespräch fordern die Wirtschaftsverbände, 2026 zum „Jahr der Reformen“ zu machen. Der Wirtschaftsstandort Deutschland stehe unter Druck wie selten zuvor in der Nachkriegsgeschichte. Genannt werden veränderte Weltordnung, härterer Wettbewerb, technologische Umbrüche und demografischer Wandel."
-    }
+ "hinweis": "Redaktionelle Ebene zu daten/zdh-2026.json. Zuordnung ueber die Kennung (letztes Pfadstueck der URL). Anders als bei den Kammer-Meldungen wird hier KEINE eigene Schlagzeile geschrieben: Die Ueberschriften des ZDH sind bereits praezise formuliert und werden unveraendert uebernommen. Geschrieben wird nur der Dreizeiler.",
+ "stand": "2026-09-25",
+ "eintraege": {
+  "ausbildung-im-handwerk-staerken-statt-mit-umlage-belasten": {
+   "art": "politik",
+   "thema": "Ausbildung & Nachwuchs",
+   "dreizeiler": "Die DGB-Jugend hat ihren Ausbildungsreport 2026 vorgelegt. Der ZDH verweist darauf, dass die neu abgeschlossenen Ausbildungsverträge im Handwerk im ersten Halbjahr 2026 deutlich gestiegen sind. Eine Ausbildungsumlage lehnt er ab – sie würde ausbildende Betriebe belasten statt stärken."
+  },
+  "jahressteuergesetz-zwischen-vereinfachungen-und-neuen-belastungen": {
+   "art": "politik",
+   "thema": "Steuern & Abgaben",
+   "dreizeiler": "Das Bundeskabinett hat das Jahressteuergesetz 2026 beschlossen. Der ZDH sieht erste Verbesserungen, etwa mehr Rechtssicherheit bei der Kaufpreisaufteilung von Grundstücken und bei der umsatzsteuerlichen Organschaft. Zentrale Belastungen für Betriebe seien damit aber noch nicht beseitigt."
+  },
+  "mehr-mut-bei-der-reform-des-aufstiegs-bafoeg": {
+   "art": "politik",
+   "thema": "Ausbildung & Nachwuchs",
+   "dreizeiler": "Das Bundeskabinett hat den Entwurf für ein fünftes Änderungsgesetz zum Aufstiegs-BAföG beschlossen. Der ZDH erkennt wichtige Verbesserungen an. Damit die Teilnehmerinnen und Teilnehmer an Fortbildungen davon aber tatsächlich profitieren, brauche es mehr Mut."
+  },
+  "zweites-entlastungskabinett-nicht-mehr-als-eine-zwischenetappe": {
+   "art": "politik",
+   "thema": "Entbürokratisierung",
+   "dreizeiler": "Die Bundesregierung hat ein zweites „Entlastungskabinett“ zur Entbürokratisierung abgehalten. Der ZDH begrüßt, dass sie den Erfolgsdruck selbst hochhält und transparent macht, wo sie steht. Trotz richtiger Ansätze und erkennbarer Fortschritte bleibe es eine Zwischenetappe."
+  },
+  "gkv-reform-laesst-entlastungspotenzial-ungenutzt": {
+   "art": "politik",
+   "thema": "Sozialabgaben & Rente",
+   "dreizeiler": "Der Bundestag hat das GKV-Beitragssatzstabilisierungsgesetz verabschiedet. Aus Sicht des ZDH bleibt es deutlich hinter dem Notwendigen zurück. Die Chance auf spürbare Entlastungen bleibe weitgehend ungenutzt."
+  },
+  "haushaltsbeschluesse-ohne-ueberzeugenden-konsolidierungskurs": {
+   "art": "politik",
+   "thema": "Steuern & Abgaben",
+   "dreizeiler": "Das Bundeskabinett hat den Regierungsentwurf zum Bundeshaushalt 2027 und den Finanzplan bis 2030 beschlossen. Der ZDH sieht darin keinen überzeugenden Konsolidierungskurs. Ein Haushalt, der auf immer neuen Schulden und unklaren Einsparversprechen aufbaue, schaffe kein Vertrauen."
+  },
+  "koalition-zeigt-handlungsfaehigkeit-durch-wichtige-reformschritte": {
+   "art": "politik",
+   "thema": "Politik & Regierung",
+   "dreizeiler": "Der Koalitionsausschuss hat seine Ergebnisse vorgestellt. Der ZDH wertet die Einigung als Beleg dafür, dass die Koalition auch bei schwierigen Themen handlungs- und kompromissfähig ist. Angesichts der wirtschaftlichen Lage sei das eine zentrale Botschaft."
+  },
+  "infrastrukturgesetz-setzt-richtige-prioritaeten": {
+   "art": "politik",
+   "thema": "Bauen & Sanieren",
+   "thema2": "Entbürokratisierung",
+   "dreizeiler": "Der Bundestag hat das Infrastruktur-Zukunftsgesetz verabschiedet. Der ZDH sieht darin ein wichtiges Signal für schnellere Planungs- und Genehmigungsverfahren. Das Gesetz schaffe die Grundlage, bei der Modernisierung der Infrastruktur schneller voranzukommen."
+  },
+  "rentenreformvorschlaege-zielen-richtung-generationengerechtigkeit": {
+   "art": "politik",
+   "thema": "Sozialabgaben & Rente",
+   "dreizeiler": "Die Rentenkommission hat ihre Empfehlungen an die Bundesregierung übergeben. Der ZDH sieht darin das Potenzial, das Rentensystem durch einen strukturellen Umbau generationengerechter aufzustellen. Die Koalition müsse nun den Mut aufbringen, das Gesamtpaket anzugehen."
+  },
+  "arbeitszeitgesetz-entwurf-geht-an-betrieblicher-realitaet-vorbei": {
+   "art": "politik",
+   "thema": "Arbeitszeit & Arbeitsrecht",
+   "dreizeiler": "Ein Referentenentwurf zur Änderung des Arbeitszeitgesetzes ist bekannt geworden. Der ZDH nennt ihn keinen Aufbruch, sondern einen Bruch mit den Zusagen des Koalitionsvertrags. Lange Anfahrten, witterungsabhängige Arbeiten und Notdienste kämen darin nicht vor."
+  },
+  "koalition-muss-konsens-ueber-reformnotwendigkeit-mit-leben-fuellen": {
+   "art": "politik",
+   "thema": "Politik & Regierung",
+   "dreizeiler": "Beim Koalitionsausschuss mit den Sozialpartnern war allen Beteiligten die Notwendigkeit tiefgreifender wirtschaftspolitischer Reformen bewusst. Über die nötigen Maßnahmen bestehen laut ZDH aber weiterhin unterschiedliche Sichtweisen."
+  },
+  "studie-mahnt-hebelreformen-in-schluessigem-reform-gesamtpaket-an": {
+   "art": "bericht",
+   "thema": "Wirtschaftslage",
+   "dreizeiler": "Im Haus des Deutschen Handwerks in Berlin haben zwei Wirtschaftswissenschaftlerinnen eine Studie zu „Hebelreformen“ vorgestellt. Der Gemeinschaftsausschuss der Deutschen Gewerblichen Wirtschaft diskutierte über Synergieeffekte für Wachstum und finanzielle Tragfähigkeit."
+  },
+  "deutsche-wirtschaft-setzt-auf-gemeinsamen-reformkurs": {
+   "art": "politik",
+   "thema": "Politik & Regierung",
+   "dreizeiler": "BDA, BDI, DIHK und ZDH haben eine gemeinsame Erklärung zum Meinungsaustausch im Kanzleramt veröffentlicht. Sie wollen möglichst große Schnittmengen in umstrittenen Reformfeldern ausloten. Es geht um soziale Sicherungssysteme, Arbeitsmarkt und Standortbedingungen."
+  },
+  "oecd-economic-outlook-sieht-grossen-reformbedarf-in-deutschland": {
+   "art": "politik",
+   "thema": "Wirtschaftslage",
+   "dreizeiler": "Die OECD hat ihren Economic Outlook veröffentlicht. Der ZDH liest daraus einen eindeutigen Handlungsauftrag an die Bundesregierung. Für spürbar bessere Bedingungen bei Wachstum, Investitionen und Beschäftigung brauche Deutschland umfassende Reformen."
+  },
+  "neue-allianzvereinbarung-zum-sommer-der-berufsausbildung-start": {
+   "art": "bericht",
+   "thema": "Ausbildung & Nachwuchs",
+   "dreizeiler": "Zum Start des „Sommers der Berufsausbildung“ wurde die neue Vereinbarung der Allianz für Aus- und Weiterbildung für 2026 bis 2029 veröffentlicht. Bundesbildungsministerium und ZDH betonen die Bedeutung der beruflichen Bildung für die Fachkräftesicherung."
+  },
+  "wirtschaftsweise-dringen-zu-recht-auf-umfassende-strukturreformen": {
+   "art": "politik",
+   "thema": "Wirtschaftslage",
+   "dreizeiler": "Der Sachverständigenrat hat sein Frühjahrsgutachten vorgelegt. Der ZDH sieht den Reformdruck auf die Bundesregierung dadurch zu Recht nochmals deutlich erhöht."
+  },
+  "zdh-und-euroskills-2027-gmbh-besiegeln-zusammenarbeit": {
+   "art": "bericht",
+   "thema": "Ausbildung & Nachwuchs",
+   "dreizeiler": "ZDH und EuroSkills 2027 GmbH haben in Berlin eine Absichtserklärung unterzeichnet. Sie vereinbaren die Zusammenarbeit für die Europameisterschaft der Berufe EuroSkills 2027."
+  },
+  "e-rechnung-fuer-betriebe-noch-mehr-aufwand-statt-entlastung": {
+   "art": "zahlen",
+   "thema": "Entbürokratisierung",
+   "dreizeiler": "Eine bundesweite ZDH-Umfrage unter knapp 2000 Handwerksbetrieben zeigt: Hoher Aufwand, zusätzliche Kosten und fehlende Vorgaben bremsen die Umsetzung der E-Rechnung deutlich. Statt Entlastung bedeutet sie für viele Betriebe derzeit Mehrarbeit."
+  },
+  "besser-sorgfaeltige-reformen-als-weitere-schnellschuesse": {
+   "art": "politik",
+   "thema": "Politik & Regierung",
+   "dreizeiler": "Der Koalitionsausschuss von Union und SPD hat sich auf einen Arbeitsprozess verständigt, statt schnelle Beschlüsse zu fassen. Der ZDH hält das für richtig: Wer bei Sozialstaat und Steuern dauerhaft etwas verändern wolle, dürfe nicht hektisch handeln."
+  },
+  "verlaesslichkeit-im-heizungskeller-ist-jetzt-entscheidend": {
+   "art": "politik",
+   "thema": "Bauen & Sanieren",
+   "dreizeiler": "Das Bundeskabinett hat das Gebäudemodernisierungsgesetz beschlossen. Damit wird die Wärmewende im Gebäudesektor neu ausgerichtet. Der ZDH nennt den Ansatz richtig – weniger Bürokratie, mehr Technologieoffenheit, einfacherer Rechtsrahmen – und mahnt jetzt Verlässlichkeit an."
+  },
+  "stopp-der-entlastungspraemie-korrigiert-zu-recht-fehlentscheidung": {
+   "art": "politik",
+   "thema": "Steuern & Abgaben",
+   "dreizeiler": "Der Bundesrat hat der sogenannten Entlastungsprämie die Zustimmung verweigert. Der ZDH wertet das als Korrektur einer gravierenden Fehlentscheidung. Sie wäre zu Lasten von Betrieben und Unternehmen gegangen."
+  },
+  "handwerk-warnt-vor-weiterer-belastungsspirale": {
+   "art": "politik",
+   "thema": "Wirtschaftslage",
+   "thema2": "Steuern & Abgaben",
+   "dreizeiler": "Der Arbeitskreis Steuerschätzung hat seine Frühjahrsprognose vorgelegt. Der ZDH liest darin ein Warnsignal: Die wirtschaftliche Dynamik in Deutschland bleibe hinter dem zurück, was nötig wäre."
+  },
+  "berufsbildung-staerken-uebergang-in-ausbildung-unterstuetzen": {
+   "art": "politik",
+   "thema": "Ausbildung & Nachwuchs",
+   "dreizeiler": "Die Bundesregierung hat den Berufsbildungsbericht veröffentlicht. Der ZDH begrüßt, dass er die Bedeutung der dualen Ausbildung für Fachkräftesicherung und Wohlstand hervorhebt. Der Übergang in die Ausbildung müsse besser unterstützt werden."
+  },
+  "1-jahr-schwarz-rot-reformfrust-statt-wirtschaftsaufbruch": {
+   "art": "politik",
+   "thema": "Politik & Regierung",
+   "dreizeiler": "Ein Jahr nach dem Start der schwarz-roten Koalition zieht der ZDH eine ernüchternde Bilanz. Aus der Erwartung eines wirtschaftspolitischen Aufbruchs sei spürbarer Frust im Handwerk geworden. Statt Entlastung und Strukturreformen entstehe der Eindruck von Stückwerk."
+  },
+  "arbeitsplatzsicherung-ist-bester-schutz-von-arbeitnehmerrechten": {
+   "art": "politik",
+   "thema": "Arbeitszeit & Arbeitsrecht",
+   "dreizeiler": "Zum Tag der Arbeit dankt der ZDH-Präsident den Beschäftigten und stellt zugleich klar: Der beste Schutz von Arbeitnehmerrechten seien sichere Arbeitsplätze. Ohne Beschäftigung gebe es weder Lohn noch soziale Absicherung."
+  },
+  "regierung-geht-unzureichende-reformentlastungsschritte": {
+   "art": "politik",
+   "thema": "Sozialabgaben & Rente",
+   "thema2": "Steuern & Abgaben",
+   "dreizeiler": "Das Kabinett hat das GKV-Beitragssatzstabilisierungsgesetz und die Eckwerte zum Bundeshaushalt 2027 beschlossen. Beides bleibt aus Sicht des ZDH hinter den angekündigten Reformvorhaben zurück. Eine erkennbare strategische Linie fehle."
+  },
+  "steueranreiz-fuer-handwerkerleistungen-nicht-abschaffen": {
+   "art": "politik",
+   "thema": "Steuern & Abgaben",
+   "dreizeiler": "Vor dem Eckwertebeschluss zum Bundeshaushalt 2027 warnt der ZDH davor, den Steueranreiz für Handwerkerleistungen zu streichen. Es bleibe unklar, was der Bundesfinanzminister unter dem Abbau von Steuervergünstigungen verstehe. Das verunsichere die Handwerksbetriebe massiv."
+  },
+  "erhalt-des-losgrundsatzes-ist-wichtiges-signal-fuer-das-handwerk": {
+   "art": "politik",
+   "thema": "Aufträge & Vergabe",
+   "dreizeiler": "Der Bundestag hat das Vergabebeschleunigungsgesetz verabschiedet. Der ZDH sieht darin einen ausgewogenen Weg: mehr Tempo bei öffentlichen Aufträgen, ohne die starke Rolle von Handwerk und Mittelstand zu schwächen."
+  },
+  "reformaufschub-gefaehrdet-massiv-deutschlands-mittelstand": {
+   "art": "politik",
+   "thema": "Wirtschaftslage",
+   "dreizeiler": "Die Bundesregierung hat ihre Frühjahrsprojektion mit deutlich reduzierter Wachstumsprognose für 2026 vorgelegt. Der ZDH warnt, der Reformstau gefährde Mittelstand und Handwerk massiv – und damit das Rückgrat der deutschen Wirtschaft."
+  },
+  "gkv-reformauftakt-muessen-weitere-strukturelle-reformen-folgen": {
+   "art": "politik",
+   "thema": "Sozialabgaben & Rente",
+   "dreizeiler": "Zum Referentenentwurf des GKV-Beitragssatzstabilisierungsgesetzes sieht der ZDH ein wichtiges Signal zur Stabilisierung der Kassenfinanzen. Positiv sei, dass zentrale Vorschläge der FinanzKommission Gesundheit aufgegriffen werden. Weitere strukturelle Reformen müssten folgen."
+  },
+  "abgewaelzte-entlastung-erhoeht-belastungsdruck-fuer-betriebe": {
+   "art": "politik",
+   "thema": "Energie & Sprit",
+   "thema2": "Steuern & Abgaben",
+   "dreizeiler": "Die Koalitionsklausur hat eine Senkung der Energiesteuer um 17 Cent pro Liter beschlossen. Der ZDH nennt das einen überfälligen ersten Schritt zur Entlastung von Wirtschaft und Verbrauchern. Der Staat solle nicht von der Krise profitieren."
+  },
+  "parkraumbedarf-des-handwerks-wird-endlich-mitgedacht": {
+   "art": "politik",
+   "thema": "Auflagen & Vorschriften",
+   "dreizeiler": "Der Bundestag hat die Novellierung des Straßenverkehrsgesetzes verabschiedet. Sie schafft die Grundlage für digitale Führerscheine und digitale Parkraumkontrolle. Für das Handwerk wichtig: Die Verordnungsermächtigung wurde erweitert."
+  },
+  "handwerk-mahnt-seriositaet-in-der-reformdebatte-an": {
+   "art": "politik",
+   "thema": "Politik & Regierung",
+   "dreizeiler": "Der ZDH-Präsident kritisiert die ständigen Einzelvorstöße aus Koalitionskreisen. Es sei ärgerlich und kontraproduktiv, dass jeden Tag ein neuer Testballon in die Luft gehe. Die Koalition müsse ihre Kommunikation hinterfragen."
+  },
+  "bundesregierung-haelt-beim-gold-plating-wort": {
+   "art": "politik",
+   "thema": "Entbürokratisierung",
+   "dreizeiler": "Das Bundeskabinett hat den Gesetzentwurf zur Umsetzung der europäischen Recht-auf-Reparatur-Richtlinie beschlossen. Der ZDH lobt, dass die europäischen Vorgaben nicht zu Lasten von Handwerk und Mittelstand verschärft werden."
+  },
+  "wochenarbeitszeit-staerkt-flexibilitaet-im-handwerk": {
+   "art": "politik",
+   "thema": "Arbeitszeit & Arbeitsrecht",
+   "dreizeiler": "In einem Interview fordert der ZDH-Generalsekretär ein Arbeitszeitgesetz, das zu modernen Arbeits- und Lebenswelten passt. Starre Tagesgrenzen hälfen niemandem. Eine Wochenarbeitszeit stärke Flexibilität und Wettbewerbsfähigkeit und verbessere die Vereinbarkeit von Beruf und Privatleben."
+  },
+  "deutschland-braucht-jetzt-eine-agenda-des-aufbruchs": {
+   "art": "politik",
+   "thema": "Politik & Regierung",
+   "dreizeiler": "Nach den Wahlergebnissen im März fordert der ZDH-Präsident eine Agenda des Aufbruchs. Seine Kernaussage: Nicht die Veränderung sei der ärgste Gegner, sondern der Stillstand."
+  },
+  "staat-darf-nicht-selbst-zum-profiteur-der-krise-werden": {
+   "art": "politik",
+   "thema": "Energie & Sprit",
+   "dreizeiler": "Die Kostenexplosion bei Energie und Treibstoffen infolge des Irankrieges schlägt in vielen Betrieben durch. Der ZDH hält es für richtig, dass die Bundesregierung den Druck auf die Mineralölindustrie erhöht. Der Staat dürfe nicht selbst zum Profiteur der Krise werden."
+  },
+  "investitionen-staerken-nicht-haushaltsloecher-stopfen": {
+   "art": "politik",
+   "thema": "Bauen & Sanieren",
+   "dreizeiler": "IW Köln und ifo-Institut haben Berechnungen zum Einsatz des Sondervermögens Infrastruktur und Klimaneutralität vorgelegt. Der ZDH fordert: Das Geld müsse in Infrastruktur fließen und dürfe nicht in Haushaltslöchern versickern."
+  },
+  "zukunftssicher-mit-dem-handwerk": {
+   "art": "bericht",
+   "thema": "Ausbildung & Nachwuchs",
+   "dreizeiler": "Zur Woche der Ausbildung wirbt der ZDH-Präsident bei jungen Menschen für das Handwerk. Handwerksberufe seien durch Künstliche Intelligenz kaum zu ersetzen, sinnstiftend, innovativ und böten gute Karrierechancen."
+  },
+  "ein-gerechter-sozialstaat-muss-alle-in-den-blick-nehmen": {
+   "art": "politik",
+   "thema": "Sozialabgaben & Rente",
+   "dreizeiler": "Zur Initiative „20 Millionen Stimmen für einen gerechten Sozialstaat“ erklärt der ZDH: Ein zukunftsfester Sozialstaat entstehe nicht durch Festhalten am Status quo. Es brauche Mut zu Reformen und Ehrlichkeit im Dialog."
+  },
+  "zdh-und-aif-vereinbaren-innovationspartnerschaft": {
+   "art": "bericht",
+   "thema": "Kammer & Service",
+   "dreizeiler": "ZDH und die Allianz für Industrie und Forschung haben auf der Internationalen Handwerksmesse eine strategische Absichtserklärung unterzeichnet. Ziel ist, kleinen und mittleren Betrieben den Zugang zu aktuellen wissenschaftlichen Erkenntnissen zu erleichtern."
+  },
+  "startschuss-fuer-zukunft-handwerk-und-ihm-2026": {
+   "art": "termin",
+   "thema": "Ehrungen & Termine",
+   "dreizeiler": "Der Kongress ZUKUNFT HANDWERK und die Internationale Handwerksmesse 2026 sind in München eröffnet worden. Es sind die größten Branchenveranstaltungen des Handwerks."
+  },
+  "stolz-und-zuversicht-im-handwerk": {
+   "art": "bericht",
+   "thema": "Ehrungen & Termine",
+   "dreizeiler": "Beim Panel „Stolz, stolzer, Handwerk“ auf dem Kongress ZUKUNFT HANDWERK standen Überzeugung und Zusammenhalt im Mittelpunkt. Teilgenommen haben Bundesforschungsministerin Dorothee Bär und Handwerkspräsident Jörg Dittrich."
+  },
+  "verleihung-des-14-handwerkspreises-der-buergschaftsbanken": {
+   "art": "ehrung",
+   "thema": "Ehrungen & Termine",
+   "dreizeiler": "Auf der Internationalen Handwerksmesse in München wurden drei Betriebe mit dem 14. Handwerkspreis der Bürgschaftsbanken ausgezeichnet. Gewürdigt wurden Integrationsengagement, nachhaltige Betriebsführung, moderne Weiterbildung und der Einsatz digitaler Werkzeuge."
+  },
+  "endlich-eine-orientierungsgrundlage-zur-waermewende": {
+   "art": "politik",
+   "thema": "Bauen & Sanieren",
+   "dreizeiler": "Die Koalitionsfraktionen haben Eckpunkte zum neuen Gebäudemodernisierungsgesetz veröffentlicht. Der ZDH begrüßt das Ende der monatelangen Hängepartie beim Gebäudeenergiegesetz. Damit gebe es endlich eine Orientierungsgrundlage."
+  },
+  "zdh-verleiht-zum-zweiten-mal-den-preis-fuer-handwerksgeschichte": {
+   "art": "ehrung",
+   "thema": "Ehrungen & Termine",
+   "dreizeiler": "Der ZDH hat zum zweiten Mal den bundesweiten Preis für Handwerksgeschichte verliehen. Ausgezeichnet wurden vier Geschichtsprojekte."
+  },
+  "reformverweigerung-gefaehrdet-den-sozialstaat": {
+   "art": "politik",
+   "thema": "Sozialabgaben & Rente",
+   "dreizeiler": "Zur DGB-Sozialstaatskonferenz erklärt der ZDH-Präsident: Wer den Sozialstaat sichern wolle, müsse ihn reformieren. Angesichts des demografischen Wandels, steigender Kosten und wachsender Belastungen führe ein Weiter-so in die Überforderung der Systeme."
+  },
+  "was-jetzt-zaehlt-strukturreformen-entlastung-und-verlaesslichkeit": {
+   "art": "politik",
+   "thema": "Wirtschaftslage",
+   "dreizeiler": "Die Bundesregierung hat den Jahreswirtschaftsbericht 2026 veröffentlicht. Der ZDH sieht den Befund bestätigt, dass die deutsche Wirtschaft seit Jahren nicht vorankommt. Das für 2026 in Aussicht gestellte Wachstum beruhe maßgeblich auf schuldenfinanzierten Staatsausgaben."
+  },
+  "besprechungskreis-kirche-handwerk-seit-60-jahren-impulsgeber": {
+   "art": "bericht",
+   "thema": "Ehrungen & Termine",
+   "dreizeiler": "Der Zentrale Besprechungskreis Kirche-Handwerk trifft sich in Braunschweig und feiert 2026 sein 60-jähriges Bestehen. Im Mittelpunkt steht eine gemeinsame Standortbestimmung für die kommenden Jahre."
+  },
+  "finger-weg-vom-betriebsvermoegen-bei-der-erbschaftsteuer": {
+   "art": "politik",
+   "thema": "Betrieb & Nachfolge",
+   "thema2": "Steuern & Abgaben",
+   "dreizeiler": "Die SPD hat Reformpläne zur Erbschaftsteuer vorgestellt. Der ZDH fordert, das Betriebsvermögen unangetastet zu lassen und zunächst das Urteil des Bundesverfassungsgerichts abzuwarten. Alles andere gefährde Arbeits- und Ausbildungsplätze."
+  },
+  "gemeinsame-erklaerung-zum-muenchener-spitzengespraech-am-06032026": {
+   "art": "politik",
+   "thema": "Wirtschaftslage",
+   "dreizeiler": "Beim Münchener Spitzengespräch fordern die Wirtschaftsverbände, 2026 zum „Jahr der Reformen“ zu machen. Der Wirtschaftsstandort Deutschland stehe unter Druck wie selten zuvor in der Nachkriegsgeschichte. Genannt werden veränderte Weltordnung, härterer Wettbewerb, technologische Umbrüche und demografischer Wandel."
+  },
+  "wirtschaftspolitik-in-den-mittelpunkt-ruecken": {
+   "art": "politik",
+   "thema": "Sozialabgaben & Rente",
+   "thema2": "Energie & Sprit",
+   "dreizeiler": "Im Handelsblatt-Interview nach der Wahl in Sachsen-Anhalt nennt ZDH-Präsident Jörg Dittrich die Senkung der Lohnzusatzkosten als Gamechanger. Bei den Strompreisen verweist er auf die im Koalitionsvertrag vereinbarte Stromsteuersenkung für alle: Wärmepumpe oder E-Auto rechneten sich dann eher, auch ohne Förderung."
+  },
+  "leasing-schafft-finanzielle-spielraeume-fuer-wachstum-im-handwerk": {
+   "art": "bericht",
+   "thema": "Wirtschaftslage",
+   "dreizeiler": "Im Jahresbericht des Bundesverbandes Deutscher Leasing-Unternehmen beschreibt ZDH-Präsident Jörg Dittrich, wie Leasing Investitionen erleichtern, Modernisierung ermöglichen und damit die Wettbewerbsfähigkeit des Handwerks stärken kann."
+  },
+  "fuer-eine-trendwende-braucht-es-mehr-reformtempo": {
+   "thema": "Wirtschaftslage",
+   "thema2": "Sozialabgaben & Rente",
+   "nur_einordnung": "Stellungnahme zur Gemeinschaftsdiagnose Herbst 2026"
+  },
+  "lohnzusatzkosten-muessen-runter-weitere-reformen-dafuer-noetig": {
+   "thema": "Sozialabgaben & Rente",
+   "nur_einordnung": "Es geht um Sozialbeitraege, nicht um Steuern"
+  },
+  "eine-atmosphaere-des-ermoeglichens-schaffen": {
+   "thema": "Steuern & Abgaben",
+   "thema2": "Sozialabgaben & Rente",
+   "nur_einordnung": "Schwerpunkt Steuerbonus und Lohnzusatzkosten, nicht Ausbildung"
+  },
+  "politischen-stillstand-koennen-wir-uns-nicht-leisten": {
+   "thema": "Steuern & Abgaben",
+   "thema2": "Energie & Sprit",
+   "nur_einordnung": "Nennt Steuern und Energie nebeneinander"
   }
+ }
 }
