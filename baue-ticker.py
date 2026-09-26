@@ -298,6 +298,12 @@ def main():
     for x in fertig:
         x["neu"] = x["id"] in neu_ids
 
+    # Das Datum im Kopf ist der Tag des letzten ABGLEICHS, nicht der des
+    # letzten Bauens. Wer nur die Vorlage aendert und neu baut, holt keine
+    # neuen Meldungen - dann darf die Seite auch nicht behaupten, sie sei
+    # heute abgeglichen worden.
+    letzter_abgleich = neuestes or heute
+
     json.dump(bekannt, open(bekannt_pfad, "w", encoding="utf-8"),
               ensure_ascii=False, indent=1, sort_keys=True)
 
@@ -383,7 +389,7 @@ def main():
         "forderungen_kriterium": forderungen_datei.get("kriterium", ""),
         "stand": redaktion_datei.get("stand", datetime.date.today().isoformat()),
         "themen": themen,
-        "letzter_abgleich": heute,
+        "letzter_abgleich": letzter_abgleich,
         "neu_anzahl": sum(1 for x in fertig if x["neu"]),
         "meldungen": fertig,
     }

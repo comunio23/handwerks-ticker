@@ -43,6 +43,10 @@
     --schatten-hoch:1px 1px 12px rgba(127,127,127,.55);
   }
   *{box-sizing:border-box}
+  /* "1fr" heisst minmax(auto,1fr) und kann nicht unter die Inhaltsbreite
+     schrumpfen - ein einziges langes Wort sprengt sonst das Handy-Layout
+     (KMS [L-0163]). Deshalb pauschal fuer alle Rasterkinder. */
+  .kennzahlen>*,.kacheln>*,.forderungs-reihe>*{min-width:0}
   html{-webkit-text-size-adjust:100%}
   body{
     margin:0;
@@ -136,13 +140,18 @@
   .kachel-kopf{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
   .kachel-name{font-size:19px;font-weight:700;color:var(--blau);line-height:1.25;
                hyphens:auto;overflow-wrap:break-word}
-  .kachel-zahl{flex:0 0 auto;background:var(--blau-flaeche);color:var(--blau);
+  .kachel-marken{flex:0 0 auto;display:flex;align-items:baseline;gap:5px}
+  .kachel-zahl{background:var(--blau-flaeche);color:var(--blau);
                font-size:13px;font-weight:700;padding:2px 9px;border-radius:10px}
+  .kachel-neu{background:var(--gelb);color:var(--blau);font-size:12px;
+              font-weight:700;padding:2px 8px;border-radius:10px;white-space:nowrap}
   .kachel.nachrangig .kachel-zahl{background:var(--grau-flaeche);color:var(--text-stark)}
   .kachel-zeile{display:block;font-size:14px;line-height:1.35;color:var(--text);
                 margin-top:9px;overflow-wrap:break-word}
   .kachel-datum{color:var(--text-leise);font-size:12px;display:block}
-  .kachel-mehr{display:block;margin-top:11px;font-size:13px;font-weight:700;
+  .kachel-herkunft{display:block;margin-top:9px;font-size:12px;
+                   color:var(--text-leise)}
+  .kachel-mehr{display:block;margin-top:7px;font-size:13px;font-weight:700;
                color:var(--blau-link)}
 
   /* ---------- Suche ---------- */
@@ -151,7 +160,7 @@
                   min-height:46px;border:1px solid var(--text);border-radius:0;
                   background:var(--weiss);color:var(--text)}
   .suchband input:hover{border-color:var(--blau-akzent)}
-  .suchband input::placeholder{color:#7b828a}
+  .suchband input::placeholder{color:var(--text-leise)}
 
   /* ---------- Reiterleiste: Muster der Kammer (Farbwelt blue-dark) ----------
      Feste Hoehe, damit beim Scrollen nichts springt. */
@@ -186,17 +195,21 @@
               color:var(--blau-link);cursor:pointer;text-align:center}
   .block-mehr:hover{box-shadow:var(--schatten-hoch)}
 
+  /* Farbregel der Kammer-Ampel: Rot heisst "wichtig" und bleibt deshalb den
+     drei belegten Forderungen vorbehalten. Politische Meldungen tragen das
+     Akzentblau als Flaeche, neue Meldungen das Gelb der Neu-Marke. */
   .karte{background:var(--weiss);box-shadow:var(--schatten);padding:14px 18px 12px;
          margin-bottom:4px;border-left:5px solid transparent}
-  .karte.politisch{border-left-color:var(--rot)}
+  .karte.politisch{border-left-color:var(--blau-akzent)}
   .karte.ist-neu{border-left-color:var(--gelb)}
-  .karte.politisch.ist-neu{border-left-color:var(--rot);
-                           box-shadow:var(--schatten),inset 4px 0 0 var(--gelb)}
   .karte-dach{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:0 0 8px;
               font-size:12px}
   .ebene{padding:3px 8px;font-weight:700;white-space:nowrap}
   .ebene-bund{background:var(--blau);color:#fff}
-  .ebene-land{background:var(--blau-flaeche);color:var(--blau)}
+  /* Zweites Merkmal neben der Farbe, damit die Ebene auch in Graustufen und
+     bei Farbsehschwaeche unterscheidbar bleibt. */
+  .ebene-land{background:var(--blau-flaeche);color:var(--blau);
+              box-shadow:inset 0 0 0 1px var(--blau)}
   .neu-marke{background:var(--gelb);color:var(--blau);font-weight:700;padding:3px 8px}
   .gattung{background:var(--grau-flaeche);color:var(--text-stark);padding:3px 8px}
   .thema{color:var(--text-leise)}
@@ -289,7 +302,7 @@
 <section class="abschnitt">
   <div class="mitte">
     <h2 class="abschnitt-titel">Worum es gerade geht</h2>
-    <p class="abschnitt-unter">Ein Klick auf ein Thema zeigt alle Meldungen dazu.</p>
+    <p class="abschnitt-unter" id="lagesatz"></p>
     <div class="kacheln" id="themenKacheln"></div>
   </div>
 </section>
@@ -484,6 +497,41 @@ function zeichneForderungen(){
     }).join("");
 }
 
+/* ---------- Lagesatz ----------
+   Ein einziger Satz, der sich aus den Daten selbst ergibt und sich mit jedem
+   Abgleich aendert. Bei Gleichstand werden alle gleichauf liegenden Themen
+   genannt - sonst waere die Aussage unvollstaendig. */
+function aufzaehlen(namen){
+  if (namen.length === 1) return namen[0];
+  return namen.slice(0, -1).join(", ") + " und " + namen[namen.length - 1];
+}
+
+function zeichneLagesatz(){
+  const zaehlen = f => BUENDEL
+    .map(b => ({b: b, n: DATEN.meldungen.filter(m => buendelVon(m) === b && f(m)).length}))
+    .filter(x => x.n > 0)
+    .sort((x, y) => y.n - x.n);
+
+  const neue = zaehlen(m => m.neu);
+  let satz;
+  if (neue.length){
+    const spitze = neue.filter(x => x.n === neue[0].n);
+    satz = "Beim Abgleich am " + datumLesbar(DATEN.letzter_abgleich) + " kamen " +
+      DATEN.meldungen.filter(m => m.neu).length + " Meldungen dazu, die meisten zu " +
+      aufzaehlen(spitze.map(x => x.b.name)) + " (je " + spitze[0].n + ").";
+  } else {
+    satz = "Seit dem Abgleich am " + datumLesbar(DATEN.letzter_abgleich) +
+      " ist nichts dazugekommen.";
+  }
+  const alle = zaehlen(() => true);
+  if (alle.length){
+    const g = alle[0];
+    satz += " Größtes Thema " + DATEN.jahr + ": " + g.b.name + " mit " +
+      g.n + " von " + DATEN.meldungen.length + " Meldungen.";
+  }
+  document.getElementById("lagesatz").textContent = satz;
+}
+
 /* ---------- Themenkacheln ---------- */
 function zeichneKacheln(){
   const html = BUENDEL.map(b => {
@@ -491,13 +539,19 @@ function zeichneKacheln(){
     if (!treffer.length) return "";          /* leere Kachel gar nicht erst zeigen */
     treffer.sort((x, y) => (y.datum || "").localeCompare(x.datum || ""));
     const gewaehlt = (filter === "buendel:" + b.name);
+    const neu = treffer.filter(m => m.neu).length;
     return '<button type="button" class="kachel' +
              (b.nachrangig ? " nachrangig" : "") + '" ' +
              'data-filter="buendel:' + esc(b.name) + '" ' +
              'aria-pressed="' + gewaehlt + '">' +
       '<span class="kachel-kopf">' +
         '<span class="kachel-name">' + esc(b.name) + '</span>' +
-        '<span class="kachel-zahl">' + treffer.length + '</span>' +
+        /* Die grosse Zahl ist die Jahressumme, die Schlagzeile darunter von
+           gestern - ohne Beschriftung liest man das als "48 diese Woche". */
+        '<span class="kachel-marken">' +
+          (neu ? '<span class="kachel-neu">' + neu + ' neu</span>' : '') +
+          '<span class="kachel-zahl">' + treffer.length + '</span>' +
+        '</span>' +
       '</span>' +
       /* Am Handy nur die juengste Schlagzeile - sonst waere die Kachelwand
          dort drei Bildschirme hoch, bevor die erste Meldung kommt. */
@@ -506,7 +560,15 @@ function zeichneKacheln(){
           '<span class="kachel-datum">' + esc(datumKurz(m.datum)) + ' &middot; ' +
             esc(m.ebene) + '</span>' + esc(m.schlagzeile) +
         '</span>').join("") +
-      '<span class="kachel-mehr">alle ' + treffer.length + ' anzeigen</span>' +
+      /* Die Herkunft im Klartext, nicht nur als Farbe: dass Geld & Steuern
+         fast nur vom Bund kommt und Ehrungen fast nur aus Brandenburg, ist
+         eine Aussage fuer sich. */
+      '<span class="kachel-herkunft">' +
+        treffer.filter(m => m.ebene === "Bund").length + ' Bund &middot; ' +
+        treffer.filter(m => m.ebene === "Brandenburg").length + ' Brandenburg' +
+      '</span>' +
+      '<span class="kachel-mehr">alle ' + treffer.length + ' aus ' +
+        esc(DATEN.jahr) + ' anzeigen</span>' +
     '</button>';
   }).join("");
   document.getElementById("themenKacheln").innerHTML = html;
@@ -544,11 +606,18 @@ function zeichneListe(){
   treffer.sort((a, b) => (b.datum || "").localeCompare(a.datum || ""));
 
   const gegliedert = (filter === "alles" && !suchtext);
+  /* Nach einem Filterklick muss dastehen, WO man gelandet ist - nicht nur,
+     wie viele Karten es sind. */
+  let wo = "";
+  if (filter.indexOf("buendel:") === 0) wo = filter.slice(8) + ": ";
+  else if (filter.indexOf("ebene:") === 0) wo = filter.slice(6) + ": ";
+  else if (filter === "politik") wo = "Politische Meldungen: ";
+  else if (filter === "neu") wo = "Neu seit dem letzten Abgleich: ";
   document.getElementById("zaehler").textContent =
     gegliedert
       ? treffer.length + " Meldungen, nach Thema geordnet – je Thema die " +
         ANRISS + " neuesten, der Rest auf Knopfdruck"
-      : treffer.length + " von " + DATEN.meldungen.length +
+      : wo + treffer.length + " von " + DATEN.meldungen.length +
         " Meldungen, neueste zuerst";
 
   const ziel = document.getElementById("liste");
@@ -689,6 +758,7 @@ document.getElementById("suche").addEventListener("input", function(){
 
 zeichneKopf();
 zeichneForderungen();
+zeichneLagesatz();
 zeichneKacheln();
 zeichneFilter();
 zeichneListe();
