@@ -89,7 +89,10 @@
               font-weight:700}
   .kennzahl span{display:block;font-size:13px;color:var(--text-leise);margin-top:3px;
                  hyphens:auto;overflow-wrap:break-word}
-  .kennzahl.hebt b{color:var(--rot)}
+  /* Die Neu-Zahl wird nicht rot - Rot gehoert in der Ampel der Kammer den
+     drei Forderungen. Markiert wird mit dem Gelb der Neu-Marke, und zwar
+     als Flaeche: Gelb traegt nie Schrift (1,58:1 auf Weiss). */
+  .kennzahl.hebt{border-left:4px solid var(--gelb)}
 
   /* ---------- Abschnittsueberschriften ---------- */
   .abschnitt{padding:28px 0 0}
@@ -113,7 +116,10 @@
                    align-items:center}
   .marke{display:inline-block;font-size:12px;line-height:1.4;padding:3px 8px;
          white-space:nowrap}
-  .marke.adressat{background:var(--blau);color:#fff;font-weight:700}
+  /* "an Bund und Land Brandenburg" ist zu lang fuer eine Zeile, die nicht
+     umbrechen darf - auf schmalen Geraeten schiebt sie sonst die Seite auf. */
+  .marke.adressat{background:var(--blau);color:#fff;font-weight:700;
+                  white-space:normal}
   .marke.beide{background:var(--blau-flaeche);color:var(--blau);font-weight:700}
   .marke.wann{background:var(--grau-flaeche);color:var(--text-stark)}
   .forderung-mehr{display:block;margin-top:10px;font-size:14px;
@@ -142,9 +148,9 @@
                hyphens:auto;overflow-wrap:break-word}
   .kachel-marken{flex:0 0 auto;display:flex;align-items:baseline;gap:5px}
   .kachel-zahl{background:var(--blau-flaeche);color:var(--blau);
-               font-size:13px;font-weight:700;padding:2px 9px;border-radius:10px}
+               font-size:13px;font-weight:700;padding:2px 9px;border-radius:0}
   .kachel-neu{background:var(--gelb);color:var(--blau);font-size:12px;
-              font-weight:700;padding:2px 8px;border-radius:10px;white-space:nowrap}
+              font-weight:700;padding:2px 8px;border-radius:0;white-space:nowrap}
   .kachel.nachrangig .kachel-zahl{background:var(--grau-flaeche);color:var(--text-stark)}
   .kachel-zeile{display:block;font-size:14px;line-height:1.35;color:var(--text);
                 margin-top:9px;overflow-wrap:break-word}
@@ -173,7 +179,9 @@
           font-weight:700;cursor:pointer;white-space:nowrap;padding:0 16px;
           background:var(--grau-flaeche);color:var(--blau);min-height:44px;
           align-self:center;height:44px;line-height:44px}
-  .reiter:hover{background:var(--blau);color:#fff}
+  /* Ueberfahren und Ausgewaehlt duerfen nicht gleich aussehen - sonst weiss
+     man am Rechner nie, welcher Reiter gerade greift. */
+  .reiter:hover{background:var(--blau-flaeche);color:var(--blau)}
   .reiter[aria-pressed="true"]{background:var(--blau);color:#fff}
   .reiter .zahl{font-weight:400;opacity:.85;margin-left:6px}
   .reiter.hinweis{background:var(--orange-zart);color:var(--blau)}
@@ -188,7 +196,7 @@
                font-size:20px;color:var(--blau)}
   .block-titel:first-child{margin-top:0}
   .block-zahl{background:var(--blau-flaeche);color:var(--blau);font-size:13px;
-              font-weight:700;padding:2px 9px;border-radius:10px}
+              font-weight:700;padding:2px 9px;border-radius:0}
   .block-mehr{display:block;width:100%;margin:0 0 6px;padding:12px;min-height:44px;
               background:var(--weiss);box-shadow:var(--schatten);border:0;
               border-radius:0;font:inherit;font-size:15px;font-weight:700;
