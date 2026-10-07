@@ -1,8 +1,8 @@
 # Handwerks-Ticker
 
 Was das Handwerk gerade fordert – gebündelt aus den Veröffentlichungen der
-Handwerkskammer Potsdam, des Handwerkskammertages Brandenburg und des
-Zentralverbands des Deutschen Handwerks.
+Handwerkskammer Potsdam, des Handwerkskammertages Brandenburg, des
+Zentralverbands des Deutschen Handwerks und der Junioren des Handwerks e.V.
 
 **Live:** https://handwerks-ticker.netlify.app
 
@@ -53,6 +53,25 @@ Derzeit aktiv beim ZDH:
 | ZDH-Positionen | **nein** – siehe unten |
 | Personalia | abgeschaltet (politisch ohne Gewicht) |
 
+### Junioren des Handwerks (Bundesverband)
+
+| Bereich | im Ticker |
+|---|---|
+| PRESSE (Abschnitt der Startseite) | ja |
+| TERMINE (Abschnitt der Startseite) | ja, aber nur **künftige** |
+
+Diese Quelle ist ein Sonderfall: handwerksjunioren.de hat **keinen
+Nachrichtenstrom**. Alle Inhalte stehen auf der Startseite, es gibt keine
+eigene Adresse je Meldung. Die Kennung bildet der Abruf deshalb aus Datum und
+Titel; verlinkt wird der Seitenanker. Vergangene Termine bleiben weg, weil zu
+fast jedem im Abschnitt PRESSE schon ein Bericht steht – umstellbar über
+`"nur_kuenftige": false` in `daten/quellen.json`.
+
+Die beiden **Maßnahmenpapiere** (Mutterschutz, Lohnzusatzkosten) stehen dort
+nur als Bild. Ihr Text ist nicht maschinell lesbar; Kurzfassung und Zitat
+wurden von den Bildseiten abgelesen und stehen mit Herkunftsvermerk in
+`daten/redaktion-handwerksjunioren-2026.json`.
+
 **Warum die Positionspapiere nicht in der Zeitleiste stehen:** Sie tragen kein
 Erscheinungsdatum auf der Seite, und die Sitemap liefert bei 63 von 64 den Tag
 der Systemumstellung. Sie als „vom 7. Juli" anzuzeigen wäre eine erfundene
@@ -67,9 +86,11 @@ Inhalt, nicht das Datum.
 |---|---|
 | `daten/meldungen-2026.json` | Kammer-Meldungen, unverändert aus der Quelle |
 | `daten/zdh-2026.json` | ZDH-Veröffentlichungen, unverändert aus der Quelle |
+| `daten/handwerksjunioren-2026.json` | Junioren-Meldungen, unverändert aus der Quelle |
 | `daten/redaktion-2026.json` | Schlagzeile, Dreizeiler, Thema je Kammer-Meldung |
 | `daten/redaktion-zdh-2026.json` | Dreizeiler und Thema je ZDH-Meldung |
-| `daten/forderungen.json` | die drei Top-Forderungen samt Belegen |
+| `daten/redaktion-handwerksjunioren-2026.json` | Einordnung je Junioren-Meldung |
+| `daten/forderungen.json` | die Top-Forderungen samt Belegen (Zahl frei) |
 | `daten/quellen.json` | welche Quellen eingesammelt werden |
 | `daten/bekannt.json` | was schon bekannt war (für die „Neu"-Markierung) |
 

@@ -75,6 +75,33 @@
      "zitat_ab": "Sie brauchen Regeln, die sich im Betriebsalltag umsetzen lassen"
     }
    ]
+  },
+  {
+   "kurz": "Sozialabgaben und Lohnzusatzkosten senken",
+   "adressat": "Bund",
+   "worum": "Die am breitesten getragene Forderung des Jahres: Sie kommt vom Brandenburgischen Handwerkskammertag, von der Handwerkskammer Potsdam und vom ZDH. Der Gesamtsozialversicherungsbeitrag hat die 40-Prozent-Marke überschritten; weil der Lohn im Handwerk je nach Betrieb 40 bis 80 Prozent der Gesamtkosten ausmacht, trifft jeder Beitragspunkt die Betriebe härter als die Industrie. Auch die Junioren des Handwerks haben dazu im April ein eigenes Maßnahmenpapier vorgelegt.",
+   "belege": [
+    {
+     "id": "6808",
+     "zitat_ab": "Was wir brauchen, sind dauerhafte Entlastungen bei Sozialabgaben"
+    },
+    {
+     "id": "6841",
+     "zitat_ab": "Wer Sozialbeiträge dauerhaft steigen lässt"
+    },
+    {
+     "id": "zdh-lohnzusatzkosten-muessen-runter-weitere-reformen-dafuer-noetig",
+     "zitat_ab": "Die zu hohen Lohnzusatzkosten verteuern Arbeit in einem Maße"
+    },
+    {
+     "id": "zdh-fuer-eine-trendwende-braucht-es-mehr-reformtempo",
+     "zitat_ab": "Weitere Reformen zur Senkung der Lohnzusatzkosten sind deshalb dringend geboten"
+    },
+    {
+     "id": "zdh-wirtschaftspolitik-in-den-mittelpunkt-ruecken",
+     "zitat_ab": "als Gamechanger die Lohnzusatzkosten senken"
+    }
+   ]
   }
  ]
 }

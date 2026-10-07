@@ -100,8 +100,10 @@
   .abschnitt-unter{margin:4px 0 0;font-size:14px;color:var(--text-leise)}
 
   /* ---------- Die drei Forderungen ---------- */
-  .forderungs-reihe{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;
-                    margin-top:16px}
+  /* auto-fit statt fester Spaltenzahl: Die Reihe traegt drei oder vier
+     Forderungen, ohne dass das CSS davon wissen muss. */
+  .forderungs-reihe{display:grid;gap:4px;margin-top:16px;
+                    grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
   .forderung{background:var(--weiss);box-shadow:var(--schatten);
              border-left:5px solid var(--rot);padding:0;min-width:0}
   .forderung summary{cursor:pointer;list-style:none;display:block;padding:16px 18px}
@@ -186,6 +188,11 @@
   .reiter .zahl{font-weight:400;opacity:.85;margin-left:6px}
   .reiter.hinweis{background:var(--orange-zart);color:var(--blau)}
   .reiter.hinweis[aria-pressed="true"]{background:var(--blau);color:#fff}
+  /* Zweite Stufe in derselben Reihe: erst das Thema, dann die Herkunft. */
+  .reiter.quelle{background:var(--weiss);color:var(--blau);
+                 box-shadow:inset 0 0 0 1px var(--blau)}
+  .reiter.quelle:hover{background:var(--blau-flaeche)}
+  .reiter.quelle[aria-pressed="true"]{background:var(--blau);color:#fff}
   .reiter.leise{background:var(--weiss);color:var(--text-leise);font-weight:400}
   .reiter.leise[aria-pressed="true"]{background:var(--blau);color:#fff;font-weight:700}
 
@@ -301,7 +308,7 @@
 
 <section class="abschnitt">
   <div class="mitte">
-    <h2 class="abschnitt-titel">Die drei am h&auml;ufigsten belegten Forderungen</h2>
+    <h2 class="abschnitt-titel" id="forderungsTitel"></h2>
     <p class="abschnitt-unter" id="kriterium"></p>
     <div class="forderungs-reihe" id="forderungsReihe"></div>
   </div>
@@ -399,8 +406,22 @@ const BUENDEL = [
    themen:["Betrieb & Nachfolge","Kammer & Service"]},
   {name:"Politik & Regierung",
    themen:["Politik & Regierung","Noch nicht eingeordnet"]},
+  /* Das Verbandsleben der Handwerksjunioren: eigene Veranstaltungen,
+     Ehrenamt, Auszeichnungen. Keine politische Forderung, aber auch keine
+     Nebensache - deshalb vor den Ehrungen und nicht zugeklappt. */
+  {name:"Junges Handwerk",
+   themen:["Junioren & Ehrenamt"]},
   {name:"Ehrungen & Termine", nachrangig:true,
    themen:["Ehrungen & Termine"]}
+];
+
+/* Wer sagt es? Die Ebene (Bund/Brandenburg) beantwortet das nur halb:
+   ZDH und Handwerksjunioren sind beide Bundesebene, aber zwei sehr
+   verschiedene Absender. */
+const QUELLEN = [
+  {schluessel:"Kammer",   name:"Kammer Potsdam"},
+  {schluessel:"ZDH",      name:"ZDH"},
+  {schluessel:"Junioren", name:"Junioren"}
 ];
 
 /* Selbstkontrolle: Ein Thema, das in keinem Buendel steht, wuerde sonst
@@ -417,6 +438,14 @@ const BUENDEL = [
     if (window.console) console.warn("Ohne Oberthema, eigenes Buendel gebildet:", offen);
   }
 })();
+
+/* Zwei Texte gelten als gleich, wenn sie sich nur in Satzzeichen,
+   Leerraum und Gross-/Kleinschreibung unterscheiden. */
+function gleicherText(a, b){
+  const k = s => String(s || "").toLowerCase()
+    .replace(/[\s.,;:!?()„“«»"'–—-]+/g, "");
+  return k(a) === k(b);
+}
 
 function buendelVon(m){
   for (let i = 0; i < BUENDEL.length; i++){
@@ -436,6 +465,7 @@ function passt(m){
   if (filter === "politik" && !istPolitisch(m)) return false;
   if (filter === "neu" && !m.neu) return false;
   if (filter.indexOf("ebene:") === 0 && m.ebene !== filter.slice(6)) return false;
+  if (filter.indexOf("quelle:") === 0 && m.quelle_kurz !== filter.slice(7)) return false;
   if (filter.indexOf("buendel:") === 0){
     const b = buendelVon(m);
     if (!b || b.name !== filter.slice(8)) return false;
@@ -470,7 +500,17 @@ function zeichneKopf(){
 }
 
 /* ---------- Die drei Forderungen ---------- */
+const ZAHLWORT = ["keine","eine","zwei","drei","vier","fünf","sechs",
+                  "sieben","acht","neun","zehn"];
+
 function zeichneForderungen(){
+  /* Die Ueberschrift zaehlt selbst - sonst steht irgendwann "die drei"
+     ueber vier Karten. */
+  const n = DATEN.forderungen.length;
+  document.getElementById("forderungsTitel").textContent =
+    n === 1 ? "Die am häufigsten belegte Forderung"
+            : "Die " + (ZAHLWORT[n] || n) +
+              " am häufigsten belegten Forderungen";
   document.getElementById("kriterium").textContent = DATEN.forderungen_kriterium;
 
   document.getElementById("forderungsReihe").innerHTML =
@@ -524,9 +564,14 @@ function zeichneLagesatz(){
   let satz;
   if (neue.length){
     const spitze = neue.filter(x => x.n === neue[0].n);
+    const anzahl = DATEN.meldungen.filter(m => m.neu).length;
     satz = "Beim Abgleich am " + datumLesbar(DATEN.letzter_abgleich) + " kamen " +
-      DATEN.meldungen.filter(m => m.neu).length + " Meldungen dazu, die meisten zu " +
-      aufzaehlen(spitze.map(x => x.b.name)) + " (je " + spitze[0].n + ").";
+      anzahl + (anzahl === 1 ? " Meldung dazu, sie gehört zu "
+                             : " Meldungen dazu, die meisten zu ") +
+      aufzaehlen(spitze.map(x => x.b.name)) +
+      /* "je 4" ergibt nur Sinn, wenn mehrere Themen gleichauf liegen. */
+      (anzahl === 1 ? "."
+        : " (" + (spitze.length > 1 ? "je " : "") + spitze[0].n + ").");
   } else {
     satz = "Seit dem Abgleich am " + datumLesbar(DATEN.letzter_abgleich) +
       " ist nichts dazugekommen.";
@@ -600,6 +645,10 @@ function zeichneFilter(){
     const n = DATEN.meldungen.filter(m => m.ebene === e).length;
     if (n) html += knopf("ebene:" + e, e, n);
   });
+  QUELLEN.forEach(q => {
+    const n = DATEN.meldungen.filter(m => m.quelle_kurz === q.schluessel).length;
+    if (n) html += knopf("quelle:" + q.schluessel, q.name, n, "quelle");
+  });
   BUENDEL.forEach(b => {
     const n = DATEN.meldungen.filter(m => buendelVon(m) === b).length;
     if (n) html += knopf("buendel:" + b.name, b.name, n,
@@ -619,6 +668,7 @@ function zeichneListe(){
   let wo = "";
   if (filter.indexOf("buendel:") === 0) wo = filter.slice(8) + ": ";
   else if (filter.indexOf("ebene:") === 0) wo = filter.slice(6) + ": ";
+  else if (filter.indexOf("quelle:") === 0) wo = filter.slice(7) + ": ";
   else if (filter === "politik") wo = "Politische Meldungen: ";
   else if (filter === "neu") wo = "Neu seit dem letzten Abgleich: ";
   document.getElementById("zaehler").textContent =
@@ -703,12 +753,13 @@ function karte(m){
       '<span class="datum">' + datum + '</span>' +
     '</p>' +
     '<h3 class="schlagzeile">' + esc(m.schlagzeile) + '</h3>' +
-    (m.dreizeiler
+    /* Bei Terminen ist der Anrisstext der Quelle woertlich die Ueberschrift.
+       Zweimal dasselbe zu lesen sieht nach Fehler aus - dann lieber nichts. */
+    (m.dreizeiler && !gleicherText(m.dreizeiler, m.schlagzeile)
       ? '<p class="dreizeiler">' + esc(m.dreizeiler) +
         (m.quelle_eigen
           ? '<span class="quelle-marke">Anrisstext der Quelle</span>' : '') + '</p>'
-      : '<p class="dreizeiler">Noch nicht zusammengefasst &ndash; oben steht der ' +
-        'Originaltitel der Quelle.</p>') +
+      : '') +
     (m.zitat
       ? '<blockquote>&bdquo;' + esc(m.zitat) + '&ldquo;</blockquote>' : '') +
     '<p class="karte-fuss">' +

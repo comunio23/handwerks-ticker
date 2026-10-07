@@ -5,6 +5,7 @@ Der eine Abgleich fuer alle Quellen.
 Holt der Reihe nach:
   1. Handwerkskammer Potsdam   (scrape-pressemitteilungen.py ueber pruefe-neues.py)
   2. Zentralverband des Deutschen Handwerks (scrape-zdh.py)
+  3. Junioren des Handwerks e.V. (scrape-handwerksjunioren.py)
 und baut anschliessend den Ticker neu.
 
 Welche ZDH-Bereiche eingesammelt werden, steht in daten/quellen.json und
@@ -74,6 +75,7 @@ def main():
 
     vorher_hwk = bestand("daten/meldungen-%s.json" % jahr)
     vorher_zdh = bestand("daten/zdh-%s.json" % jahr)
+    vorher_hwj = bestand("daten/handwerksjunioren-%s.json" % jahr, "kennung")
 
     melde()
     melde("1. Handwerkskammer Potsdam")
@@ -86,21 +88,29 @@ def main():
     if lauf("scrape-zdh.py", jahr) == 2:
         fehler = True
 
+    melde()
+    melde("3. Junioren des Handwerks (Bundesverband)")
+    if lauf("scrape-handwerksjunioren.py", jahr) == 2:
+        fehler = True
+
     nachher_hwk = bestand("daten/meldungen-%s.json" % jahr)
     nachher_zdh = bestand("daten/zdh-%s.json" % jahr)
+    nachher_hwj = bestand("daten/handwerksjunioren-%s.json" % jahr, "kennung")
     neu_hwk = nachher_hwk - vorher_hwk
     neu_zdh = nachher_zdh - vorher_zdh
+    neu_hwj = nachher_hwj - vorher_hwj
 
     melde()
-    melde("3. Ticker bauen")
+    melde("4. Ticker bauen")
     if lauf("baue-ticker.py") == 2:
         fehler = True
 
     melde()
     melde("-" * 66)
-    if neu_hwk or neu_zdh:
-        melde("NEU: %d von der Kammer, %d vom ZDH" % (len(neu_hwk), len(neu_zdh)))
-        for u in sorted(neu_hwk | neu_zdh):
+    if neu_hwk or neu_zdh or neu_hwj:
+        melde("NEU: %d von der Kammer, %d vom ZDH, %d von den Junioren"
+              % (len(neu_hwk), len(neu_zdh), len(neu_hwj)))
+        for u in sorted(neu_hwk | neu_zdh | neu_hwj):
             melde("   " + u)
         melde()
         melde("Diese Meldungen haben noch keinen Redaktionseintrag und erscheinen")
@@ -111,7 +121,7 @@ def main():
 
     if "--hochladen" in sys.argv and not fehler:
         melde()
-        melde("4. Veroeffentlichen")
+        melde("5. Veroeffentlichen")
         if lauf("deploy-netlify.py") == 2:
             fehler = True
 

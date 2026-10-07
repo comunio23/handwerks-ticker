@@ -50,5 +50,28 @@
     "ebene": "Brandenburg",
     "basis": "https://www.hwk-potsdam.de",
     "bemerkung": "Eigener Weg über die Jahresübersicht der Pressemitteilungen, siehe scrape-pressemitteilungen.py. Die Übersichtsseite wird in der Navigation gesucht, damit der Jahreswechsel nichts kaputt macht."
+  },
+  "handwerksjunioren": {
+    "name": "Junioren des Handwerks e.V.",
+    "kurz": "Handwerksjunioren",
+    "ebene": "Bund",
+    "basis": "https://www.handwerksjunioren.de",
+    "startseite": "https://www.handwerksjunioren.de/",
+    "bemerkung": "Bundesverband der Handwerksjunioren. Die Seite hat KEINEN Nachrichtenstrom - alle Inhalte stehen auf der Startseite in den Abschnitten PRESSE und TERMINE. Es gibt keine Einzeladressen je Meldung; verlinkt wird der Seitenanker. Siehe scrape-handwerksjunioren.py.",
+    "bereiche": [
+      {
+        "schluessel": "presse",
+        "titel": "Aus dem Junioren-Netzwerk",
+        "aktiv": true,
+        "bemerkung": "Abschnitt PRESSE der Startseite. Enthaelt auch die Massnahmenpapiere - die werden automatisch als 'papier' erkannt."
+      },
+      {
+        "schluessel": "termin",
+        "titel": "Termin der Handwerksjunioren",
+        "aktiv": true,
+        "bemerkung": "Abschnitt TERMINE der Startseite. 'nur_kuenftige': true laesst vergangene Termine weg - zu fast jedem gibt es im Abschnitt PRESSE schon einen Bericht. Auf false setzen, wenn der ganze Jahreskalender erscheinen soll.",
+        "nur_kuenftige": true
+      }
+    ]
   }
 }

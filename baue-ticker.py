@@ -164,6 +164,7 @@ def zdh_laden():
             "thema2": r.get("thema2"),
             "absender": "Zentralverband des Deutschen Handwerks",
             "ebene": "Bund",
+            "quelle_kurz": "ZDH",
             # Die Ueberschrift des ZDH wird unveraendert uebernommen - sie ist
             # praezise formuliert, eine eigene Fassung koennte nur verzerren.
             "schlagzeile": x["titel"],
@@ -175,6 +176,74 @@ def zdh_laden():
         })
     if ohne:
         print("   davon mit dem eigenen Anrisstext des ZDH statt Dreizeiler:", ohne)
+    return fertig
+
+
+def junioren_laden():
+    """Die Meldungen der Junioren des Handwerks (Bundesverband) einlesen.
+
+    Zwei Eigenheiten dieser Quelle:
+      - Es gibt keine Einzeladressen. Die Kennung bildet der Abruf aus Datum
+        und Titel, sie steht im Feld 'kennung'.
+      - Die Massnahmenpapiere stehen auf der Seite nur als BILD. Ihr Volltext
+        ist deshalb leer; sie brauchen zwingend einen Redaktionseintrag,
+        sonst erscheinen sie ohne jeden Text.
+    """
+    pfad_daten = "daten/handwerksjunioren-%s.json" % JAHR
+    pfad_redaktion = "daten/redaktion-handwerksjunioren-%s.json" % JAHR
+    if not os.path.exists(pfad_daten):
+        return []
+    roh = json.load(open(pfad_daten, encoding="utf-8"))
+    redaktion = {}
+    if os.path.exists(pfad_redaktion):
+        redaktion = json.load(open(pfad_redaktion, encoding="utf-8"))["eintraege"]
+
+    GRUNDART = {"presse": "bericht", "termin": "termin", "papier": "politik"}
+    fertig = []
+    ohne = 0
+    for x in roh:
+        kennung = x["kennung"]
+        r = redaktion.get(kennung)
+        vorspann = (x["volltext"].splitlines() or [""])[0].strip()
+        grundart = GRUNDART.get(x["art_quelle"], "bericht")
+        if not r or not r.get("dreizeiler"):
+            # Kein Redaktionseintrag oder nur eine Einordnung: die Quelle
+            # spricht selbst (KMS [L-0247]).
+            r = dict(r or {})
+            r.setdefault("art", grundart)
+            r.setdefault("thema", thema_aus_schlagworten([], x["titel"])
+                         or "Noch nicht eingeordnet")
+            r["dreizeiler"] = vorspann
+            r["quelle_eigen"] = True
+            if vorspann:
+                ohne += 1
+        fertig.append({
+            "id": "hwj-" + kennung,
+            "datum": x["datum"],
+            "datum_ungenau": False,
+            "nummer": None,
+            "titel": x["titel"],
+            "url": x["url"],
+            "art": r["art"],
+            "thema": r["thema"],
+            "thema2": r.get("thema2"),
+            "absender": "Junioren des Handwerks e.V.",
+            "ebene": "Bund",
+            "quelle_kurz": "Junioren",
+            # Die Ueberschrift der Quelle ist knapp und praezise - sie wird
+            # nur ersetzt, wenn die Redaktion ausdruecklich eine eigene setzt.
+            "schlagzeile": r.get("schlagzeile") or x["titel"],
+            "dreizeiler": r["dreizeiler"],
+            "unredigiert": bool(r.get("quelle_eigen")),
+            "quelle_eigen": bool(r.get("quelle_eigen")),
+            "gattung": x.get("art_titel", ""),
+            "zitat": r.get("zitat"),
+        })
+    if ohne:
+        print("   davon mit dem eigenen Anrisstext der Junioren:", ohne)
+    leer = [x for x in fertig if not x["dreizeiler"]]
+    for x in leer:
+        print("   OHNE TEXT (Quelle zeigt nur ein Bild):", x["titel"][:60])
     return fertig
 
 
@@ -275,6 +344,7 @@ def main():
 
     for x in fertig:
         x["ebene"] = "Brandenburg"
+        x["quelle_kurz"] = "Kammer"
 
     zdh = zdh_laden()
     zdh_neu_angeschlossen = zdh and "zdh" not in bekannte_quellen
@@ -287,8 +357,22 @@ def main():
                                 if (erster_lauf or zdh_neu_angeschlossen) else heute)
         x["zuerst_gesehen"] = bekannt[x["id"]]
     fertig.extend(zdh)
-    fertig.sort(key=lambda x: (x["datum"] or ""), reverse=True)
     print("Bundesebene (ZDH):", len(zdh), "Meldungen")
+
+    junioren = junioren_laden()
+    hwj_neu_angeschlossen = junioren and "hwj" not in bekannte_quellen
+    if hwj_neu_angeschlossen:
+        print("   Die Handwerksjunioren sind neu angeschlossen - der Bestand")
+        print("   zaehlt als Grundbestand, nicht als Neuzugang (KMS [D-0183]).")
+    for x in junioren:
+        if x["id"] not in bekannt:
+            bekannt[x["id"]] = (ERSTBESTAND
+                                if (erster_lauf or hwj_neu_angeschlossen) else heute)
+        x["zuerst_gesehen"] = bekannt[x["id"]]
+    fertig.extend(junioren)
+    print("Junioren des Handwerks:", len(junioren), "Meldungen")
+
+    fertig.sort(key=lambda x: (x["datum"] or ""), reverse=True)
 
     # "Neu" heisst: beim juengsten Abgleich dazugekommen. Der Grundbestand
     # zaehlt nie mit.
@@ -310,6 +394,8 @@ def main():
     bekannte_quellen.add("hwk")
     if zdh:
         bekannte_quellen.add("zdh")
+    if junioren:
+        bekannte_quellen.add("hwj")
     json.dump(sorted(bekannte_quellen), open(quellen_pfad, "w", encoding="utf-8"),
               ensure_ascii=False, indent=1)
 
@@ -382,6 +468,11 @@ def main():
             "anzahl": len(belege),
             "ebenen": sorted(set(b["ebene"] for b in belege)),
         })
+
+    # Die Reihenfolge muss dem Kriterium folgen, das ueber der Reihe steht:
+    # erst wie oft belegt, dann ob beide Ebenen sie tragen, dann wie aktuell.
+    forderungen.sort(key=lambda f: (f["anzahl"], len(f["ebenen"]), f["zuletzt"]),
+                     reverse=True)
 
     daten = {
         "jahr": JAHR,

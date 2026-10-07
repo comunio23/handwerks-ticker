@@ -1,0 +1,98 @@
+{
+ "hinweis": "Redaktionelle Ebene zu daten/handwerksjunioren-2026.json. Zuordnung ueber die Kennung (Datum plus entschaerfter Titel), die der Abruf bildet - die Quelle vergibt keine eigenen Kennungen. Wer nur die Einordnung korrigieren will, laesst 'dreizeiler' weg; dann bleibt der Anrisstext der Quelle stehen und wird als solcher gekennzeichnet.",
+ "stand": "2026-10-07",
+ "eintraege": {
+  "2026-12-05-bundesvorstand-auf-der-dmh-schlussfeier-in-berlin-german": {
+   "thema": "Junioren & Ehrenamt",
+   "nur_einordnung": "DMH-Schlussfeier"
+  },
+  "2026-11-05-bundesvorstand-bei-der-zdh-vollversammlung-und-beim-zdh": {
+   "thema": "Junioren & Ehrenamt",
+   "nur_einordnung": "ZDH-Vollversammlung"
+  },
+  "2026-11-03-bundesvorstand-bei-der-preisverleihung-ausbildungs-ass-in": {
+   "thema": "Junioren & Ehrenamt",
+   "thema2": "Ausbildung & Nachwuchs",
+   "nur_einordnung": "Ausbildungs-Ass"
+  },
+  "2026-10-16-savoir-faire-junges-handwerk-deutschland-zu-gast-in-paris": {
+   "thema": "Junioren & Ehrenamt",
+   "nur_einordnung": "Junges Handwerk Deutschland zu Gast in Paris"
+  },
+  "2026-10-01-bild-handwerksgipfel": {
+   "thema": "Ausbildung & Nachwuchs",
+   "nur_einordnung": "Vorteile einer dualen Ausbildung gegenüber einer akademischen Laufbahn"
+  },
+  "2026-09-26-inter-bootstour": {
+   "thema": "Junioren & Ehrenamt",
+   "nur_einordnung": "neue Kontakte zu knüpfen"
+  },
+  "2026-09-26-gremiensitzungen": {
+   "thema": "Junioren & Ehrenamt",
+   "nur_einordnung": "neu gegründete Juniorennetzwerke"
+  },
+  "2026-09-25-auftakt-bundeskongress": {
+   "thema": "Politik & Regierung",
+   "thema2": "Junioren & Ehrenamt",
+   "nur_einordnung": "Junges Handwerk trifft Bundespolitik"
+  },
+  "2026-08-01-handwerk-magazin-08-2026": {
+   "thema": "Ausbildung & Nachwuchs",
+   "thema2": "Junioren & Ehrenamt",
+   "nur_einordnung": "Auszeichnung der „Junghandwerkerin 2026“"
+  },
+  "2026-06-16-bewerbungsstart-auszeichnung-junghandwerkerin-2026-und": {
+   "thema": "Ausbildung & Nachwuchs",
+   "nur_einordnung": "junge Talente im Handwerk sichtbar machen"
+  },
+  "2026-06-13-herocon": {
+   "thema": "Personal & Fachkräfte",
+   "thema2": "Junioren & Ehrenamt",
+   "nur_einordnung": "Inklusion, Nachwuchsgewinnung und Imagewandel im Handwerk"
+  },
+  "2026-05-06-handwerk-magazin-05-2026": {
+   "thema": "Politik & Regierung",
+   "nur_einordnung": "Erwartungen des jungen Handwerks an die Bundespolitik"
+  },
+  "2026-04-30-ehrenamtskampagne": {
+   "thema": "Junioren & Ehrenamt",
+   "nur_einordnung": "für das junge Ehrenamt im Handwerk"
+  },
+  "2026-04-16-massnahmenpapier-mutterschutz-fur-selbststandige": {
+   "art": "politik",
+   "thema": "Betrieb & Nachfolge",
+   "thema2": "Personal & Fachkräfte",
+   "schlagzeile": "Junioren: Eine Schwangerschaft darf den Betrieb nicht gefährden",
+   "dreizeiler": "Die Junioren des Handwerks sehen im Mutterschutz für selbstständige Handwerkerinnen einen unverzichtbaren Baustein, um Existenzgründungen und Betriebsübernahmen durch junge Handwerkerinnen zu fördern. Das Papier nennt drei Maßnahmen: Informationsangebote ausbauen und die angekündigte Aufklärungskampagne umsetzen, den Koalitionsvertrag praxisnah und bürokratiearm umsetzen, und gemeinsam mit der Versicherungswirtschaft erweiterte Versicherungsmöglichkeiten prüfen. Zusätzliche finanzielle Belastungen für Handwerksbetriebe dürfen dabei nicht entstehen.",
+   "zitat": "Eine Schwangerschaft darf keine existenzielle Bedrohung für eine Betriebsinhaberin bzw. den Betrieb darstellen. Ein Kinderwunsch sollte kein Hindernis für eine erfolgreiche Selbstständigkeit im Handwerk darstellen.",
+   "quelle_text": "Das Papier steht auf handwerksjunioren.de nur als Bild (drei Seiten, PNG). Die Kurzfassung und das Zitat wurden aus Seite 2 und 3 gelesen: Massnahmenpapier_Mutterschutz_Selbststaendige_April_2026-2.png und -3.png, abgerufen am 07.10.2026."
+  },
+  "2026-04-15-massnahmenpapier-lohnzusatzkosten": {
+   "art": "politik",
+   "thema": "Sozialabgaben & Rente",
+   "thema2": "Wirtschaftslage",
+   "schlagzeile": "Junioren fordern: Sozialbeitrag dauerhaft unter 40 Prozent",
+   "dreizeiler": "Die Junioren des Handwerks fordern eine generationsgerechte Ausgestaltung der Sozialabgaben. Das Papier nennt drei Punkte: den Gesamtsozialversicherungsbeitrag dauerhaft unter 40 Prozent halten, die Wettbewerbsfähigkeit von Handwerksunternehmen stärken und die angekündigte Reform des Gesundheitssystems umsetzen. Begründung: Während der Lohn in einigen Industrieunternehmen nur 5 bis 10 Prozent der Gesamtkosten ausmacht, liegt er im Handwerk oft zwischen 40 und 80 Prozent.",
+   "zitat": "Der Gesamtsozialversicherungsbeitrag hat mittlerweile die 40-Prozent-Marke überschritten. In zehn Jahren könnte dieser Beitrag laut einiger Prognosen bei 50 Prozent liegen.",
+   "quelle_text": "Das Papier steht auf handwerksjunioren.de nur als Bild (drei Seiten, PNG). Die Kurzfassung und das Zitat wurden aus Seite 2 und 3 gelesen: Massnahmenpapier_Lohnzusatzkosten_April_2026-2.png und -3.png, abgerufen am 07.10.2026."
+  },
+  "2026-03-29-bundesvorstand-im-interview": {
+   "thema": "Junioren & Ehrenamt",
+   "nur_einordnung": "Engagement im Handwerksehrenamt"
+  },
+  "2026-03-05-tv-interview-phoenix": {
+   "thema": "Wirtschaftslage",
+   "thema2": "Junioren & Ehrenamt",
+   "nur_einordnung": "über die Zukunft des Handwerks"
+  },
+  "2026-03-04-kongress-zukunft-handwerk": {
+   "thema": "Junioren & Ehrenamt",
+   "thema2": "Personal & Fachkräfte",
+   "nur_einordnung": "Inklusionspreis im Handwerk 2026"
+  },
+  "2026-01-27-handwerk-magazin-02-2026": {
+   "thema": "Junioren & Ehrenamt",
+   "nur_einordnung": "Jahresmotto und die Junioren-Highlight-Events"
+  }
+ }
+}
