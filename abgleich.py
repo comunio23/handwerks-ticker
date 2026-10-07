@@ -5,7 +5,9 @@ Der eine Abgleich fuer alle Quellen.
 Holt der Reihe nach:
   1. Handwerkskammer Potsdam   (scrape-pressemitteilungen.py ueber pruefe-neues.py)
   2. Zentralverband des Deutschen Handwerks (scrape-zdh.py)
-  3. Junioren des Handwerks e.V. (scrape-handwerksjunioren.py)
+  3. Handwerkskammer Frankfurt (Oder) (scrape-hwk-ff.py)
+  4. Handwerkskammer Cottbus          (scrape-hwk-cottbus.py)
+  5. Junioren des Handwerks e.V.      (scrape-handwerksjunioren.py)
 und baut anschliessend den Ticker neu.
 
 Welche ZDH-Bereiche eingesammelt werden, steht in daten/quellen.json und
@@ -76,6 +78,8 @@ def main():
     vorher_hwk = bestand("daten/meldungen-%s.json" % jahr)
     vorher_zdh = bestand("daten/zdh-%s.json" % jahr)
     vorher_hwj = bestand("daten/handwerksjunioren-%s.json" % jahr, "kennung")
+    vorher_ff = bestand("daten/hwk-ff-%s.json" % jahr, "kennung")
+    vorher_cb = bestand("daten/hwk-cottbus-%s.json" % jahr, "kennung")
 
     melde()
     melde("1. Handwerkskammer Potsdam")
@@ -89,7 +93,17 @@ def main():
         fehler = True
 
     melde()
-    melde("3. Junioren des Handwerks (Bundesverband)")
+    melde("3. Handwerkskammer Frankfurt (Oder)")
+    if lauf("scrape-hwk-ff.py", jahr) == 2:
+        fehler = True
+
+    melde()
+    melde("4. Handwerkskammer Cottbus")
+    if lauf("scrape-hwk-cottbus.py", jahr) == 2:
+        fehler = True
+
+    melde()
+    melde("5. Junioren des Handwerks (Bundesverband)")
     if lauf("scrape-handwerksjunioren.py", jahr) == 2:
         fehler = True
 
@@ -99,18 +113,22 @@ def main():
     neu_hwk = nachher_hwk - vorher_hwk
     neu_zdh = nachher_zdh - vorher_zdh
     neu_hwj = nachher_hwj - vorher_hwj
+    neu_ff = bestand("daten/hwk-ff-%s.json" % jahr, "kennung") - vorher_ff
+    neu_cb = bestand("daten/hwk-cottbus-%s.json" % jahr, "kennung") - vorher_cb
 
     melde()
-    melde("4. Ticker bauen")
+    melde("6. Ticker bauen")
     if lauf("baue-ticker.py") == 2:
         fehler = True
 
     melde()
     melde("-" * 66)
-    if neu_hwk or neu_zdh or neu_hwj:
-        melde("NEU: %d von der Kammer, %d vom ZDH, %d von den Junioren"
-              % (len(neu_hwk), len(neu_zdh), len(neu_hwj)))
-        for u in sorted(neu_hwk | neu_zdh | neu_hwj):
+    alles_neu = neu_hwk | neu_zdh | neu_hwj | neu_ff | neu_cb
+    if alles_neu:
+        melde("NEU: %d Potsdam, %d Frankfurt (Oder), %d Cottbus, %d ZDH, "
+              "%d Junioren" % (len(neu_hwk), len(neu_ff), len(neu_cb),
+                               len(neu_zdh), len(neu_hwj)))
+        for u in sorted(alles_neu):
             melde("   " + u)
         melde()
         melde("Diese Meldungen haben noch keinen Redaktionseintrag und erscheinen")
@@ -121,7 +139,7 @@ def main():
 
     if "--hochladen" in sys.argv and not fehler:
         melde()
-        melde("5. Veroeffentlichen")
+        melde("7. Veroeffentlichen")
         if lauf("deploy-netlify.py") == 2:
             fehler = True
 

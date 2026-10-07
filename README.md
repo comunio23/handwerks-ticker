@@ -1,8 +1,9 @@
 # Handwerks-Ticker
 
-Was das Handwerk gerade fordert – gebündelt aus den Veröffentlichungen der
-Handwerkskammer Potsdam, des Handwerkskammertages Brandenburg, des
-Zentralverbands des Deutschen Handwerks und der Junioren des Handwerks e.V.
+Was das Handwerk gerade fordert – gebündelt aus fünf Quellen: den
+Handwerkskammern **Potsdam**, **Frankfurt (Oder)** und **Cottbus**, dem
+**Zentralverband des Deutschen Handwerks** und den **Junioren des Handwerks e.V.**
+Damit ist Brandenburg vollständig abgedeckt.
 
 **Live:** https://handwerks-ticker.netlify.app
 
@@ -53,6 +54,35 @@ Derzeit aktiv beim ZDH:
 | ZDH-Positionen | **nein** – siehe unten |
 | Personalia | abgeschaltet (politisch ohne Gewicht) |
 
+### Handwerkskammer Frankfurt (Oder)
+
+Läuft auf WordPress mit offener Schnittstelle – Datum, Titel, Anrisstext,
+Volltext und Kategorien kommen als JSON, es wird nichts aus HTML geraten.
+Welche Kategorien eingesammelt werden, steht in `daten/quellen.json`:
+
+| Kategorie | im Ticker |
+|---|---|
+| Medieninformationen | ja (die Pressemeldungen der Kammer selbst) |
+| Handwerksjunioren | ja |
+| Presse | **nein** – Obermenge mit Lehrberufeschauen und Fotogalerien |
+| Recht, Fotogalerien, Sonderumfragen | nein |
+
+### Handwerkskammer Cottbus
+
+Gleiches Redaktionssystem wie Potsdam, aber **monatsweise** geordnet:
+Archiv → Monatsseite → Meldung.
+
+**Achtung, hier liegt eine Falle:** Die `sitemap.xml` der Kammer endet im
+Dezember 2024. Wer ihr vertraut, hält die Quelle für seit zwei Jahren tot –
+die Seite selbst ist aktuell. Der Abruf geht deshalb über die Archivseite.
+
+Die Meldungen tragen **kein Datum im Text**. Es kommt aus dem Feld
+`datePublished`, dessen sichtbare Beschriftung „Seite aktualisiert am …"
+lautet. Bei 13 von 58 Meldungen widerspricht dieses Datum dem Monat, unter
+dem die Kammer die Meldung führt – dann war es eine spätere Bearbeitung.
+Diese Meldungen erscheinen mit „um den …" und nennen beim Antippen den Grund.
+Ein Ersatzdatum wird **nicht** erfunden.
+
 ### Junioren des Handwerks (Bundesverband)
 
 | Bereich | im Ticker |
@@ -86,6 +116,8 @@ Inhalt, nicht das Datum.
 |---|---|
 | `daten/meldungen-2026.json` | Kammer-Meldungen, unverändert aus der Quelle |
 | `daten/zdh-2026.json` | ZDH-Veröffentlichungen, unverändert aus der Quelle |
+| `daten/hwk-ff-2026.json` | Meldungen aus Frankfurt (Oder), unverändert |
+| `daten/hwk-cottbus-2026.json` | Meldungen aus Cottbus, unverändert |
 | `daten/handwerksjunioren-2026.json` | Junioren-Meldungen, unverändert aus der Quelle |
 | `daten/redaktion-2026.json` | Schlagzeile, Dreizeiler, Thema je Kammer-Meldung |
 | `daten/redaktion-zdh-2026.json` | Dreizeiler und Thema je ZDH-Meldung |

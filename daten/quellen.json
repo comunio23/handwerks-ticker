@@ -73,5 +73,57 @@
         "nur_kuenftige": true
       }
     ]
+  },
+  "hwk_frankfurt": {
+    "name": "Handwerkskammer Frankfurt (Oder)",
+    "kurz": "Kammer Frankfurt",
+    "ebene": "Brandenburg",
+    "basis": "https://www.hwk-ff.de",
+    "bemerkung": "Laeuft auf WordPress mit offener Schnittstelle - Datum, Titel, Anriss, Volltext und Kategorien kommen als JSON. Siehe scrape-hwk-ff.py. Die robots.txt sperrt nichts.",
+    "kategorien": [
+      {
+        "id": 104,
+        "name": "Medieninformationen",
+        "aktiv": true,
+        "bemerkung": "Die Pressemeldungen der Kammer selbst. 88 Beitraege in 2026."
+      },
+      {
+        "id": 68,
+        "name": "Presse",
+        "aktiv": false,
+        "bemerkung": "Obermenge von Medieninformationen, zusaetzlich Lehrberufeschauen und Fotogalerien. Einschalten, wenn auch das Veranstaltungsgeschehen erscheinen soll (109 in 2026)."
+      },
+      {
+        "id": 96,
+        "name": "Handwerksjunioren",
+        "aktiv": true,
+        "bemerkung": "Regionales Juniorengeschehen. 2026 bislang ohne Beitrag, aber 27 aus frueheren Jahren."
+      },
+      {
+        "id": 54,
+        "name": "Recht",
+        "aktiv": false,
+        "bemerkung": "Rechtsmeldungen fuer Betriebe - nuetzlich, aber keine politischen Aussagen."
+      },
+      {
+        "id": 107,
+        "name": "Fotogalerien",
+        "aktiv": false
+      },
+      {
+        "id": 74,
+        "name": "Sonderumfragen ZDH",
+        "aktiv": false,
+        "bemerkung": "Konjunkturumfragen. Koennte als Zahlenquelle interessant werden."
+      }
+    ]
+  },
+  "hwk_cottbus": {
+    "name": "Handwerkskammer Cottbus",
+    "kurz": "Kammer Cottbus",
+    "ebene": "Brandenburg",
+    "basis": "https://www.hwk-cottbus.de",
+    "archiv": "https://www.hwk-cottbus.de/artikel/archiv-pressemitteilungen-7,0,79.html",
+    "bemerkung": "Gleiches Redaktionssystem wie Potsdam, aber monatsweise geordnet. ACHTUNG: Die sitemap.xml endet im Dezember 2024 und ist unbrauchbar - der Abruf geht ueber die Archivseite. Das Datum kommt aus dem Feld datePublished, dessen Beschriftung 'Seite aktualisiert am' lautet. Siehe scrape-hwk-cottbus.py."
   }
 }

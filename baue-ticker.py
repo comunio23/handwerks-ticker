@@ -65,7 +65,8 @@ SCHLAGWORT_THEMA = [
     ("Sozialabgaben & Rente",
      ["sozialversicherung", "rente", "kranken", "pflege", "lohnzusatzkosten"]),
     ("Arbeitszeit & Arbeitsrecht",
-     ["arbeitszeit", "arbeitsrecht", "gesundheitsschutz", "mindestlohn"]),
+     ["arbeitszeit", "arbeitsrecht", "gesundheitsschutz", "mindestlohn",
+      "entgelttransparenz", "tarifvertrag", "urlaubsanspruch"]),
     ("Ausbildung & Nachwuchs",
      ["ausbildung", "berufsbildung", "bildungspolitik", "bafög", "bafoeg",
       "euroskills", "weiterbildung", "allianz für aus", "azubi", "lehrstelle"]),
@@ -73,37 +74,66 @@ SCHLAGWORT_THEMA = [
      ["fachkräfte", "fachkraft", "migrationshintergrund", "demografie",
       "arbeitslosen", "arbeitsmarkt"]),
     ("Energie & Sprit",
-     ["energiepreise", "stromsteuer", "energie- und"]),
+     ["energiepreise", "energiepreis", "energiekosten", "stromsteuer",
+      "strompreis", "energiesteuer", "kraftstoff", "spritpreis", "sprit-",
+      "tankrabatt", "dieselpreis", "energie- und"]),
     ("Aufträge & Vergabe",
-     ["vergabe", "ausschreibung"]),
+     ["vergabe", "ausschreibung", "vergaberecht", "best-bieter", "bestbieter",
+      "oeffentliche auftr", "öffentliche auftr"]),
     ("Betrieb & Nachfolge",
      ["betriebsübergabe", "nachfolge", "gründung", "existenzgründ"]),
     ("Bauen & Sanieren",
      ["gebäude", "baurecht", "infrastruktur", "wohnungsbau", "klimapolitik",
-      "bauwirtschaft"]),
+      "bauwirtschaft", "bauordnung", "solarpflicht", "wohnraum", "bauantrag",
+      "genehmigungsverfahren"]),
     ("Entbürokratisierung",
      ["bürokratie", "bürokratische", "e-rechnung", "recht auf reparatur",
-      "digitaler omnibus", "bonpflicht", "entlastung", "sonntagsback"]),
+      "digitaler omnibus", "bonpflicht", "entlastung", "sonntagsback",
+      "kassenführung", "kassengesetz", "berichtspflicht", "nachweispflicht"]),
     ("Wirtschaftslage",
      ["wettbewerbsfähigkeit", "investitionen", "strukturpolitik", "strukturwandel",
       "nachhaltige finanzierung", "konjunktur", "binnenmarkt"]),
     ("Ehrungen & Termine",
+     # "preis" stand hier einmal allein und zog "Spritpreissenkung",
+     # "Energiepreise" und "Gruendungspreis" mit herein - ein Stichwort, das
+     # mehr Schaden anrichtet als Nutzen bringt.
      ["handwerksmesse", "handwerksgeschichte", "kulturhandwerk", "kirche",
-      "spitzengespräch", "preis"]),
+      "spitzengespräch", "preisverleihung", "ausgezeichnet", "jubiläum",
+      "freisprechung", "lehrling des monats", "meisterbrief"]),
 ]
 
 
-def thema_aus_schlagworten(schlagworte, titel=""):
-    """Thema zuerst aus den Schlagworten der Quelle, dann ersatzweise aus dem
-    Titel. Manche Meldungen tragen gar keine Schlagworte - dann ist der Titel
-    die naechstbeste Grundlage, die immer noch aus der Quelle stammt."""
-    for text in (" ".join(schlagworte).lower(), (titel or "").lower()):
-        if not text.strip():
+MINDEST_PUNKTE = 3
+
+
+def thema_aus_schlagworten(schlagworte, titel="", text=""):
+    """Thema aus Schlagworten, Titel und - wenn vorhanden - Anrisstext.
+
+    Frueher nahm diese Funktion den ERSTEN Treffer in der Reihenfolge der
+    Tabelle. Bei langen Texten gewann damit, wer in der Liste oben stand:
+    "Tankrabatt gestartet - Handwerk fordert dauerhafte Entlastungen" landete
+    unter Entbuerokratisierung, weil dort "entlastung" steht. Jetzt wird
+    gezaehlt und gewichtet: Schlagwort und Titel wiegen schwer, der Anrisstext
+    leicht. Wer nicht deutlich vorn liegt, bekommt KEIN Thema - lieber
+    "Noch nicht eingeordnet" als ein falsches Etikett (KMS [L-0238])."""
+    punkte = {}
+    for inhalt, gewicht in ((" ".join(schlagworte).lower(), 3),
+                            ((titel or "").lower(), 3),
+                            ((text or "").lower(), 1)):
+        if not inhalt.strip():
             continue
         for thema, worte in SCHLAGWORT_THEMA:
-            if any(w in text for w in worte):
-                return thema
-    return None
+            treffer = sum(1 for w in worte if w in inhalt)
+            if treffer:
+                punkte[thema] = punkte.get(thema, 0) + gewicht * treffer
+    if not punkte:
+        return None
+    rang = sorted(punkte.items(), key=lambda p: (-p[1], p[0]))
+    if rang[0][1] < MINDEST_PUNKTE:
+        return None
+    if len(rang) > 1 and rang[0][1] == rang[1][1]:
+        return None          # Gleichstand ist keine Entscheidung
+    return rang[0][0]
 
 
 def zdh_laden():
@@ -176,6 +206,102 @@ def zdh_laden():
         })
     if ohne:
         print("   davon mit dem eigenen Anrisstext des ZDH statt Dreizeiler:", ohne)
+    return fertig
+
+
+# Wortfelder, an denen sich die GATTUNG einer Kammermeldung faktisch ablesen
+# laesst. Bewusst eng gehalten: Das sind Tatsachenwoerter, keine Deutungen.
+# "politik" steht NICHT darunter - ob eine Meldung eine politische Forderung
+# ist, entscheidet die Redaktion, nicht ein Stichwort (KMS [D-0170]).
+GATTUNG_WORTE = [
+    ("ehrung", ["lehrling des monats", "freisprechung", "jubil", "goldene meister",
+                "meisterbrief", "ehrt ", "ehrung", "auszeichnung für",
+                "ausgezeichnet", "bester ", "beste ", "siegerin", "sieger ",
+                "gesellenbrief", "nachwuchstalent", "preistr"]),
+    ("termin", ["informiert zu terminen", "lädt ein", "einladung",
+                "terminkalender", "save the date"]),
+    ("zahlen", ["konjunktur", "in zahlen", "zahl der lehrvertr",
+                "ausbildungszahlen", "statistik", "umfrage"]),
+]
+
+
+def gattung_raten(titel, art_quelle):
+    """Gattung einer Kammermeldung. Im Zweifel 'bericht' - das behauptet am
+    wenigsten."""
+    if "einladung" in (art_quelle or "").lower():
+        return "termin"
+    t = (titel or "").lower()
+    for art, worte in GATTUNG_WORTE:
+        if any(w in t for w in worte):
+            return art
+    return "bericht"
+
+
+def kammer_laden(schluessel, absender, quelle_kurz, praefix):
+    """Eine weitere Handwerkskammer in dieselbe Form bringen wie die uebrigen
+    Quellen. Gilt fuer Frankfurt (Oder) und Cottbus - beide liefern Datum,
+    Titel, Anrisstext und Volltext, aber keine Einordnung."""
+    pfad_daten = "daten/%s-%s.json" % (schluessel, JAHR)
+    pfad_redaktion = "daten/redaktion-%s-%s.json" % (schluessel, JAHR)
+    if not os.path.exists(pfad_daten):
+        return []
+    roh = json.load(open(pfad_daten, encoding="utf-8"))
+    redaktion = {}
+    if os.path.exists(pfad_redaktion):
+        redaktion = json.load(open(pfad_redaktion, encoding="utf-8"))["eintraege"]
+
+    fertig = []
+    ohne = 0
+    for x in roh:
+        kennung = x["kennung"]
+        r = redaktion.get(kennung)
+        vorspann = (x["volltext"].splitlines() or [""])[0].strip()
+        if not r or not r.get("dreizeiler"):
+            r = dict(r or {})
+            r.setdefault("art", gattung_raten(x["titel"], x.get("art_quelle")))
+            # Fuer die Themenerkennung zaehlt hier auch der Anrisstext - der
+            # Titel einer Kammermeldung nennt das Sachthema oft gar nicht
+            # ("Die das Land am Laufen halten").
+            vorschau = " ".join(x["volltext"].split())[:500]
+            gefunden = thema_aus_schlagworten(x.get("schlagworte", []),
+                                              x["titel"], vorschau)
+            if not gefunden:
+                # Ehrungen und Termine sind kein Sachthema, sondern Kammerleben.
+                if r["art"] in ("ehrung", "termin"):
+                    gefunden = "Ehrungen & Termine"
+                else:
+                    # Ein grosser Teil der Kammermeldungen ist regionale
+                    # Berichterstattung - Betriebsbesuche, Lehrberufeschauen,
+                    # Gremienarbeit. Dafuer ein Sachthema zu erfinden waere
+                    # falsch; sie bekommen ein ehrliches eigenes.
+                    gefunden = "Aus den Kammern"
+            r.setdefault("thema", gefunden)
+            r["dreizeiler"] = vorspann
+            r["quelle_eigen"] = True
+            ohne += 1
+        fertig.append({
+            "id": praefix + kennung,
+            "datum": x["datum"],
+            "datum_ungenau": bool(x.get("datum_ungenau")),
+            "datum_hinweis": x.get("datum_hinweis", ""),
+            "nummer": None,
+            "titel": x["titel"],
+            "url": x["url"],
+            "art": r["art"],
+            "thema": r["thema"],
+            "thema2": r.get("thema2"),
+            "absender": absender,
+            "ebene": x.get("ebene", "Brandenburg"),
+            "quelle_kurz": quelle_kurz,
+            "schlagzeile": r.get("schlagzeile") or x["titel"],
+            "dreizeiler": r["dreizeiler"],
+            "unredigiert": bool(r.get("quelle_eigen")),
+            "quelle_eigen": bool(r.get("quelle_eigen")),
+            "gattung": x.get("art_titel", ""),
+            "zitat": r.get("zitat"),
+        })
+    if ohne:
+        print("   davon mit dem eigenen Anrisstext der Kammer:", ohne)
     return fertig
 
 
@@ -371,6 +497,29 @@ def main():
         x["zuerst_gesehen"] = bekannt[x["id"]]
     fertig.extend(junioren)
     print("Junioren des Handwerks:", len(junioren), "Meldungen")
+
+    # Die beiden anderen Brandenburger Kammern. Erst mit ihnen laesst sich
+    # fragen, ob das Land mit einer Stimme spricht.
+    for schluessel, absender, kurz, praefix, marke in [
+            ("hwk-ff", "Handwerkskammer Frankfurt (Oder)", "Kammer Frankfurt",
+             "ff-", "hwkff"),
+            ("hwk-cottbus", "Handwerkskammer Cottbus", "Kammer Cottbus",
+             "cb-", "hwkcb")]:
+        weitere = kammer_laden(schluessel, absender, kurz, praefix)
+        if not weitere:
+            continue
+        neu_angeschlossen = marke not in bekannte_quellen
+        if neu_angeschlossen:
+            print("   %s ist neu angeschlossen - Bestand zaehlt als Grundbestand."
+                  % absender)
+        for x in weitere:
+            if x["id"] not in bekannt:
+                bekannt[x["id"]] = (ERSTBESTAND
+                                    if (erster_lauf or neu_angeschlossen) else heute)
+            x["zuerst_gesehen"] = bekannt[x["id"]]
+        fertig.extend(weitere)
+        bekannte_quellen.add(marke)
+        print("%s: %d Meldungen" % (absender, len(weitere)))
 
     fertig.sort(key=lambda x: (x["datum"] or ""), reverse=True)
 

@@ -403,7 +403,7 @@ const BUENDEL = [
   {name:"Papierkram & Vorschriften",
    themen:["Entbürokratisierung","Auflagen & Vorschriften"]},
   {name:"Betrieb & Zukunft",
-   themen:["Betrieb & Nachfolge","Kammer & Service"]},
+   themen:["Betrieb & Nachfolge"]},
   {name:"Politik & Regierung",
    themen:["Politik & Regierung","Noch nicht eingeordnet"]},
   /* Das Verbandsleben der Handwerksjunioren: eigene Veranstaltungen,
@@ -411,7 +411,12 @@ const BUENDEL = [
      Nebensache - deshalb vor den Ehrungen und nicht zugeklappt. */
   {name:"Junges Handwerk",
    themen:["Junioren & Ehrenamt"]},
-  {name:"Ehrungen & Termine", nachrangig:true,
+  /* Regionale Berichterstattung der drei Kammern: Betriebsbesuche,
+     Lehrberufeschauen, Gremienarbeit. Kein Sachthema - und es waere falsch,
+     ihr eines anzudichten, nur damit die Kachelwand voller aussieht. */
+  {name:"Aus den Kammern", kein_sachthema:true,
+   themen:["Aus den Kammern","Kammer & Service"]},
+  {name:"Ehrungen & Termine", nachrangig:true, kein_sachthema:true,
    themen:["Ehrungen & Termine"]}
 ];
 
@@ -419,9 +424,11 @@ const BUENDEL = [
    ZDH und Handwerksjunioren sind beide Bundesebene, aber zwei sehr
    verschiedene Absender. */
 const QUELLEN = [
-  {schluessel:"Kammer",   name:"Kammer Potsdam"},
-  {schluessel:"ZDH",      name:"ZDH"},
-  {schluessel:"Junioren", name:"Junioren"}
+  {schluessel:"Kammer",          name:"Potsdam"},
+  {schluessel:"Kammer Frankfurt", name:"Frankfurt (Oder)"},
+  {schluessel:"Kammer Cottbus",  name:"Cottbus"},
+  {schluessel:"ZDH",             name:"ZDH"},
+  {schluessel:"Junioren",        name:"Junioren"}
 ];
 
 /* Selbstkontrolle: Ein Thema, das in keinem Buendel steht, wuerde sonst
@@ -576,11 +583,13 @@ function zeichneLagesatz(){
     satz = "Seit dem Abgleich am " + datumLesbar(DATEN.letzter_abgleich) +
       " ist nichts dazugekommen.";
   }
-  const alle = zaehlen(() => true);
+  /* "Aus den Kammern" und "Ehrungen & Termine" sind Auffangtoepfe, keine
+     Sachthemen - als "groesstes Thema" waeren sie eine leere Aussage. */
+  const alle = zaehlen(() => true).filter(x => !x.b.kein_sachthema);
   if (alle.length){
     const g = alle[0];
-    satz += " Größtes Thema " + DATEN.jahr + ": " + g.b.name + " mit " +
-      g.n + " von " + DATEN.meldungen.length + " Meldungen.";
+    satz += " Größtes Sachthema " + DATEN.jahr + ": " + g.b.name +
+      " mit " + g.n + " von " + DATEN.meldungen.length + " Meldungen.";
   }
   document.getElementById("lagesatz").textContent = satz;
 }
@@ -731,9 +740,12 @@ const ART_NAME = {
 };
 
 function karte(m){
+  /* Warum ein Datum unsicher ist, weiss die Quelle am besten - wenn sie es
+     mitliefert, steht ihr Hinweis im Aufklapptext statt eines pauschalen. */
   const datum = m.datum_ungenau
-    ? '<span class="ungenau" title="Diese Meldung nennt kein Datum. Aus der ' +
-      'Reihenfolge der &Uuml;bersichtsseite eingeordnet.">um den ' +
+    ? '<span class="ungenau" title="' + esc(m.datum_hinweis ||
+        "Diese Meldung nennt kein Datum. Aus der Reihenfolge der " +
+        "Übersichtsseite eingeordnet.") + '">um den ' +
       esc(datumLesbar(m.datum)) + '</span>'
     : esc(datumLesbar(m.datum));
 
