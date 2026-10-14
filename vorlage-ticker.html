@@ -4,6 +4,16 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Handwerks-Ticker</title>
+<meta name="description" content="Was das Handwerk politisch fordert - geb&uuml;ndelt aus Kammern, Zentralverband und Junioren.">
+<!-- Als App installierbar: Kennzeichen, Symbole und Farbe der Titelleiste.
+     Beim Oeffnen einer heruntergeladenen Datei laufen diese Verweise ins
+     Leere - das stoert nicht, die Seite funktioniert vollstaendig. -->
+<meta name="theme-color" content="#073070">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/icon-192.png" sizes="192x192" type="image/png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Handwerk">
 <style>
   /* ------------------------------------------------------------------
      Farben und Formen stammen aus dem Live-CSS der Handwerkskammer
@@ -82,6 +92,11 @@
   .kopfband h1{color:#fff;font-size:26px;letter-spacing:-.01em}
   .kopfband .stand{margin:0;font-size:14px;color:#cddcf0;text-align:right;flex:0 0 auto}
   .kopfband .stand b{color:#fff;font-size:15px;white-space:nowrap}
+  /* Der Takt der Automatik gehoert sichtbar auf die Seite: Wer das Datum
+     liest, soll ohne Nachfrage wissen, wann das naechste Mal nachgesehen
+     wird. */
+  .kopfband .stand .takt{display:block;font-size:12px;color:#cddcf0;
+                         margin-top:2px}
 
   /* ---------- Kennzeile ----------
      Vier Kachelkaesten kosteten 200 Pixel und vier Rahmen, um vier Zahlen zu
@@ -95,6 +110,29 @@
   /* Der Trenner ist Text, also muss er lesbar sein - in #dfe4ea waren es
      1,28:1. */
   .kennzeile .trenner{color:var(--text-leise);padding:0 5px}
+
+  /* ---------- Hinweis "als App" ----------
+     Erscheint nur, wenn das Geraet die Installation wirklich anbietet, und
+     nur so lange, bis er einmal weggetippt wurde. */
+  .appleiste{margin:10px 0 0;background:var(--blau-zart);
+             border-left:4px solid var(--blau-akzent);
+             box-shadow:var(--schatten);padding:9px 14px;display:flex;
+             flex-wrap:wrap;align-items:center;gap:8px;font-size:14px;
+             color:var(--text-stark);line-height:1.5}
+  .appleiste .text{flex:1 1 230px}
+  .appleiste button{font:inherit;min-height:44px;border:0;cursor:pointer}
+  .appleiste .ja{background:var(--blau);color:#fff;font-weight:700;padding:0 18px}
+  .appleiste .ja:hover{background:var(--blau-tief)}
+  .appleiste .nein{background:transparent;color:var(--blau-link);
+                   text-decoration:underline;padding:0 10px}
+
+  /* ---------- Warnung "Abgleich haengt" ----------
+     Eine Automatik faellt still aus. Deshalb sagt die Seite selbst Bescheid,
+     sobald der letzte Abgleich zu lange her ist - sonst merkt es niemand. */
+  .haengt{margin:10px 0 0;background:var(--orange-zart);
+          border-left:4px solid var(--orange);box-shadow:var(--schatten);
+          padding:10px 14px;font-size:14px;color:var(--text-stark);
+          line-height:1.5}
 
   /* ---------- Abschnittsueberschriften ---------- */
   .abschnitt{padding:28px 0 0}
@@ -337,6 +375,12 @@
 
 <div class="mitte">
   <p class="kennzeile" id="kennzeile"></p>
+  <p class="haengt" id="haengt" hidden></p>
+  <div class="appleiste" id="appleiste" hidden>
+    <span class="text" id="appText"></span>
+    <button type="button" class="ja" id="appJa">Installieren</button>
+    <button type="button" class="nein" id="appNein">Nein danke</button>
+  </div>
 </div>
 
 <section class="abschnitt" id="abschnittForderungen">
@@ -385,9 +429,7 @@
   <div class="mitte">
     <p>Die Kurzfassungen sind redaktionell. Massgeblich ist immer der Originaltext
        der jeweiligen Quelle &ndash; jede Meldung verlinkt ihn.</p>
-    <p><b>Quellen:</b> Handwerkskammer Potsdam, Brandenburgischer
-       Handwerkskammertag und Zentralverband des Deutschen Handwerks (Bundesebene).
-       Die Seite gleicht diese Quellen w&ouml;chentlich ab.</p>
+    <p id="fussQuellen"></p>
   </div>
 </footer>
 
@@ -531,8 +573,15 @@ function passt(m){
 
 /* ---------- Kopf ---------- */
 function zeichneKopf(){
+  /* "Zuletzt abgeglichen" ist der Tag, an dem die Quellen zuletzt WIRKLICH
+     abgefragt wurden - nicht der Tag, an dem zuletzt etwas Neues dabei war.
+     Beides zu vermischen hiess: Ein Abgleich ohne Fund sah aus wie gar kein
+     Abgleich. */
   document.getElementById("stand").innerHTML =
-    "Zuletzt abgeglichen <b>" + esc(datumLesbar(DATEN.letzter_abgleich)) + "</b>";
+    "Zuletzt abgeglichen <b>" + esc(datumLesbar(DATEN.letzter_abgleich)) + "</b>" +
+    (DATEN.abgleich_takt
+       ? '<span class="takt">automatisch ' + esc(DATEN.abgleich_takt) + "</span>"
+       : "");
 
   const M = DATEN.meldungen;
   const neu = M.filter(m => m.neu).length;
@@ -615,7 +664,8 @@ function zeichneLagesatz(){
   if (neue.length){
     const spitze = neue.filter(x => x.n === neue[0].n);
     const anzahl = DATEN.meldungen.filter(m => m.neu).length;
-    satz = "Beim Abgleich am " + datumLesbar(DATEN.letzter_abgleich) + " kamen " +
+    satz = "Beim Abgleich am " + datumLesbar(DATEN.letztes_neues ||
+                                               DATEN.letzter_abgleich) + " kamen " +
       anzahl + (anzahl === 1 ? " Meldung dazu, sie gehört zu "
                              : " Meldungen dazu, die meisten zu ") +
       aufzaehlen(spitze.map(x => x.b.name)) +
@@ -623,8 +673,8 @@ function zeichneLagesatz(){
       (anzahl === 1 ? "."
         : " (" + (spitze.length > 1 ? "je " : "") + spitze[0].n + ").");
   } else {
-    satz = "Seit dem Abgleich am " + datumLesbar(DATEN.letzter_abgleich) +
-      " ist nichts dazugekommen.";
+    satz = "Beim Abgleich am " + datumLesbar(DATEN.letzter_abgleich) +
+      " war nichts Neues dabei.";
   }
   /* "Aus den Kammern" und "Ehrungen & Termine" sind Auffangtoepfe, keine
      Sachthemen - als "groesstes Thema" waeren sie eine leere Aussage. */
@@ -881,7 +931,117 @@ document.getElementById("zurueck").addEventListener("click", function(){
   zuAnker("#abschnittThemen");
 });
 
+/* ---------- Faellt die Automatik aus, sagt es die Seite ----------
+   Geplant ist mittwochs und freitags; der groesste normale Abstand sind
+   fuenf Tage. Erst ab acht Tagen ist also wirklich etwas liegengeblieben -
+   ein einzelner verpasster Lauf soll keinen Fehlalarm ausloesen. */
+const GEDULD_TAGE = 8;
+
+function tageSeit(iso){
+  const d = new Date(iso + "T00:00:00");
+  if (isNaN(d.getTime())) return null;
+  const heute = new Date();
+  heute.setHours(0, 0, 0, 0);
+  return Math.round((heute - d) / 86400000);
+}
+
+function zeichneHaengt(){
+  const el = document.getElementById("haengt");
+  const tage = tageSeit(DATEN.letzter_abgleich);
+  if (tage === null || tage <= GEDULD_TAGE){ el.hidden = true; return; }
+  el.innerHTML = "<b>Der letzte Abgleich ist " + esc(tage) + " Tage her.</b> " +
+    (DATEN.abgleich_takt
+       ? "Vorgesehen ist " + esc(DATEN.abgleich_takt) + " \u2013 die Automatik " +
+         "scheint nicht gelaufen zu sein."
+       : "Diese Seite zeigt also m\u00f6glicherweise nicht den aktuellen Stand.");
+  el.hidden = false;
+}
+
+function zeichneFuss(){
+  /* Die Quellenliste zaehlt sich selbst auf. Als sie noch im Text stand,
+     nannte sie nach dem Anschluss von drei weiteren Quellen immer noch
+     die alten drei. */
+  const namen = DATEN.meldungen.map(m => m.absender)
+    /* "Gemeinsam mit Partnern" steht bei gemeinsamen Erklaerungen im Feld
+       Absender - es ist aber keine Organisation und gehoert nicht in eine
+       Quellenliste. */
+    .filter((n, i, a) => n && n !== "Gemeinsam mit Partnern" && a.indexOf(n) === i)
+    .sort((a, b) => a.localeCompare(b, "de"));
+  document.getElementById("fussQuellen").innerHTML =
+    "<b>Quellen:</b> " + esc(aufzaehlen(namen)) + ". Die Seite gleicht sie " +
+    esc(DATEN.abgleich_takt || "regelm\u00e4\u00dfig") + " ab.";
+}
+
+/* ---------- Als App auf den Startbildschirm ----------
+   Android und Chrome melden sich von selbst (beforeinstallprompt) - dann
+   startet der Knopf die Installation direkt. Das iPhone kennt diesen Weg
+   nicht; dort bleibt nur der Hinweis auf den Teilen-Knopf. Laeuft die Seite
+   schon als App, ist der Hinweis ueberfluessig. */
+const HINWEIS_WEG = "ticker-app-hinweis-weg";
+let installAngebot = null;
+
+function hinweisErlaubt(){
+  try {
+    if (matchMedia("(display-mode: standalone)").matches) return false;
+    if (navigator.standalone) return false;
+    return localStorage.getItem(HINWEIS_WEG) !== "ja";
+  } catch (e){
+    return true;   /* Ohne Speicher lieber einmal zu viel fragen als gar nicht */
+  }
+}
+
+function hinweisWeg(){
+  document.getElementById("appleiste").hidden = true;
+  try { localStorage.setItem(HINWEIS_WEG, "ja"); } catch (e){}
+}
+
+function zeichneAppHinweis(){
+  if (!hinweisErlaubt()) return;
+  const leiste = document.getElementById("appleiste");
+  const knopf = document.getElementById("appJa");
+  if (installAngebot){
+    document.getElementById("appText").textContent =
+      /* Kurz genug fuer EINE Zeile am Handy - die Leiste bleibt dadurch
+         zweizeilig statt dreizeilig. */
+      "Diesen Ticker als App installieren?";
+    knopf.hidden = false;
+    leiste.hidden = false;
+  } else if (/iphone|ipad|ipod/i.test(navigator.userAgent)){
+    document.getElementById("appText").innerHTML =
+      "Als App aufs iPhone: unten auf <b>Teilen</b> tippen, dann " +
+      "<b>Zum Home-Bildschirm</b>.";
+    knopf.hidden = true;
+    leiste.hidden = false;
+  }
+}
+
+window.addEventListener("beforeinstallprompt", function(e){
+  e.preventDefault();          /* statt Chromes eigenem Banner unser Hinweis */
+  installAngebot = e;
+  zeichneAppHinweis();
+});
+window.addEventListener("appinstalled", hinweisWeg);
+
+document.getElementById("appJa").addEventListener("click", function(){
+  if (!installAngebot) return;
+  installAngebot.prompt();
+  installAngebot.userChoice.then(function(){ installAngebot = null; hinweisWeg(); });
+});
+document.getElementById("appNein").addEventListener("click", hinweisWeg);
+
+/* Der Service Worker macht die Seite installierbar und ohne Netz lesbar.
+   Nur ueber http(s): In einer heruntergeladenen Datei (file://) gibt es ihn
+   nicht - die Seite selbst funktioniert dort unveraendert. */
+if ("serviceWorker" in navigator && location.protocol.indexOf("http") === 0){
+  window.addEventListener("load", function(){
+    navigator.serviceWorker.register("sw.js").catch(function(){});
+  });
+}
+
 zeichneKopf();
+zeichneHaengt();
+zeichneFuss();
+zeichneAppHinweis();
 zeichneForderungen();
 zeichneLagesatz();
 zeichneKacheln();

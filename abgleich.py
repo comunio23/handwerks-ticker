@@ -116,6 +116,15 @@ def main():
     neu_ff = bestand("daten/hwk-ff-%s.json" % jahr, "kennung") - vorher_ff
     neu_cb = bestand("daten/hwk-cottbus-%s.json" % jahr, "kennung") - vorher_cb
 
+    # Den Tag des Abgleichs festhalten, BEVOR gebaut wird. Bisher leitete die
+    # Seite ihr Datum aus dem juengsten Fund ab - ein Abgleich, bei dem nichts
+    # Neues dabei war, sah damit aus wie gar kein Abgleich.
+    stand = {"zuletzt": datetime.date.today().isoformat(),
+             "zuletzt_uhrzeit": beginn.strftime("%H:%M"),
+             "mit_fehler": bool(fehler)}
+    with open("daten/abgleich-stand.json", "w", encoding="utf-8") as f:
+        json.dump(stand, f, ensure_ascii=False, indent=1)
+
     melde()
     melde("6. Ticker bauen")
     if lauf("baue-ticker.py") == 2:

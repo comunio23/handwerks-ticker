@@ -125,5 +125,14 @@
     "basis": "https://www.hwk-cottbus.de",
     "archiv": "https://www.hwk-cottbus.de/artikel/archiv-pressemitteilungen-7,0,79.html",
     "bemerkung": "Gleiches Redaktionssystem wie Potsdam, aber monatsweise geordnet. ACHTUNG: Die sitemap.xml endet im Dezember 2024 und ist unbrauchbar - der Abruf geht ueber die Archivseite. Das Datum kommt aus dem Feld datePublished, dessen Beschriftung 'Seite aktualisiert am' lautet. Siehe scrape-hwk-cottbus.py."
+  },
+  "abgleich": {
+    "hinweis": "Wann die Automatik laeuft. 'tage' sind Wochentage, 0 = Montag. Wird hier geaendert, muss auch die Windows-Aufgabe geaendert werden (siehe abgleich-automatisch.cmd) - die Seite nennt nur, was hier steht.",
+    "tage": [
+      2,
+      4
+    ],
+    "uhrzeit": "07:30",
+    "text": "mittwochs und freitags"
   }
 }

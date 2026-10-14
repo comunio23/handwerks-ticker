@@ -14,27 +14,101 @@ Damit ist Brandenburg vollständig abgedeckt.
 Eine Datei startet alles:
 
 ```
-woechentlich-abgleichen.cmd
+abgleich-automatisch.cmd
 ```
 
 Doppelklicken genügt. Sie holt alle Quellen, baut den Ticker neu und
 veröffentlicht ihn. Das dauert einige Minuten – der Abruf ist bewusst
 langsam, damit die fremden Server nicht belastet werden.
 
-### Automatisch jeden Mittwoch
+### Automatisch mittwochs und freitags
 
-Einmalig in der Eingabeaufforderung ausführen:
+Einmalig ausführen – danach läuft es von selbst:
 
 ```
-schtasks /create /tn "Handwerks-Ticker" /sc weekly /d MI /st 07:30 /tr "\"C:\Users\ZFG\Desktop\Themen-Standpunkte HWK\woechentlich-abgleichen.cmd\" still"
+powershell -ExecutionPolicy Bypass -File automatik-einschalten.ps1
 ```
 
-Täglich statt wöchentlich: `/sc daily /st 07:30` statt `/sc weekly /d MI /st 07:30`.
+**Warum diese beiden Tage?** Gemessen am Jahrgang 2026 (412 Meldungen)
+erscheint dienstags mit Abstand am meisten (136), am Wochenende fast nichts.
+Mit Mittwoch **und** Freitag liegt eine Meldung im Schnitt **2,0 Tage**
+unbemerkt herum, mit einem einzigen Tag 3,7 Tage.
 
-Wieder entfernen: `schtasks /delete /tn "Handwerks-Ticker" /f`
-Nachsehen: `schtasks /query /tn "Handwerks-Ticker" /v /fo LIST`
+| Takt | mittlere Liegezeit |
+|---|---|
+| nur mittwochs | 3,7 Tage |
+| nur freitags | 3,3 Tage |
+| **mittwochs + freitags** | **2,0 Tage** |
+| täglich | 1,0 Tage |
+
+War der Rechner um 7:30 aus, holt Windows den Lauf beim nächsten Start nach.
+Bei Netzproblemen gibt es drei Versuche im Stundenabstand.
+
+Wieder abschalten: `powershell -ExecutionPolicy Bypass -File automatik-einschalten.ps1 -Aus`
+Nachsehen: `Get-ScheduledTaskInfo -TaskName "Handwerks-Ticker"`
+
+Wird der Takt geändert, muss auch `daten/quellen.json` geändert werden –
+die Seite nennt den Takt, der dort steht.
 
 Was bei jedem Lauf passierte, steht in `daten/abgleich-protokoll.txt`.
+
+### Fällt die Automatik aus, sagt es die Seite
+
+Ein Zeitplan fällt still aus. Deshalb rechnet der Ticker beim Öffnen selbst
+nach: Liegt der letzte Abgleich mehr als **acht Tage** zurück, erscheint oben
+ein oranger Hinweis. Acht Tage, weil der größte normale Abstand (Freitag bis
+Mittwoch) fünf Tage beträgt – ein einzelner verpasster Lauf soll keinen
+Fehlalarm auslösen.
+
+Dafür gibt es zwei getrennte Daten, die lange eines waren:
+
+| Feld | Bedeutung |
+|---|---|
+| `letzter_abgleich` | wann die Quellen zuletzt **wirklich abgefragt** wurden (aus `daten/abgleich-stand.json`, geschrieben von `abgleich.py`) |
+| `letztes_neues` | wann zuletzt **etwas Neues** dabei war |
+
+Vorher wurde beides aus dem jüngsten Fund abgeleitet – ein Abgleich, bei dem
+nichts Neues dabei war, sah damit aus wie gar kein Abgleich.
+
+---
+
+## Als App auf dem Handy
+
+Die Live-Seite lässt sich auf dem Handy wie eine App installieren
+(Progressive Web App) – mit eigenem Symbol auf dem Startbildschirm, ohne
+Adressleiste und **ohne App Store**.
+
+- **Android/Chrome:** Beim ersten Besuch erscheint oben die Frage „Diesen
+  Ticker als App installieren?" – antippen, fertig. Wer sie wegtippt, findet
+  den Weg weiter im Chrome-Menü unter *App installieren*.
+- **iPhone:** Safari kennt diesen Knopf nicht. Dort steht stattdessen der
+  Hinweis: *Teilen* → *Zum Home-Bildschirm*.
+
+**Sie funktioniert auch ohne Netz.** Der Service Worker (`web/sw.js`) fragt
+immer zuerst das Netz und legt die Antwort beiseite; nur wenn keine
+Verbindung da ist, zeigt er die zuletzt gespeicherte Fassung. Umgekehrt wäre
+die Seite schneller, würde aber alte Meldungen zeigen – bei einem Ticker der
+schlechtere Tausch.
+
+Ausgeliefert wird dafür nicht mehr nur eine Datei:
+
+| lokal | live unter |
+|---|---|
+| `ticker-prototyp.html` | `/index.html` |
+| `web/manifest.json` | `/manifest.json` |
+| `web/sw.js` | `/sw.js` |
+| `web/icons/*.png` | `/icons/*.png` |
+
+Vor dem Veröffentlichen genau das ansehen, was hochgeht:
+
+```
+python deploy-netlify.py --vorschau
+python -m http.server 8766 --directory vorschau
+```
+
+Die **heruntergeladene Einzeldatei** bleibt davon unberührt: Sie enthält alle
+Meldungen und funktioniert vollständig, nur Installation und Symbol fehlen
+(ein Service Worker braucht http(s), aus `file://` gibt es ihn nicht).
 
 ---
 
@@ -125,6 +199,8 @@ Inhalt, nicht das Datum.
 | `daten/forderungen.json` | die Top-Forderungen samt Belegen (Zahl frei) |
 | `daten/quellen.json` | welche Quellen eingesammelt werden |
 | `daten/bekannt.json` | was schon bekannt war (für die „Neu"-Markierung) |
+| `daten/abgleich-stand.json` | wann zuletzt wirklich abgeglichen wurde |
+| `web/manifest.json`, `web/sw.js`, `web/icons/` | was die Seite zur App macht |
 
 ---
 
@@ -151,6 +227,7 @@ python abgleich.py --hochladen     zusätzlich veröffentlichen
 python baue-ticker.py              nur neu bauen
 python deploy-netlify.py           nur veröffentlichen
 python analyse-themen.py           Auswertung für Gremien
+python deploy-netlify.py --vorschau   alles in den Ordner vorschau/, kein Upload
 ```
 
 Der Netlify-Token kommt aus der Umgebungsvariablen `NETLIFY_AUTH_TOKEN` und

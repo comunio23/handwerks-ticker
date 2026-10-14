@@ -26,3 +26,6 @@ netlify-site.json
 daten/cache-zdh/
 daten/_zdh_lesen.txt
 daten/cache-cottbus/
+
+# Oertliche Vorschau: genau die Dateien, die auch hochgeladen werden
+vorschau/

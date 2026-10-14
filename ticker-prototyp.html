@@ -4,6 +4,16 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Handwerks-Ticker</title>
+<meta name="description" content="Was das Handwerk politisch fordert - geb&uuml;ndelt aus Kammern, Zentralverband und Junioren.">
+<!-- Als App installierbar: Kennzeichen, Symbole und Farbe der Titelleiste.
+     Beim Oeffnen einer heruntergeladenen Datei laufen diese Verweise ins
+     Leere - das stoert nicht, die Seite funktioniert vollstaendig. -->
+<meta name="theme-color" content="#073070">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/icon-192.png" sizes="192x192" type="image/png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Handwerk">
 <style>
   /* ------------------------------------------------------------------
      Farben und Formen stammen aus dem Live-CSS der Handwerkskammer
@@ -82,6 +92,11 @@
   .kopfband h1{color:#fff;font-size:26px;letter-spacing:-.01em}
   .kopfband .stand{margin:0;font-size:14px;color:#cddcf0;text-align:right;flex:0 0 auto}
   .kopfband .stand b{color:#fff;font-size:15px;white-space:nowrap}
+  /* Der Takt der Automatik gehoert sichtbar auf die Seite: Wer das Datum
+     liest, soll ohne Nachfrage wissen, wann das naechste Mal nachgesehen
+     wird. */
+  .kopfband .stand .takt{display:block;font-size:12px;color:#cddcf0;
+                         margin-top:2px}
 
   /* ---------- Kennzeile ----------
      Vier Kachelkaesten kosteten 200 Pixel und vier Rahmen, um vier Zahlen zu
@@ -95,6 +110,29 @@
   /* Der Trenner ist Text, also muss er lesbar sein - in #dfe4ea waren es
      1,28:1. */
   .kennzeile .trenner{color:var(--text-leise);padding:0 5px}
+
+  /* ---------- Hinweis "als App" ----------
+     Erscheint nur, wenn das Geraet die Installation wirklich anbietet, und
+     nur so lange, bis er einmal weggetippt wurde. */
+  .appleiste{margin:10px 0 0;background:var(--blau-zart);
+             border-left:4px solid var(--blau-akzent);
+             box-shadow:var(--schatten);padding:9px 14px;display:flex;
+             flex-wrap:wrap;align-items:center;gap:8px;font-size:14px;
+             color:var(--text-stark);line-height:1.5}
+  .appleiste .text{flex:1 1 230px}
+  .appleiste button{font:inherit;min-height:44px;border:0;cursor:pointer}
+  .appleiste .ja{background:var(--blau);color:#fff;font-weight:700;padding:0 18px}
+  .appleiste .ja:hover{background:var(--blau-tief)}
+  .appleiste .nein{background:transparent;color:var(--blau-link);
+                   text-decoration:underline;padding:0 10px}
+
+  /* ---------- Warnung "Abgleich haengt" ----------
+     Eine Automatik faellt still aus. Deshalb sagt die Seite selbst Bescheid,
+     sobald der letzte Abgleich zu lange her ist - sonst merkt es niemand. */
+  .haengt{margin:10px 0 0;background:var(--orange-zart);
+          border-left:4px solid var(--orange);box-shadow:var(--schatten);
+          padding:10px 14px;font-size:14px;color:var(--text-stark);
+          line-height:1.5}
 
   /* ---------- Abschnittsueberschriften ---------- */
   .abschnitt{padding:28px 0 0}
@@ -337,6 +375,12 @@
 
 <div class="mitte">
   <p class="kennzeile" id="kennzeile"></p>
+  <p class="haengt" id="haengt" hidden></p>
+  <div class="appleiste" id="appleiste" hidden>
+    <span class="text" id="appText"></span>
+    <button type="button" class="ja" id="appJa">Installieren</button>
+    <button type="button" class="nein" id="appNein">Nein danke</button>
+  </div>
 </div>
 
 <section class="abschnitt" id="abschnittForderungen">
@@ -385,9 +429,7 @@
   <div class="mitte">
     <p>Die Kurzfassungen sind redaktionell. Massgeblich ist immer der Originaltext
        der jeweiligen Quelle &ndash; jede Meldung verlinkt ihn.</p>
-    <p><b>Quellen:</b> Handwerkskammer Potsdam, Brandenburgischer
-       Handwerkskammertag und Zentralverband des Deutschen Handwerks (Bundesebene).
-       Die Seite gleicht diese Quellen w&ouml;chentlich ab.</p>
+    <p id="fussQuellen"></p>
   </div>
 </footer>
 
@@ -605,8 +647,8 @@ const DATEN = /*__DATEN__*/{
   "Politik & Regierung",
   "Junioren & Ehrenamt",
   "Betrieb & Nachfolge",
-  "Arbeitszeit & Arbeitsrecht",
   "Noch nicht eingeordnet",
+  "Arbeitszeit & Arbeitsrecht",
   "Personal & Fachkräfte",
   "Bauen & Sanieren",
   "Aufträge & Vergabe",
@@ -614,8 +656,10 @@ const DATEN = /*__DATEN__*/{
   "Kammer & Service",
   "Ehrungen & Termine"
  ],
- "letzter_abgleich": "2026-10-07",
- "neu_anzahl": 5,
+ "letzter_abgleich": "2026-10-14",
+ "letztes_neues": "2026-10-14",
+ "abgleich_takt": "mittwochs und freitags",
+ "neu_anzahl": 12,
  "meldungen": [
   {
    "id": "hwj-2026-12-05-bundesvorstand-auf-der-dmh-schlussfeier-in-berlin-german",
@@ -706,6 +750,248 @@ const DATEN = /*__DATEN__*/{
    "neu": false
   },
   {
+   "id": "zdh-denkmalpflege-handwerk-bewahrt-kulturerbe",
+   "datum": "2026-10-14",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Denkmalpflege: Handwerk bewahrt Kulturerbe",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/pressemitteilungen/denkmalpflege-handwerk-bewahrt-kulturerbe/",
+   "art": "politik",
+   "thema": "Sozialabgaben & Rente",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "quelle_kurz": "ZDH",
+   "schlagzeile": "Denkmalpflege: Handwerk bewahrt Kulturerbe",
+   "dreizeiler": "Beim Bundespreis für Handwerk in der Denkmalpflege 2026 in Nordrhein-Westfalen sind am 13. Oktober herausragende Restaurierungsleistungen geehrt und das Können und die Bedeutung des Handwerks zum Erhalt historischer Bausubstanz gewürdigt worden.",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Pressemitteilung",
+   "zitat": null,
+   "zuerst_gesehen": "2026-10-14",
+   "neu": true
+  },
+  {
+   "id": "zdh-handwerk-kritisiert-steuerpolitische-beschluesse",
+   "datum": "2026-10-14",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Handwerk kritisiert steuerpolitische Beschlüsse",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/pressemitteilungen/handwerk-kritisiert-steuerpolitische-beschluesse/",
+   "art": "politik",
+   "thema": "Noch nicht eingeordnet",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "quelle_kurz": "ZDH",
+   "schlagzeile": "Handwerk kritisiert steuerpolitische Beschlüsse",
+   "dreizeiler": "Zum Beschluss des Haushaltsbegleitgesetzes durch das Bundeskabinett am Mittwoch, 14. Oktober 2026, erklärt Holger Schwannecke, Generalsekretär des Zentralverbandes des Deutschen Handwerks (ZDH):",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Pressemitteilung",
+   "zitat": null,
+   "zuerst_gesehen": "2026-10-14",
+   "neu": true
+  },
+  {
+   "id": "cb-cb-10545",
+   "datum": "2026-10-13",
+   "datum_ungenau": false,
+   "datum_hinweis": "",
+   "nummer": null,
+   "titel": "Handwerkskammer informiert zu Terminen im Oktober",
+   "url": "https://www.hwk-cottbus.de/artikel/handwerkskammer-informiert-zu-terminen-im-oktober-7,0,10545.html",
+   "art": "termin",
+   "thema": "Ehrungen & Termine",
+   "thema2": null,
+   "absender": "Handwerkskammer Cottbus",
+   "ebene": "Brandenburg",
+   "quelle_kurz": "Kammer Cottbus",
+   "schlagzeile": "Handwerkskammer informiert zu Terminen im Oktober",
+   "dreizeiler": "Für Ihre Planung übermitteln wir Ihnen den monatlichen Überblick zu Veranstaltungen der Handwerkskammer",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Pressemitteilung",
+   "zitat": null,
+   "zuerst_gesehen": "2026-10-14",
+   "neu": true
+  },
+  {
+   "id": "6944",
+   "datum": "2026-10-09",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Herbstkonjunktur im Handwerk: Wirtschaftliche Lage in Brandenburg bleibt angespannt",
+   "url": "https://www.hwk-potsdam.de/artikel/herbstkonjunktur-im-handwerk-wirtschaftliche-lage-in-brandenburg-bleibt-angespannt-9,735,6944.html",
+   "art": "unsortiert",
+   "thema": "Noch nicht eingeordnet",
+   "thema2": null,
+   "absender": "Handwerkskammertag Brandenburg",
+   "schlagzeile": "Herbstkonjunktur im Handwerk: Wirtschaftliche Lage in Brandenburg bleibt angespannt",
+   "dreizeiler": "",
+   "unredigiert": true,
+   "zuerst_gesehen": "2026-10-14",
+   "zitat": null,
+   "ebene": "Brandenburg",
+   "quelle_kurz": "Kammer",
+   "neu": true
+  },
+  {
+   "id": "6945",
+   "datum": "2026-10-09",
+   "datum_ungenau": false,
+   "nummer": "74",
+   "titel": "Handwerkskonjunktur in Westbrandenburg: Geschäftsklima deutlich gesunken / Sinkende Auftragseingänge, steigender Kostendruck und zurückhaltende Investitionspläne prägen den Ausblick der Betriebe",
+   "url": "https://www.hwk-potsdam.de/artikel/handwerkskonjunktur-in-westbrandenburg-geschaeftsklima-deutlich-gesunken-sinkende-auftragseingaenge-steigender-kostendruck-und-zurueckhaltende-investitionspl-9,735,6945.html",
+   "art": "unsortiert",
+   "thema": "Noch nicht eingeordnet",
+   "thema2": null,
+   "absender": "Handwerkskammer Potsdam",
+   "schlagzeile": "Handwerkskonjunktur in Westbrandenburg: Geschäftsklima deutlich gesunken / Sinkende Auftragseingänge, steigender Kostendruck und zurückhaltende Investitionspläne prägen den Ausblick der Betriebe",
+   "dreizeiler": "",
+   "unredigiert": true,
+   "zuerst_gesehen": "2026-10-14",
+   "zitat": null,
+   "ebene": "Brandenburg",
+   "quelle_kurz": "Kammer",
+   "neu": true
+  },
+  {
+   "id": "zdh-handwerk-und-kultur-gehoeren-zusammen",
+   "datum": "2026-10-09",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Handwerk und Kultur gehören zusammen",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/interviews-und-statements/handwerk-und-kultur-gehoeren-zusammen/",
+   "art": "politik",
+   "thema": "Ehrungen & Termine",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "quelle_kurz": "ZDH",
+   "schlagzeile": "Handwerk und Kultur gehören zusammen",
+   "dreizeiler": "Um die Verbindung von Handwerk und Kultur stärker ins öffentliche Bewusstsein zu rücken, kooperieren künftig die Stiftung Preußischer Kulturbesitz und der ZDH, so deren Präsidenten Dittrich und Ackermann zu DHZ-Redakteuren Steffen Range und Ulrich Steudel.",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Interview / Statement",
+   "zitat": null,
+   "zuerst_gesehen": "2026-10-14",
+   "neu": true
+  },
+  {
+   "id": "ff-ff-25605",
+   "datum": "2026-10-09",
+   "datum_ungenau": false,
+   "datum_hinweis": "",
+   "nummer": null,
+   "titel": "Ausbildung: Zahl der Neuabschlüsse erneut gestiegen",
+   "url": "https://www.hwk-ff.de/ausbildungsmarkt2026-2/",
+   "art": "bericht",
+   "thema": "Ausbildung & Nachwuchs",
+   "thema2": null,
+   "absender": "Handwerkskammer Frankfurt (Oder)",
+   "ebene": "Brandenburg",
+   "quelle_kurz": "Kammer Frankfurt",
+   "schlagzeile": "Ausbildung: Zahl der Neuabschlüsse erneut gestiegen",
+   "dreizeiler": "Zum 30. September 2026 hat das ostbrandenburgische Handwerk mit 981 neuen Ausbildungsverträgen 17 Abschlüsse mehr registriert als im Vorjahr (2025: 964). Damit setzt sich der positive Trend des Vorjahres fort. Davon wurden 945 Ausbildungsverträge direkt mit Betrieben abgeschlossen (2025: 927). 36 Abschlüsse entfielen auf die außerbetriebliche Ausbildung (davon 8 nach § 240 SGB III und […]",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Medieninformation",
+   "zitat": null,
+   "zuerst_gesehen": "2026-10-14",
+   "neu": true
+  },
+  {
+   "id": "ff-ff-25596",
+   "datum": "2026-10-09",
+   "datum_ungenau": false,
+   "datum_hinweis": "",
+   "nummer": null,
+   "titel": "Konjunktur: Handwerk zeigt Stabilität in herausforderndem Umfeld",
+   "url": "https://www.hwk-ff.de/konjunktur-zweites-halbjahr2026/",
+   "art": "zahlen",
+   "thema": "Wirtschaftslage",
+   "thema2": null,
+   "absender": "Handwerkskammer Frankfurt (Oder)",
+   "ebene": "Brandenburg",
+   "quelle_kurz": "Kammer Frankfurt",
+   "schlagzeile": "Konjunktur: Handwerk zeigt Stabilität in herausforderndem Umfeld",
+   "dreizeiler": "Das Handwerk in Ostbrandenburg präsentiert sich im zweiten Halbjahr 2026 insgesamt stabil, ein nachhaltiger konjunktureller Aufschwung bleibt jedoch aus. Das geht aus dem aktuellen Konjunkturbericht der Handwerkskammer Frankfurt (Oder) – Region Ostbrandenburg hervor. Rund 85 Prozent der befragten Betriebe bewerten ihre Geschäftslage als gut oder befriedigend. Gleichzeitig haben sich die Erwartungen für die kommenden Monate […]",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Medieninformation",
+   "zitat": null,
+   "zuerst_gesehen": "2026-10-14",
+   "neu": true
+  },
+  {
+   "id": "cb-cb-10540",
+   "datum": "2026-10-09",
+   "datum_ungenau": false,
+   "datum_hinweis": "",
+   "nummer": null,
+   "titel": "Handwerk zwischen Stabilität und Herausforderungen",
+   "url": "https://www.hwk-cottbus.de/artikel/handwerk-zwischen-stabilitaet-und-herausforderungen-7,0,10540.html",
+   "art": "bericht",
+   "thema": "Aus den Kammern",
+   "thema2": null,
+   "absender": "Handwerkskammer Cottbus",
+   "ebene": "Brandenburg",
+   "quelle_kurz": "Kammer Cottbus",
+   "schlagzeile": "Handwerk zwischen Stabilität und Herausforderungen",
+   "dreizeiler": "Verbesserungen bei Umsätzen und Aufträgen treffen auf anhaltenden Fachkräfte und Kostendruck",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Pressemitteilung",
+   "zitat": null,
+   "zuerst_gesehen": "2026-10-14",
+   "neu": true
+  },
+  {
+   "id": "zdh-reformen-bleiben-trotz-besserer-wachstumsprognosen-pflicht",
+   "datum": "2026-10-08",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Reformen bleiben trotz besserer Wachstumsprognosen Pflicht",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/pressemitteilungen/reformen-bleiben-trotz-besserer-wachstumsprognosen-pflicht/",
+   "art": "politik",
+   "thema": "Wirtschaftslage",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "quelle_kurz": "ZDH",
+   "schlagzeile": "Reformen bleiben trotz besserer Wachstumsprognosen Pflicht",
+   "dreizeiler": "Anlässlich der Veröffentlichung der Herbstprojektion der Bundesregierung am 8. Oktober und am Tag nach dem Koalitionsausschuss am 7. Oktober erklärt Jörg Dittrich, Präsident des Zentralverbandes des Deutschen Handwerks (ZDH):",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Pressemitteilung",
+   "zitat": null,
+   "zuerst_gesehen": "2026-10-14",
+   "neu": true
+  },
+  {
+   "id": "zdh-zdh-und-stiftung-preussischer-kulturbesitz-vereinbaren-kooperation",
+   "datum": "2026-10-08",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "ZDH und Stiftung Preußischer Kulturbesitz vereinbaren Kooperation",
+   "url": "https://www.zdh.de/presse/veroeffentlichungen/pressemitteilungen/zdh-und-stiftung-preussischer-kulturbesitz-vereinbaren-kooperation/",
+   "art": "politik",
+   "thema": "Ehrungen & Termine",
+   "thema2": null,
+   "absender": "Zentralverband des Deutschen Handwerks",
+   "ebene": "Bund",
+   "quelle_kurz": "ZDH",
+   "schlagzeile": "ZDH und Stiftung Preußischer Kulturbesitz vereinbaren Kooperation",
+   "dreizeiler": "Der Zentralverband des Deutschen Handwerks (ZDH) und die Stiftung Preußischer Kulturbesitz (SPK) haben eine strategische Zusammenarbeit vereinbart.",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Pressemitteilung",
+   "zitat": null,
+   "zuerst_gesehen": "2026-10-14",
+   "neu": true
+  },
+  {
    "id": "zdh-die-betriebe-muessen-den-buerokratie-abbau-spueren",
    "datum": "2026-10-07",
    "datum_ungenau": false,
@@ -725,7 +1011,7 @@ const DATEN = /*__DATEN__*/{
    "gattung": "Pressemitteilung",
    "zitat": null,
    "zuerst_gesehen": "2026-10-07",
-   "neu": true
+   "neu": false
   },
   {
    "id": "zdh-prioritaeten-im-haushalt-setzen-fuer-groessere-steuerliche-entlastung",
@@ -747,7 +1033,7 @@ const DATEN = /*__DATEN__*/{
    "gattung": "Pressemitteilung",
    "zitat": null,
    "zuerst_gesehen": "2026-10-07",
-   "neu": true
+   "neu": false
   },
   {
    "id": "ff-ff-25573",
@@ -815,7 +1101,7 @@ const DATEN = /*__DATEN__*/{
    "gattung": "Interview / Statement",
    "zitat": null,
    "zuerst_gesehen": "2026-10-07",
-   "neu": true
+   "neu": false
   },
   {
    "id": "ff-ff-25550",
@@ -928,7 +1214,7 @@ const DATEN = /*__DATEN__*/{
    "gattung": "Interview / Statement",
    "zitat": null,
    "zuerst_gesehen": "2026-10-07",
-   "neu": true
+   "neu": false
   },
   {
    "id": "zdh-pflegereform-bleibt-hinter-dem-notwendigen-zurueck",
@@ -950,7 +1236,7 @@ const DATEN = /*__DATEN__*/{
    "gattung": "Pressemitteilung",
    "zitat": null,
    "zuerst_gesehen": "2026-10-07",
-   "neu": true
+   "neu": false
   },
   {
    "id": "ff-ff-25481",
@@ -974,6 +1260,28 @@ const DATEN = /*__DATEN__*/{
    "zitat": null,
    "zuerst_gesehen": "erstbestand",
    "neu": false
+  },
+  {
+   "id": "hwj-2026-09-26-jubilaums-abend",
+   "datum": "2026-09-26",
+   "datum_ungenau": false,
+   "nummer": null,
+   "titel": "Jubiläums-Abend",
+   "url": "https://www.handwerksjunioren.de/#news",
+   "art": "bericht",
+   "thema": "Ehrungen & Termine",
+   "thema2": null,
+   "absender": "Junioren des Handwerks e.V.",
+   "ebene": "Bund",
+   "quelle_kurz": "Junioren",
+   "schlagzeile": "Jubiläums-Abend",
+   "dreizeiler": "In der atemberaubenden Würth Repräsentanz auf der Insel Schwanenwerder in Berlin ist unser deutschlandweites Netzwerk zusammengekommen, um 70 Jahre Handwerksjunioren zu feiern. Mit Grußworten von Elke Büdenbender, Jörg Dittrich, Carola Zarth und Johannes Schmalzl sowie einer Keynote von Christoph Krause hat der hochkarätig besetzte Abend einen angemessenen Rahmen für unser Jubiläum geboten.",
+   "unredigiert": true,
+   "quelle_eigen": true,
+   "gattung": "Aus dem Junioren-Netzwerk",
+   "zitat": null,
+   "zuerst_gesehen": "2026-10-14",
+   "neu": true
   },
   {
    "id": "hwj-2026-09-26-inter-bootstour",
@@ -8345,8 +8653,15 @@ function passt(m){
 
 /* ---------- Kopf ---------- */
 function zeichneKopf(){
+  /* "Zuletzt abgeglichen" ist der Tag, an dem die Quellen zuletzt WIRKLICH
+     abgefragt wurden - nicht der Tag, an dem zuletzt etwas Neues dabei war.
+     Beides zu vermischen hiess: Ein Abgleich ohne Fund sah aus wie gar kein
+     Abgleich. */
   document.getElementById("stand").innerHTML =
-    "Zuletzt abgeglichen <b>" + esc(datumLesbar(DATEN.letzter_abgleich)) + "</b>";
+    "Zuletzt abgeglichen <b>" + esc(datumLesbar(DATEN.letzter_abgleich)) + "</b>" +
+    (DATEN.abgleich_takt
+       ? '<span class="takt">automatisch ' + esc(DATEN.abgleich_takt) + "</span>"
+       : "");
 
   const M = DATEN.meldungen;
   const neu = M.filter(m => m.neu).length;
@@ -8429,7 +8744,8 @@ function zeichneLagesatz(){
   if (neue.length){
     const spitze = neue.filter(x => x.n === neue[0].n);
     const anzahl = DATEN.meldungen.filter(m => m.neu).length;
-    satz = "Beim Abgleich am " + datumLesbar(DATEN.letzter_abgleich) + " kamen " +
+    satz = "Beim Abgleich am " + datumLesbar(DATEN.letztes_neues ||
+                                               DATEN.letzter_abgleich) + " kamen " +
       anzahl + (anzahl === 1 ? " Meldung dazu, sie gehört zu "
                              : " Meldungen dazu, die meisten zu ") +
       aufzaehlen(spitze.map(x => x.b.name)) +
@@ -8437,8 +8753,8 @@ function zeichneLagesatz(){
       (anzahl === 1 ? "."
         : " (" + (spitze.length > 1 ? "je " : "") + spitze[0].n + ").");
   } else {
-    satz = "Seit dem Abgleich am " + datumLesbar(DATEN.letzter_abgleich) +
-      " ist nichts dazugekommen.";
+    satz = "Beim Abgleich am " + datumLesbar(DATEN.letzter_abgleich) +
+      " war nichts Neues dabei.";
   }
   /* "Aus den Kammern" und "Ehrungen & Termine" sind Auffangtoepfe, keine
      Sachthemen - als "groesstes Thema" waeren sie eine leere Aussage. */
@@ -8695,7 +9011,117 @@ document.getElementById("zurueck").addEventListener("click", function(){
   zuAnker("#abschnittThemen");
 });
 
+/* ---------- Faellt die Automatik aus, sagt es die Seite ----------
+   Geplant ist mittwochs und freitags; der groesste normale Abstand sind
+   fuenf Tage. Erst ab acht Tagen ist also wirklich etwas liegengeblieben -
+   ein einzelner verpasster Lauf soll keinen Fehlalarm ausloesen. */
+const GEDULD_TAGE = 8;
+
+function tageSeit(iso){
+  const d = new Date(iso + "T00:00:00");
+  if (isNaN(d.getTime())) return null;
+  const heute = new Date();
+  heute.setHours(0, 0, 0, 0);
+  return Math.round((heute - d) / 86400000);
+}
+
+function zeichneHaengt(){
+  const el = document.getElementById("haengt");
+  const tage = tageSeit(DATEN.letzter_abgleich);
+  if (tage === null || tage <= GEDULD_TAGE){ el.hidden = true; return; }
+  el.innerHTML = "<b>Der letzte Abgleich ist " + esc(tage) + " Tage her.</b> " +
+    (DATEN.abgleich_takt
+       ? "Vorgesehen ist " + esc(DATEN.abgleich_takt) + " \u2013 die Automatik " +
+         "scheint nicht gelaufen zu sein."
+       : "Diese Seite zeigt also m\u00f6glicherweise nicht den aktuellen Stand.");
+  el.hidden = false;
+}
+
+function zeichneFuss(){
+  /* Die Quellenliste zaehlt sich selbst auf. Als sie noch im Text stand,
+     nannte sie nach dem Anschluss von drei weiteren Quellen immer noch
+     die alten drei. */
+  const namen = DATEN.meldungen.map(m => m.absender)
+    /* "Gemeinsam mit Partnern" steht bei gemeinsamen Erklaerungen im Feld
+       Absender - es ist aber keine Organisation und gehoert nicht in eine
+       Quellenliste. */
+    .filter((n, i, a) => n && n !== "Gemeinsam mit Partnern" && a.indexOf(n) === i)
+    .sort((a, b) => a.localeCompare(b, "de"));
+  document.getElementById("fussQuellen").innerHTML =
+    "<b>Quellen:</b> " + esc(aufzaehlen(namen)) + ". Die Seite gleicht sie " +
+    esc(DATEN.abgleich_takt || "regelm\u00e4\u00dfig") + " ab.";
+}
+
+/* ---------- Als App auf den Startbildschirm ----------
+   Android und Chrome melden sich von selbst (beforeinstallprompt) - dann
+   startet der Knopf die Installation direkt. Das iPhone kennt diesen Weg
+   nicht; dort bleibt nur der Hinweis auf den Teilen-Knopf. Laeuft die Seite
+   schon als App, ist der Hinweis ueberfluessig. */
+const HINWEIS_WEG = "ticker-app-hinweis-weg";
+let installAngebot = null;
+
+function hinweisErlaubt(){
+  try {
+    if (matchMedia("(display-mode: standalone)").matches) return false;
+    if (navigator.standalone) return false;
+    return localStorage.getItem(HINWEIS_WEG) !== "ja";
+  } catch (e){
+    return true;   /* Ohne Speicher lieber einmal zu viel fragen als gar nicht */
+  }
+}
+
+function hinweisWeg(){
+  document.getElementById("appleiste").hidden = true;
+  try { localStorage.setItem(HINWEIS_WEG, "ja"); } catch (e){}
+}
+
+function zeichneAppHinweis(){
+  if (!hinweisErlaubt()) return;
+  const leiste = document.getElementById("appleiste");
+  const knopf = document.getElementById("appJa");
+  if (installAngebot){
+    document.getElementById("appText").textContent =
+      /* Kurz genug fuer EINE Zeile am Handy - die Leiste bleibt dadurch
+         zweizeilig statt dreizeilig. */
+      "Diesen Ticker als App installieren?";
+    knopf.hidden = false;
+    leiste.hidden = false;
+  } else if (/iphone|ipad|ipod/i.test(navigator.userAgent)){
+    document.getElementById("appText").innerHTML =
+      "Als App aufs iPhone: unten auf <b>Teilen</b> tippen, dann " +
+      "<b>Zum Home-Bildschirm</b>.";
+    knopf.hidden = true;
+    leiste.hidden = false;
+  }
+}
+
+window.addEventListener("beforeinstallprompt", function(e){
+  e.preventDefault();          /* statt Chromes eigenem Banner unser Hinweis */
+  installAngebot = e;
+  zeichneAppHinweis();
+});
+window.addEventListener("appinstalled", hinweisWeg);
+
+document.getElementById("appJa").addEventListener("click", function(){
+  if (!installAngebot) return;
+  installAngebot.prompt();
+  installAngebot.userChoice.then(function(){ installAngebot = null; hinweisWeg(); });
+});
+document.getElementById("appNein").addEventListener("click", hinweisWeg);
+
+/* Der Service Worker macht die Seite installierbar und ohne Netz lesbar.
+   Nur ueber http(s): In einer heruntergeladenen Datei (file://) gibt es ihn
+   nicht - die Seite selbst funktioniert dort unveraendert. */
+if ("serviceWorker" in navigator && location.protocol.indexOf("http") === 0){
+  window.addEventListener("load", function(){
+    navigator.serviceWorker.register("sw.js").catch(function(){});
+  });
+}
+
 zeichneKopf();
+zeichneHaengt();
+zeichneFuss();
+zeichneAppHinweis();
 zeichneForderungen();
 zeichneLagesatz();
 zeichneKacheln();

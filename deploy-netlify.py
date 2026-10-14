@@ -1,6 +1,14 @@
 # -*- coding: utf-8 -*-
 """
-Veroeffentlicht ticker-prototyp.html als index.html auf Netlify.
+Veroeffentlicht den Handwerks-Ticker auf Netlify.
+
+Hochgeladen wird nicht mehr nur die Seite, sondern alles, was sie zur App
+macht:
+
+    ticker-prototyp.html  ->  /index.html
+    web/manifest.json     ->  /manifest.json      (Name, Farben, Symbole)
+    web/sw.js             ->  /sw.js              (offline + installierbar)
+    web/icons/*.png       ->  /icons/*.png
 
 Verwendet die SHA1-Manifest-API, NICHT den ZIP-Upload: Der ZIP-Weg liefert
 teils Content-Type text/plain, der Browser zeigt dann Quelltext statt Seite
@@ -11,6 +19,8 @@ steht nirgends im Code.
 
 Aufruf:
     python deploy-netlify.py            (nutzt/erstellt die Site aus netlify-site.json)
+    python deploy-netlify.py --vorschau (legt dieselben Dateien nur oertlich
+                                         in den Ordner vorschau/, kein Upload)
 """
 import hashlib
 import json
@@ -73,30 +83,77 @@ def site_holen():
     sys.exit("Kein freier Site-Name gefunden.")
 
 
+def sammeln():
+    """Alle auszuliefernden Dateien als {Netlify-Pfad: lokaler Pfad}."""
+    dateien = {"/index.html": QUELLE}
+    for name in ("manifest.json", "sw.js"):
+        dateien["/" + name] = os.path.join("web", name)
+    verzeichnis = os.path.join("web", "icons")
+    for name in sorted(os.listdir(verzeichnis)):
+        if name.lower().endswith(".png"):
+            dateien["/icons/" + name] = os.path.join(verzeichnis, name)
+
+    fehlt = [p for p in dateien.values() if not os.path.exists(p)]
+    if fehlt:
+        sys.exit("Diese Dateien fehlen: %s%s"
+                 % (", ".join(fehlt),
+                    "\n(erst 'python baue-ticker.py' laufen lassen)"
+                    if QUELLE in fehlt else ""))
+    return dateien
+
+
+def vorschau(dateien):
+    """Dieselben Dateien unter denselben Pfaden in den Ordner vorschau/ legen.
+
+    Damit laesst sich die App genau so pruefen, wie sie spaeter ausgeliefert
+    wird (Startseite als index.html, Symbole unter /icons/) - ohne sie dafuer
+    veroeffentlichen zu muessen.
+    """
+    import shutil
+    ziel = "vorschau"
+    if os.path.isdir(ziel):
+        shutil.rmtree(ziel)
+    for weg, pfad in dateien.items():
+        hin = os.path.join(ziel, weg.lstrip("/").replace("/", os.sep))
+        os.makedirs(os.path.dirname(hin), exist_ok=True)
+        shutil.copyfile(pfad, hin)
+        print("  %s" % hin)
+    print()
+    print("Vorschau bereit. Ansehen mit:")
+    print("  python -m http.server 8765 --directory vorschau")
+
+
 def main():
     hier = os.path.dirname(os.path.abspath(__file__))
     os.chdir(hier)
 
-    if not os.path.exists(QUELLE):
-        sys.exit("%s fehlt - erst 'python baue-ticker.py' laufen lassen." % QUELLE)
+    dateien = sammeln()
+    if "--vorschau" in sys.argv:
+        return vorschau(dateien)
+    inhalte = {weg: open(pfad, "rb").read() for weg, pfad in dateien.items()}
+    pruefsummen = {weg: hashlib.sha1(roh).hexdigest() for weg, roh in inhalte.items()}
 
-    inhalt = open(QUELLE, "rb").read()
-    pruefsumme = hashlib.sha1(inhalt).hexdigest()      # Netlify erwartet SHA1
-    print("%s: %.0f kB, SHA1 %s" % (QUELLE, len(inhalt) / 1024, pruefsumme[:12]))
+    for weg in sorted(dateien):
+        print("  %-28s %7.1f kB  %s"
+              % (weg, len(inhalte[weg]) / 1024, pruefsummen[weg][:12]))
 
     site = site_holen()
 
-    # Schritt 1: Netlify das Dateiverzeichnis ankuendigen
+    # Schritt 1: Netlify das ganze Dateiverzeichnis ankuendigen. Was dort NICHT
+    # steht, verschwindet von der Site - deshalb immer alles aufzaehlen.
     deploy = anfrage("/sites/%s/deploys" % site["id"], "POST",
-                     {"files": {"/index.html": pruefsumme}})
-    fehlend = deploy.get("required", [])
-    print("Deploy angelegt:", deploy["id"], "| noch hochzuladen:", len(fehlend))
+                     {"files": pruefsummen})
+    noetig = set(deploy.get("required", []))
+    print("Deploy angelegt:", deploy["id"], "| hochzuladen:", len(noetig))
 
-    # Schritt 2: die Datei selbst schicken
-    if pruefsumme in fehlend or fehlend:
-        anfrage("%s/deploys/%s/files/index.html" % (API, deploy["id"]),
-                "PUT", inhalt, "application/octet-stream")
-        print("Datei uebertragen.")
+    # Schritt 2: nur die Dateien schicken, die Netlify noch nicht kennt
+    for weg in sorted(dateien):
+        if pruefsummen[weg] not in noetig:
+            print("  unveraendert:", weg)
+            continue
+        anfrage("%s/deploys/%s/files%s" % (API, deploy["id"], weg),
+                "PUT", inhalte[weg], "application/octet-stream")
+        print("  uebertragen :", weg)
 
     stand = anfrage("/deploys/%s" % deploy["id"])
     print()

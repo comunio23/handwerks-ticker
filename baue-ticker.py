@@ -531,11 +531,31 @@ def main():
     for x in fertig:
         x["neu"] = x["id"] in neu_ids
 
-    # Das Datum im Kopf ist der Tag des letzten ABGLEICHS, nicht der des
-    # letzten Bauens. Wer nur die Vorlage aendert und neu baut, holt keine
-    # neuen Meldungen - dann darf die Seite auch nicht behaupten, sie sei
-    # heute abgeglichen worden.
-    letzter_abgleich = neuestes or heute
+    # Zwei verschiedene Daten, die lange eines waren:
+    #   letztes_neues   - wann zuletzt etwas Neues dazukam
+    #   letzter_abgleich- wann die Quellen zuletzt WIRKLICH abgefragt wurden
+    # Der Tag des Bauens ist keines von beidem: Wer nur die Vorlage aendert
+    # und neu baut, holt nichts - dann darf die Seite auch nicht behaupten,
+    # sie sei heute abgeglichen worden. Deshalb schreibt abgleich.py den
+    # Stand in eine eigene Datei; fehlt sie, bleibt es beim alten Verhalten.
+    letztes_neues = neuestes or heute
+    stand_pfad = "daten/abgleich-stand.json"
+    letzter_abgleich = letztes_neues
+    if os.path.exists(stand_pfad):
+        try:
+            letzter_abgleich = (json.load(open(stand_pfad, encoding="utf-8"))
+                                .get("zuletzt") or letztes_neues)
+        except Exception as f:
+            print("  Hinweis: %s nicht lesbar (%s)" % (stand_pfad, f))
+
+    # Wann die Automatik laeuft, steht in daten/quellen.json - damit Seite und
+    # Zeitplan dieselbe Quelle haben.
+    takt = ""
+    try:
+        takt = (json.load(open("daten/quellen.json", encoding="utf-8"))
+                .get("abgleich", {}).get("text", ""))
+    except Exception:
+        pass
 
     json.dump(bekannt, open(bekannt_pfad, "w", encoding="utf-8"),
               ensure_ascii=False, indent=1, sort_keys=True)
@@ -630,6 +650,8 @@ def main():
         "stand": redaktion_datei.get("stand", datetime.date.today().isoformat()),
         "themen": themen,
         "letzter_abgleich": letzter_abgleich,
+        "letztes_neues": letztes_neues,
+        "abgleich_takt": takt,
         "neu_anzahl": sum(1 for x in fertig if x["neu"]),
         "meldungen": fertig,
     }
