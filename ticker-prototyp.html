@@ -114,6 +114,12 @@
   /* ---------- Hinweis "als App" ----------
      Erscheint nur, wenn das Geraet die Installation wirklich anbietet, und
      nur so lange, bis er einmal weggetippt wurde. */
+  /* Ein Element mit dem Merkmal "hidden" MUSS verschwinden. Ohne diese Zeile
+     gewinnt jede eigene display-Regel (hier display:flex der Hinweisleiste)
+     gegen die eingebaute Regel des Browsers - die Leiste stand dann leer und
+     ohne Text auf der Seite. */
+  [hidden]{display:none !important}
+
   .appleiste{margin:10px 0 0;background:var(--blau-zart);
              border-left:4px solid var(--blau-akzent);
              box-shadow:var(--schatten);padding:9px 14px;display:flex;
