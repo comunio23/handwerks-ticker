@@ -47,7 +47,10 @@
      schrumpfen - ein einziges langes Wort sprengt sonst das Handy-Layout
      (KMS [L-0163]). Deshalb pauschal fuer alle Rasterkinder. */
   .kennzahlen>*,.kacheln>*,.forderungs-reihe>*{min-width:0}
-  html{-webkit-text-size-adjust:100%}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+  @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+  /* Damit der Sprung zur Themenwahl nicht direkt an der Oberkante klebt */
+  #abschnittThemen{scroll-margin-top:10px}
   body{
     margin:0;
     background:var(--seite);
@@ -80,19 +83,18 @@
   .kopfband .stand{margin:0;font-size:14px;color:#cddcf0;text-align:right;flex:0 0 auto}
   .kopfband .stand b{color:#fff;font-size:15px;white-space:nowrap}
 
-  /* ---------- Kennzahlen ---------- */
-  .kennzahlen{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;
-              margin:20px 0 0}
-  .kennzahl{background:var(--weiss);box-shadow:var(--schatten);padding:14px 16px;
-            min-width:0}
-  .kennzahl b{display:block;font-size:30px;line-height:1.1;color:var(--blau);
-              font-weight:700}
-  .kennzahl span{display:block;font-size:13px;color:var(--text-leise);margin-top:3px;
-                 hyphens:auto;overflow-wrap:break-word}
-  /* Die Neu-Zahl wird nicht rot - Rot gehoert in der Ampel der Kammer den
-     drei Forderungen. Markiert wird mit dem Gelb der Neu-Marke, und zwar
-     als Flaeche: Gelb traegt nie Schrift (1,58:1 auf Weiss). */
-  .kennzahl.hebt{border-left:4px solid var(--gelb)}
+  /* ---------- Kennzeile ----------
+     Vier Kachelkaesten kosteten 200 Pixel und vier Rahmen, um vier Zahlen zu
+     zeigen. Eine Zeile tut dasselbe. */
+  .kennzeile{margin:14px 0 0;font-size:14px;color:var(--text-leise);
+             background:var(--weiss);box-shadow:var(--schatten);
+             padding:11px 16px;line-height:1.7}
+  .kennzeile b{color:var(--blau);font-size:17px}
+  .kennzeile .neu-zahl{background:var(--gelb);color:var(--blau);font-weight:700;
+                       padding:1px 7px;white-space:nowrap}
+  /* Der Trenner ist Text, also muss er lesbar sein - in #dfe4ea waren es
+     1,28:1. */
+  .kennzeile .trenner{color:var(--text-leise);padding:0 5px}
 
   /* ---------- Abschnittsueberschriften ---------- */
   .abschnitt{padding:28px 0 0}
@@ -106,15 +108,16 @@
                     grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
   .forderung{background:var(--weiss);box-shadow:var(--schatten);
              border-left:5px solid var(--rot);padding:0;min-width:0}
-  .forderung summary{cursor:pointer;list-style:none;display:block;padding:16px 18px}
+  .forderung summary{cursor:pointer;list-style:none;display:block;padding:12px 15px}
   .forderung summary::-webkit-details-marker{display:none}
   .forderung summary:hover{background:var(--blau-zart)}
-  .forderung-rang{display:inline-block;background:var(--rot);color:#fff;
-                  font-size:12px;font-weight:700;letter-spacing:.06em;
-                  padding:3px 8px;margin-bottom:8px}
-  .forderung-titel{display:block;font-size:20px;font-weight:700;color:var(--blau);
+  .forderung-kopf{display:flex;align-items:flex-start;gap:9px}
+  .forderung-rang{flex:0 0 auto;background:var(--rot);color:#fff;font-size:14px;
+                  font-weight:700;width:26px;height:26px;line-height:26px;
+                  text-align:center}
+  .forderung-titel{font-size:18px;font-weight:700;color:var(--blau);
                    line-height:1.3;hyphens:auto;overflow-wrap:break-word}
-  .forderung-zeile{margin:10px 0 0;display:flex;flex-wrap:wrap;gap:6px;
+  .forderung-zeile{margin:8px 0 0 35px;display:flex;flex-wrap:wrap;gap:5px;
                    align-items:center}
   .marke{display:inline-block;font-size:12px;line-height:1.4;padding:3px 8px;
          white-space:nowrap}
@@ -124,10 +127,10 @@
                   white-space:normal}
   .marke.beide{background:var(--blau-flaeche);color:var(--blau);font-weight:700}
   .marke.wann{background:var(--grau-flaeche);color:var(--text-stark)}
-  .forderung-mehr{display:block;margin-top:10px;font-size:14px;
-                  color:var(--blau-link);text-decoration:underline}
-  .forderung[open] .forderung-mehr{display:none}
-  .forderung-inhalt{padding:0 18px 16px}
+  .forderung-mehr{font-size:12px;line-height:1.4;padding:3px 8px;
+                  color:var(--blau-link);text-decoration:underline;
+                  white-space:nowrap}
+  .forderung-inhalt{padding:0 15px 14px 35px}
   .forderung-inhalt p.worum{margin:0;font-size:15px;line-height:1.5}
   .forderung blockquote{margin:12px 0 0;padding:10px 14px;background:var(--blau-zart);
                         border-left:3px solid var(--blau-akzent);font-size:15px;
@@ -137,68 +140,95 @@
          display:flex;flex-wrap:wrap;align-items:center;gap:0 6px;min-height:44px}
   .beleg a{display:inline-flex;align-items:center;min-height:44px}
 
-  /* ---------- Themenkacheln ---------- */
-  .kacheln{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:16px}
+  /* ---------- Themenkacheln ----------
+     Die Themen stehen nur noch HIER. Vorher gab es sie doppelt - als Kachel
+     und als Knopf in einer 2.963 Pixel breiten Leiste. Zwei Wege zum selben
+     Ziel sind keine Auswahl, sondern Unordnung. */
+  .kacheln{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:14px}
   .kachel{display:block;width:100%;text-align:left;font:inherit;cursor:pointer;
           background:var(--weiss);box-shadow:var(--schatten);border:0;
-          border-top:4px solid var(--blau);padding:14px 16px 12px;min-width:0}
+          border-top:3px solid var(--blau);padding:11px 14px 10px;min-width:0}
   .kachel:hover{box-shadow:var(--schatten-hoch)}
   .kachel.nachrangig{border-top-color:var(--grau-blau)}
-  .kachel[aria-pressed="true"]{background:var(--blau-zart)}
-  .kachel-kopf{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
-  .kachel-name{font-size:19px;font-weight:700;color:var(--blau);line-height:1.25;
-               hyphens:auto;overflow-wrap:break-word}
-  .kachel-marken{flex:0 0 auto;display:flex;align-items:baseline;gap:5px}
+  .kachel[aria-pressed="true"]{background:var(--blau);border-top-color:var(--blau)}
+  .kachel[aria-pressed="true"] .kachel-name{color:#fff}
+  .kachel[aria-pressed="true"] .kachel-zeile,
+  .kachel[aria-pressed="true"] .kachel-herkunft{color:#e2ecf9}
+  /* Wird es eng, rutschen die Marken unter den Namen, statt die Kachel um
+     ein paar Pixel ueber den Bildschirmrand zu schieben. */
+  .kachel-kopf{display:flex;align-items:baseline;justify-content:space-between;
+               gap:6px 8px;flex-wrap:wrap}
+  /* break-word statt anywhere: anywhere bricht AUCH dort, wo ein normaler
+     Umbruch reichen wuerde - aus "Auftraege & Konjunktur" wurde dadurch
+     "Auftraeg e & Konjunk tur". */
+  .kachel-name{flex:1 1 auto;min-width:0;font-size:17px;font-weight:700;
+               color:var(--blau);line-height:1.25;
+               hyphens:auto;overflow-wrap:break-word;word-break:normal}
+  .kachel-marken{flex:0 0 auto;display:flex;align-items:baseline;gap:4px}
   .kachel-zahl{background:var(--blau-flaeche);color:var(--blau);
-               font-size:13px;font-weight:700;padding:2px 9px;border-radius:0}
+               font-size:13px;font-weight:700;padding:1px 8px;border-radius:0}
   .kachel-neu{background:var(--gelb);color:var(--blau);font-size:12px;
-              font-weight:700;padding:2px 8px;border-radius:0;white-space:nowrap}
+              font-weight:700;padding:1px 7px;border-radius:0;white-space:nowrap}
   .kachel.nachrangig .kachel-zahl{background:var(--grau-flaeche);color:var(--text-stark)}
-  .kachel-zeile{display:block;font-size:14px;line-height:1.35;color:var(--text);
-                margin-top:9px;overflow-wrap:break-word}
-  .kachel-datum{color:var(--text-leise);font-size:12px;display:block}
-  .kachel-herkunft{display:block;margin-top:9px;font-size:12px;
+  /* Die juengste Schlagzeile auf zwei Zeilen begrenzen - sonst bestimmt die
+     laengste Ueberschrift die Hoehe der ganzen Reihe. */
+  .kachel-zeile{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;
+                overflow:hidden;font-size:13px;line-height:1.35;color:var(--text);
+                margin-top:6px;overflow-wrap:break-word;hyphens:auto}
+  .kachel-herkunft{display:block;margin-top:5px;font-size:12px;
                    color:var(--text-leise)}
-  .kachel-mehr{display:block;margin-top:7px;font-size:13px;font-weight:700;
-               color:var(--blau-link)}
 
-  /* ---------- Suche ---------- */
-  .suchband{padding:24px 0 0}
-  .suchband input{width:100%;font:inherit;font-size:16px;padding:11px 14px;
-                  min-height:46px;border:1px solid var(--text);border-radius:0;
-                  background:var(--weiss);color:var(--text)}
-  .suchband input:hover{border-color:var(--blau-akzent)}
-  .suchband input::placeholder{color:var(--text-leise)}
+  /* ---------- Statuszeile: klebt, feste Hoehe ---------- */
+  .statusband{position:sticky;top:0;z-index:20;background:var(--weiss);
+              border-top:2px solid var(--blau);border-bottom:1px solid var(--linie);
+              margin-top:22px;box-shadow:0 2px 4px rgba(0,0,0,.06)}
+  .statuszeile{display:flex;align-items:center;justify-content:space-between;
+               gap:12px;height:52px}
+  .zaehler{font-size:14px;color:var(--text-stark);margin:0;min-width:0;
+           overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .zaehler b{color:var(--blau)}
+  .zurueck{flex:0 0 auto;border:0;border-radius:0;font:inherit;font-size:14px;
+           font-weight:700;cursor:pointer;background:var(--grau-flaeche);
+           color:var(--blau);height:44px;padding:0 14px;white-space:nowrap}
+  .zurueck:hover{background:var(--blau-flaeche)}
 
-  /* ---------- Reiterleiste: Muster der Kammer (Farbwelt blue-dark) ----------
-     Feste Hoehe, damit beim Scrollen nichts springt. */
-  .reiterband{position:sticky;top:0;z-index:20;background:var(--seite);
-              border-bottom:2px solid var(--blau);margin-top:12px}
-  .reiter-spur{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;
-               -webkit-overflow-scrolling:touch;height:56px;align-items:stretch}
-  .reiter-spur::-webkit-scrollbar{height:0}
-  .reiter{flex:0 0 auto;border:0;border-radius:0;font:inherit;font-size:15px;
-          font-weight:700;cursor:pointer;white-space:nowrap;padding:0 16px;
+  /* ---------- Werkzeuge: Suche und Eingrenzen ---------- */
+  .werkzeuge{margin:16px 0 18px}
+  .werkzeuge input{width:100%;font:inherit;font-size:16px;padding:11px 14px;
+                   min-height:46px;border:1px solid var(--text);border-radius:0;
+                   background:var(--weiss);color:var(--text)}
+  .werkzeuge input:hover{border-color:var(--blau-akzent)}
+  .werkzeuge input::placeholder{color:var(--text-leise)}
+  .eingrenzen{margin-top:4px;background:var(--weiss);box-shadow:var(--schatten)}
+  .eingrenzen>summary{cursor:pointer;list-style:none;display:flex;
+                      align-items:center;min-height:44px;padding:0 14px;
+                      font-size:14px;font-weight:700;color:var(--blau)}
+  .eingrenzen>summary::-webkit-details-marker{display:none}
+  .eingrenzen>summary::after{content:"\\25bc";margin-left:8px;font-size:10px;
+                             color:var(--text-leise)}
+  .eingrenzen[open]>summary::after{content:"\\25b2"}
+  .eingrenzen>summary:hover{background:var(--blau-zart)}
+  /* Die Knoepfe BRECHEN UM statt seitwaerts zu scrollen - niemand sucht einen
+     Filter, den er erst wegschieben muss. */
+  .chips{display:flex;flex-wrap:wrap;gap:4px;padding:0 14px 14px}
+  .reiter{border:0;border-radius:0;font:inherit;font-size:14px;font-weight:700;
+          cursor:pointer;white-space:nowrap;padding:0 13px;
           background:var(--grau-flaeche);color:var(--blau);min-height:44px;
-          align-self:center;height:44px;line-height:44px}
-  /* Ueberfahren und Ausgewaehlt duerfen nicht gleich aussehen - sonst weiss
-     man am Rechner nie, welcher Reiter gerade greift. */
+          height:44px;line-height:44px}
   .reiter:hover{background:var(--blau-flaeche);color:var(--blau)}
   .reiter[aria-pressed="true"]{background:var(--blau);color:#fff}
   .reiter .zahl{font-weight:400;opacity:.85;margin-left:6px}
   .reiter.hinweis{background:var(--orange-zart);color:var(--blau)}
   .reiter.hinweis[aria-pressed="true"]{background:var(--blau);color:#fff}
-  /* Zweite Stufe in derselben Reihe: erst das Thema, dann die Herkunft. */
   .reiter.quelle{background:var(--weiss);color:var(--blau);
                  box-shadow:inset 0 0 0 1px var(--blau)}
   .reiter.quelle:hover{background:var(--blau-flaeche)}
   .reiter.quelle[aria-pressed="true"]{background:var(--blau);color:#fff}
-  .reiter.leise{background:var(--weiss);color:var(--text-leise);font-weight:400}
-  .reiter.leise[aria-pressed="true"]{background:var(--blau);color:#fff;font-weight:700}
+  .chips .zwischentitel{flex:0 0 100%;font-size:12px;color:var(--text-leise);
+                        margin:8px 0 2px;letter-spacing:.04em;text-transform:uppercase}
 
   /* ---------- Liste ---------- */
   main{padding-bottom:44px}
-  .zaehler{font-size:14px;color:var(--text-leise);margin:16px 0 14px}
   .block-titel{display:flex;align-items:center;gap:10px;margin:26px 0 10px;
                font-size:20px;color:var(--blau)}
   .block-titel:first-child{margin-top:0}
@@ -270,24 +300,27 @@
   /* ---------- Handy ---------- */
   @media (max-width:767px){
     body{font-size:16px}
-    h1,h2,h3,.kachel-name,.forderung-titel{overflow-wrap:anywhere}
+    h1,h2,h3,.forderung-titel{overflow-wrap:anywhere}
     .mitte{padding:0 16px}
     .kopf-innen{flex-direction:column;align-items:flex-start;gap:2px;
                 min-height:56px;padding-top:9px;padding-bottom:9px}
     .kopfband h1{font-size:22px}
     .kopfband .stand{text-align:left;font-size:13px}
-    .kennzahlen{grid-template-columns:repeat(2,1fr);margin-top:16px}
-    .kennzahl b{font-size:26px}
+    .kennzeile{font-size:13px;padding:10px 14px;line-height:1.8}
+    .kennzeile b{font-size:16px}
     .abschnitt-titel{font-size:21px}
-    .kacheln{grid-template-columns:1fr}
-    .kachel{padding:12px 14px 10px}
-    .kachel-zeile{margin-top:7px}
-    .kachel-mehr{margin-top:8px}
+    /* Zwei Spalten auch am Handy: neun Kacheln untereinander waren allein
+       1.463 Pixel hoch - fast zwei Bildschirme vor der ersten Meldung. */
+    .kacheln{grid-template-columns:repeat(2,1fr)}
+    .kachel{padding:10px 12px 9px}
+    .kachel-name{font-size:15px}
+    .kachel-zeile{font-size:12px;-webkit-line-clamp:3}
+    .kachel-herkunft{font-size:12px}
+    .statuszeile{height:48px}
     .nur-breit{display:none}
     .schlagzeile{font-size:18px}
-    .forderung summary{padding:13px 15px}
-    .forderung-titel{font-size:18px}
-    .forderung-zeile{margin-top:8px;gap:5px}
+    .forderung summary{padding:11px 13px}
+    .forderung-titel{font-size:17px}
     .abschnitt{padding-top:22px}
     .datum{margin-left:0}
   }
@@ -303,10 +336,10 @@
 </header>
 
 <div class="mitte">
-  <div class="kennzahlen" id="kennzahlen"></div>
+  <p class="kennzeile" id="kennzeile"></p>
 </div>
 
-<section class="abschnitt">
+<section class="abschnitt" id="abschnittForderungen">
   <div class="mitte">
     <h2 class="abschnitt-titel" id="forderungsTitel"></h2>
     <p class="abschnitt-unter" id="kriterium"></p>
@@ -314,7 +347,7 @@
   </div>
 </section>
 
-<section class="abschnitt">
+<section class="abschnitt" id="abschnittThemen">
   <div class="mitte">
     <h2 class="abschnitt-titel">Worum es gerade geht</h2>
     <p class="abschnitt-unter" id="lagesatz"></p>
@@ -322,23 +355,28 @@
   </div>
 </section>
 
-<div class="suchband">
-  <div class="mitte">
-    <label class="sr" for="suche">In allen Meldungen suchen</label>
-    <input id="suche" type="search" autocomplete="off"
-           placeholder="In allen Meldungen suchen &hellip;">
-  </div>
-</div>
-
-<div class="reiterband">
-  <div class="mitte">
-    <div class="reiter-spur" id="filterKnoepfe" role="group" aria-label="Meldungen filtern"></div>
+<!-- Klebende Statuszeile: sagt beim Lesen jederzeit, was man gerade sieht,
+     und fuehrt mit einem Griff zur Themenwahl zurueck. Feste Hoehe, damit
+     beim Scrollen nichts springt (KMS [L-0239]). -->
+<div class="statusband">
+  <div class="mitte statuszeile">
+    <p class="zaehler" id="zaehler"></p>
+    <button type="button" class="zurueck" id="zurueck">Themen</button>
   </div>
 </div>
 
 <main>
   <div class="mitte">
-    <p class="zaehler" id="zaehler"></p>
+    <div class="werkzeuge">
+      <label class="sr" for="suche">In allen Meldungen suchen</label>
+      <input id="suche" type="search" autocomplete="off"
+             placeholder="In allen Meldungen suchen &hellip;">
+      <details class="eingrenzen">
+        <summary>Eingrenzen nach Herkunft</summary>
+        <div class="chips" id="filterKnoepfe" role="group"
+             aria-label="Nach Ebene und Absender eingrenzen"></div>
+      </details>
+    </div>
     <div id="liste"></div>
   </div>
 </main>
@@ -8228,9 +8266,14 @@ const BUENDEL = [
   /* Regionale Berichterstattung der drei Kammern: Betriebsbesuche,
      Lehrberufeschauen, Gremienarbeit. Kein Sachthema - und es waere falsch,
      ihr eines anzudichten, nur damit die Kachelwand voller aussieht. */
-  {name:"Aus den Kammern", kein_sachthema:true,
+  {name:"Aus den Kammern", kein_sachthema:true, zugeklappt:true,
+   hinweis:"Betriebsbesuche, Lehrberufeschauen, Gremienarbeit und Dienste der " +
+           "drei Kammern. Wichtig für die Region, aber keine politische " +
+           "Forderung – deshalb hier unten.",
    themen:["Aus den Kammern","Kammer & Service"]},
   {name:"Ehrungen & Termine", nachrangig:true, kein_sachthema:true,
+   zugeklappt:true,
+   hinweis:"Jubiläen, Freisprechungen und Veranstaltungstermine.",
    themen:["Ehrungen & Termine"]}
 ];
 
@@ -8280,7 +8323,7 @@ function istPolitisch(m){ return m.art === "politik"; }
 let filter = "alles";
 let suchtext = "";
 const offeneBloecke = {};
-const ANRISS = 5;            /* so viele Karten je Block, bevor es "mehr" gibt */
+const ANRISS = 3;            /* so viele Karten je Block, bevor es "mehr" gibt */
 
 function passt(m){
   if (filter === "politik" && !istPolitisch(m)) return false;
@@ -8305,19 +8348,18 @@ function zeichneKopf(){
   document.getElementById("stand").innerHTML =
     "Zuletzt abgeglichen <b>" + esc(datumLesbar(DATEN.letzter_abgleich)) + "</b>";
 
-  const felder = [
-    {wert: DATEN.meldungen.length, text: "Meldungen im Jahr " + DATEN.jahr},
-    {wert: DATEN.meldungen.filter(istPolitisch).length,
-     text: "davon politische Meldungen"},
-    {wert: DATEN.meldungen.filter(m => m.ebene === "Bund").length,
-     text: "aus der Bundesebene"},
-    {wert: DATEN.meldungen.filter(m => m.neu).length,
-     text: "neu seit dem letzten Abgleich", hebt: true}
+  const M = DATEN.meldungen;
+  const neu = M.filter(m => m.neu).length;
+  const teile = [
+    "<b>" + esc(M.length) + "</b> Meldungen " + esc(DATEN.jahr),
+    "<b>" + esc(M.filter(istPolitisch).length) + "</b> politische",
+    "<b>" + esc(M.filter(m => m.ebene === "Brandenburg").length) +
+      "</b> aus Brandenburg, <b>" +
+      esc(M.filter(m => m.ebene === "Bund").length) + "</b> vom Bund"
   ];
-  document.getElementById("kennzahlen").innerHTML = felder.map(f =>
-    '<div class="kennzahl' + (f.hebt && f.wert ? " hebt" : "") + '">' +
-      '<b>' + esc(f.wert) + '</b><span>' + esc(f.text) + '</span></div>'
-  ).join("");
+  if (neu) teile.push('<span class="neu-zahl">' + esc(neu) + " neu</span>");
+  document.getElementById("kennzeile").innerHTML =
+    teile.join('<span class="trenner">&middot;</span>');
 }
 
 /* ---------- Die drei Forderungen ---------- */
@@ -8337,22 +8379,23 @@ function zeichneForderungen(){
   document.getElementById("forderungsReihe").innerHTML =
     DATEN.forderungen.map((f, i) => {
       const beleg = f.belege[0];
+      /* Zugeklappt so flach wie moeglich: Rang und Titel in EINER Zeile,
+         darunter eine einzige Zeile mit Adressat, Datum und Belegzahl. Die
+         vier Karten brauchten vorher 794 Pixel - fast einen ganzen
+         Handybildschirm, bevor ueberhaupt ein Thema zu sehen war. */
       return '<details class="forderung">' +
         '<summary>' +
-          '<span class="forderung-rang">FORDERUNG ' + (i + 1) + '</span>' +
-          '<span class="forderung-titel">' + esc(f.kurz) + '</span>' +
+          '<span class="forderung-kopf">' +
+            '<span class="forderung-rang">' + (i + 1) + '</span>' +
+            '<span class="forderung-titel">' + esc(f.kurz) + '</span>' +
+          '</span>' +
           '<span class="forderung-zeile">' +
             '<span class="marke adressat">an ' + esc(f.adressat) + '</span>' +
-            (f.ebenen.length > 1
-              ? '<span class="marke beide">Bund + Brandenburg</span>'
-              : '<span class="marke beide">nur ' + esc(f.ebenen[0]) + '</span>') +
-            '<span class="marke wann">zuletzt ' + esc(datumLesbar(f.zuletzt)) + '</span>' +
-            (f.anzahl > 1
-              ? '<span class="marke wann nur-breit">' + esc(f.anzahl) +
-                '&times; belegt</span>'
-              : '') +
+            '<span class="marke wann">zuletzt ' +
+              esc(datumLesbar(f.zuletzt)) + '</span>' +
+            '<span class="forderung-mehr">' + esc(f.anzahl) +
+              (f.anzahl === 1 ? ' Beleg' : ' Belege') + '</span>' +
           '</span>' +
-          '<span class="forderung-mehr">Worum es geht &ndash; und wer das sagt</span>' +
         '</summary>' +
         '<div class="forderung-inhalt">' +
           '<p class="worum">' + esc(f.worum) + '</p>' +
@@ -8429,13 +8472,11 @@ function zeichneKacheln(){
           '<span class="kachel-zahl">' + treffer.length + '</span>' +
         '</span>' +
       '</span>' +
-      /* Am Handy nur die juengste Schlagzeile - sonst waere die Kachelwand
-         dort drei Bildschirme hoch, bevor die erste Meldung kommt. */
-      treffer.slice(0, 2).map((m, i) =>
-        '<span class="kachel-zeile' + (i ? " nur-breit" : "") + '">' +
-          '<span class="kachel-datum">' + esc(datumKurz(m.datum)) + ' &middot; ' +
-            esc(m.ebene) + '</span>' + esc(m.schlagzeile) +
-        '</span>').join("") +
+      /* Eine einzige Schlagzeile, auf zwei Zeilen begrenzt: Sie beantwortet
+         "was steckt drin", ohne die Kachelwand zu einem zweiten Inhalt zu
+         machen. */
+      '<span class="kachel-zeile">' + esc(datumKurz(treffer[0].datum)) +
+        ' &middot; ' + esc(treffer[0].schlagzeile) + '</span>' +
       /* Die Herkunft im Klartext, nicht nur als Farbe: dass Geld & Steuern
          fast nur vom Bund kommt und Ehrungen fast nur aus Brandenburg, ist
          eine Aussage fuer sich. */
@@ -8443,8 +8484,6 @@ function zeichneKacheln(){
         treffer.filter(m => m.ebene === "Bund").length + ' Bund &middot; ' +
         treffer.filter(m => m.ebene === "Brandenburg").length + ' Brandenburg' +
       '</span>' +
-      '<span class="kachel-mehr">alle ' + treffer.length + ' aus ' +
-        esc(DATEN.jahr) + ' anzeigen</span>' +
     '</button>';
   }).join("");
   document.getElementById("themenKacheln").innerHTML = html;
@@ -8459,23 +8498,25 @@ function zeichneFilter(){
       (anzahl === null ? "" : '<span class="zahl">' + anzahl + '</span>') +
     '</button>';
 
+  /* Die THEMEN stehen hier bewusst nicht mehr - die waehlt man oben an den
+     Kacheln. Hier bleibt nur, was eine andere Frage beantwortet: Wer sagt es,
+     auf welcher Ebene, und was ist neu. */
   const neu = DATEN.meldungen.filter(m => m.neu).length;
   let html = knopf("alles", "Alles", DATEN.meldungen.length);
-  if (neu) html += knopf("neu", "Neu", neu, "hinweis");
-  html += knopf("politik", "Politisches",
+  if (neu) html += knopf("neu", "Neu seit dem Abgleich", neu, "hinweis");
+  html += knopf("politik", "Nur Politisches",
                 DATEN.meldungen.filter(istPolitisch).length);
+
+  html += '<span class="zwischentitel">Ebene</span>';
   ["Bund","Brandenburg"].forEach(e => {
     const n = DATEN.meldungen.filter(m => m.ebene === e).length;
     if (n) html += knopf("ebene:" + e, e, n);
   });
+
+  html += '<span class="zwischentitel">Absender</span>';
   QUELLEN.forEach(q => {
     const n = DATEN.meldungen.filter(m => m.quelle_kurz === q.schluessel).length;
     if (n) html += knopf("quelle:" + q.schluessel, q.name, n, "quelle");
-  });
-  BUENDEL.forEach(b => {
-    const n = DATEN.meldungen.filter(m => buendelVon(m) === b).length;
-    if (n) html += knopf("buendel:" + b.name, b.name, n,
-                         b.nachrangig ? "leise" : "");
   });
   document.getElementById("filterKnoepfe").innerHTML = html;
 }
@@ -8494,12 +8535,14 @@ function zeichneListe(){
   else if (filter.indexOf("quelle:") === 0) wo = filter.slice(7) + ": ";
   else if (filter === "politik") wo = "Politische Meldungen: ";
   else if (filter === "neu") wo = "Neu seit dem letzten Abgleich: ";
-  document.getElementById("zaehler").textContent =
+  document.getElementById("zaehler").innerHTML =
     gegliedert
-      ? treffer.length + " Meldungen, nach Thema geordnet – je Thema die " +
-        ANRISS + " neuesten, der Rest auf Knopfdruck"
-      : wo + treffer.length + " von " + DATEN.meldungen.length +
-        " Meldungen, neueste zuerst";
+      ? "Alle Themen &middot; <b>" + esc(treffer.length) + "</b> Meldungen"
+      : esc(wo) + "<b>" + esc(treffer.length) + "</b> von " +
+        esc(DATEN.meldungen.length) + " Meldungen";
+  /* Der Knopf fuehrt zur Themenwahl zurueck - solange noch nichts gewaehlt
+     ist, waere er sinnlos. */
+  document.getElementById("zurueck").hidden = gegliedert;
 
   const ziel = document.getElementById("liste");
   if (!treffer.length){
@@ -8516,7 +8559,7 @@ function zeichneListe(){
 
   let html = "";
   BUENDEL.forEach(b => {
-    if (b.nachrangig) return;
+    if (b.zugeklappt) return;
     const teil = treffer.filter(m => buendelVon(m) === b);
     if (!teil.length) return;
     const alle = offeneBloecke[b.name];
@@ -8533,14 +8576,16 @@ function zeichneListe(){
     }
   });
 
-  BUENDEL.filter(b => b.nachrangig).forEach(b => {
+  /* Zugeklappt ans Ende: das Kammerleben und die Ehrungen. Zusammen sind das
+     fast die Haelfte aller Meldungen - offen wuerden sie die politischen
+     Themen zuschuetten (KMS [D-0173]). */
+  BUENDEL.filter(b => b.zugeklappt).forEach(b => {
     const teil = treffer.filter(m => buendelVon(m) === b);
     if (!teil.length) return;
     html += '<details class="nebensache">' +
       '<summary>' + esc(b.name) +
         '<span class="block-zahl">' + teil.length + '</span></summary>' +
-      '<p class="nebensache-hinweis">Jubil&auml;en, Ehrungen und Veranstaltungen ' +
-        'der Kammer &ndash; zugeklappt, damit die politischen Themen oben bleiben.</p>' +
+      '<p class="nebensache-hinweis">' + esc(b.hinweis || "") + '</p>' +
       '<div class="nebensache-inhalt">' + teil.map(karte).join("") + '</div>' +
     '</details>';
   });
@@ -8598,24 +8643,21 @@ function karte(m){
 }
 
 /* ---------- Bedienung ---------- */
+/* scrollIntoView statt scrollTo({behavior:"smooth"}): Das weiche Scrollen
+   wird nicht ueberall ausgefuehrt - wo es fehlt, passiert dann GAR nichts,
+   und der Sprung faellt stillschweigend aus. scrollIntoView springt immer;
+   weich wird es ueber scroll-behavior im CSS, wo der Browser das kann. */
+function zuAnker(auswahl){
+  const e = document.querySelector(auswahl);
+  if (e) e.scrollIntoView({block: "start"});
+}
+
 function filterSetzen(wert, springen){
   filter = (wert === filter && filter !== "alles") ? "alles" : wert;
   zeichneFilter();
   zeichneKacheln();
   zeichneListe();
-  /* Der gewaehlte Reiter muss sichtbar sein - sonst weiss man nach einem
-     Klick auf eine Themenkachel nicht, welcher Filter gerade greift. */
-  const spur = document.getElementById("filterKnoepfe");
-  const aktiv = spur.querySelector('.reiter[aria-pressed="true"]');
-  if (aktiv){
-    const s = spur.getBoundingClientRect(), a = aktiv.getBoundingClientRect();
-    spur.scrollLeft = Math.max(0, spur.scrollLeft + (a.left - s.left) - 8);
-  }
-  if (springen){
-    const band = document.querySelector(".reiterband");
-    const y = band.getBoundingClientRect().top + window.pageYOffset;
-    window.scrollTo({top: y - 2, behavior: "smooth"});
-  }
+  if (springen) zuAnker(".statusband");
 }
 
 document.getElementById("filterKnoepfe").addEventListener("click", function(e){
@@ -8639,6 +8681,18 @@ document.getElementById("liste").addEventListener("click", function(e){
 document.getElementById("suche").addEventListener("input", function(){
   suchtext = this.value.trim().toLowerCase();
   zeichneListe();
+});
+
+/* Zurueck zur Themenwahl: Wer unten in einer gefilterten Liste steht, soll
+   nicht erst durch die ganze Seite nach oben scrollen muessen. */
+document.getElementById("zurueck").addEventListener("click", function(){
+  filter = "alles";
+  document.getElementById("suche").value = "";
+  suchtext = "";
+  zeichneFilter();
+  zeichneKacheln();
+  zeichneListe();
+  zuAnker("#abschnittThemen");
 });
 
 zeichneKopf();
