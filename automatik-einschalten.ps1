@@ -37,7 +37,9 @@ $aktion = New-ScheduledTaskAction -Execute "powershell.exe" `
     -Argument "-NoProfile -WindowStyle Hidden -ExecutionPolicy Bypass -Command `"& '.\abgleich-automatisch.cmd' still`"" `
     -WorkingDirectory $ordner
 
-$ausloeser = New-ScheduledTaskTrigger -Weekly -DaysOfWeek Wednesday,Friday -At 7:30am
+# Uhrzeit als echtes Datum statt als Text "7:30am": So haengt die Aufgabe
+# nicht davon ab, wie Windows Zeitangaben auf diesem Rechner liest.
+$ausloeser = New-ScheduledTaskTrigger -Weekly -DaysOfWeek Wednesday,Friday -At (Get-Date -Hour 7 -Minute 30 -Second 0)
 
 # StartWhenAvailable: War der Rechner um 7:30 aus, laeuft der Abgleich beim
 # naechsten Start nach. RestartCount: bei Netzproblemen drei Versuche im
