@@ -248,9 +248,12 @@
                       align-items:center;min-height:44px;padding:0 14px;
                       font-size:14px;font-weight:700;color:var(--blau)}
   .eingrenzen>summary::-webkit-details-marker{display:none}
-  .eingrenzen>summary::after{content:"\\25bc";margin-left:8px;font-size:10px;
+  /* EIN Backslash. Mit zweien ist es in CSS ein maskierter Backslash plus
+     der Text "25bc" - und genau das stand monatelang als "\25bc" neben der
+     Ueberschrift, statt eines Dreiecks. */
+  .eingrenzen>summary::after{content:"\25bc";margin-left:8px;font-size:10px;
                              color:var(--text-leise)}
-  .eingrenzen[open]>summary::after{content:"\\25b2"}
+  .eingrenzen[open]>summary::after{content:"\25b2"}
   .eingrenzen>summary:hover{background:var(--blau-zart)}
   /* Die Knoepfe BRECHEN UM statt seitwaerts zu scrollen - niemand sucht einen
      Filter, den er erst wegschieben muss. */
@@ -301,6 +304,13 @@
               box-shadow:inset 0 0 0 1px var(--blau)}
   .neu-marke{background:var(--gelb);color:var(--blau);font-weight:700;padding:3px 8px}
   .gattung{background:var(--grau-flaeche);color:var(--text-stark);padding:3px 8px}
+  /* Die zweite Stimme: Was das Ministerium sagt, darf keine Sekunde lang wie
+     eine Forderung des Handwerks aussehen. Deshalb ein dunkel gefuelltes
+     Schild - deutlich anders als die blauen Schilder des Handwerks - und eine
+     leicht abgesetzte Kartenflaeche. */
+  .gegenseite-marke{background:var(--text-stark);color:#fff;padding:3px 8px;
+                    font-weight:700;white-space:nowrap}
+  .karte.gegenseite{background:#f7f8fa}
   .thema{color:var(--text-leise)}
   .datum{margin-left:auto;color:var(--text-leise);white-space:nowrap}
   .ungenau{border-bottom:1px dotted var(--text-leise);cursor:help}
@@ -497,6 +507,15 @@ const BUENDEL = [
      Nebensache - deshalb vor den Ehrungen und nicht zugeklappt. */
   {name:"Junges Handwerk",
    themen:["Junioren & Ehrenamt"]},
+  /* Die Gegenseite: Meldungen des Wirtschaftsministeriums, die zu keinem
+     Sachthema des Handwerks passen - Regierungsarbeit von Tourismus bis
+     Innovationspreis. Was zu einem Sachthema passt, steht NICHT hier, sondern
+     direkt neben der Forderung des Handwerks. Genau dort gehoert es hin. */
+  {name:"Aus der Landesregierung", kein_sachthema:true, zugeklappt:true,
+   hinweis:"Meldungen des Wirtschaftsministeriums ohne Bezug zu einem " +
+           "Handwerksthema. Was das Ministerium zu Ausbildung, Energie oder " +
+           "Bürokratie sagt, steht oben beim jeweiligen Thema.",
+   themen:["Aus der Landesregierung"]},
   /* Regionale Berichterstattung der drei Kammern: Betriebsbesuche,
      Lehrberufeschauen, Gremienarbeit. Kein Sachthema - und es waere falsch,
      ihr eines anzudichten, nur damit die Kachelwand voller aussieht. */
@@ -519,7 +538,8 @@ const QUELLEN = [
   {schluessel:"Kammer Frankfurt", name:"Frankfurt (Oder)"},
   {schluessel:"Kammer Cottbus",  name:"Cottbus"},
   {schluessel:"ZDH",             name:"ZDH"},
-  {schluessel:"Junioren",        name:"Junioren"}
+  {schluessel:"Junioren",        name:"Junioren"},
+  {schluessel:"Ministerium",     name:"Ministerium", gegenseite:true}
 ];
 
 /* Selbstkontrolle: Ein Thema, das in keinem Buendel steht, wuerde sonst
@@ -552,6 +572,11 @@ function buendelVon(m){
   return null;
 }
 function istPolitisch(m){ return m.art === "politik"; }
+
+/* Zwei Stimmen stehen in diesem Ticker: Das Handwerk fordert, die
+   Landesregierung antwortet. Wer das verwechselt, liest eine
+   Ministeriumsmeldung als Beschluss des Handwerks. */
+function vonDerGegenseite(m){ return m.seite === "Landesregierung"; }
 
 /* ---------- Zustand ---------- */
 let filter = "alles";
@@ -598,6 +623,10 @@ function zeichneKopf(){
       "</b> aus Brandenburg, <b>" +
       esc(M.filter(m => m.ebene === "Bund").length) + "</b> vom Bund"
   ];
+  /* Die Gegenstimme gehoert in die Kennzeile: Sonst wundert sich jemand,
+     warum unter "Ausbildung" plötzlich das Ministerium spricht. */
+  const gegen = M.filter(vonDerGegenseite).length;
+  if (gegen) teile.push("<b>" + esc(gegen) + "</b> von der Landesregierung");
   if (neu) teile.push('<span class="neu-zahl">' + esc(neu) + " neu</span>");
   document.getElementById("kennzeile").innerHTML =
     teile.join('<span class="trenner">&middot;</span>');
@@ -853,12 +882,15 @@ function karte(m){
   let klasse = "karte";
   if (istPolitisch(m)) klasse += " politisch";
   if (m.neu) klasse += " ist-neu";
+  if (vonDerGegenseite(m)) klasse += " gegenseite";
 
   return '<article class="' + klasse + '">' +
     '<p class="karte-dach">' +
       (m.neu ? '<span class="neu-marke">Neu</span>' : '') +
       '<span class="ebene ebene-' + (m.ebene === "Bund" ? "bund" : "land") + '">' +
         esc(m.ebene) + '</span>' +
+      (vonDerGegenseite(m)
+        ? '<span class="gegenseite-marke">Landesregierung</span>' : '') +
       (ART_NAME[m.art]
         ? '<span class="gattung">' + esc(ART_NAME[m.art]) + '</span>' : '') +
       '<span class="thema">' + esc(m.thema) +

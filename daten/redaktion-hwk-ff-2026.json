@@ -1,0 +1,214 @@
+{
+  "hinweis": "Redaktionelle Ebene zu daten/hwk-ff-2026.json (Handwerkskammer Frankfurt (Oder) - Region Ostbrandenburg). Schlüssel ist die 'kennung' der Rohmeldung. Felder: art (politik | bericht | zahlen | ehrung | termin), thema, thema2, schlagzeile (nur wo der Originaltitel die Aussage nicht trägt - sonst bleibt er stehen), dreizeiler (eigene Kurzfassung, ausschließlich aus dem Quelltext), zitat (muss WÖRTLICH im Volltext stehen, baue-ticker.py bricht sonst ab). Einträge ohne 'dreizeiler' ordnen nur ein; dort bleibt der Anrisstext der Kammer stehen und ist als solcher gekennzeichnet.",
+  "stand": "2026-10-14",
+  "eintraege": {
+
+    "ff-25524": {
+      "art": "politik",
+      "thema": "Energie & Sprit",
+      "thema2": "Steuern & Abgaben",
+      "schlagzeile": "Tankrabatt: Kammer fordert dauerhafte Entlastung statt Dreimonatshilfe",
+      "dreizeiler": "Zum Start des Tankrabatts erklärt die Handwerkskammer Frankfurt (Oder), die Maßnahme könne kurzfristig für etwas Entspannung sorgen, löse aber die grundlegenden Probleme nicht. Betroffen seien vor allem Betriebe mit hohem Mobilitätsaufwand im Bau-, Ausbau- und Dienstleistungsbereich, während gestiegene Energiepreise Werkstätten, Produktionsstätten und Fuhrparks weiter belasten. Hauptgeschäftsführer Frank Ecker verlangt stattdessen strukturelle Reformen und eine Senkung der Stromsteuer.",
+      "zitat": "Der Tankrabatt lindert Symptome, löst aber keine Probleme."
+    },
+
+    "ff-25221": {
+      "art": "bericht",
+      "thema": "Energie & Sprit",
+      "thema2": "Steuern & Abgaben",
+      "schlagzeile": "Tankrabatt beschlossen: 14 Cent weniger Energiesteuer bis Jahresende",
+      "dreizeiler": "Der Bundestag hat die erneute befristete Absenkung der Energiesteuer auf Kraftstoffe beschlossen, der Bundesrat hat keinen Einspruch eingelegt. Vom 1. Oktober bis 31. Dezember 2026 sinkt der Steuersatz für Benzin und Diesel um 14,04 Cent je Liter. Das Entlastungsvolumen beträgt rund 2,5 Milliarden Euro; die Länder tragen davon 1,25 Milliarden über einen Umsatzsteuerfestbetrag."
+    },
+
+    "ff-24545": {
+      "art": "politik",
+      "thema": "Entbürokratisierung",
+      "thema2": "Steuern & Abgaben",
+      "schlagzeile": "Reformpaket: Richtung stimmt, aber der Steuerbonus soll nicht sinken",
+      "dreizeiler": "Der Brandenburgische Handwerkskammertag bewertet das Reformpaket der Bundesregierung als Schritt in die richtige Richtung: Steuererhöhungen für den breiten Mittelstand bleiben aus, der Steuerbonus für Handwerkerleistungen bleibt grundsätzlich erhalten. Kritisch sieht Präsident Robert Wüst, dass dieser Bonus reduziert werden soll – er stärke legale Aufträge, entlaste private Haushalte und wirke gegen Schwarzarbeit. Nachholbedarf bleibe bei Personenunternehmen, die gegenüber Kapitalgesellschaften nicht benachteiligt werden dürften.",
+      "zitat": "Entscheidend ist jetzt, dass den Ankündigungen schnell konkrete und praxistaugliche Gesetze folgen."
+    },
+
+    "ff-24539": {
+      "art": "politik",
+      "thema": "Politik & Regierung",
+      "thema2": "Steuern & Abgaben",
+      "dreizeiler": "Zu den Ergebnissen des Koalitionsausschusses erklärt ZDH-Präsident Jörg Dittrich, die Einigung zeige, dass die Regierungskoalition auch bei schwierigen Themen handlungs- und kompromissfähig sei. Höhere Freibeträge, Kindergeld und Anpassungen im Einkommensteuertarif stärkten die Kaufkraft und könnten die Binnenkonjunktur stabilisieren. Planungssicherheit entstehe dadurch, dass weder die Erbschaftsteuer angehoben noch der Spitzensteuersatz allgemein erhöht wird.",
+      "zitat": "Insgesamt setzt das Reformpaket aber an vielen der richtigen Stellen an."
+    },
+
+    "ff-24376": {
+      "art": "politik",
+      "thema": "Bauen & Sanieren",
+      "thema2": "Entbürokratisierung",
+      "schlagzeile": "Neue Bauordnung: drei Wochen Prüffrist, nach drei Monaten gilt der Antrag als genehmigt",
+      "dreizeiler": "Der Landtag Brandenburg hat die Novelle der Brandenburgischen Bauordnung beschlossen. Bauaufsichtsbehörden müssen künftig binnen drei Wochen prüfen, ob ein Bauantrag vollständig ist; bleibt eine Entscheidung drei Monate aus, gilt der Antrag als genehmigt. Ab dem 1. Oktober 2026 ist die digitale Antragstellung verpflichtend, Umbauten, Aufstockungen und Umnutzungen im Bestand werden vereinfacht."
+    },
+
+    "ff-24362": {
+      "art": "politik",
+      "thema": "Ausbildung & Nachwuchs",
+      "schlagzeile": "Unterrichtsausfall: Handwerk nennt es ein Armutszeugnis",
+      "dreizeiler": "Bildungsminister Gordon Hoffmann hat eingeräumt, dass der Unterricht an Brandenburgs Schulen im kommenden Schuljahr nicht überall abgesichert werden kann – womit auch die bundesweite Anerkennung brandenburgischer Schulabschlüsse gefährdet ist. Robert Wüst, Präsident des Handwerkskammertages, sieht darin ein Risiko für die Fachkräftesicherung. Betriebe erlebten seit Jahren, dass junge Menschen mit deutlichen Defiziten in Mathematik, Deutsch und Naturwissenschaften in die Ausbildung starten und nachqualifiziert werden müssen.",
+      "zitat": "Dass Brandenburg den Kernunterricht nicht mehr überall absichern kann, ist ein Armutszeugnis."
+    },
+
+    "ff-24332": {
+      "art": "politik",
+      "thema": "Steuern & Abgaben",
+      "dreizeiler": "Der Steuerbonus für Handwerkerleistungen nach § 35a Abs. 3 EStG steht in den Beratungen zum Bundeshaushalt 2027 als mögliche Einsparmaßnahme zur Diskussion. Der Handwerkskammertag Land Brandenburg warnt vor der Abschaffung: Der Bonus sorge dafür, dass handwerkliche Leistungen offiziell beauftragt, sauber abgerechnet und legal versteuert werden. Gerade in den ländlich geprägten Regionen sei das Reparatur- und Modernisierungsgeschäft ein wichtiger Teil der Nachfrage; fiele die Entlastung weg, drohten weniger Aufträge und neue Anreize für Schwarzarbeit.",
+      "zitat": "Eine Abschaffung des Steuerbonus für Handwerkerleistungen wäre ein Fehler mit spürbaren Folgen für Brandenburg."
+    },
+
+    "ff-24311": {
+      "art": "politik",
+      "thema": "Politik & Regierung",
+      "thema2": "Personal & Fachkräfte",
+      "schlagzeile": "Aktionsprogramm 2026–2029: Land, Kammern und DGB unterzeichnen",
+      "dreizeiler": "Landesregierung, die brandenburgischen Handwerkskammern und der DGB Berlin-Brandenburg haben das Aktionsprogramm 2026–2029 „Zukunft des Handwerks im Land Brandenburg“ unterzeichnet. Es richtet sich an rund 37.500 Betriebe mit fast 185.000 Beschäftigten. Verabredet sind Maßnahmen zur Sicherung des Fachkräftenachwuchses, zur Umsetzung der Energiewende, zur Förderung von Unternehmensnachfolgen und Existenzgründungen sowie zur Stärkung der Selbstverwaltung im Handwerk."
+    },
+
+    "ff-24112": {
+      "art": "politik",
+      "thema": "Steuern & Abgaben",
+      "thema2": "Wirtschaftslage",
+      "dreizeiler": "Der Bundesrat hat der sogenannten Entlastungsprämie die Zustimmung verweigert; die Handwerkskammer Frankfurt (Oder) begrüßt das als notwendiges Korrektiv gegen zusätzliche Belastungen der Betriebe. ZDH-Präsident Jörg Dittrich erklärt, damit sei verhindert worden, dass sich die Regierungskoalition auf Kosten von Betrieben mit vermeintlichen Entlastungen schmücke. In einer anhaltenden Energiepreiskrise ausgerechnet jene Betriebe zur Kasse zu bitten, die selbst unter hohen Kosten und wachsendem Druck litten, sei nicht hinnehmbar gewesen.",
+      "zitat": "Es ging nicht darum, wer die 1.000 Euro steuerfrei zahlen will, sondern wer es kann."
+    },
+
+    "ff-23872": {
+      "art": "bericht",
+      "thema": "Energie & Sprit",
+      "schlagzeile": "Spritpreissenkung kam nur teilweise an der Zapfsäule an",
+      "dreizeiler": "Die Energiesteuer auf Benzin und Diesel war vom 1. Mai bis 30. Juni 2026 um 14,04 Cent je Liter gesenkt, mit geringerer Mehrwertsteuer bis zu 16,7 Cent brutto. An vielen Zapfsäulen kam eine reale, aber nicht vollständige Entlastung an: E10 fiel zeitweise wieder unter 2 Euro je Liter, Diesel blieb häufiger darüber. Die Markttransparenzstelle für Kraftstoffe, an die rund 15.000 Tankstellen Preisänderungen binnen fünf Minuten melden, sieht Nachholbedarf."
+    },
+
+    "ff-23585": {
+      "art": "politik",
+      "thema": "Steuern & Abgaben",
+      "dreizeiler": "Zur Debatte um den Eckwertebeschluss zum Bundeshaushalt 2027 kritisiert ZDH-Präsident Jörg Dittrich, es bleibe nebulös, was der Bundesfinanzminister unter dem Abbau von Finanzhilfen und Steuervergünstigungen verstehe. Der sogenannte Handwerkerbonus sei kein Bonus für Betriebe, sondern ein gezielter Steueranreiz für Verbraucherinnen und Verbraucher, der legale Arbeit stärke und Schwarzarbeit eindämme. Ihn jetzt abzuschaffen sende ein widersprüchliches Signal, während zugleich der Kampf gegen Schwarzarbeit betont werde.",
+      "zitat": "Es verunsichert die Handwerksbetriebe massiv"
+    },
+
+    "ff-23413": {
+      "art": "politik",
+      "thema": "Politik & Regierung",
+      "schlagzeile": "Erstes Treffen des Handwerks mit Wirtschaftsministerin Klement",
+      "dreizeiler": "Die Spitzenvertreter des brandenburgischen Handwerks kamen im Märkischen Gildehaus in Caputh zu einem ersten Austausch mit Brandenburgs neuer Wirtschaftsministerin Martina Klement zusammen. Robert Wüst, Präsident des Handwerkskammertages, wertete den Auftakt als starkes Signal: Die Ministerin habe genau zugehört, gezielt nachgefragt und deutlich gemacht, dass sie die wirtschaftliche Realität der Betriebe verstehen wolle. Das Handwerk brauche eine Wirtschaftspolitik, die die Lage der Betriebe kennt und konkrete Entlastungen möglich macht."
+    },
+
+    "ff-23282": {
+      "art": "politik",
+      "thema": "Energie & Sprit",
+      "thema2": "Steuern & Abgaben",
+      "dreizeiler": "Bundeskanzler Friedrich Merz hat angekündigt, die Mineralölsteuer für zwei Monate um rund 17 Cent je Liter zu senken. Wolf-Harald Krüger, Präsident der Handwerkskammer Frankfurt (Oder), nennt das ein grundsätzlich richtiges Signal, aber ein Strohfeuer: Im Flächenland Brandenburg sei Mobilität ein zentraler Kostenfaktor, Betriebe bräuchten dauerhaft verlässliche Energiepreise. Zugleich warnt die Kammer vor dem geplanten steuerfreien Krisen-Bonus von bis zu 1.000 Euro als zusätzlicher Belastung der Betriebe.",
+      "zitat": "Sie bleibt jedoch ein Strohfeuer. Unsere Betriebe sind täglich auf Fahrzeuge angewiesen."
+    },
+
+    "ff-23149": {
+      "art": "politik",
+      "thema": "Energie & Sprit",
+      "thema2": "Aufträge & Vergabe",
+      "schlagzeile": "Sprit- und Materialpreise: Handwerkskammertag fordert Preisgleitklauseln",
+      "dreizeiler": "Steigende Kosten für Kraftstoffe, Energie und Materialien setzen Handwerksbetriebe in Brandenburg zunehmend unter Druck; der Brandenburgische Handwerkskammertag fordert zielgerichtete Entlastungen und praxistaugliche Regelungen für öffentliche Aufträge. Corina Reifenstein, Präsidentin der Handwerkskammer Cottbus und Sprecherin des BHKT, beschreibt kaum noch kalkulierbare Preise und erste Engpässe. Die Landesregierung wird aufgefordert, sich im Bund für eine spürbare Entlastung bei Benzin und Diesel einzusetzen – Polen, Österreich und Italien handelten bereits.",
+      "zitat": "Tanken und Materialeinkauf werden gleichzeitig teurer, sind kaum noch kalkulierbar und erste Engpässe sind spürbar."
+    },
+
+    "ff-23015": {
+      "art": "politik",
+      "thema": "Politik & Regierung",
+      "dreizeiler": "Zur Vereidigung der Ministerinnen und Minister der neuen rot-schwarzen Landesregierung erinnert der Handwerkskammertag an die Bedeutung stabiler Rahmenbedingungen. Präsident Robert Wüst verlangt, die Regierung müsse schnell zeigen, dass sie den Mittelstand nicht nur in Sonntagsreden lobt, sondern im Regierungsalltag stärkt. Dazu zählt er eine beschleunigte Verwaltungsmodernisierung, verlässliche Investitionen in Infrastruktur, Schulen und Wohnungsbau sowie eine Berufsorientierung, die jungen Menschen den Weg ins Handwerk erleichtert.",
+      "zitat": "Brandenburg braucht jetzt Sicherheit und Stabilität, nicht nur politisch, sondern auch für die vielen Handwerksbetriebe, die tagtäglich Verantwortung für Arbeits- und Ausbildungsplätze übernehmen."
+    },
+
+    "ff-23010": {
+      "art": "politik",
+      "thema": "Politik & Regierung",
+      "thema2": "Bauen & Sanieren",
+      "schlagzeile": "Sondervermögen: Investitionen stärken, nicht Haushaltslöcher stopfen",
+      "dreizeiler": "Der ZDH fordert, die Mittel aus dem Sondervermögen für Infrastruktur und Klimaneutralität konsequent für zusätzliche Investitionen zu verwenden; Berechnungen von Wirtschaftsinstituten zufolge ist ein erheblicher Teil nicht dort angekommen. Generalsekretär Holger Schwannecke warnt davor, damit Haushaltslöcher zu stopfen – andernfalls drohe eine weitere Schwächung des Wirtschaftsstandorts. Brandenburg informiert seitdem auf einer eigenen Internetseite über die Verwendung seines Anteils aus dem Zukunftspaket."
+    },
+
+    "ff-22911": {
+      "art": "politik",
+      "thema": "Politik & Regierung",
+      "thema2": "Betrieb & Nachfolge",
+      "schlagzeile": "Koalitionsvertrag: Meisterbonus und Meistergründungsprämie als wichtiges Signal",
+      "dreizeiler": "Der Handwerkskammertag begrüßt die Vorstellung des Koalitionsvertrags von SPD und CDU und erwartet nach den politischen Turbulenzen der vergangenen Wochen klare und entschlossene Maßnahmen. Präsident Robert Wüst hebt die verankerte Stärkung der Meisterausbildung hervor: Der Meisterabschluss sichere Qualität, ermögliche Innovation und sei Grundlage für Ausbildung und Betriebsnachfolge. Der angekündigte Meisterbonus und die Weiterentwicklung der Meistergründungsprämie schüfen zusätzliche Anreize für den Schritt in die Selbstständigkeit."
+    },
+
+    "ff-22795": {
+      "art": "politik",
+      "thema": "Bauen & Sanieren",
+      "thema2": "Energie & Sprit",
+      "dreizeiler": "Die Koalitionsfraktionen haben Eckpunkte zum Gebäudemodernisierungsgesetz vorgelegt, der Novelle des Gebäudeenergiegesetzes. ZDH-Präsident Jörg Dittrich begrüßt das Ende einer monatelangen Hängepartie: Betriebe und Verbraucher hätten damit endlich eine erste Orientierungsgrundlage für die Wärmewende. Entscheidend sei nun, die zugesicherte Technologieoffenheit und Wahlfreiheit bei Heizsystemen mit einer verlässlichen Förderkulisse zu hinterlegen und die Förderbedingungen früh und klar zu kommunizieren."
+    },
+
+    "ff-22776": {
+      "art": "politik",
+      "thema": "Politik & Regierung",
+      "thema2": "Wirtschaftslage",
+      "dreizeiler": "Der Bund hat den Planungsstart für den sechsspurigen Ausbau der A12 eingeleitet; die Handwerkskammer begrüßt das ausdrücklich. Rund 22.000 Fahrzeuge nutzen die Strecke täglich, darunter etwa 40 Prozent Lkw – regelmäßige Staus im Grenzbereich erschweren die Planbarkeit von Materiallieferungen und gefährden Termine. Der Ausbau samt neuer Trassierung und Oderbrücke gilt der Kammer als starkes Signal für die Region, auch wenn der Baubeginn erst in einigen Jahren zu erwarten ist."
+    },
+
+    "ff-22741": {
+      "art": "politik",
+      "thema": "Aufträge & Vergabe",
+      "thema2": "Entbürokratisierung",
+      "dreizeiler": "Wirtschaftsminister Daniel Keller will das Best-Bieter-Prinzip im brandenburgischen Vergaberecht verankern: Nur noch der zu erwartende erfolgreiche Bieter soll seine Eignung nachweisen müssen. Ralph Bührig, Hauptgeschäftsführer des Handwerkskammertages, nennt das einen wichtigen Schritt zu faireren und praxistauglicheren Verfahren, der die Teilnahme an öffentlichen Ausschreibungen erleichtert. Entscheidend sei aber auch, dass Qualität, Zuverlässigkeit und regionale Wertschöpfung stärker zählen als nur der Preis.",
+      "zitat": "Öffentliche Aufträge müssen für alle Betriebe erreichbar sein, unabhängig von ihrer Größe."
+    },
+
+    "ff-22717": {
+      "art": "politik",
+      "thema": "Ausbildung & Nachwuchs",
+      "dreizeiler": "SPD und CDU wollen das Ende 2024 ausgelaufene Azubi-Ticket zum Beginn des Ausbildungsjahres im September 2026 gemeinsam mit Berlin wieder einführen; Auszubildende zahlen dann mit Landeszuschuss 37,80 statt 63 Euro für das Deutschland-Ticket. Ralph Bührig, Hauptgeschäftsführer der Handwerkskammer Potsdam und des Handwerkskammertages, nennt das genau die Anschlusslösung, die das Handwerk seit langem fordert. Bezahlbare Mobilität entscheide gerade bei den langen Strecken im Flächenland darüber, ob Betrieb und Berufsschule verlässlich erreicht werden."
+    },
+
+    "ff-22510": {
+      "art": "politik",
+      "thema": "Ausbildung & Nachwuchs",
+      "dreizeiler": "Die Handwerkskammern Potsdam und Frankfurt (Oder) haben sich erneut für die Einführung einer Praktikumsprämie ausgesprochen; Anlass war ein Dreh des rbb. Frank Ecker, Hauptgeschäftsführer in Frankfurt (Oder), hält sie für ein wirkungsvolles Instrument: Viele Jugendliche wollten vor einer Ausbildung erst Praxiserfahrung sammeln, eine finanzielle Unterstützung erleichtere diesen Einstieg und helfe Betrieben, früh Nachwuchs kennenzulernen. Ralph Bührig von der Handwerkskammer Potsdam sieht darin vor allem im ländlichen Raum eine Möglichkeit, Hürden abzubauen."
+    },
+
+    "ff-22179": {
+      "art": "politik",
+      "thema": "Betrieb & Nachfolge",
+      "thema2": "Steuern & Abgaben",
+      "dreizeiler": "Die SPD hat vorgeschlagen, die Verschonungsregeln für Betriebsvermögen abzuschaffen und stattdessen einen einheitlichen Freibetrag von 5 Millionen Euro einzuführen. Der ZDH hält das für schädlich: Schon mittelgroße Maschinenparks, Fahrzeuge oder Betriebsgrundstücke überschritten diesen Betrag – ein einzelner Kran koste rund 500.000 Euro. Besonders kritisch sieht der Verband, dass die Bindung der Steuerbegünstigung an den Erhalt von Arbeitsplätzen entfallen soll."
+    },
+
+    "ff-22066": {
+      "art": "politik",
+      "thema": "Politik & Regierung",
+      "dreizeiler": "Nach dem Ende der Koalition mit dem BSW durch Ministerpräsident Dietmar Woidke betont der Handwerkskammertag Land Brandenburg die Bedeutung einer handlungsfähigen und verlässlichen Landesregierung. Präsident Robert Wüst verweist auf den Bedarf an klaren Entscheidungen und planbaren Rahmenbedingungen, besonders bei Infrastruktur, Energie, Fachkräftesicherung und Bürokratieabbau. Der Kammertag vertritt über 37.000 Betriebe mit rund 154.000 Beschäftigten und knapp 18,4 Milliarden Euro Jahresumsatz.",
+      "zitat": "Das Handwerk appelliert an alle Verantwortlichen, politische Handlungsfähigkeit sicherzustellen und das Vertrauen der Wirtschaft nicht zu gefährden."
+    },
+
+    "ff-25605": { "art": "zahlen", "thema": "Ausbildung & Nachwuchs" },
+    "ff-25596": { "art": "zahlen", "thema": "Wirtschaftslage" },
+    "ff-25550": { "art": "bericht", "thema": "Auflagen & Vorschriften" },
+    "ff-25172": { "art": "zahlen", "thema": "Ausbildung & Nachwuchs" },
+    "ff-24908": { "art": "bericht", "thema": "Aufträge & Vergabe", "thema2": "Entbürokratisierung" },
+    "ff-24905": { "art": "bericht", "thema": "Wirtschaftslage" },
+    "ff-24725": { "art": "zahlen", "thema": "Ausbildung & Nachwuchs" },
+    "ff-24706": { "art": "bericht", "thema": "Auflagen & Vorschriften", "thema2": "Personal & Fachkräfte" },
+    "ff-24702": { "art": "bericht", "thema": "Bauen & Sanieren" },
+    "ff-24652": { "art": "bericht", "thema": "Auflagen & Vorschriften", "thema2": "Bauen & Sanieren" },
+    "ff-24442": { "art": "zahlen", "thema": "Ausbildung & Nachwuchs" },
+    "ff-24418": { "art": "zahlen", "thema": "Wirtschaftslage" },
+    "ff-24300": { "art": "bericht", "thema": "Ausbildung & Nachwuchs" },
+    "ff-24235": { "art": "bericht", "thema": "Auflagen & Vorschriften", "thema2": "Steuern & Abgaben" },
+    "ff-24203": { "art": "bericht", "thema": "Auflagen & Vorschriften" },
+    "ff-24188": { "art": "zahlen", "thema": "Wirtschaftslage" },
+    "ff-23305": { "art": "zahlen", "thema": "Wirtschaftslage" },
+    "ff-23114": { "art": "bericht", "thema": "Ausbildung & Nachwuchs" },
+    "ff-23092": { "art": "termin", "thema": "Ehrungen & Termine" },
+    "ff-23073": { "art": "bericht", "thema": "Politik & Regierung" },
+    "ff-22436": { "art": "bericht", "thema": "Personal & Fachkräfte" },
+    "ff-22360": { "art": "bericht", "thema": "Entbürokratisierung" },
+    "ff-22293": { "art": "bericht", "thema": "Politik & Regierung" },
+    "ff-22149": { "art": "bericht", "thema": "Auflagen & Vorschriften", "thema2": "Bauen & Sanieren" },
+    "ff-22118": { "art": "bericht", "thema": "Auflagen & Vorschriften" }
+  }
+}

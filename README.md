@@ -5,6 +5,15 @@ Handwerkskammern **Potsdam**, **Frankfurt (Oder)** und **Cottbus**, dem
 **Zentralverband des Deutschen Handwerks** und den **Junioren des Handwerks e.V.**
 Damit ist Brandenburg vollständig abgedeckt.
 
+Dazu kommt eine sechste Quelle, die **nicht** zum Handwerk gehört: das
+**Ministerium für Wirtschaft, Energie, Klimaschutz und Europa**. Es ist der
+Adressat vieler Forderungen – wer wissen will, ob eine Forderung beantwortet
+wurde, muss auch die Gegenseite hören. Jede Meldung trägt deshalb ein Feld
+`seite` („Handwerk" oder „Landesregierung"); Meldungen des Ministeriums
+erscheinen mit einem dunklen Schild **Landesregierung** und auf leicht
+abgesetzter Fläche, damit sie keine Sekunde lang wie eine Forderung des
+Handwerks aussehen.
+
 **Live:** https://handwerks-ticker.netlify.app
 
 ---
@@ -182,6 +191,39 @@ der Systemumstellung. Sie als „vom 7. Juli" anzuzeigen wäre eine erfundene
 Tatsache. Als Beleg für eine Forderung bleiben sie nutzbar – dort zählt der
 Inhalt, nicht das Datum.
 
+### Wirtschaftsministerium Brandenburg – die Gegenseite
+
+```
+python scrape-mweke.py
+```
+
+Das Ministerium ist **keine Handwerksquelle**, sondern der Adressat. Seine
+Meldungen tragen `seite: "Landesregierung"`, erscheinen mit dem dunklen Schild
+**Landesregierung** und sind über den Knopf *Ministerium* einzeln zu holen.
+
+Drei Eigenheiten der Seite:
+
+1. **Die Domain wechselt** je nach Zuschnitt des Hauses (mwae → mwaek →
+   mweke), alle zeigen auf dieselbe Installation. Jeder Verweis wird auf die
+   in `quellen.json` hinterlegte Basis umgeschrieben – sonst stünde dieselbe
+   Meldung unter zwei Adressen in den Daten.
+2. **Die Presseliste zeigt immer nur 15 Meldungen** und kennt kein Blättern.
+   Dafür gibt es Rubriken, die je 15 eigene Meldungen führen; bei schmalen
+   Rubriken reicht das Jahre zurück. Gesammelt wird deshalb über die Rubriken.
+   Aktiv sind *Handel und Handwerk*, *Ausbildung, Arbeit*, *Energie*,
+   *Förderpolitik*, *Gründungsförderung*, *Schule und Wirtschaft* – und die
+   Gesamtliste, damit nichts Aktuelles durchrutscht, nur weil es in keiner
+   dieser Rubriken steht. Sie bringt ein paar Meldungen ohne Handwerksbezug
+   mit; die sammeln sich zugeklappt unter *Aus der Landesregierung*.
+3. **Das Datum steht zweimal da** – in der Liste und in der Meldung selbst
+   („Potsdam, 1. Oktober 2026"). Beide werden verglichen; weichen sie ab,
+   wird die Meldung als `datum_ungenau` gekennzeichnet, statt sie
+   stillschweigend einem Tag zuzuordnen.
+
+Eine `robots.txt` gibt es nicht (HTTP 404), es ist also nichts gesperrt. Der
+Abruf bleibt trotzdem höflich: eigener User-Agent, eine Sekunde Pause,
+lokaler Cache.
+
 ---
 
 ## Was wo steht
@@ -197,10 +239,38 @@ Inhalt, nicht das Datum.
 | `daten/redaktion-zdh-2026.json` | Dreizeiler und Thema je ZDH-Meldung |
 | `daten/redaktion-handwerksjunioren-2026.json` | Einordnung je Junioren-Meldung |
 | `daten/forderungen.json` | die Top-Forderungen samt Belegen (Zahl frei) |
+| `daten/mweke-2026.json` | Meldungen des Wirtschaftsministeriums, unverändert |
+| `daten/redaktion-hwk-ff-2026.json` | Einordnung und Kurzfassungen Frankfurt (Oder) |
+| `daten/redaktion-hwk-cottbus-2026.json` | Einordnung und Kurzfassungen Cottbus |
 | `daten/quellen.json` | welche Quellen eingesammelt werden |
 | `daten/bekannt.json` | was schon bekannt war (für die „Neu"-Markierung) |
 | `daten/abgleich-stand.json` | wann zuletzt wirklich abgeglichen wurde |
 | `web/manifest.json`, `web/sw.js`, `web/icons/` | was die Seite zur App macht |
+
+---
+
+## Die redaktionelle Ebene
+
+Zu jeder Quelle gehört eine Redaktionsdatei, die einordnet, was die Quelle
+selbst nicht sagt: `art` (politik / bericht / zahlen / ehrung / termin),
+`thema`, optional `thema2`, eine eigene `schlagzeile` und ein `dreizeiler`.
+
+| Eintrag | Wirkung |
+|---|---|
+| nur `art` und `thema` | ordnet ein; es bleibt beim **Anrisstext der Quelle**, sichtbar gekennzeichnet |
+| zusätzlich `dreizeiler` | eigene Kurzfassung statt des Anrisstextes |
+| zusätzlich `schlagzeile` | eigene Überschrift – nur wo der Originaltitel die Aussage nicht trägt |
+| zusätzlich `zitat` | wörtliches Zitat als Blockzitat auf der Karte |
+
+**`art: "politik"` vergibt nur ein Mensch.** Die automatische Erkennung
+(`gattung_raten`) kennt Ehrung, Termin und Zahlen – „politisch" ist eine
+redaktionelle Entscheidung und wird nie geraten.
+
+**Jedes `zitat` wird geprüft.** Steht es nicht wörtlich im Volltext der
+Quelle, **bricht der Bau ab**. Einzige Ausnahme: Liefert die Quelle gar
+keinen Text, weil sie nur als Bild vorliegt (die Maßnahmenpapiere der
+Junioren), muss der Eintrag in `quelle_text` festhalten, woher das Zitat
+stammt. Die Pflicht zum Beleg bleibt, nur ihre Form ändert sich.
 
 ---
 

@@ -158,6 +158,7 @@ def zdh_laden():
             continue
         kennung = x["url"].rstrip("/").split("/")[-1]
         r = redaktion.get(kennung)
+        zitat_pruefen(r, x, kennung, pfad_redaktion)
         vorspann = (x["volltext"].splitlines() or [""])[0].strip()
         grundart = "politik" if x["art_quelle"] != "rede" else "bericht"
         if not r:
@@ -195,6 +196,7 @@ def zdh_laden():
             "absender": "Zentralverband des Deutschen Handwerks",
             "ebene": "Bund",
             "quelle_kurz": "ZDH",
+            "seite": "Handwerk",
             # Die Ueberschrift des ZDH wird unveraendert uebernommen - sie ist
             # praezise formuliert, eine eigene Fassung koennte nur verzerren.
             "schlagzeile": x["titel"],
@@ -237,10 +239,44 @@ def gattung_raten(titel, art_quelle):
     return "bericht"
 
 
-def kammer_laden(schluessel, absender, quelle_kurz, praefix):
-    """Eine weitere Handwerkskammer in dieselbe Form bringen wie die uebrigen
-    Quellen. Gilt fuer Frankfurt (Oder) und Cottbus - beide liefern Datum,
-    Titel, Anrisstext und Volltext, aber keine Einordnung."""
+def zitat_pruefen(eintrag, roh, kennung, datei):
+    """Regel 1 des Projekts, technisch erzwungen: Ein Zitat in einer
+    Redaktionsdatei muss WOERTLICH in der Quelle stehen. Sonst bricht der Bau
+    ab - ein Fehler verhindert die Veroeffentlichung, statt still
+    durchzurutschen.
+
+    Eine einzige Ausnahme: Steht die Quelle nur als BILD auf der Seite (die
+    Massnahmenpapiere der Junioren), ist ihr Volltext leer. Dann muss der
+    Eintrag in 'quelle_text' festhalten, woher das Zitat stammt - die Pflicht
+    zum Beleg bleibt, nur ihre Form aendert sich.
+    """
+    if not (eintrag and eintrag.get("zitat")):
+        return
+    volltext = " ".join((roh.get("volltext") or "").split())
+    if not volltext:
+        if eintrag.get("quelle_text"):
+            return
+        sys.exit("ABBRUCH: %s hat ein Zitat, aber die Quelle liefert keinen "
+                 "Text und der Eintrag nennt keine Herkunft (quelle_text). "
+                 "Datei: %s" % (kennung, datei))
+    if " ".join(eintrag["zitat"].split()) not in volltext:
+        sys.exit("ABBRUCH: Das Zitat zu %s steht nicht woertlich im "
+                 "Quelltext. Datei: %s | Zitat: %s"
+                 % (kennung, datei, eintrag["zitat"][:140]))
+
+
+def kammer_laden(schluessel, absender, quelle_kurz, praefix,
+                 seite="Handwerk", auffang="Aus den Kammern"):
+    """Eine Quelle in dieselbe Form bringen wie die uebrigen. Gilt fuer die
+    Kammern Frankfurt (Oder) und Cottbus und fuer das Wirtschaftsministerium -
+    alle drei liefern Datum, Titel, Anrisstext und Volltext, aber keine
+    Einordnung.
+
+    'seite' trennt die beiden Stimmen: Das Handwerk fordert, die
+    Landesregierung antwortet. Ohne diese Unterscheidung stuende eine
+    Ministeriumsmeldung im Ticker wie eine Forderung des Handwerks.
+    'auffang' ist das Thema fuer alles, was zu keinem Sachthema passt -
+    bei den Kammern Kammerleben, beim Ministerium Regierungsarbeit."""
     pfad_daten = "daten/%s-%s.json" % (schluessel, JAHR)
     pfad_redaktion = "daten/redaktion-%s-%s.json" % (schluessel, JAHR)
     if not os.path.exists(pfad_daten):
@@ -255,6 +291,7 @@ def kammer_laden(schluessel, absender, quelle_kurz, praefix):
     for x in roh:
         kennung = x["kennung"]
         r = redaktion.get(kennung)
+        zitat_pruefen(r, x, kennung, pfad_redaktion)
         vorspann = (x["volltext"].splitlines() or [""])[0].strip()
         if not r or not r.get("dreizeiler"):
             r = dict(r or {})
@@ -270,11 +307,11 @@ def kammer_laden(schluessel, absender, quelle_kurz, praefix):
                 if r["art"] in ("ehrung", "termin"):
                     gefunden = "Ehrungen & Termine"
                 else:
-                    # Ein grosser Teil der Kammermeldungen ist regionale
-                    # Berichterstattung - Betriebsbesuche, Lehrberufeschauen,
+                    # Ein grosser Teil dieser Meldungen ist Berichterstattung
+                    # ohne Sachthema - Betriebsbesuche, Lehrberufeschauen,
                     # Gremienarbeit. Dafuer ein Sachthema zu erfinden waere
                     # falsch; sie bekommen ein ehrliches eigenes.
-                    gefunden = "Aus den Kammern"
+                    gefunden = auffang
             r.setdefault("thema", gefunden)
             r["dreizeiler"] = vorspann
             r["quelle_eigen"] = True
@@ -299,9 +336,10 @@ def kammer_laden(schluessel, absender, quelle_kurz, praefix):
             "quelle_eigen": bool(r.get("quelle_eigen")),
             "gattung": x.get("art_titel", ""),
             "zitat": r.get("zitat"),
+            "seite": seite,
         })
     if ohne:
-        print("   davon mit dem eigenen Anrisstext der Kammer:", ohne)
+        print("   davon mit dem eigenen Anrisstext der Quelle:", ohne)
     return fertig
 
 
@@ -330,6 +368,7 @@ def junioren_laden():
     for x in roh:
         kennung = x["kennung"]
         r = redaktion.get(kennung)
+        zitat_pruefen(r, x, kennung, pfad_redaktion)
         vorspann = (x["volltext"].splitlines() or [""])[0].strip()
         grundart = GRUNDART.get(x["art_quelle"], "bericht")
         if not r or not r.get("dreizeiler"):
@@ -356,6 +395,7 @@ def junioren_laden():
             "absender": "Junioren des Handwerks e.V.",
             "ebene": "Bund",
             "quelle_kurz": "Junioren",
+            "seite": "Handwerk",
             # Die Ueberschrift der Quelle ist knapp und praezise - sie wird
             # nur ersetzt, wenn die Redaktion ausdruecklich eine eigene setzt.
             "schlagzeile": r.get("schlagzeile") or x["titel"],
@@ -471,6 +511,7 @@ def main():
     for x in fertig:
         x["ebene"] = "Brandenburg"
         x["quelle_kurz"] = "Kammer"
+        x["seite"] = "Handwerk"
 
     zdh = zdh_laden()
     zdh_neu_angeschlossen = zdh and "zdh" not in bekannte_quellen
@@ -498,14 +539,18 @@ def main():
     fertig.extend(junioren)
     print("Junioren des Handwerks:", len(junioren), "Meldungen")
 
-    # Die beiden anderen Brandenburger Kammern. Erst mit ihnen laesst sich
-    # fragen, ob das Land mit einer Stimme spricht.
-    for schluessel, absender, kurz, praefix, marke in [
+    # Die beiden anderen Brandenburger Kammern - erst mit ihnen laesst sich
+    # fragen, ob das Land mit einer Stimme spricht - und das
+    # Wirtschaftsministerium als Gegenseite: der Adressat vieler Forderungen.
+    for schluessel, absender, kurz, praefix, marke, seite, auffang in [
             ("hwk-ff", "Handwerkskammer Frankfurt (Oder)", "Kammer Frankfurt",
-             "ff-", "hwkff"),
+             "ff-", "hwkff", "Handwerk", "Aus den Kammern"),
             ("hwk-cottbus", "Handwerkskammer Cottbus", "Kammer Cottbus",
-             "cb-", "hwkcb")]:
-        weitere = kammer_laden(schluessel, absender, kurz, praefix)
+             "cb-", "hwkcb", "Handwerk", "Aus den Kammern"),
+            ("mweke", "Ministerium für Wirtschaft, Energie, Klimaschutz und Europa",
+             "Ministerium", "", "mweke", "Landesregierung",
+             "Aus der Landesregierung")]:
+        weitere = kammer_laden(schluessel, absender, kurz, praefix, seite, auffang)
         if not weitere:
             continue
         neu_angeschlossen = marke not in bekannte_quellen

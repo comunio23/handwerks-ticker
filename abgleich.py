@@ -8,6 +8,7 @@ Holt der Reihe nach:
   3. Handwerkskammer Frankfurt (Oder) (scrape-hwk-ff.py)
   4. Handwerkskammer Cottbus          (scrape-hwk-cottbus.py)
   5. Junioren des Handwerks e.V.      (scrape-handwerksjunioren.py)
+  6. Wirtschaftsministerium Brandenburg (scrape-mweke.py) - die Gegenseite
 und baut anschliessend den Ticker neu.
 
 Welche ZDH-Bereiche eingesammelt werden, steht in daten/quellen.json und
@@ -80,6 +81,7 @@ def main():
     vorher_hwj = bestand("daten/handwerksjunioren-%s.json" % jahr, "kennung")
     vorher_ff = bestand("daten/hwk-ff-%s.json" % jahr, "kennung")
     vorher_cb = bestand("daten/hwk-cottbus-%s.json" % jahr, "kennung")
+    vorher_mw = bestand("daten/mweke-%s.json" % jahr, "kennung")
 
     melde()
     melde("1. Handwerkskammer Potsdam")
@@ -107,6 +109,11 @@ def main():
     if lauf("scrape-handwerksjunioren.py", jahr) == 2:
         fehler = True
 
+    melde()
+    melde("6. Wirtschaftsministerium Brandenburg (Gegenseite)")
+    if lauf("scrape-mweke.py", jahr) == 2:
+        fehler = True
+
     nachher_hwk = bestand("daten/meldungen-%s.json" % jahr)
     nachher_zdh = bestand("daten/zdh-%s.json" % jahr)
     nachher_hwj = bestand("daten/handwerksjunioren-%s.json" % jahr, "kennung")
@@ -115,6 +122,7 @@ def main():
     neu_hwj = nachher_hwj - vorher_hwj
     neu_ff = bestand("daten/hwk-ff-%s.json" % jahr, "kennung") - vorher_ff
     neu_cb = bestand("daten/hwk-cottbus-%s.json" % jahr, "kennung") - vorher_cb
+    neu_mw = bestand("daten/mweke-%s.json" % jahr, "kennung") - vorher_mw
 
     # Den Tag des Abgleichs festhalten, BEVOR gebaut wird. Bisher leitete die
     # Seite ihr Datum aus dem juengsten Fund ab - ein Abgleich, bei dem nichts
@@ -126,17 +134,18 @@ def main():
         json.dump(stand, f, ensure_ascii=False, indent=1)
 
     melde()
-    melde("6. Ticker bauen")
+    melde("7. Ticker bauen")
     if lauf("baue-ticker.py") == 2:
         fehler = True
 
     melde()
     melde("-" * 66)
-    alles_neu = neu_hwk | neu_zdh | neu_hwj | neu_ff | neu_cb
+    alles_neu = neu_hwk | neu_zdh | neu_hwj | neu_ff | neu_cb | neu_mw
     if alles_neu:
         melde("NEU: %d Potsdam, %d Frankfurt (Oder), %d Cottbus, %d ZDH, "
-              "%d Junioren" % (len(neu_hwk), len(neu_ff), len(neu_cb),
-                               len(neu_zdh), len(neu_hwj)))
+              "%d Junioren, %d Ministerium"
+              % (len(neu_hwk), len(neu_ff), len(neu_cb), len(neu_zdh),
+                 len(neu_hwj), len(neu_mw)))
         for u in sorted(alles_neu):
             melde("   " + u)
         melde()
@@ -148,7 +157,7 @@ def main():
 
     if "--hochladen" in sys.argv and not fehler:
         melde()
-        melde("7. Veroeffentlichen")
+        melde("8. Veroeffentlichen")
         if lauf("deploy-netlify.py") == 2:
             fehler = True
 

@@ -134,5 +134,64 @@
     ],
     "uhrzeit": "07:30",
     "text": "mittwochs und freitags"
+  },
+  "wirtschaftsministerium": {
+    "name": "Ministerium für Wirtschaft, Energie, Klimaschutz und Europa",
+    "kurz": "Wirtschaftsministerium Brandenburg",
+    "ebene": "Brandenburg",
+    "seite": "Landesregierung",
+    "hinweis": "Die Gegenseite: der Adressat vieler Handwerksforderungen. Die Presseliste zeigt immer nur 15 Meldungen und kennt kein Blättern - gesammelt wird deshalb über die Rubriken, die je 15 eigene Meldungen führen. 'sv' ist die Kennung der Rubrik in der Adresse. Weitere Rubriken der Seite: Außenwirtschaft, Berlin und Brandenburg, Messen, Polen und Brandenburg, Tourismus - sie stehen hier bewusst nicht, weil sie das Handwerk kaum berühren. Wer sie will, trägt sie nach demselben Muster ein.",
+    "basis": "https://mweke.brandenburg.de",
+    "liste": "/de/bb1.c.478373.de",
+    "rubriken": [
+      {
+        "schluessel": "handwerk",
+        "titel": "Handel und Handwerk",
+        "sv": "bb1.c.502266.de",
+        "aktiv": true
+      },
+      {
+        "schluessel": "ausbildung",
+        "titel": "Ausbildung, Arbeit",
+        "sv": "bb1.c.651635.de",
+        "aktiv": true
+      },
+      {
+        "schluessel": "energie",
+        "titel": "Energie",
+        "sv": "bb1.c.502261.de",
+        "aktiv": true
+      },
+      {
+        "schluessel": "foerderung",
+        "titel": "Förderpolitik",
+        "sv": "bb1.c.502265.de",
+        "aktiv": true
+      },
+      {
+        "schluessel": "gruendung",
+        "titel": "Gründungsförderung",
+        "sv": "bb1.c.502273.de",
+        "aktiv": true
+      },
+      {
+        "schluessel": "schule",
+        "titel": "Schule und Wirtschaft",
+        "sv": "bb1.c.502263.de",
+        "aktiv": true
+      },
+      {
+        "schluessel": "lausitz",
+        "titel": "Lausitz",
+        "sv": "bb1.c.589128.de",
+        "aktiv": false
+      },
+      {
+        "schluessel": "alle",
+        "titel": "Alle Pressemitteilungen",
+        "sv": null,
+        "aktiv": true
+      }
+    ]
   }
 }

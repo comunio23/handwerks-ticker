@@ -1,0 +1,59 @@
+{
+  "hinweis": "Redaktionelle Ebene zu daten/hwk-cottbus-2026.json (Handwerkskammer Cottbus). Schlüssel ist die 'kennung' der Rohmeldung. Felder: art (politik | bericht | zahlen | ehrung | termin), thema, thema2, schlagzeile (nur wo der Originaltitel die Aussage nicht trägt), dreizeiler (eigene Kurzfassung, ausschließlich aus dem Quelltext), zitat (muss WÖRTLICH im Volltext stehen, baue-ticker.py bricht sonst ab). Einträge ohne 'dreizeiler' ordnen nur ein; dort bleibt der Anrisstext der Kammer stehen und ist als solcher gekennzeichnet.",
+  "stand": "2026-10-14",
+  "eintraege": {
+
+    "cb-10211": {
+      "art": "politik",
+      "thema": "Bauen & Sanieren",
+      "thema2": "Entbürokratisierung",
+      "dreizeiler": "Die Handwerkskammer Cottbus fordert, die Novelle der Brandenburgischen Bauordnung nicht nur zu verabschieden, sondern schnell und konsequent umzusetzen. Präsidentin Corina Reifenstein verweist auf die vorgesehenen Fristen: vier Wochen für die Vollständigkeitsprüfung von Bauanträgen, nur eine einmalige Nachforderung und ein Monat Stellungnahmefrist für Fachbehörden – bleibt eine Rückmeldung aus, sollen öffentliche Belange dem Vorhaben nicht länger entgegenstehen. Auch die vollständige Digitalisierung der Bauanträge sei längst überfällig.",
+      "zitat": "Für das Handwerk zählt nicht das Ankündigen, sondern das Handeln. Jede weitere Verzögerung kostet Aufträge, Arbeitsplätze und Investitionen"
+    },
+
+    "cb-10205": {
+      "art": "bericht",
+      "thema": "Energie & Sprit",
+      "thema2": "Entbürokratisierung",
+      "schlagzeile": "Dialogtour in Guben: gute Auftragslage, aber Energiepreise und Bürokratie drücken",
+      "dreizeiler": "Unter dem Motto „Das bewegt. Handwerker im Gespräch“ besuchten HWK-Präsidentin Corina Reifenstein, Heiko Jahn von der Wirtschaftsregion Lausitz und Gubens Bürgermeister Fred Mahro drei Handwerksbetriebe. Trotz guter Auftragslage stehen die Unternehmen zunehmend unter Druck: Anhaltend steigende Energiepreise für Strom und Kraftstoffe gefährden das kostendeckende Arbeiten. Der stetig wachsende Bürokratieaufwand binde zusätzlich wertvolle Ressourcen."
+    },
+
+    "cb-10540": {
+      "art": "zahlen",
+      "thema": "Wirtschaftslage",
+      "thema2": "Personal & Fachkräfte",
+      "dreizeiler": "Die Konjunkturumfrage der Handwerkskammer Cottbus zeigt für den Herbst 2026 eine stabile Lage: 77,2 Prozent der Betriebe bewerten ihre Geschäftslage als gut oder befriedigend, leicht über dem Vorjahreswert von 76,4 Prozent. Für die kommenden Monate erwarten 57,9 Prozent eine gleichbleibende Entwicklung, 13,8 Prozent eine Verbesserung und 28,3 Prozent eine Verschlechterung. 81,3 Prozent konnten ihren Fachkräftebestand halten oder ausbauen; zugleich melden 29,9 Prozent unbesetzte Stellen, im Schnitt fehlen 1,9 Fachkräfte."
+    },
+
+    "cb-10317": {
+      "art": "zahlen",
+      "thema": "Wirtschaftslage",
+      "dreizeiler": "Die Frühjahrsumfrage 2026 zeigt eine spürbar eingetrübte Geschäftslage: Der Anteil zufriedener Betriebe sank von 76,4 Prozent im Herbst 2025 auf 69,3 Prozent, nur noch 13,8 Prozent bewerten ihre Lage als gut. Das Gesundheitshandwerk profitiert von der demografischen Entwicklung und stabiler Nachfrage, während die Handwerke für den gewerblichen Bedarf unter der Industrieschwäche leiden. Besonders angespannt bleibt die Lage im Nahrungsmittelhandwerk mit hohen Kosten und wachsendem Preisdruck durch den Einzelhandel."
+    },
+
+    "cb-10457": {
+      "art": "zahlen",
+      "thema": "Ausbildung & Nachwuchs",
+      "dreizeiler": "Im Kammerbezirk Cottbus lagen im Juli 2026 insgesamt 450 abgeschlossene Lehrverträge vor, 7,14 Prozent mehr als im Vorjahr mit 420. In der Ausbildung engagieren sich 952 Handwerksbetriebe, darunter 28 erstmals. Am stärksten wuchs die Zahl bei den Anlagenmechanikern für Sanitär-, Heizungs- und Klimatechnik von 35 auf 53; rückläufig sind erstmals die Kraftfahrzeugmechatroniker mit 79 statt 83 Verträgen."
+    },
+
+    "cb-10531": {
+      "art": "bericht",
+      "thema": "Ausbildung & Nachwuchs",
+      "dreizeiler": "Wirtschaftsministerin Martina Klement übergab einen Förderbescheid über rund 50 Millionen Euro an HWK-Präsidentin Corina Reifenstein und nahm am Spatenstich für das Leistungszentrum Nord in Königs Wusterhausen teil. Auf einem rund 13.000 Quadratmeter großen Areal entsteht ein zweigeschossiges Ausbildungszentrum mit 7.000 Quadratmetern Nutzfläche. Vorgesehen sind Werkstätten, Fachkabinette und Seminarräume für Anlagenmechaniker, Kraftfahrzeugmechatroniker, Elektroniker und Metallbauer; EU und Land tragen 90 Prozent der zuwendungsfähigen Kosten."
+    },
+
+    "cb-10529": { "art": "bericht", "thema": "Energie & Sprit" },
+    "cb-10417": { "art": "bericht", "thema": "Auflagen & Vorschriften" },
+    "cb-10375": { "art": "bericht", "thema": "Auflagen & Vorschriften", "thema2": "Bauen & Sanieren" },
+    "cb-10203": { "art": "zahlen", "thema": "Wirtschaftslage" },
+    "cb-7474": { "art": "zahlen", "thema": "Wirtschaftslage" },
+    "cb-10530": { "art": "bericht", "thema": "Ausbildung & Nachwuchs" },
+    "cb-10515": { "art": "bericht", "thema": "Betrieb & Nachfolge" },
+    "cb-10452": { "art": "bericht", "thema": "Personal & Fachkräfte" },
+    "cb-10500": { "art": "bericht", "thema": "Personal & Fachkräfte" },
+    "cb-10372": { "art": "bericht", "thema": "Ausbildung & Nachwuchs" },
+    "cb-10342": { "art": "termin", "thema": "Ehrungen & Termine" }
+  }
+}

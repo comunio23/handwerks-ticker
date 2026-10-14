@@ -29,3 +29,6 @@ daten/cache-cottbus/
 
 # Oertliche Vorschau: genau die Dateien, die auch hochgeladen werden
 vorschau/
+
+# Zwischenspeicher des Wirtschaftsministeriums
+daten/cache-mweke/
