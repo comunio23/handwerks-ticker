@@ -41,6 +41,9 @@ import time
 import unicodedata
 import urllib.request
 
+# Kontaktdaten gehoeren nicht in eine oeffentliche Datendatei
+import ohne_kontaktdaten
+
 BASIS = "https://www.handwerksjunioren.de"
 UA = "Handwerks-Ticker/1.0 (Handwerksjunioren HWK Potsdam)"
 
@@ -279,6 +282,11 @@ if __name__ == "__main__":
 
     im_jahr = [x for x in alles if (x["datum"] or "").startswith(jahr)]
     im_jahr.sort(key=lambda x: x["datum"], reverse=True)
+
+    # Vor dem Speichern: Durchwahlen und E-Mail-Adressen der
+    # Pressestellen raus. Sie stehen im Original weiterhin da,
+    # hier braucht sie niemand (siehe ohne_kontaktdaten.py).
+    ohne_kontaktdaten.melden(ohne_kontaktdaten.saeubern(im_jahr))
 
     ziel = os.path.join("daten", "handwerksjunioren-%s.json" % jahr)
     with open(ziel, "w", encoding="utf-8") as f:

@@ -40,6 +40,9 @@ import sys
 import time
 import urllib.request
 
+# Kontaktdaten gehoeren nicht in eine oeffentliche Datendatei
+import ohne_kontaktdaten
+
 if hasattr(sys.stdout, "buffer"):
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
 
@@ -233,6 +236,11 @@ def main():
         print("   davon mit abweichendem Datum in der Meldung: %d" % unsicher)
     if fertig:
         print("   neueste: %s %s" % (fertig[0]["datum"], fertig[0]["titel"][:60]))
+
+    # Vor dem Speichern: Durchwahlen und E-Mail-Adressen der
+    # Pressestellen raus. Sie stehen im Original weiterhin da,
+    # hier braucht sie niemand (siehe ohne_kontaktdaten.py).
+    ohne_kontaktdaten.melden(ohne_kontaktdaten.saeubern(fertig))
 
     ziel = os.path.join("daten", "mweke-%d.json" % jahr)
     with open(ziel, "w", encoding="utf-8") as f:

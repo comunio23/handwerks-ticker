@@ -38,6 +38,9 @@ import sys
 import time
 import urllib.request
 
+# Kontaktdaten gehoeren nicht in eine oeffentliche Datendatei
+import ohne_kontaktdaten
+
 BASIS = "https://www.hwk-cottbus.de"
 UA = "Handwerks-Ticker/1.0 (Handwerksjunioren HWK Potsdam)"
 CACHE = os.path.join("daten", "cache-cottbus")
@@ -240,6 +243,11 @@ if __name__ == "__main__":
             print("   ... %d von %d gelesen" % (i, len(eintraege)))
 
     ergebnis.sort(key=lambda x: x["datum"], reverse=True)
+    # Vor dem Speichern: Durchwahlen und E-Mail-Adressen der
+    # Pressestellen raus. Sie stehen im Original weiterhin da,
+    # hier braucht sie niemand (siehe ohne_kontaktdaten.py).
+    ohne_kontaktdaten.melden(ohne_kontaktdaten.saeubern(ergebnis))
+
     ziel = os.path.join("daten", "hwk-cottbus-%s.json" % jahr)
     with open(ziel, "w", encoding="utf-8") as f:
         json.dump(ergebnis, f, ensure_ascii=False, indent=2)

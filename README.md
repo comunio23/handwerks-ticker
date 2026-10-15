@@ -243,6 +243,7 @@ lokaler Cache.
 | `daten/redaktion-hwk-ff-2026.json` | Einordnung und Kurzfassungen Frankfurt (Oder) |
 | `daten/redaktion-hwk-cottbus-2026.json` | Einordnung und Kurzfassungen Cottbus |
 | `daten/quellen.json` | welche Quellen eingesammelt werden |
+| `ohne_kontaktdaten.py` | entfernt Durchwahlen und E-Mail-Adressen vor dem Speichern |
 | `daten/bekannt.json` | was schon bekannt war (für die „Neu"-Markierung) |
 | `daten/abgleich-stand.json` | wann zuletzt wirklich abgeglichen wurde |
 | `web/manifest.json`, `web/sw.js`, `web/icons/` | was die Seite zur App macht |
@@ -271,6 +272,29 @@ Quelle, **bricht der Bau ab**. Einzige Ausnahme: Liefert die Quelle gar
 keinen Text, weil sie nur als Bild vorliegt (die Maßnahmenpapiere der
 Junioren), muss der Eintrag in `quelle_text` festhalten, woher das Zitat
 stammt. Die Pflicht zum Beleg bleibt, nur ihre Form ändert sich.
+
+---
+
+## Keine Kontaktdaten in den Datendateien
+
+Am Ende fast jeder Pressemitteilung steht ein Kontaktblock – Name, Durchwahl
+und E-Mail der Pressestelle. Auf der Presseseite der Kammer ist das richtig
+und gewollt. In unseren Datendateien ist es etwas anderes: Die liegen in
+einem **öffentlichen Repository**, sind maschinenlesbar und lassen sich im
+Dutzend auslesen. Genau daraus bauen Adresshändler ihre Listen.
+
+Gebraucht werden sie hier nie – der Ticker zeigt Schlagzeile, Kurzfassung und
+einen Verweis auf das Original. Deshalb entfernt `ohne_kontaktdaten.py` sie,
+**bevor** gespeichert wird; alle sechs Abrufe rufen es auf. An die Stelle
+tritt eine sichtbare Marke (`[E-Mail entfernt]`, `[Telefon entfernt]`), damit
+später niemand einen Abruffehler vermutet.
+
+**Namen bleiben stehen.** Sie sind der Inhalt der Meldung („Robert Wüst
+fordert …"), nicht ihr Anhang. Entfernt werden nur E-Mail-Adressen sowie
+Telefon-, Mobil- und Faxnummern.
+
+Das ist Datensparsamkeit nach Art. 5 Abs. 1 lit. c DSGVO – kein Rechtsgutachten,
+sondern die naheliegende Vorsichtsmaßnahme für Daten, die niemand braucht.
 
 ---
 
